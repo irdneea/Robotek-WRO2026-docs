@@ -11,7 +11,7 @@
 
 The mission always works in a counter-clockwise frame: a clockwise round is mirrored (and the colours swapped) before it
 gets here, so nothing in this file needs to know the direction. The code that wires it to ROS is in drive.py and
-strategy.py. Chapters 6 and 7 of the repository's README explain the behaviour in detail.
+strategy.py. Chapter 6 of the repository's README explains the behaviour in detail.
 """
 import bisect
 import math

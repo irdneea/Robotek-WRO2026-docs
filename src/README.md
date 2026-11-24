@@ -58,7 +58,7 @@ Rule of the workspace: the two strategies depend only on `robotek_common`. They 
 | `recording.py` | What every round leaves in `~/runs`: telemetry, events, parameters |
 | `config/` | The YAML profiles. `car_picam_park_round.yaml` is the one of the validated round |
 
-Chapters 5, 6 and 7 of the main [README](../README.md) explain what these files do and why.
+Chapter 5 and chapter 6 of the main [README](../README.md) explain what these files do and why.
 
 ## Open: `robotek_open/robotek_open/`
 
@@ -107,4 +107,4 @@ cd src/robotek_open && python3 -m pytest test -q            # 62 tests
 cd src/robotek_hardware && python3 -m pytest test -q        # conversions, wiring checks (need ROS for some)
 ```
 
-Run the car with `bash tools/obstacle-round.sh` (Obstacle) or `bash tools/car-run.sh open` (Open). More in chapter 10 of the [README](../README.md#10-build-run-and-test-it-yourself).
+Run the car with `bash tools/obstacle-round.sh` (Obstacle) or `bash tools/car-run.sh open` (Open). More in chapter 9 of the [README](../README.md#9-build-run-and-test-it-yourself).

@@ -1,13 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 640" width="1000" height="640" font-family="Arial, Helvetica, sans-serif">
 <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#333"/></marker></defs>
 <rect width="1000" height="640" fill="#ffffff"/>
-<text x="500.0" y="26" font-size="18" font-weight="bold" text-anchor="middle">Wiring diagram of the car (current version)</text>
+<text x="500.0" y="26" font-size="18" font-weight="bold" text-anchor="middle">Wiring diagram of the car (version 12)</text>
 <rect x="40" y="70" width="170" height="56" rx="8" fill="#fde8c8" stroke="#333" stroke-width="1.2"/>
-<text x="125.0" y="94.5" font-size="12" font-weight="bold" text-anchor="middle">Electronics battery</text>
+<text x="125.0" y="94.5" font-size="12" font-weight="bold" text-anchor="middle">Battery</text>
 <text x="125.0" y="109.5" font-size="12" font-weight="normal" text-anchor="middle">2S LiPo 7.4 V</text>
-<rect x="40" y="480" width="170" height="56" rx="8" fill="#fde8c8" stroke="#333" stroke-width="1.2"/>
-<text x="125.0" y="504.5" font-size="12" font-weight="bold" text-anchor="middle">Motor battery</text>
-<text x="125.0" y="519.5" font-size="12" font-weight="normal" text-anchor="middle">2S LiPo 7.4 V</text>
 <rect x="330" y="150" width="250" height="190" rx="8" fill="#d6e6fa" stroke="#333" stroke-width="1.2"/>
 <text x="455.0" y="219.0" font-size="12" font-weight="bold" text-anchor="middle">RRC Lite board (Hiwonder)</text>
 <text x="455.0" y="234.0" font-size="12" font-weight="normal" text-anchor="middle">STM32F407</text>
@@ -39,9 +36,7 @@
 <text x="455.0" y="539.0" font-size="12" font-weight="normal" text-anchor="middle">encoder, 20:1, 450 rpm</text>
 <text x="455.0" y="554.0" font-size="12" font-weight="normal" text-anchor="middle">rear axle, port M2</text>
 <path d="M210,98 L270,98 L270,190 L330,190" fill="none" stroke="#c0392b" stroke-width="1.6" marker-end="url(#a)"/>
-<text x="270.0" y="139.0" font-size="11" fill="#222" text-anchor="middle" paint-order="stroke" stroke="#fff" stroke-width="4">VIN 6-14 V</text>
-<path d="M210,508 L270,508 L270,550 L330,550" fill="none" stroke="#c0392b" stroke-width="1.6" marker-end="url(#a)"/>
-<text x="270" y="500" font-size="11" fill="#222" text-anchor="middle" paint-order="stroke" stroke="#fff" stroke-width="4">power for M2</text>
+<text x="270" y="180" font-size="11" fill="#222" text-anchor="middle" paint-order="stroke" stroke="#fff" stroke-width="4">VIN 6-14 V (powers everything)</text>
 <path d="M580,175 L700,105" fill="none" stroke="#c0392b" stroke-width="1.6" marker-end="url(#a)"/>
 <text x="640" y="128" font-size="11" fill="#222" text-anchor="middle" paint-order="stroke" stroke="#fff" stroke-width="4">USB-C 5 V / 5 A</text>
 <path d="M580,215 L700,150" fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#a)" marker-start="url(#a)"/>
@@ -70,5 +65,5 @@
 <text x="510" y="612" font-size="11" text-anchor="start" font-weight="normal">Sensor</text>
 <rect x="640" y="600" width="14" height="14" fill="#f8d9d9" stroke="#333"/>
 <text x="660" y="612" font-size="11" text-anchor="start" font-weight="normal">Actuator</text>
-<text x="40" y="625" font-size="11" text-anchor="start" font-weight="normal">Red lines carry power, black lines carry data or control signals. Both batteries are separate so that the motor cannot pull the Raspberry Pi down.</text>
+<text x="40" y="625" font-size="11" text-anchor="start" font-weight="normal">Red lines carry power, black lines carry data or control signals. One battery feeds the board; the board powers the Raspberry Pi, the servo and the motor.</text>
 </svg>
