@@ -14,7 +14,6 @@
 > 🤔 Why is our team named *Renkay*?<br><br>
 > The name *Renkay* is inspired by three words that define our team: resilience, minka, and wiñay. "**Resilience**" represents our determination to never give up; "**minka**", an ancestral tradition of working together for a common purpose, reflects our belief that the best ideas are built through collaboration; and wiñay, which means "to grow", symbolizes our commitment to continuous learning and improvement. Together, these words represent who we are as a team, and guide every step of our robotics journey.
 
-
 ## The car at a glance
 
 | | |
@@ -26,7 +25,7 @@
 | Sensors | LDROBOT LD19 LiDAR, Pi camera with a wide lens, IMU of the RRC Lite, VL53L0X rear distance sensor |
 | Power | One 2S LiPo battery; the RRC Lite board feeds the motor, the servo and the Raspberry Pi |
 | Size | About 233 mm long and 147.6 mm wide (limits 300 × 200 mm). Mass and height: see [rules compliance](#11-rules-compliance) |
-| Code | Python, ROS 2 Jazzy. One state machine per challenge; the same code runs on the car and in our simulator |
+| Code | Python, ROS 2 Jazzy. One state machine per challenge; the same code runs on the car and in our simulator ([try it](#try-the-simulation)) |
 | Best Obstacle round on the car | 3 laps, leaving the lot and a partial parallel park in 105.9 s, all 19 signs passed on the right side |
 
 | Front | Left | Right |
@@ -41,15 +40,18 @@ More photos of the car and of its earlier versions are in [`v-photos`](v-photos)
 
 ## Contents
 
+* [How this repository is organised](#how-this-repository-is-organised)
 * [1. The team](#1-the-team)
-* [2. Repository structure](#2-repository-structure)
+* [2. Vehicle overview and versions](#2-vehicle-overview-and-versions)
+  * [Version 12 in pictures](#version-12-in-pictures)
+  * [Versions of the car](#versions-of-the-car)
 * [3. Mechanics: chassis, steering and drive](#3-mechanics-chassis-steering-and-drive)
   * [Layout and dimensions](#layout-and-dimensions)
   * [Steering: why a Hiwonder Ackermann linkage](#steering-why-a-hiwonder-ackermann-linkage)
   * [Drive train: motor, gears, speed](#drive-train-motor-gears-speed)
   * [Torque and speed, worked out](#torque-and-speed-worked-out)
   * [Mechanical stability](#mechanical-stability)
-  * [Printed parts](#printed-parts)
+  * [Printed parts and other pieces](#printed-parts-and-other-pieces)
   * [Assembly instructions](#assembly-instructions)
 * [4. Power, sensors and wiring](#4-power-sensors-and-wiring)
   * [Block diagram (power and data)](#block-diagram-power-and-data)
@@ -63,21 +65,22 @@ More photos of the car and of its earlier versions are in [`v-photos`](v-photos)
 * [5. Software architecture](#5-software-architecture)
   * [Code structure](#code-structure)
   * [ROS 2 nodes and topics](#ros-2-nodes-and-topics)
-  * [Control loop of the Obstacle (50 Hz)](#control-loop-of-the-obstacle-50-hz)
-  * [Steering law](#steering-law)
   * [Testing and tuning process, with metrics](#testing-and-tuning-process-with-metrics)
 * [6. Obstacle Challenge](#6-obstacle-challenge)
-  * [6.1 How a round goes](#61-how-a-round-goes)
-  * [6.2 Finding and avoiding the signs](#62-finding-and-avoiding-the-signs)
-  * [6.3 Leaving the parking lot](#63-leaving-the-parking-lot)
-  * [6.4 Parking in parallel](#64-parking-in-parallel)
-  * [6.5 What is validated and what is not](#65-what-is-validated-and-what-is-not)
+  * [6.1 Overview](#61-overview)
+  * [6.2 States](#62-states)
+    * [SETUP](#setup)
+    * [LOT_EXIT: leaving the parking lot](#lot_exit-leaving-the-parking-lot)
+    * [RUN: three laps with signs](#run-three-laps-with-signs)
+    * [PARK: parking in parallel](#park-parking-in-parallel)
+    * [WAIT_SENSOR, FAULT and STOP](#wait_sensor-fault-and-stop)
+  * [6.3 Results and validation](#63-results-and-validation)
+  * [6.4 Surprise rule (in progress)](#64-surprise-rule-in-progress)
 * [7. Open Challenge](#7-open-challenge)
-  * [What it uses](#what-it-uses)
-  * [States](#states)
-  * [Results](#results)
-  * [Crash detector](#crash-detector)
-  * [Why this design](#why-this-design)
+  * [7.1 Overview](#71-overview)
+  * [7.2 States](#72-states)
+  * [7.3 Results and validation](#73-results-and-validation)
+  * [7.4 Other details](#74-other-details)
 * [8. Systems thinking and engineering decisions](#8-systems-thinking-and-engineering-decisions)
   * [How the subsystems interact](#how-the-subsystems-interact)
   * [Constraints](#constraints)
@@ -90,6 +93,7 @@ More photos of the car and of its earlier versions are in [`v-photos`](v-photos)
   * [Start by itself when the Pi is switched on](#start-by-itself-when-the-pi-is-switched-on)
   * [Driving the car with the keyboard](#driving-the-car-with-the-keyboard)
   * [Seeing what the car does](#seeing-what-the-car-does)
+  * [Try the simulation](#try-the-simulation)
   * [Tests without the car](#tests-without-the-car)
   * [Round records](#round-records)
   * [Test plan before the final](#test-plan-before-the-final)
@@ -98,6 +102,23 @@ More photos of the car and of its earlier versions are in [`v-photos`](v-photos)
 * [11. Rules compliance](#11-rules-compliance)
 * [12. History of the car and engineering journal](#12-history-of-the-car-and-engineering-journal)
 * [13. Licence and third-party code](#13-licence-and-third-party-code)
+
+## How this repository is organised
+
+Everything is in this one README. The folders hold the material that a text cannot carry.
+
+| Folder | What is inside |
+| --- | --- |
+| [`src`](src) | **The code of the vehicle**, a ROS 2 workspace. [`src/README.md`](src/README.md) says what each package and each file does, in reading order |
+| [`tools`](tools) | Scripts to set up the Raspberry Pi, start a round, clean leftovers and calibrate the steering. [`tools/README.md`](tools/README.md) explains each one |
+| [`schemes`](schemes) | The diagrams: wiring, power, ROS nodes, the flow of each challenge and the outline of the car |
+| [`models`](models) | 3D-printed parts of the chassis and housings (STL and previews) |
+| [`v-photos`](v-photos) | Photos of the car, every side, top and bottom, and of its earlier versions |
+| [`t-photos`](t-photos) | Team photos |
+| [`videos`](videos) | Links to the demonstration videos |
+| [`other`](other) | Extra material |
+
+**Reading the code.** Start with [`src/README.md`](src/README.md). The two files that hold the decisions of each challenge are `src/robotek_obstacle_v3/robotek_obstacle_v3/mission.py` (Obstacle) and `src/robotek_open/robotek_open/v5/mission.py` (Open). Everything else either feeds them sensor data or turns their speed and steering command into motor and servo signals.
 
 ## 1. The team
 
@@ -151,22 +172,205 @@ More photos of the car and of its earlier versions are in [`v-photos`](v-photos)
   </tr>
 </table>
 
-## 2. Repository structure
+## 2. Vehicle overview and versions
 
-Everything is in this one README. The folders hold the material that a text cannot carry.
+This is our car, **Sami**. It is the result of many versions and modifications since 2024. We have been studying, learning and testing different methods to improve it, and it has been an interesting and challenging journey in robotics.
 
-| Folder | What is inside |
-| --- | --- |
-| [`src`](src) | **The code of the vehicle**, a ROS 2 workspace. [`src/README.md`](src/README.md) says what each package and each file does, in reading order |
-| [`tools`](tools) | Scripts to set up the Raspberry Pi, start a round, clean leftovers and calibrate the steering. [`tools/README.md`](tools/README.md) explains each one |
-| [`schemes`](schemes) | The diagrams: wiring, power, ROS nodes, the flow of each challenge and the outline of the car |
-| [`models`](models) | 3D-printed parts of the chassis and housings (STL and previews) |
-| [`v-photos`](v-photos) | Photos of the car, every side, top and bottom, and of its earlier versions |
-| [`t-photos`](t-photos) | Team photos |
-| [`videos`](videos) | Links to the demonstration videos |
-| [`other`](other) | Extra material |
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/491effc5-e55b-4c2b-aae7-920ffc49a3a9" width="70%">
+</p>
 
-**Reading the code.** Start with [`src/README.md`](src/README.md). The two files that hold the decisions of each challenge are `src/robotek_obstacle_v3/robotek_obstacle_v3/mission.py` (Obstacle) and `src/robotek_open/robotek_open/v5/mission.py` (Open). Everything else either feeds them sensor data or turns their speed and steering command into motor and servo signals.
+### General description
+
+Our autonomous vehicle is built to take on both the Open and Obstacle Challenges at the Future Engineers competition. Running on Ubuntu with ROS 2, it can process information and make decisions in real time. The car uses an Ackermann steering system and a custom-built chassis to move smoothly through turns and straight paths. A LiDAR sensor helps it detect the field walls, while the camera identifies the colour of the signs. Everything is controlled by a Raspberry Pi 5 and an RRC Lite board.
+
+### Version 12 in pictures
+
+| Bottom | Steering linkage | Camera housing |
+| :--: | :--: | :--: |
+| <img src="v-photos/version-12/bottom-view.jpg" width="95%"/> | <img src="v-photos/version-12/bottom-view-steering-linkage.jpg" width="95%"/> | <img src="v-photos/version-12/camera-housing.jpg" width="95%"/> |
+
+| LiDAR on its printed tab | Parts before assembly | Battery and Pi housing |
+| :--: | :--: | :--: |
+| <img src="v-photos/version-12/lidar-on-printed-tab.jpg" width="95%"/> | <img src="v-photos/version-12/parts-layout.jpg" width="95%"/> | <img src="v-photos/version-12/housing-and-base-arm.jpg" width="95%"/> |
+
+### Versions of the car
+
+Our vehicle has gone through **twelve versions** and we keep improving it. Versions 1 to 11 are the ones we described in our national documentation; version 12 is the car for the international final. It all started with a cardboard prototype, then moved on to acrylic and metal chassis designs, and later, we made personalized adjustments to a HiWonder kit. Along the way, we also experimented with different wheel designs, repositioned components, tested sensors like LiDAR, and finally adopted a new operating environment with ROS and Ubuntu.
+
+<table>  
+  <tr>
+    <th width="10%">Version</th>
+    <th width="40%">Car Photo</th>
+    <th width="50%">Description</th>
+  </tr>
+  
+  <!-- Version 1 -->
+  <tr>
+    <td align="center"><i>Version N°1</i></td>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/88cb9f71-715d-41d5-8dcd-54870af7fa87" width="330"height="230"/>
+    </td>
+    <td>
+      We built a cardboard prototype to test and understand the Ackermann steering system and wheel movement. This served as a reference to learn about the placement of components and systems.<br><br>
+      <a href="v-photos/vehicle-versions/README.md#version-1">➡️ See more photos 🚗</a>
+    </td>
+  </tr>
+
+  <!-- Version 2 -->
+  <tr>
+    <td align="center"><i>Version N°2</i></td>
+    <td align="center"><img src="https://github.com/user-attachments/assets/14afa30d-317e-43f8-b6ef-d63897212c88" width="330" height="230"/>
+    </td>
+    <td>
+      <br>We cut and incorporated an acrylic chassis and designed/3D-printed housing pieces for the camera, Ackermann system, and other components. The Ackermann used a stepper motor, and to perceive its surroundings, the car relied on infrared sensors and a webcam. 
+      <br><br>The main controllers were a Raspberry Pi 4 and an Arduino Nano, powered by a power bank and lithium batteries. The car’s movement was driven by a single motor.<br><br> 
+      <a href="v-photos/vehicle-versions/README.md#version-2">➡️ See more photos 🚗</a><br><br>
+    </td>
+  </tr>
+
+  <!-- Version 3 -->
+  <tr>
+    <td align="center"><i>Version N°3</i></td>
+    <td align="center"><img src="https://github.com/user-attachments/assets/5299a922-0fb3-43a8-9a32-9bdbc77225d7" width="330" height="230"/>
+    </td>
+    <td>
+      <br> We replaced the power bank with a smaller one, adjusted component placement into a two-level car system, and installed new wheels. Lithium batteries were replaced with higher-current ones, and the infrared sensors were moved to the front, so the vehicle could make more precise turns.<br><br>
+      <a href="v-photos/vehicle-versions/README.md#version-3">➡️ See more photos 🚗</a><br><br>
+    </td>
+  </tr>
+
+  <!-- Version 4 -->
+  <tr>
+    <td align="center"><i>Version N°4</i></td>
+    <td align="center"><img src="https://github.com/user-attachments/assets/80568426-a136-48a6-b219-9c05dd3e2584" width="330" height="230"/>
+    </td>
+    <td>
+    <br> We upgraded the chassis to a modified HiWonder Kit and replaced the infrared sensors with a LiDAR for more accurate obstacle detection. The webcam was also switched to a monocular camera. The original car motor was replaced by two encoder motors, adapted with gears to drive a single wheel in compliance with competition guidelines.<br><br>
+
+For the Ackermann steering, we replaced the stepper motor with a servomotor. On top of that, we moved away from the Arduino Nano and began implementing the ROS framework.<br><br>
+<a href="v-photos/vehicle-versions/README.md#version-4">➡️ See more photos 🚗</a><br><br>
+    </td>
+  </tr>
+
+  <!-- Version 5 -->
+  <tr>
+    <td align="center"><i>Version N°5</i></td>
+    <td align="center"><img src="https://github.com/user-attachments/assets/fe6757a1-3fe5-4b12-b856-bedcc28a5b50" width="330" height="230"/>
+    </td>
+    <td>
+      <br>Our main improvement was the chassis. We joined the two bases by drilling them together and carefully organized the components with the Raspberry Pi inside. The LiDAR was placed on top so nothing would block its view, and we also completed and installed the camera housing.<br><br>
+      <a href="v-photos/vehicle-versions/README.md#version-5">➡️ See more photos 🚗</a><br><br>
+    </td>
+  </tr>
+
+  <!-- Version 6 -->
+  <tr>
+    <td align="center"><i>Version N°6</i></td>
+    <td align="center"><img src="https://github.com/user-attachments/assets/7e483e4c-2f35-48e9-8125-00a2123f06a2" width="330" height="230"/>
+    </td>
+    <td>
+      <br> Wheels were changed to adjust the car’s height so the Lidar could detect walls within the 10 cm range (previously it was too high and failed). The housing material was upgraded from PLA to polycarbonate for greater resistance, and the Open Challenge (autonomous 3 rounds driving) was completed.<br><br>
+      <a href="v-photos/vehicle-versions/README.md#version-6">➡️ See more photos 🚗</a><br><br>
+    </td>
+  </tr>
+
+  <!-- Version 7 -->
+  <tr>
+    <td align="center"><i>Version N°7</i></td>
+    <td align="center"><img src="https://github.com/user-attachments/assets/105155b6-ddb2-4885-aa63-7e07f1468315" width="330" height="230"/>
+    </td>
+    <td>
+      <br> Using our HiWonder kit as the base, we designed and cut a completely new, smaller chassis with personalized mounting holes for all components, new housing pieces were created, and the two-motor system was replaced by a single motor in a gear system.<br><br>
+    We also moved from a two-level structure to a single-level layout, placing all the components on the same surface to give the Raspberry Pi better airflow and easier access. The car successfully detected and avoided the first traffic signs.<br><br>
+      <a href="v-photos/vehicle-versions/README.md#version-7">➡️ See more photos 🚗</a><br><br>
+    </td>
+  </tr>
+
+  <!-- Version 8 -->
+  <tr>
+    <td align="center"><i>Version N°8</i></td>
+    <td align="center"><img src="https://github.com/user-attachments/assets/5d66a0cd-a12c-4155-ae6f-aa4655cf6e0e" width="330" height="250"/>
+    </td>
+    <td>
+      <br> <b>Car dimensions:</b> 15 x 23 cm <br><br>
+      We 3D-printed new, slimmer front wheels because the original ones stuck out too much from the chassis. A custom housing was also printed for the batteries, and most importantly, the Ackermann steering servo was mounted vertically to save space and allow for a wider turning angle.<br><br>
+During previous testing, we realized the LiDAR was struggling to properly detect the walls of the field, so we 3D-printed and implemented a small angled mount to give it a slight tilt.<br><br>
+      <a href="v-photos/vehicle-versions/README.md#version-8">➡️ See more photos 🚗</a><br><br>
+    </td>
+  </tr>
+
+<!-- Version 9 -->
+  <tr>
+    <td align="center"><i>Version N°9</i></td>
+    <td align="center"><img src="https://github.com/user-attachments/assets/312c2e7e-4638-4917-b54a-fff2bb1a2965" width="330" height="450"/>
+    </td>
+    <td>
+      <br> <b>Car dimensions:</b> 15 x 20 cm <br><br>
+In this version, the components were arranged more efficiently to save space. We added a custom housing for the batteries, placed the Pi5 controller on top, and mounted the Raspberry above it, creating a layered system.<br><br> 
+A new chassis base was printed in MDF, and the Ackermann was moved slightly because, in the previous version, the rack was colliding with the servo. To improve traction, we added a groove to the wheels and printed small cylinders between them to prevent contact with the screws. With these adjustments, the robot managed to complete a lap in <b>20 seconds</b>.<br><br>
+      <a href="v-photos/vehicle-versions/README.md#version-9">➡️ See more photos 🚗</a><br><br>
+    </td>
+  </tr>
+
+  <!-- Version 10 -->
+  <tr>
+    <td align="center"><i>Version N°10</i></td>
+    <td align="center"><img src="https://github.com/user-attachments/assets/03a1e68f-fcf6-40c0-91ea-beff7a2833ab" width="330" height="450"/>
+    </td>
+    <td>
+      <br> <b>Car dimensions:</b> 15 x 18 x 16 cm <br><br> 
+We removed the LiDAR housing because, after testing the robot multiple times, we found that vision worked better without it. We also printed the rear wheels, so now all wheels are the same. We modified the gear system, which allowed the robot to complete the 3 laps faster. It now takes less than 10 seconds to complete an entire lap, and it manages to complete the 3 laps in 28 seconds. The small and big gears were interchanged so that the big gear is directly attached to the motor shaft
+<br><br>
+  <a href="v-photos/vehicle-versions/README.md#version-10">➡️ See more photos 🚗</a><br><br>
+    </td>
+  </tr>
+
+  <!-- Version 11 -->
+  <tr>
+    <td align="center"><i>Version N°11</i></td>
+    <td align="center"><img src="https://github.com/user-attachments/assets/deba8088-32d4-4846-b635-17d4c11e2836" width="330" height="450"/>
+    </td>
+    <td>
+      <br> <b>Car dimensions:</b> N x N x N cm <br><br> 
+We noticed that the room lights were affecting our color detection, so we added a 16-LED WS2812 RGB ring light (5V) to keep the lighting consistent. We also moved the LiDAR again. We printed a new housing and placed it at the front, right under the chassis, an adjustment that significantly improved wall detection.
+Finally, we replaced the old L298N motor driver with a TB6612FNG. This made a big difference because we can now control the speed more smoothly, starting at around 35%, and we have much better control when reversing and stopping.
+<br><br>
+  <a href="v-photos/vehicle-versions/README.md#version-10">➡️ See more photos 🚗</a><br><br>
+    </td>
+  </tr>
+  
+
+  <!-- Version 12 -->
+  <tr>
+    <td align="center"><i>Version N°12</i><br><b>(current)</b></td>
+    <td align="center">
+      <img src="v-photos/version-12/bottom-view.jpg" width="330"/>
+    </td>
+    <td>
+      The car we take to the international final. The motor and the steering servo moved from the Raspberry Pi GPIO and the TB6612FNG driver to the Hiwonder RRC Lite board, which closes the speed loop with the motor encoder. A single battery now feeds everything, the gears are 1:1 (printed by us), the Hiwonder motor has a thicker shaft, the steering linkage got one more rod, and the car carries a LD19 LiDAR, a Pi camera with a wide lens and a VL53L0X distance sensor at the rear. Its software is ROS 2 Jazzy with one state machine per challenge.<br><br>
+      <a href="v-photos/version-12/">➡️ See more photos 🚗</a><br><br>
+    </td>
+  </tr>
+</table>
+
+<br>
+
+> [!NOTE]
+> 🌱 Visit our [`vehicle-versions`](v-photos/vehicle-versions/README.md) folder to see photos and videos of our car evolution.
+
+<br>
+
+#### What changed in version 12
+
+* **Drive.** The motor and the servo moved from the Raspberry Pi GPIO and the TB6612FNG driver to the **Hiwonder RRC Lite** board: the board closes the speed loop with the motor encoder, and the steering servo is on port J4.
+* **Power.** One battery for everything: the second (motor) battery of version 11 was removed. The board feeds the motor, the servo and the Raspberry Pi.
+* **Gears.** 1:1 instead of 54:30 (12 Nov 2026), printed by us in 3D.
+* **Motor shaft.** The original shaft of the Hiwonder motor was replaced by a thicker one.
+* **Sensors.** LD19 LiDAR, Pi camera with a wide lens on the CSI ribbon, the IMU of the board and a VL53L0X distance sensor at the rear.
+* **Steering servo.** Mounted vertically, with one more rod in the linkage, and re-mounted on 18 Nov 2026 after steering faults.
+* **Small things.** Sponge around the battery so that it fits its printed housing, and a printed piece with our koala logo that places the car in the parking lot at the start.
+* **Software.** ROS 2 Jazzy on Ubuntu 24.04, one state machine per challenge (chapter 6 for the Obstacle, chapter 7 for the Open).
 
 ## 3. Mechanics: chassis, steering and drive
 
@@ -202,6 +406,40 @@ The reference point of the software (`base_link`) is midway between the axles, o
 
 **Trade-off.** More steering angle would give tighter corners but the linkage binds beyond 25° of servo, so the minimum turning radius is fixed by geometry (about 0.38 m at 17.5°). Our corner planner (`corner.py`) is written around that radius instead of assuming ideal steering.
 
+**How the steering design evolved.** The first versions used a stepper motor with a printed gear and rack; the printed teeth were imprecise and the design took too much room, so we moved to the Hiwonder kit linkage. Photos of that history, from our national documentation:
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/211ba653-b04c-4f56-9fca-0c7498eb9aff" width="300" height="200">
+  <img src="https://github.com/user-attachments/assets/e45a7e54-3c88-4524-b427-0ecff04898f5" width="300" height="200">
+  <img src="https://github.com/user-attachments/assets/4843c1d0-fb98-4bd4-b9e3-5fe4925295cd" width="300" height="200">
+</p>
+
+The position of the servo made the difference between a car that turned well to one side only and one that turned well to both:
+
+<table>
+  <tr>
+    <th width="30%">Initial position</th>
+    <th width="30%">Idea</th>
+    <th width="30%">Final position</th>
+  </tr>
+  <tr>
+    <td align="center"><img src="https://github.com/user-attachments/assets/8f9ed661-b90d-4a0c-a93c-d991b6ed5e6a"/></td>
+    <td align="center"><img src="https://github.com/user-attachments/assets/f8daf76d-dcd0-4047-aad0-b892d945f7b1"/></td>
+    <td align="center"><img src="https://github.com/user-attachments/assets/a90c9a7e-319a-4859-b601-9cafb577e2aa"/></td>
+  </tr>
+  <tr>
+    <td align="center">Servo mounted horizontally (limited angle to the left)</td>
+    <td align="center">Servo repositioned vertically</td>
+    <td align="center">Final placement with improved steering</td>
+  </tr>
+</table>
+
+**One more rod in version 12.** For this version we added one more rod to the linkage that the servo moves. The two photos show the servo with its rods under the chassis, and the short video [steering-linkage.mp4](videos/steering-linkage.mp4) shows the linkage moving.
+
+| Servo and rods | Another view |
+| :--: | :--: |
+| <img src="v-photos/version-12/servo-and-rods-a.jpg" width="95%"/> | <img src="v-photos/version-12/servo-and-rods-b.jpg" width="95%"/> |
+
 ### Drive train: motor, gears, speed
 
 **Motor.** One Hiwonder JGA27-310R encoder motor (20:1 gearbox, 450 rpm) on port M2 of the RRC Lite board. The board runs the speed loop with the encoder, so the software commands m/s (converted to board rps) and the speed no longer depends on battery voltage.
@@ -214,7 +452,28 @@ The reference point of the software (`base_link`) is midway between the axles, o
 
 **Gear ratio: 54:30 against 1:1.** The first Obstacle rounds used a 54:30 reduction (`motor_rps_per_mps` 4.4). After rounds with several ratios on 11–12 Nov the coach chose **1:1** (`motor_rps_per_mps` 7.0–8.0): the car starts at lower speeds with full lock and the speed command is better aligned with the speed on the floor. Result on the same field: complete rounds of 107.1 s from Start (laps 36.2 / 33.1 / 33.8 s) with no recovery manoeuvre, and 105.9 s with the partial park. See the table in [05 Reproducibility and tests](#obstacle-rounds-on-the-car).
 
-**Motor driver history.** L298N → TB6612FNG → RRC Lite closed loop (summary in [chapter 12](#motor-driver-history-what-the-table-above-does-not-say)).
+**Motor driver history.** L298N → TB6612FNG → RRC Lite closed loop (summary in [chapter 12](#motor-driver-history)).
+
+**Changes we made to the motor and the gears in version 12.**
+
+* **A thicker motor shaft.** We replaced the original shaft of the Hiwonder motor by a thicker one. The photo on the left compares the original motor, with its encoder, and the modified one; the photo on the right shows the motor with the new shaft.
+* **Gears printed in 3D.** The gears of the drive train are printed by us (purple parts below). Version 12 runs them 1:1.
+* **The motor on the chassis.** The motor sits in the printed base and its shaft carries the gear to the rear axle.
+
+| Original and modified motor | Motor with the thicker shaft | Gears printed in 3D |
+| :--: | :--: | :--: |
+| <img src="v-photos/version-12/motor-shaft-comparison-b.jpg" width="95%"/> | <img src="v-photos/version-12/motor-thick-shaft.jpg" width="95%"/> | <img src="v-photos/version-12/printed-gears.jpg" width="95%"/> |
+
+| Original and modified motor (another view) | Motors in the printed base |
+| :--: | :--: |
+| <img src="v-photos/version-12/motor-shaft-comparison-a.jpg" width="95%"/> | <img src="v-photos/version-12/motors-on-chassis.jpg" width="95%"/> |
+
+The drive axle history, with the earlier gear system, from our national documentation:
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/1b89468f-1234-4610-8944-20d835b95d5b" width="40%">
+  <img src="https://github.com/user-attachments/assets/6c35f5b0-4c04-4e40-a79d-c3ad8ee8d3b9" width="40%">
+</p>
 
 ### Torque and speed, worked out
 
@@ -240,7 +499,7 @@ The tyres are 61 mm in diameter, so one wheel turn moves the car 0.1916 m. The s
 
 **What we would change next.** The wheel encoder of the drive motor is not read by the software yet; using it would remove the drift of the dead reckoning after the lot exit (the estimated pose ends up to 0.2 m away from the LiDAR localisation).
 
-### Printed parts
+### Printed parts and other pieces
 
 | Part | Folder | Purpose |
 | --- | --- | --- |
@@ -251,6 +510,30 @@ The tyres are 61 mm in diameter, so one wheel turn moves the car 0.1916 m. The s
 | Wheels | [`models/vehicle_wheels`](models/vehicle_wheels) | Rims that take the silicone tyre |
 
 Each folder has an STL and a preview image. The kit parts (Ackermann linkage, hubs, motor, servo) are listed in the bill of materials in [chapter 4](#bill-of-materials). The assembly sequence is in the next section.
+
+**Photos of the parts.**
+
+| Base seen from above | Base in the CAD program | Printing a part |
+| :--: | :--: | :--: |
+| <img src="v-photos/version-12/base-top-view.jpg" width="95%"/> | <img src="v-photos/version-12/cad-base-a.jpg" width="95%"/> | <img src="v-photos/version-12/slicer-printing.jpg" width="95%"/> |
+
+The video [3d-printing-parts.mp4](videos/3d-printing-parts.mp4) shows one of the parts being printed.
+
+**The placement piece for the parking lot.** We also printed a flat piece with the Robotek name and our koala logo. It is shaped to fit the parking lot, so that at the start of a round the car is put in the lot in the same place every time, quickly and without nudging it around. The photo shows it in the slicer, and in the video [parking-piece-in-the-lot.mp4](videos/parking-piece-in-the-lot.mp4) it can be seen lying in the lot of our field.
+
+| In the slicer | In the lot of our field |
+| :--: | :--: |
+| <img src="v-photos/version-12/parking-piece-slicer.jpg" width="95%"/> | <img src="v-photos/version-12/parking-piece-in-the-lot.jpg" width="95%"/> |
+
+**Batteries.** The battery fits its printed housing with a layer of sponge around it, which also holds it in place.
+
+<p align="center"><img src="v-photos/version-12/battery-foam.jpg" width="40%"/></p>
+
+**Something we tried and did not keep.** We tried to fit the old TB6612FNG motor-driver board on the base, next to the motor. In the end it was not used: version 12 drives the motor from the RRC Lite board.
+
+| Driver on the base | Another attempt |
+| :--: | :--: |
+| <img src="v-photos/version-12/driver-on-chassis-attempt.jpg" width="95%"/> | <img src="v-photos/version-12/driver-under-chassis-attempt.jpg" width="95%"/> |
 
 ### Assembly instructions
 
@@ -266,12 +549,20 @@ This is the order in which we build the car. The STL files are in [`models`](mod
 6. Mount the servo **vertically**. A horizontal servo limited the angle to the left (see chapter 3).
 7. Fit the wheel hubs, which hold the wheels, on the movable pieces with bearings, so the wheels spin freely.
 
+| Base and steering linkage | Servo and rods |
+| :--: | :--: |
+| <img src="v-photos/version-12/bottom-view.jpg" width="95%"/> | <img src="v-photos/version-12/servo-and-rods-a.jpg" width="95%"/> |
+
 #### 2. Motor and drive axle
 
 1. Screw the motor mount to the base, then the motor to the mount. If there is a gap between the metal chassis part and the axle supports, fit the printed spacer cylinders first: a loose axle makes the drive train wobble.
 2. Put the axle through the two openings of the mount. It rests on two bearings that keep it centred and two locking rings that stop it from sliding sideways.
 3. Join the motor shaft and the axle with the spacers, keeping them clear of the motor screws (gears 1:1 in version 12).
 4. Put the rear wheels on the hubs, with the silicone tyres.
+
+| Motor, gear and axle in the base | The gears we print |
+| :--: | :--: |
+| <img src="v-photos/version-12/motors-on-chassis.jpg" width="95%"/> | <img src="v-photos/version-12/printed-gears.jpg" width="95%"/> |
 
 #### 3. Housings
 
@@ -280,6 +571,10 @@ With both systems in place, fit the housings on the top of the base, following t
 * The **LiDAR housing** goes at the front, so nothing blocks its view.
 * The **camera housing** goes right behind it. It is taller, so the camera sees over the LiDAR, and it tilts the camera down about 8°.
 * The **battery and Raspberry Pi housings** go behind, forming a ceiling over the servo that sticks out of the base.
+
+| All the printed parts | Camera housing | LiDAR on its tab |
+| :--: | :--: | :--: |
+| <img src="v-photos/version-12/parts-layout.jpg" width="95%"/> | <img src="v-photos/version-12/camera-housing.jpg" width="95%"/> | <img src="v-photos/version-12/lidar-on-printed-tab.jpg" width="95%"/> |
 
 #### 4. Electronics
 
@@ -290,6 +585,10 @@ With both systems in place, fit the housings on the top of the base, following t
 5. Wire the rear VL53L0X to the Pi: VIN to 3.3 V (pin 1), SDA to pin 3, SCL to pin 5, GND.
 6. Wire the extra push button between GPIO 16 and GND.
 7. Run `bash tools/setup-pi.sh` to install the software and the udev rules (see chapter 9).
+
+The rear distance sensor sits in a small printed mount on the back of the base:
+
+<p align="center"><img src="v-photos/version-12/rear-sensor-mount.jpg" width="40%"/></p>
 
 #### 5. First checks
 
@@ -366,7 +665,7 @@ The camera is on the CSI ribbon, not on USB. In a stress test the LiDAR did not 
 
 | What | Method | Where it is stored |
 | --- | --- | --- |
-| Gyro bias | Measured **after Start**, 0.3 s in the Open and 1.0 s in the Obstacle: the rules forbid calibrating before Start (9.9) and require the car to wait for the button only | `mission.py` (`CALIBRATE_SECONDS`) |
+| Gyro bias | Measured **after Start**, 0.3 s in both challenges: the rules forbid calibrating before Start (9.9) and require the car to wait for the button only | `mission.py` (`CALIBRATE_SECONDS`) |
 | Wheel angle against servo µs | Circles on the floor (`tools/steer_calibration.py`): radius gives the real wheel angle for each servo angle | `wheel_table_*` in `robot.yaml` |
 | Speed against board rps | Runs along the wall measured with the LiDAR | `motor_rps_per_mps` in `robot.yaml` |
 | Camera yaw, pitch, height | A sign on each side of the car and the LiDAR clusters (8 Oct); height from the STEP model (26 Oct) | `car.py` and `car_picam*.yaml` |
@@ -445,42 +744,6 @@ Inside `robotek_obstacle_v3/robotek_obstacle_v3` each file has one job:
 
 ![ROS 2 nodes and topics on the car](schemes/ros-nodes.svg)
 
-### Control loop of the Obstacle (50 Hz)
-
-```mermaid
-flowchart TD
-  A[New tick] --> B{LiDAR, camera and gyro<br/>all fresh?}
-  B -- no --> W[Stand still: WAIT_SENSOR] --> A
-  B -- yes --> C[Update pose: wall fit + gyro]
-  C --> D[File every LiDAR cluster under its seat<br/>and add colour votes]
-  D --> E[Rebuild the planned line ahead]
-  E --> F[Steering law]
-  F --> G[Speed rules]
-  G --> H{Recover, watch or look<br/>needs control?}
-  H -- yes --> I[Override with the recover move] --> J
-  H -- no --> J[Send speed and wheel angle]
-  J --> A
-```
-
-### Steering law
-
-```mermaid
-flowchart LR
-  L[Planned line<br/>point and curvature] --> FF["Feed-forward<br/>atan(wheelbase · curvature)"]
-  L --> E1[Lateral error]
-  L --> E2[Heading error]
-  P[Pose: wall fit + gyro] --> E1
-  P --> E2
-  GY[Gyro yaw rate] --> D
-  E1 -->|"× 6"| S((+))
-  E2 -->|"× 1.5"| S
-  D["× 0.2"] --> S
-  FF --> S
-  S --> C[Clamp to 17.6 degrees] --> A[Wheel angle command]
-```
-
-In words: a feed-forward term for the curvature of the planned line plus feedback on the lateral error, the heading (integrated gyro) and the yaw rate; the steering is limited to 17.6°, the real wheel-angle limit of the car.
-
 ### Testing and tuning process, with metrics
 
 * **Unit tests** per package (`pytest`): the strategy checks, `steer_watch`, the lot exit, the parking planner and the corner planner. At this version `robotek_obstacle_v3` passes 45 tests on the Pi (40 plus 1 skipped on a PC without ROS).
@@ -491,28 +754,11 @@ In words: a feed-forward term for the curvature of the planned line plus feedbac
 
 ## 6. Obstacle Challenge
 
-Three laps of the field with red and green signs, then a parallel park in the parking lot where the car started. The rules are simple: pass a red sign on its right and a green sign on its left, do not move a sign, and finish parked in the lot. This chapter explains how the car does it, from the sensors to the manoeuvres: **6.1** how a round goes, **6.2** how it finds and avoids the signs, **6.3** how it leaves the parking lot, **6.4** how it parks in parallel and **6.5** what has been validated.
+Three laps of the field with red and green signs, then a parallel park in the parking lot where the car started. The rules are simple: pass a red sign on its right and a green sign on its left, do not move a sign, and finish parked in the lot. This chapter has the same shape as the one of the Open Challenge: an overview, then each state with what the car does in it, then the results.
 
-### 6.1 How a round goes
+### 6.1 Overview
 
 ![What the Obstacle does from Start to the final park](schemes/obstacle-flowchart.svg)
-
-* **SETUP.** The gyro bias is measured *after* Start (rule 9.9). The driving direction is read from the walls or, in the lot, from the wall on the near side.
-* **LOT_EXIT** (rounds that start in the lot). The lot is only 1.5 car lengths long, so the car cannot drive straight out. It runs a short sequence of pulses (forward at full lock, back at the other lock, and so on) at 0.2 m/s, with the rear sensor stopping every reverse. Details in 6.3.
-* **RUN.** Three laps following a planned line that passes each sign on the right side. Details in 6.2.
-* **PARK.** After the last sign of the start straight, a fixed manoeuvre closed on the gyro, the LiDAR and the rear sensor. Details in 6.4.
-* **WAIT_SENSOR.** If the LiDAR, the gyroscope or the camera is older than 0.35 s (camera 0.8 s), the car stands still until the data is fresh again.
-* **FAULT.** 180 s after Start the round ends.
-
-The whole mission is written for a counter-clockwise round. A clockwise round is mirrored (and the colours swapped) before the mission sees it, so the code never needs to know the direction.
-
-**Speeds.** 0.28 m/s on a clear lane, 0.30 m/s near a sign, 0.20 m/s with something close ahead and 0.15 m/s over the last metres. They are set by the lowest speed at which the motor starts the car reliably (see chapter 3).
-
-**Why a planned line, and not just wall following.** A wall-following PID (what the Open uses) is fine without signs, but it cannot hold a side offset around a sign or plan a corner with signs at both ends. And an earlier version that searched many manoeuvres was replaced because fixing each sign's side as soon as its colour is known makes the path predictable and testable.
-
-### 6.2 Finding and avoiding the signs
-
-#### The problem in one paragraph
 
 The track is a rounded square: four 1 m straights joined by quarter circles of 0.5 m radius, with the lane running between an inner island and the outer walls. On every straight there can be up to three signs, 5 × 5 cm and 10 cm tall, red or green. Red must be passed on the **right**, green on the **left**. The car has to do three laps in under 180 s without touching a sign, and it must do it from a start where it has seen nothing yet. The signs change position and colour in every round.
 
@@ -523,7 +769,83 @@ Two facts shaped the whole design:
 
 So we need both sensors, and we need a memory, because the colour often arrives late and from a bad angle.
 
-#### Finding signs
+The mission is written for a counter-clockwise round. A clockwise round is mirrored (and the colours swapped) before the mission sees it, so the code never needs to know the direction.
+
+**Why a planned line, and not just wall following.** A wall-following PID (what the Open uses) is fine without signs, but it cannot hold a side offset around a sign or plan a corner with signs at both ends. An earlier version that searched many manoeuvres was replaced because fixing each sign's side as soon as its colour is known makes the path predictable and testable.
+
+**The states.** The mission is one state machine. The next section explains each state, and the parts of the problem that belong to it (the signs inside RUN, the parking lot inside LOT_EXIT and PARK).
+
+| State | What the car does | Where it is explained |
+| --- | --- | --- |
+| SETUP | Stands still, measures the gyro bias, decides the direction | [SETUP](#setup) |
+| LOT_EXIT | Leaves the parking lot with a sequence of pulses | [LOT_EXIT](#lot_exit-leaving-the-parking-lot) |
+| RUN | Three laps along a planned line, passing every sign on its side | [RUN](#run-three-laps-with-signs) |
+| PARK | Parks in parallel in the lot | [PARK](#park-parking-in-parallel) |
+| WAIT_SENSOR, FAULT, STOP | Safety holds and the end of the round | [Safety](#wait_sensor-fault-and-stop) |
+
+### 6.2 States
+
+#### SETUP
+
+For 0.3 s after Start the car stands still and averages the gyroscope. That average is the **gyro bias**, which is subtracted from then on. The rules require calibrating after Start and not before it (rule 9.9).
+
+Then it decides the driving direction. It fits the scan to the walls twice, once as counter-clockwise and once as clockwise, and takes the direction that fits better by a margin of 0.10 (0.03 after waiting 1 s, so a difficult case still ends in a decision). When the car starts in the lot, the direction is read from the wall on the near side instead (see LOT_EXIT). A direction can also be given by hand (`direction:=ccw` or `cw`), which we use in parking tests.
+
+#### LOT_EXIT: leaving the parking lot
+
+##### The space we have
+
+* The lot is on the start straight, against the outer wall. Its **depth** is always 20 cm. Its **length** is 1.5 × the length of the robot. We measured the car with its LiDAR tab as 0.245 m long, so our team field uses a lot **0.3675 m** long, with the far limit 0.31 m along the start straight (`park_lot_length`, `park_lot_end` in `config/car_picam_park_round.yaml`).
+* The car is about 0.233 m long in the planners' outline and 0.148 m wide. Inside the lot there are about 12 cm of room along the car and only about 2.6 cm on each side across it. Everything below follows from those numbers.
+* The LiDAR cannot see anything closer than about 12 cm, so the limits and the wall next to the car are invisible to it most of the time. That is why a rear distance sensor was added and why most steps end on the gyroscope heading rather than on the LiDAR.
+
+##### Which way do we drive?
+
+Nobody tells the car the direction, and the rules do not allow a switch for it. At the start the car sits parallel to the outer wall, about 1 cm from the rear limit and 1 cm from the wall, facing the driving direction. So **the wall that is close is the outer wall**: wall on the right means counter-clockwise, wall on the left means clockwise (`direction_in_lot`). We take the median distance in a 12° window around each side. Because the LiDAR drops returns under 12 cm, a side with no returns at all counts as "the near one", at its nominal distance (1 cm gap plus half the car).
+
+##### Why a sequence of pulses
+
+A forward arc at full lock from the starting position hits the far limit after about 11 cm, at about 17° of heading. The car has to go out, back, out again. We tried to have the software plan this and it never reproduced the movement that works on the real car, so the coach recorded a **sequence of pulses** and we execute it exactly (`lot_exit_steps`).
+
+The sequence of the final profile is
+
+`L+0.25  R-0.3  L+0.25  R-0.3  L+0.25  R-0.3  C-0.2`
+
+Each word is one pulse: the first letter is the steering (L or R at full lock, C for wheels straight), the sign is forward (+) or reverse (−), and the number is the time in seconds. The letters are written for counter-clockwise; in a clockwise round they are mirrored, so L always means "away from the wall". Read in order: forward with the nose turning away from the wall for 0.25 s, back with the nose turning toward it for 0.3 s, and so on three times, and finally 0.2 s straight back with centred wheels.
+
+##### What a single pulse does
+
+```mermaid
+flowchart LR
+  A[Turn the wheels to the lock<br/>car stopped, 0.5 s] --> B[Drive for the pulse time<br/>0.2 m/s]
+  B --> C{Reversing and the rear sensor<br/>closer than 20 mm?}
+  C -- yes --> D[Hard brake]
+  C -- no --> E[Time is up]
+  D --> F[Stand still 0.4 s]
+  E --> F
+  F --> G[Next pulse]
+```
+
+* The 0.5 s with the car stopped is there because the servo needs time to reach the lock; without it the first part of the pulse is driven with the wheels still straight. The command is a velocity plus an angle, and an angle cannot be expressed at zero speed, so the car is sent a tiny forward or backward speed (3 mm/s) under the motor's dead band.
+* The pulse speed is 0.2 m/s; the motor floor turns this into about 0.25 m/s on the floor.
+* A reverse ends early with a hard brake if the rear sensor reads under 20 mm.
+* After the pulse the car stands 0.4 s so the heading we read is the final one.
+
+##### Knowing where we are afterwards
+
+During the pulses nothing sees the walls well, so the exit estimates its own position (`LotExit.pose`): the lot from the parameters, x from the rear sensor and y from the wall gap at the start, and then each pulse as a full-lock arc whose length is the one that turns the gyroscope heading by the amount we measured. When the pulses end, the estimate is given to the localizer (`Localizer.initialize`) as a first guess, and the LiDAR fitted to the known walls corrects it. The estimate and the LiDAR fit differ by up to 0.2 m, which is why the estimate is only used as a starting point.
+
+##### What it looks like on the car
+
+The heading grows by about 10 to 14° per pair of pulses: roughly 1°, 14°, 23°, 37°, 47°, 62° and 69° after the seven pulses (measured on the car, rear distance 50 to 170 mm during the sequence). The car leaves the lot pointing about 70° into the lane, and the lane following takes over from there: the first thing it does is a gentle turn back toward the lane direction.
+
+##### What the exit does not do
+
+It does not check by itself that the pulses worked: it trusts the gyroscope heading and the rear sensor. If a pulse does not turn the car (a wedged car, a servo that does not follow), the sequence keeps going. The steer watch of [chapter 6](#6-obstacle-challenge) is what catches a servo that stops answering, and the lab and the car rounds are what we used to check that the sequence produces the same heading every time.
+
+#### RUN: three laps with signs
+
+##### Finding signs
 
 ```mermaid
 flowchart TD
@@ -549,7 +871,7 @@ Two measured details matter here. The red band starts at hue 170 and the green b
 
 **Pairing** (`associate` in `obstacle_vision.py`). A blob and a cluster belong together if they lie at the same bearing, within 0.12 rad. When the blob also has a ground position we require the cluster to be close to it (0.20 m plus 0.12 m for every metre of range), which fixes the case of two signs on the same line of sight: the far one is not given the colour of the near one. If a cluster is claimed by blobs of both colours we throw it away rather than guess. What leaves this step is a list of observations, each one a position in the car frame and a colour.
 
-#### Remembering signs: the seat map
+##### Remembering signs: the seat map
 
 A colour is often seen once, from a corner exit, and then the sign leaves the picture while the car is still 40 cm from it. If the planner only used the current frame it would forget. So the mission files every cluster under a **seat** (`Mission._remember`).
 
@@ -560,7 +882,7 @@ The rules of the competition say what the signs can look like: they stand at thr
 * The **layout rules** are enforced (`_enforce_layout`): per straight there can be one sign at the start, in the middle or at the end, or two at the start and the end, never three, and never the middle together with another. If the evidence disagrees, the combination with more sightings wins, and the other one waits in a "shadow" list and can come back if it overtakes. This removed a phantom sign in the middle of a straight that a colour had been wrongly given to.
 * A sign that was moved a few centimetres (for example touched by the car) is followed: the seat's lateral offset drifts to where the LiDAR sees it, in 2 cm steps.
 
-#### Deciding the side
+##### Deciding the side
 
 For every remembered sign ahead the planner computes the lateral offset the car must have next to it (`Mission._side_offset`):
 
@@ -572,7 +894,7 @@ In the lane frame, positive lateral means toward the island. Green is passed on 
 
 **Colour not known yet.** The car keeps to the middle of the lane (`unknown_offset` is 0 in the validated version; another version used 0.12 m away from the sign). From the middle it can still go to either side, and the camera has the whole approach to resolve the colour. The middle is not a safe place: the car is 14.8 cm wide and the inner row of signs is 10 cm from the lane centre, so the gap to a sign is about a millimetre. If the colour never arrives, the car brushes or touches the sign, which is why the peek and the lookout below exist.
 
-#### The planned line
+##### The planned line
 
 The mission builds a list of knots `(progress, offset)` for everything within three units ahead (`Mission._plan`):
 
@@ -581,24 +903,66 @@ The mission builds a list of knots `(progress, offset)` for everything within th
 3. For an **unknown colour** near a corner, we add a *lookout* knot that moves the car 0.15 m toward the island, so the camera sees an inner sign earlier (`_lookouts`).
 4. **Corners** are replaced by a line straight–arc–straight chosen by `corner.py`: it tries arcs of 0.5, 0.6 and 0.75 m radius and many offsets before and after the corner, and keeps the one with the largest clearance to the island, the outer wall, the sign at each end and, near the start, the limits of the parking lot. The clearance is not computed on the ideal line but on the path a simulated car actually drives with our steering law, including the servo's delay and rate. A line that is clear on paper but needs 10 1/m of curvature touches in the real round, because the car can only do about 2.7 1/m.
 
-#### Following the line
+##### Following the line
 
-At every control step (50 Hz) `Mission._steer` computes
+Every 20 ms (50 Hz) the mission runs the loop below. The first thing it checks is that the LiDAR, the camera and the gyroscope are fresh; if one is not, the car stands still (WAIT_SENSOR) until it is.
+
+```mermaid
+flowchart TD
+  A[New tick] --> B{LiDAR, camera and gyro<br/>all fresh?}
+  B -- no --> W[Stand still: WAIT_SENSOR] --> A
+  B -- yes --> C[Update pose: wall fit + gyro]
+  C --> D[File every LiDAR cluster under its seat<br/>and add colour votes]
+  D --> E[Rebuild the planned line ahead]
+  E --> F[Steering law]
+  F --> G[Speed rules]
+  G --> H{Recover, watch or look<br/>needs control?}
+  H -- yes --> I[Override with the recover move] --> J
+  H -- no --> J[Send speed and wheel angle]
+  J --> A
+```
+
+1. **Pose.** The car's position is moved forward with the distance driven and the gyro heading, and then corrected by fitting the LiDAR points to the known walls (`localizer.py`). This also gives the progress along the lane, in track units.
+2. **Sign memory.** Every LiDAR cluster is filed under its seat and receives the colour votes of the camera.
+3. **The line ahead.** With the signs that are known, the side offsets and the corner arcs are rebuilt.
+4. **Steering and speed.** The steering law and the speed rules below.
+5. **Overrides.** The front recover, the steering watch and the peek can take control for a moment and replace the normal command (see below).
+
+**The steering law.** For the point of the line at the car, `Mission._steer` computes
 
 `steer = atan(wheelbase · curvature) − 6 · lateral error − 1.5 · heading error − 0.2 · gyro`
 
-The first term turns the curvature of the line, taken 10 cm ahead of the car to cover the lag of servo and motor, into the steering angle that would follow it exactly. The other three terms correct what the car did wrong: how far it is off the line (6 rad of steering per metre), how far its heading is off the line's heading (1.5) and how fast it is turning (0.2, damping). The command is clamped to the real wheel limit of 17.6°.
+```mermaid
+flowchart LR
+  L[Planned line<br/>point and curvature] --> FF["Feed-forward<br/>atan(wheelbase · curvature)"]
+  L --> E1[Lateral error]
+  L --> E2[Heading error]
+  P[Pose: wall fit + gyro] --> E1
+  P --> E2
+  GY[Gyro yaw rate] --> D
+  E1 -->|"× 6"| S((+))
+  E2 -->|"× 1.5"| S
+  D["× 0.2"] --> S
+  FF --> S
+  S --> C[Clamp to 17.6 degrees] --> A[Wheel angle command]
+```
 
-**Speed** (`Mission._speed`): 0.28 m/s on a free lane, 0.30 m/s near a sign or changing lane, 0.20 m/s with something close ahead and 0.15 m/s in the last metres. The motor floor of about 0.25 m/s is why these numbers are so close to each other (see [chapter 3](#3-mechanics-chassis-steering-and-drive)).
+* The **first term** is the steering that would follow the line exactly, from its curvature taken 10 cm ahead of the car to cover the lag of the servo and the motor. For a corner arc of 0.5 m radius the curvature is 2 per metre and the term is `atan(0.119 · 2)`, about 13°.
+* The **lateral error** term (6 rad of steering per metre) pulls the car back to the line: 3 cm off the line asks for about 10° of correction.
+* The **heading error** term (1.5) aligns the car with the direction of the line: 0.1 rad (6°) of error asks for 0.15 rad (9°).
+* The **gyro** term (0.2) is damping: the faster the car is already turning, the less it is asked to turn, so it does not swing.
+* The sum is limited to 17.6°, the real wheel-angle limit of the car.
 
-#### When the colour is still unknown
+**Speed** (`Mission._speed`): 0.28 m/s on a free lane, 0.30 m/s near a sign or changing lane, 0.20 m/s with something close ahead and 0.15 m/s over the last metres. The motor floor of about 0.25 m/s is why these numbers are so close to each other (see [chapter 3](#3-mechanics-chassis-steering-and-drive)).
+
+##### When the colour is still unknown
 
 Two behaviours exist for the case where the next sign is close and the colour has not arrived:
 
 * **At Start** the car stands still for 0.25 s, and for up to 1.0 s if the first sign is very close and still without colour, so the first signs can be filed before moving. If the first sign is closer than the car needs to change side, it backs up straight (at most 0.5 m).
 * **Peek** (`Mission._look`). If the next sign has no colour and is between 0.6 and 1.4 units away, the car stops and reverses at full lock until its nose has turned 15° toward the sign, then waits 0.5 s for a frame. This gets a sign that is too far to the side for the camera into its field of view. It happens once per sign.
 
-#### When something goes wrong
+##### When something goes wrong
 
 ```mermaid
 flowchart TD
@@ -618,16 +982,7 @@ flowchart TD
 * **Steer watch** (`steer_watch.py`): when the command has been at full lock for 0.35 s plus a 0.5 s window and the gyro shows less than 30 % of the turn that the wheels should give, the servo is not following. The car stops 0.6 s with the wheels centred and then carries on. See the servo failures in [chapter 4](#failure-points-and-mitigations).
 * **Stale sensors** (`strategy.py`): the car stops until the LiDAR, camera and gyro are all fresh again.
 
-#### What we validated
-
-On 12 Nov 2026 the car passed 19 of 19 signs on the correct side in the 01:22 round and made a complete round in 107.1 s from Start with no recover move at all (laps 36.2 / 33.1 / 33.8 s). The five front recovers in the 01:22 round all happened on the north straight. In the lab, 195 of 200 rounds without parking were valid (see [chapter 9](#9-build-run-and-test-it-yourself)). Points are estimated until a judge validates a round.
-
-#### Known limits
-
-* The colour of a sign far to the side of a corner exit can arrive too late for the car to cross the lane, and the car then passes on the safe side, which may be the wrong one. The peek and the lookout reduce this but do not remove it.
-* A sign whose colour changes with the light (glare) can get a wrong vote; the votes make this rare but not impossible, and the HSV bands should be checked at the venue.
-
-#### Decision flow for one sign
+##### Decision flow for one sign
 
 ```mermaid
 flowchart TD
@@ -643,59 +998,7 @@ flowchart TD
   H --> I[Steering law follows the line]
 ```
 
-### 6.3 Leaving the parking lot
-
-#### The space we have
-
-* The lot is on the start straight, against the outer wall. Its **depth** is always 20 cm. Its **length** is 1.5 × the length of the robot. We measured the car with its LiDAR tab as 0.245 m long, so our team field uses a lot **0.3675 m** long, with the far limit 0.31 m along the start straight (`park_lot_length`, `park_lot_end` in `config/car_picam_park_round.yaml`).
-* The car is about 0.233 m long in the planners' outline and 0.148 m wide. Inside the lot there are about 12 cm of room along the car and only about 2.6 cm on each side across it. Everything below follows from those numbers.
-* The LiDAR cannot see anything closer than about 12 cm, so the limits and the wall next to the car are invisible to it most of the time. That is why a rear distance sensor was added and why most steps end on the gyroscope heading rather than on the LiDAR.
-
-#### Which way do we drive?
-
-Nobody tells the car the direction, and the rules do not allow a switch for it. At the start the car sits parallel to the outer wall, about 1 cm from the rear limit and 1 cm from the wall, facing the driving direction. So **the wall that is close is the outer wall**: wall on the right means counter-clockwise, wall on the left means clockwise (`direction_in_lot`). We take the median distance in a 12° window around each side. Because the LiDAR drops returns under 12 cm, a side with no returns at all counts as "the near one", at its nominal distance (1 cm gap plus half the car).
-
-#### Why a sequence of pulses
-
-A forward arc at full lock from the starting position hits the far limit after about 11 cm, at about 17° of heading. The car has to go out, back, out again. We tried to have the software plan this and it never reproduced the movement that works on the real car, so the coach recorded a **sequence of pulses** and we execute it exactly (`lot_exit_steps`).
-
-The sequence of the final profile is
-
-`L+0.25  R-0.3  L+0.25  R-0.3  L+0.25  R-0.3  C-0.2`
-
-Each word is one pulse: the first letter is the steering (L or R at full lock, C for wheels straight), the sign is forward (+) or reverse (−), and the number is the time in seconds. The letters are written for counter-clockwise; in a clockwise round they are mirrored, so L always means "away from the wall". Read in order: forward with the nose turning away from the wall for 0.25 s, back with the nose turning toward it for 0.3 s, and so on three times, and finally 0.2 s straight back with centred wheels.
-
-#### What a single pulse does
-
-```mermaid
-flowchart LR
-  A[Turn the wheels to the lock<br/>car stopped, 0.5 s] --> B[Drive for the pulse time<br/>0.2 m/s]
-  B --> C{Reversing and the rear sensor<br/>closer than 20 mm?}
-  C -- yes --> D[Hard brake]
-  C -- no --> E[Time is up]
-  D --> F[Stand still 0.4 s]
-  E --> F
-  F --> G[Next pulse]
-```
-
-* The 0.5 s with the car stopped is there because the servo needs time to reach the lock; without it the first part of the pulse is driven with the wheels still straight. The command is a velocity plus an angle, and an angle cannot be expressed at zero speed, so the car is sent a tiny forward or backward speed (3 mm/s) under the motor's dead band.
-* The pulse speed is 0.2 m/s; the motor floor turns this into about 0.25 m/s on the floor.
-* A reverse ends early with a hard brake if the rear sensor reads under 20 mm.
-* After the pulse the car stands 0.4 s so the heading we read is the final one.
-
-#### Knowing where we are afterwards
-
-During the pulses nothing sees the walls well, so the exit estimates its own position (`LotExit.pose`): the lot from the parameters, x from the rear sensor and y from the wall gap at the start, and then each pulse as a full-lock arc whose length is the one that turns the gyroscope heading by the amount we measured. When the pulses end, the estimate is given to the localizer (`Localizer.initialize`) as a first guess, and the LiDAR fitted to the known walls corrects it. The estimate and the LiDAR fit differ by up to 0.2 m, which is why the estimate is only used as a starting point.
-
-#### What it looks like on the car
-
-The heading grows by about 10 to 14° per pair of pulses: roughly 1°, 14°, 23°, 37°, 47°, 62° and 69° after the seven pulses (measured on the car, rear distance 50 to 170 mm during the sequence). The car leaves the lot pointing about 70° into the lane, and the lane following takes over from there: the first thing it does is a gentle turn back toward the lane direction.
-
-#### What the exit does not do
-
-It does not check by itself that the pulses worked: it trusts the gyroscope heading and the rear sensor. If a pulse does not turn the car (a wedged car, a servo that does not follow), the sequence keeps going. The steer watch of [chapter 6](#6-obstacle-challenge) is what catches a servo that stops answering, and the lab and the car rounds are what we used to check that the sequence produces the same heading every time.
-
-### 6.4 Parking in parallel
+#### PARK: parking in parallel
 
 At the end of the third lap, once the last sign on the start straight has been passed, the mission switches from RUN to PARK (`Mission._park`) and starts `FixedParking` (`park_mode: 1`).
 
@@ -727,11 +1030,24 @@ flowchart TD
    They use the same executor as the lot exit (`LotExit`), at 0.1 m/s that the motor floor raises to about 0.25 m/s, and the same rear distance stop. The sequence is the one that left the car parallel in the lot in the parking-only test of 12 Nov 02:39 (20.3 s).
 6. **Check.** At the end the car compares its own pose with the lot (`Lot.parked`): inside, parallel. PARKED or PARK_FAIL; in both cases it stays still.
 
-#### `park_fixed_sense`: placing the lot from the LiDAR
+##### `park_fixed_sense`: placing the lot from the LiDAR
 
 On the car the outer wall showed at y of −1.52 to −1.57 instead of −1.50, and one limit stood about 3 cm from where the map put it. With 2.6 cm of room per side, that is the whole margin. `park_fixed_sense` (0 off, 1 wall and plates, 2 the two plates as a pair in a wide window) fits a line to the wall's returns and finds the limit plates near their expected x, and applies a small, low-pass-filtered correction to the pose. It is available but it is **not part of** the command validated on 12 Nov, so the validated parking runs without it.
 
-### 6.5 What is validated and what is not
+#### WAIT_SENSOR, FAULT and STOP
+
+Three situations stop the car without being part of a manoeuvre:
+
+* **WAIT_SENSOR.** If the LiDAR, the gyroscope or the camera is older than 0.35 s (camera 0.8 s), the car stands still until the data is fresh. If the camera is lost for 1.5 s the round goes on with the colours already remembered.
+* **FAULT.** 180 s after Start the round ends.
+* **STOP.** The normal end: after the park, or after three laps if parking is off. The round is reported as DONE.
+
+### 6.3 Results and validation
+
+On 12 Nov 2026 the car passed 19 of 19 signs on the correct side in the 01:22 round and made a complete round in 107.1 s from Start with no recover move at all (laps 36.2 / 33.1 / 33.8 s). The five front recovers in the 01:22 round all happened on the north straight. In the lab, 195 of 200 rounds without parking were valid (see [chapter 9](#9-build-run-and-test-it-yourself)). Points are estimated until a judge validates a round.
+
+* The colour of a sign far to the side of a corner exit can arrive too late for the car to cross the lane, and the car then passes on the safe side, which may be the wrong one. The peek and the lookout reduce this but do not remove it.
+* A sign whose colour changes with the light (glare) can get a wrong vote; the votes make this rare but not impossible, and the HSV bands should be checked at the venue.
 
 | Movement | Direction | State |
 | --- | --- | --- |
@@ -743,13 +1059,23 @@ On the car the outer wall showed at y of −1.52 to −1.57 instead of −1.50, 
 
 For the final we will run the parking pulses in CW again with `park_fixed_sense: 2` and decide, from those rounds, whether to trust CW parking or to document it as a limit.
 
+### 6.4 Surprise rule (in progress)
+
+The 2026 rules announce a **surprise rule** for the final. We are working on it and it is **in progress**: it is not finished and it is not part of the code in this repository, which is the validated version of 12 Nov 2026. What we have so far are the tools to see what the car understands: a camera test screen that lists every sign it sees with its colour and the side it would pass on, and the RViz view with the LiDAR and the detected signs.
+
+| Camera test screen (in Spanish) | Signs detected, in RViz |
+| :--: | :--: |
+| <img src="v-photos/version-12/surprise-camera-test.jpg" width="95%"/> | <img src="v-photos/version-12/rviz-detector-pillars.jpg" width="95%"/> |
+
 ## 7. Open Challenge
 
-The Open Challenge asks for three laps of a field where the inner walls change from round to round, and where the starting direction is not given. There are no signs, so the strategy can be much simpler than the Obstacle one: we use the **fewest states and the least code** that finishes the three laps reliably. The code is the package `src/robotek_open` (`robotek_open/v5/`), which shares the hardware adapters, the recording and the launch file with the Obstacle.
+Three laps of a field where the inner walls change from round to round, with a starting direction that nobody tells the car. There are no signs, so the strategy can be much simpler than the Obstacle one: we use the **fewest states and the least code** that finishes the three laps reliably. This chapter has the same shape as the one of the Obstacle Challenge: an overview, then each state with what the car does in it, then the results. The code is the package `src/robotek_open` (`robotek_open/v5/`), which shares the hardware adapters, the recording and the launch file with the Obstacle.
+
+### 7.1 Overview
 
 ![What the Open Challenge does from Start to the stop](schemes/open-flowchart.svg)
 
-### What it uses
+**What it uses.**
 
 * The **LiDAR** for the walls and the island.
 * The **gyroscope** for the heading.
@@ -757,20 +1083,7 @@ The Open Challenge asks for three laps of a field where the inner walls change f
 
 No odometry and no encoder: the distance driven on a straight is measured by how much nearer the front wall got.
 
-### States
-
-```mermaid
-stateDiagram-v2
-    [*] --> SETUP: Start button
-    SETUP --> RUN: bias measured, direction known
-    SETUP --> STOP: no direction after 15 s
-    RUN --> FOLLOW: straight
-    FOLLOW --> TURN: corner conditions met
-    TURN --> FOLLOW: heading within 0.3 rad of the goal
-    FOLLOW --> FINISH: 12 corners done
-    FINISH --> STOP: front range matches the start
-    STOP --> [*]
-```
+### 7.2 States
 
 In the telemetry the states appear as WAIT_START, CALIBRATE, DETECT_DIRECTION, FOLLOW, TURN, FINISH and DONE.
 
@@ -808,15 +1121,17 @@ When all three are true the goal heading changes by 90° in the driving directio
 
 After 12 corners the car is back in the starting section. It drives at 0.32 m/s with the wheels straight until the front range matches the one measured at Start (14 cm early, `finish_lead`, to compensate for the braking distance) and the heading is within 0.1 rad of straight, then brakes and waits 0.9 s at rest before reporting DONE. It brakes only when it is straight again: braking with the wheels still turned left the car rolling into the island in some lab rounds.
 
-### Results
+### 7.3 Results and validation
 
 On 11 Nov 2026 (17:29, new motor, 54:30 gears) the car completed three laps in **30.9 s** from Start to DONE, the round the coach called perfect (no judge, so no official score). An earlier record of 23.4 s used a higher cruise speed and no corner speed; it crashed on fields with a narrow corner, so we chose the slower and repeatable settings. In the lab the same speeds had no contact in the standard set of twelve fields.
 
-### Crash detector
+### 7.4 Other details
+
+#### Crash detector
 
 `crash_watch.py` keeps the last five seconds of the round and says when the car has hit something, from two signals: the LiDAR going blind against a wall (fewer than 120 valid rays of 504 for 0.4 s while the car is told to move), or a jump of the yaw rate bigger than any corner gives within 0.1 s. On a crash the car stops, the board is reset and the window is saved. It is off by default and can be turned on at launch.
 
-### Why this design
+#### Why this design
 
 Our first Open version was a wall-following PID that kept the car centred (distance to one wall minus distance to the other; see [chapter 12](#12-history-of-the-car-and-engineering-journal)). The v5 uses only what the track guarantees: straights are straight, corners are 90° and the island is a closed shape. With that we could remove states and parameters until the rounds were repeatable in the lab. The list of choices and their data is in [chapter 8](#8-systems-thinking-and-engineering-decisions).
 
@@ -849,7 +1164,7 @@ flowchart LR
 | --- | --- | --- |
 | 180 s per round, 3 laps | rules 9.2 | Speed cannot be only "safe"; the limit is enforced in the strategy (`FAULT` at 180 s) |
 | ≤ 300 × 200 mm, ≤ 1.5 kg, one driven axle | rules 11 | Compact two-level layout; one motor |
-| Calibration only after Start | rules 9.9 | Gyro bias measured in the first 0.3 s / 1.0 s |
+| Calibration only after Start | rules 9.9 | Gyro bias measured in the first 0.3 s |
 | No inputs to choose direction or mode | rules 9.9 | The direction is detected from the walls |
 | No Wi-Fi/Bluetooth during the round | rules 11.10 | Used only for development; see [rules compliance](#11-rules-compliance) |
 | Motor cannot hold speeds below about 0.25 m/s | measured | Minimum command; the Obstacle runs at 0.28–0.30 m/s |
@@ -996,6 +1311,36 @@ The real speed is limited by `motor_max_rps` of the launch, not by the window. F
 * `python3 tools/open_monitor.py` in a second terminal on the Pi: twice a second the state, what the camera sees, the LiDAR, the gyroscope and the steering and speed the strategy sends. It also saves the images of the direction decision.
 * RViz on your computer shows the scan, the signs and the planned line.
 
+### Try the simulation
+
+You do not need the car to run our code. The simulator puts the same strategies in a Gazebo field with the measures and the delays of the real car, with a judge that scores the round with the rules. The points it gives are an **estimate**, not an official score.
+
+The video [simulation-run.mp4](videos/simulation-run.mp4) shows a round in the simulator.
+
+On Ubuntu 24.04 (or WSL2):
+
+```bash
+bash tools/install-ubuntu.sh                  # ROS 2 Jazzy and Gazebo Harmonic
+source /opt/ros/jazzy/setup.bash
+colcon build --symlink-install
+source install/setup.bash
+
+ros2 launch robotek_course sim.launch.py                                             # only the car in its field
+ros2 launch robotek_course obstacle_round.launch.py strategy:=robotek_obstacle_v3 seed:=0 direction:=ccw gui:=true
+ros2 launch robotek_course round.launch.py strategy:=robotek_open direction:=ccw gui:=true
+ros2 run robotek_course score                                                        # scores the last round again
+```
+
+Rounds are saved in `~/robotek_runs/`. The simulation is **honest**: the strategy only gets what the real car has (LiDAR, gyroscope and camera, with noise); the true pose of the car is recorded apart, only to audit.
+
+**Without Gazebo.** The Obstacle also has a fast lab written in plain Python (it needs only Python and NumPy). One round of the Obstacle takes about 10 seconds:
+
+```bash
+python3 -m robotek_evaluation.obstacle_lab --strategy robotek_obstacle_v3.strategy:Strategy --layouts 0 --direction ccw
+```
+
+On our computer that command printed `obstacle-0-ccw  pts=40/40  t=111.3  VALID`, that is, a valid round of 111.3 simulated seconds. Use `--layouts 0-4 --parking` for a batch with the parking lot.
+
 ### Tests without the car
 
 ```bash
@@ -1078,6 +1423,8 @@ A rule-by-rule check of the vehicle and of this repository against the WRO 2026 
 
 ## 12. History of the car and engineering journal
 
+The versions of the car, with photos, are in [chapter 2](#2-vehicle-overview-and-versions). This chapter keeps the timeline of the work.
+
 ### Engineering journal
 
 The story of the engineering work, in order, with the reason for each change. The details are in the chapters above; this is the timeline that connects them.
@@ -1106,179 +1453,9 @@ The story of the engineering work, in order, with the reason for each change. Th
 2. The limit of the real system was the slowest sensor (the camera) and the lowest motor speed, not the algorithms.
 3. A validated version beats a better untested one two weeks before the final.
 
-### The versions of the car
+### Motor driver history
 
-The evolution of the car, from the first prototype to the current version 12. The reasons behind the current design are in chapters 3, 4 and 8. Where an older description below disagrees with those chapters, the chapters are right.
-
-#### Version 12 (the current car)
-
-What changed with respect to version 11:
-
-* **Drive.** The motor and the servo moved from the Raspberry Pi GPIO and the TB6612FNG driver to the **Hiwonder RRC Lite** board: the board closes the speed loop with the motor encoder, and the steering servo is on port J4.
-* **Power.** One battery for everything: the second (motor) battery of version 11 was removed. The board feeds the motor, the servo and the Raspberry Pi.
-* **Gears.** 1:1 instead of 54:30 (12 Nov 2026).
-* **Sensors.** LD19 LiDAR, Pi camera with a wide lens on the CSI ribbon, the IMU of the board and a VL53L0X distance sensor at the rear.
-* **Steering servo.** Mounted vertically and re-mounted on 18 Nov 2026 after steering faults.
-* **Software.** ROS 2 Jazzy on Ubuntu 24.04, one state machine per challenge (chapter 6 for the Obstacle, chapter 7 for the Open).
-
-#### The versions
-These are versions 1 to 11 as we described them in our national documentation. It all started with a cardboard prototype, then moved on to acrylic and metal chassis designs, and later, we made personalized adjustments to a HiWonder kit. Along the way, we also experimented with different wheel designs, repositioned components, tested sensors like LiDAR, and finally adopted a new operating environment with ROS and Ubuntu.
-
-<table>  
-  <tr>
-    <th width="10%">Version</th>
-    <th width="40%">Car Photo</th>
-    <th width="50%">Description</th>
-  </tr>
-  
-  <!-- Version 1 -->
-  <tr>
-    <td align="center"><i>Version N°1</i></td>
-    <td align="center">
-      <img src="https://github.com/user-attachments/assets/88cb9f71-715d-41d5-8dcd-54870af7fa87" width="330"height="230"/>
-    </td>
-    <td>
-      We built a cardboard prototype to test and understand the Ackermann steering system and wheel movement. This served as a reference to learn about the placement of components and systems.<br><br>
-      <a href="v-photos/vehicle-versions/README.md#version-1">➡️ See more photos 🚗</a>
-    </td>
-  </tr>
-
-  <!-- Version 2 -->
-  <tr>
-    <td align="center"><i>Version N°2</i></td>
-    <td align="center"><img src="https://github.com/user-attachments/assets/14afa30d-317e-43f8-b6ef-d63897212c88" width="330" height="230"/>
-    </td>
-    <td>
-      <br>We cut and incorporated an acrylic chassis and designed/3D-printed housing pieces for the camera, Ackermann system, and other components. The Ackermann used a stepper motor, and to perceive its surroundings, the car relied on infrared sensors and a webcam. 
-      <br><br>The main controllers were a Raspberry Pi 4 and an Arduino Nano, powered by a power bank and lithium batteries. The car’s movement was driven by a single motor.<br><br> 
-      <a href="v-photos/vehicle-versions/README.md#version-2">➡️ See more photos 🚗</a><br><br>
-    </td>
-  </tr>
-
-  <!-- Version 3 -->
-  <tr>
-    <td align="center"><i>Version N°3</i></td>
-    <td align="center"><img src="https://github.com/user-attachments/assets/5299a922-0fb3-43a8-9a32-9bdbc77225d7" width="330" height="230"/>
-    </td>
-    <td>
-      <br> We replaced the power bank with a smaller one, adjusted component placement into a two-level car system, and installed new wheels. Lithium batteries were replaced with higher-current ones, and the infrared sensors were moved to the front, so the vehicle could make more precise turns.<br><br>
-      <a href="v-photos/vehicle-versions/README.md#version-3">➡️ See more photos 🚗</a><br><br>
-    </td>
-  </tr>
-
-  <!-- Version 4 -->
-  <tr>
-    <td align="center"><i>Version N°4</i></td>
-    <td align="center"><img src="https://github.com/user-attachments/assets/80568426-a136-48a6-b219-9c05dd3e2584" width="330" height="230"/>
-    </td>
-    <td>
-    <br> We upgraded the chassis to a modified HiWonder Kit and replaced the infrared sensors with a LiDAR for more accurate obstacle detection. The webcam was also switched to a monocular camera. The original car motor was replaced by two encoder motors, adapted with gears to drive a single wheel in compliance with competition guidelines.<br><br>
-
-For the Ackermann steering, we replaced the stepper motor with a servomotor. On top of that, we moved away from the Arduino Nano and began implementing the ROS framework.<br><br>
-<a href="v-photos/vehicle-versions/README.md#version-4">➡️ See more photos 🚗</a><br><br>
-    </td>
-  </tr>
-
-  <!-- Version 5 -->
-  <tr>
-    <td align="center"><i>Version N°5</i></td>
-    <td align="center"><img src="https://github.com/user-attachments/assets/fe6757a1-3fe5-4b12-b856-bedcc28a5b50" width="330" height="230"/>
-    </td>
-    <td>
-      <br>Our main improvement was the chassis. We joined the two bases by drilling them together and carefully organized the components with the Raspberry Pi inside. The LiDAR was placed on top so nothing would block its view, and we also completed and installed the camera housing.<br><br>
-      <a href="v-photos/vehicle-versions/README.md#version-5">➡️ See more photos 🚗</a><br><br>
-    </td>
-  </tr>
-
-  <!-- Version 6 -->
-  <tr>
-    <td align="center"><i>Version N°6</i></td>
-    <td align="center"><img src="https://github.com/user-attachments/assets/7e483e4c-2f35-48e9-8125-00a2123f06a2" width="330" height="230"/>
-    </td>
-    <td>
-      <br> Wheels were changed to adjust the car’s height so the Lidar could detect walls within the 10 cm range (previously it was too high and failed). The housing material was upgraded from PLA to polycarbonate for greater resistance, and the Open Challenge (autonomous 3 rounds driving) was completed.<br><br>
-      <a href="v-photos/vehicle-versions/README.md#version-6">➡️ See more photos 🚗</a><br><br>
-    </td>
-  </tr>
-
-  <!-- Version 7 -->
-  <tr>
-    <td align="center"><i>Version N°7</i></td>
-    <td align="center"><img src="https://github.com/user-attachments/assets/105155b6-ddb2-4885-aa63-7e07f1468315" width="330" height="230"/>
-    </td>
-    <td>
-      <br> Using our HiWonder kit as the base, we designed and cut a completely new, smaller chassis with personalized mounting holes for all components, new housing pieces were created, and the two-motor system was replaced by a single motor in a gear system.<br><br>
-    We also moved from a two-level structure to a single-level layout, placing all the components on the same surface to give the Raspberry Pi better airflow and easier access. The car successfully detected and avoided the first traffic signs.<br><br>
-      <a href="v-photos/vehicle-versions/README.md#version-7">➡️ See more photos 🚗</a><br><br>
-    </td>
-  </tr>
-
-  <!-- Version 8 -->
-  <tr>
-    <td align="center"><i>Version N°8</i></td>
-    <td align="center"><img src="https://github.com/user-attachments/assets/5d66a0cd-a12c-4155-ae6f-aa4655cf6e0e" width="330" height="250"/>
-    </td>
-    <td>
-      <br> <b>Car dimensions:</b> 15 x 23 cm <br><br>
-      We 3D-printed new, slimmer front wheels because the original ones stuck out too much from the chassis. A custom housing was also printed for the batteries, and most importantly, the Ackermann steering servo was mounted vertically to save space and allow for a wider turning angle.<br><br>
-During previous testing, we realized the LiDAR was struggling to properly detect the walls of the field, so we 3D-printed and implemented a small angled mount to give it a slight tilt.<br><br>
-      <a href="v-photos/vehicle-versions/README.md#version-8">➡️ See more photos 🚗</a><br><br>
-    </td>
-  </tr>
-
-<!-- Version 9 -->
-  <tr>
-    <td align="center"><i>Version N°9</i></td>
-    <td align="center"><img src="https://github.com/user-attachments/assets/312c2e7e-4638-4917-b54a-fff2bb1a2965" width="330" height="450"/>
-    </td>
-    <td>
-      <br> <b>Car dimensions:</b> 15 x 20 cm <br><br>
-In this version, the components were arranged more efficiently to save space. We added a custom housing for the batteries, placed the Pi5 controller on top, and mounted the Raspberry above it, creating a layered system.<br><br> 
-A new chassis base was printed in MDF, and the Ackermann was moved slightly because, in the previous version, the rack was colliding with the servo. To improve traction, we added a groove to the wheels and printed small cylinders between them to prevent contact with the screws. With these adjustments, the robot managed to complete a lap in <b>20 seconds</b>.<br><br>
-      <a href="v-photos/vehicle-versions/README.md#version-9">➡️ See more photos 🚗</a><br><br>
-    </td>
-  </tr>
-
-  <!-- Version 10 -->
-  <tr>
-    <td align="center"><i>Version N°10</i></td>
-    <td align="center"><img src="https://github.com/user-attachments/assets/03a1e68f-fcf6-40c0-91ea-beff7a2833ab" width="330" height="450"/>
-    </td>
-    <td>
-      <br> <b>Car dimensions:</b> 15 x 18 x 16 cm <br><br> 
-We removed the LiDAR housing because, after testing the robot multiple times, we found that vision worked better without it. We also printed the rear wheels, so now all wheels are the same. We modified the gear system, which allowed the robot to complete the 3 laps faster. It now takes less than 10 seconds to complete an entire lap, and it manages to complete the 3 laps in 28 seconds. The small and big gears were interchanged so that the big gear is directly attached to the motor shaft
-<br><br>
-  <a href="v-photos/vehicle-versions/README.md#version-10">➡️ See more photos 🚗</a><br><br>
-    </td>
-  </tr>
-
-  <!-- Version 11 -->
-  <tr>
-    <td align="center"><i>Version N°11</i></td>
-    <td align="center"><img src="https://github.com/user-attachments/assets/deba8088-32d4-4846-b635-17d4c11e2836" width="330" height="450"/>
-    </td>
-    <td>
-      <br> <b>Car dimensions:</b> N x N x N cm <br><br> 
-We noticed that the room lights were affecting our color detection, so we added a 16-LED WS2812 RGB ring light (5V) to keep the lighting consistent. We also moved the LiDAR again. We printed a new housing and placed it at the front, right under the chassis, an adjustment that significantly improved wall detection.
-Finally, we replaced the old L298N motor driver with a TB6612FNG. This made a big difference because we can now control the speed more smoothly, starting at around 35%, and we have much better control when reversing and stopping.
-<br><br>
-  <a href="v-photos/vehicle-versions/README.md#version-10">➡️ See more photos 🚗</a><br><br>
-    </td>
-  </tr>
-  
-</table>
-
-
-<br>
-
-> [!NOTE]
-> 🌱 Visit our [`vehicle-versions`](v-photos/vehicle-versions/README.md) folder to see photos and videos of our car evolution.
-
-<br>
-
-#### Motor driver history (what the table above does not say)
-
-| Period | Driver | Why it changed |
+| When | Driver | What happened |
 | --- | --- | --- |
 | 2024 – Oct 2026 | L298N, then TB6612FNG on the Raspberry Pi GPIO | The TB6612FNG allowed smooth speeds from about 35 % PWM and reliable reversing; the L298N stalled at 50 % or less. |
 | 8 Oct 2026 | TB6612FNG, standby pin GPIO13 | The motor "worked only sometimes": a software bug (the standby pin was never raised by our node) and a PWM write that `lgpio` ignored. Both fixed and verified with the car in the air. |

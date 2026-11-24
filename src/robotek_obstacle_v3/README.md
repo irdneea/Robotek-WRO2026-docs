@@ -7,8 +7,8 @@ The long explanations are in the main README. Start with these chapters:
 | Topic | Where |
 | --- | --- |
 | Code structure and state machine | [chapter 5](../../README.md#5-software-architecture) |
-| Finding signs, remembering them, choosing sides, recovering from contacts | [chapter 6.2](../../README.md#62-finding-and-avoiding-the-signs) |
-| Leaving the lot and parking in parallel | [chapter 6.3 and 6.4](../../README.md#63-leaving-the-parking-lot) |
+| Finding signs, remembering them, choosing sides, recovering from contacts | [chapter 6, RUN](../../README.md#run-three-laps-with-signs) |
+| Leaving the lot and parking in parallel | [chapter 6, LOT_EXIT and PARK](../../README.md#lot_exit-leaving-the-parking-lot) |
 | Parameters and their defaults | [PARAMETERS.md](PARAMETERS.md) |
 | Simulation results | [RESULTS.md](RESULTS.md) |
 
