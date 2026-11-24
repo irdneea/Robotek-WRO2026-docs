@@ -1,10 +1,5 @@
-# Aviso de procedencia
+# Provenance notice
 
-Código basado en Hiwonder MentorPi (https://github.com/Hiwonder/MentorPi, commit fb6d9969). Incluido con el permiso de
-Hiwonder, confirmado por el autor del repositorio. El código original no declara licencia; los cambios del equipo
-Robotek están bajo MIT.
+Code based on Hiwonder MentorPi (https://github.com/Hiwonder/MentorPi, commit fb6d9969). It is included with Hiwonder's permission, confirmed by the author of this repository. The original code declares no licence; the changes of the Robotek team are under MIT.
 
-Cambios del equipo respecto a MentorPi (`driver/ros_robot_controller`): nombres (`rrc_lite_driver`, nodo `rrc_driver`,
-tópicos `/rrc/...`), el servo de dirección (`SetAckerServoState` en `/rrc/acker_servo/set_state`, servo PWM 2),
-reconexión del puerto serie, puerto serie como parámetro (`port`, por defecto `/dev/rrc_lite` o `/dev/ttyACM0`) y
-reintentos con un mensaje claro cuando la placa no está enchufada. Solo se incluye lo que necesita el coche real.
+Changes of the team with respect to MentorPi (`driver/ros_robot_controller`): names (`rrc_lite_driver`, node `rrc_driver`, topics `/rrc/...`), the steering servo (`SetAckerServoState` on `/rrc/acker_servo/set_state`, PWM servo channel selected with `acker_channel`), reconnection of the serial port, the serial port as a parameter (`port`, by default `/dev/rrc_lite` or `/dev/ttyACM0`) and retries with a clear message when the board is not plugged in. Only what the real car needs is included.

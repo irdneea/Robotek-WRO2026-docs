@@ -1,24 +1,24 @@
-# Reglas de udev del coche de Robotek: nombres estables y permisos para el grupo dialout.
-# Las instala tools/setup-pi.sh en /etc/udev/rules.d/99-robotek.rules (o hazlo a mano:
-#   sudo cp tools/99-robotek.rules /etc/udev/rules.d/ && sudo udevadm control --reload-rules && sudo udevadm trigger).
-# Tu usuario tiene que estar en los grupos dialout, video y gpio (setup-pi.sh lo hace) y volver a entrar.
+# udev rules of the Robotek car: stable device names and permissions for the dialout group.
+# tools/setup-pi.sh installs them as /etc/udev/rules.d/99-robotek.rules. To do it by hand:
+#   sudo cp tools/99-robotek.rules /etc/udev/rules.d/ && sudo udevadm control --reload-rules && sudo udevadm trigger
+# Your user has to be in the groups dialout, video and gpio (setup-pi.sh does it) and log in again.
 #
-# Origen de cada identificador (nada inventado):
-#  * 1a86:55d4  placa HiWonder RRC Lite (aparece como /dev/ttyACM0). Es el mismo identificador de la regla
-#               99-ttyACM0.rules de Hiwonder MentorPi y de las mediciones del equipo (README de robotek_hardware).
-#  * 10c4:ea60  adaptador USB-serie CP210x del LiDAR LDROBOT LD19 (aparece como /dev/ttyUSB0). Es el de la regla
-#               ldlidar.rules del repositorio de LDROBOT (src/ldlidar_stl_ros2/scripts/ldlidar.rules). OJO: cualquier
-#               otro dispositivo CP210x genérico (10c4:ea60) tendrá también el nombre /dev/ldlidar.
-#  * gpiochip   el motor (TB6612) usa /dev/gpiochip4 del Pi 5 con lgpio. La regla da acceso al grupo gpio.
-#               SIN CONFIRMAR en un Pi limpio: en las imágenes de Raspberry Pi OS / Ubuntu para Pi el grupo gpio y
-#               esta regla ya suelen venir; si el motor dice "GPIO chip 4 not usable", revisa esto.
-#  * La cámara (icSpring, 32e6:9005 en el coche del equipo) no necesita regla: el grupo video basta.
+# Where each identifier comes from:
+#  * 1a86:55d4  Hiwonder RRC Lite board (shows up as /dev/ttyACM0). It is the same identifier as Hiwonder MentorPi's
+#               99-ttyACM0.rules and as the team's own measurements (README of robotek_hardware).
+#  * 10c4:ea60  CP210x USB-serial adapter of the LDROBOT LD19 LiDAR (shows up as /dev/ttyUSB0). It is the one in the
+#               ldlidar.rules of LDROBOT's repository (src/ldlidar_stl_ros2/scripts/ldlidar.rules). Careful: any other
+#               generic CP210x device (10c4:ea60) will also be named /dev/ldlidar.
+#  * gpiochip   the GPIO rule gives the gpio group access to /dev/gpiochip* (used by the push button and by the old
+#               TB6612 motor driver through lgpio). It is the usual Raspberry Pi rule and has not been checked on a clean
+#               Pi: if a node says "GPIO chip not usable", look here first.
+#  * The USB camera (icSpring, 32e6:9005, used on earlier versions) needs no rule: the video group is enough.
 
-# Placa RRC Lite: /dev/rrc_lite (y que ModemManager no la ocupe)
+# RRC Lite board: /dev/rrc_lite (and keep ModemManager away from it)
 SUBSYSTEM=="tty", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="55d4", GROUP="dialout", MODE="0660", SYMLINK+="rrc_lite", ENV{ID_MM_PORT_IGNORE}="1"
 
-# LiDAR LD19: /dev/ldlidar
+# LD19 LiDAR: /dev/ldlidar
 SUBSYSTEM=="tty", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", GROUP="dialout", MODE="0660", SYMLINK+="ldlidar", ENV{ID_MM_PORT_IGNORE}="1"
 
-# GPIO del motor
+# GPIO
 SUBSYSTEM=="gpio", KERNEL=="gpiochip*", GROUP="gpio", MODE="0660"

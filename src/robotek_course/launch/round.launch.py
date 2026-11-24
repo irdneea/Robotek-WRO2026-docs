@@ -36,7 +36,7 @@ def _round(context):
     directory = os.path.expanduser(os.path.join(LaunchConfiguration('runs_dir').perform(context), '%s-%s' % (stamp, name)))
     world = LaunchConfiguration('world').perform(context) or os.path.join(share('robotek_gazebo'), 'worlds', WORLD)
     use_sim_time = {'use_sim_time': True}
-    print('Ronda guardada en %s' % directory, flush=True)
+    print('Round saved in %s' % directory, flush=True)
     # The referee: Start, true pose, end of the round, score. When it ends, everything ends.
     recorder = Node(package='robotek_course', executable='round_recorder', output='screen',
                     parameters=[{'output_dir': directory, 'direction': direction, 'strategy': strategy, 'world': world},

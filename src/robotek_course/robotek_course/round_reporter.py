@@ -71,16 +71,16 @@ class RoundReporter(Node):
             lap = (self.corners - 1) // 4 + 1
             if self.direction is None:
                 self.direction = 'antihorario (izquierda)' if self.turn_yaw > 0 else 'horario (derecha)'
-                self.say(f'Sentido: {self.direction} ({math.degrees(self.turn_yaw):+.0f} grados en la 1.a esquina)')
-            self.say(f'Esquina {self.corners}/{CORNERS} (vuelta {lap}, {math.degrees(self.turn_yaw):+.0f} grados)')
+                self.say(f'Direction: {self.direction} ({math.degrees(self.turn_yaw):+.0f} degrees at the 1st corner)')
+            self.say(f'Corner {self.corners}/{CORNERS} (lap {lap}, {math.degrees(self.turn_yaw):+.0f} degrees)')
             if self.corners % 4 == 0:
                 now = time.monotonic()
-                self.say(f'Vuelta {self.corners // 4} completa en {now - self.lap_start:.1f} s')
+                self.say(f'Lap {self.corners // 4} done in {now - self.lap_start:.1f} s')
                 self.lap_start = now
-        self.say(f'Estado: {state}')
+        self.say(f'State: {state}')
         if state == 'DONE':
-            self.say(f'Ronda terminada: {self.corners} esquinas, líneas azul/naranja {self.lines[0]}/{self.lines[1]}, '
-                     f'{self.t():.1f} s desde Start')
+            self.say(f'Round finished: {self.corners} corners, blue/orange lines {self.lines[0]}/{self.lines[1]}, '
+                     f'{self.t():.1f} s from Start')
 
     def on_imu(self, msg):
         now = time.monotonic()
@@ -94,11 +94,11 @@ class RoundReporter(Node):
         if lines != self.lines:
             colour = 'azul' if lines[0] != self.lines[0] else 'naranja'
             self.lines = lines
-            self.say(f'Línea {colour} cruzada (azul {lines[0]}, naranja {lines[1]})')
+            self.say(f'{colour} line crossed (blue {lines[0]}, orange {lines[1]})')
         if self.state in ('CALIBRATE', 'DETECT_DIRECTION') and time.monotonic() - self.view_time > 1.0:
             self.view_time = time.monotonic()
             blue, orange = line_lengths(frame)
-            self.say(f'Cámara: azul {blue:.0f} px, naranja {orange:.0f} px')
+            self.say(f'Camera: blue {blue:.0f} px, orange {orange:.0f} px')
 
 
 def main(args=None):

@@ -321,29 +321,27 @@ class Board:
             print('get_sbus enable reception first!')
             return None
 
-    def _reconnect(self, motivo=""):
-        """Reabre el puerto serie tras un error de E/S.
+    def _reconnect(self, reason=""):
+        """Reopens the serial port after an I/O error.
 
-        AUDITORIA -- journalctl del Pi mostro resets reales de USB en los
-        puertos del RRC Lite (bus 4) durante corridas normales, sin ningun
-        error visible en ROS. La causa: ni buf_write() ni recv_task()
-        atrapaban nada, asi que un reset de bus tiraba una excepcion sin
-        atrapar que mataba recv_task PARA SIEMPRE (hilo daemon, nadie lo
-        reinicia) y dejaba el servo/motor sin responder en silencio.
+        Why it exists: the Pi's journalctl showed real USB resets on the RRC Lite's
+        ports (bus 4) during normal rounds, with no visible error in ROS. Neither
+        buf_write() nor recv_task() caught anything, so a bus reset raised an
+        uncaught exception that killed recv_task FOR GOOD (a daemon thread that
+        nobody restarts) and left the servo and motor silently unresponsive.
 
-        UN solo intento por llamada, sin bucle de reintento bloqueante:
-        motor/rrc_driver vuelven a llamar a esto en su propio ciclo
-        (20-50 Hz), asi que no hace falta reintentar aca adentro -- y
-        bloquear aca con sleeps trabaria ese hilo (tipicamente el callback
-        de ROS que manda el comando). Rate-limitado a una vez cada 0.5s para
-        no meter metralla de intentos de apertura mientras el dispositivo
-        sigue sin volver.
+        Only ONE attempt per call, with no blocking retry loop: the motor and
+        rrc_driver call this again in their own cycle (20-50 Hz), so there is no
+        need to retry in here, and sleeping here would stall that thread (usually
+        the ROS callback that sends the command). It is rate-limited to once
+        every 0.5 s so we do not fire a burst of open attempts while the device
+        is still gone.
         """
         with self._reconnect_lock:
-            ahora = time.monotonic()
-            if ahora - self._last_reconnect_try < 0.5:
+            now = time.monotonic()
+            if now - self._last_reconnect_try < 0.5:
                 return False
-            self._last_reconnect_try = ahora
+            self._last_reconnect_try = now
             try:
                 self.port.close()
             except Exception:
@@ -354,10 +352,10 @@ class Board:
                 self.port.dtr = False
                 self.port.setPort(self.device)
                 self.port.open()
-                print(f"board: puerto reconectado ({motivo})")
+                print(f"board: port reconnected ({reason})")
                 return True
             except Exception as e:
-                print(f"board: reconexion fallida ({motivo}): {e}")
+                print(f"board: reconnection failed ({reason}): {e}")
                 return False
 
     def buf_write(self, func, data):

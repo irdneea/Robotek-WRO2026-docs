@@ -40,8 +40,8 @@ def _round(context):
     manifest = build_world(directory, seed, parking, direction)
     world = os.path.join(directory, 'world.sdf')
     use_sim_time = {'use_sim_time': True}
-    print('Ronda guardada en %s (señales: %d, aparcamiento: %s)' % (directory, len(manifest['pillars']),
-                                                                    'sí' if parking else 'no'), flush=True)
+    print('Round saved in %s (signs: %d, parking: %s)' % (directory, len(manifest['pillars']),
+                                                                    'yes' if parking else 'no'), flush=True)
     recorder = Node(package='robotek_course', executable='obstacle_round_recorder', output='screen',
                     parameters=[{'output_dir': directory, 'direction': direction, 'strategy': strategy, 'world': world},
                                 use_sim_time])

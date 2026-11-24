@@ -2,10 +2,10 @@ rrc_driver:
   ros__parameters:
     imu_frame: "imu_link"
     init_finish: false
-    port: ""          # vacio = /dev/rrc_lite (udev) o /dev/ttyACM0
-    acker_channel: 1  # canal PWM del servo de dirección: en el coche del equipo, J4 es el canal 1 (medido 1 nov 2026)
-    # Tipo de motor: -1 = NO mandarlo (8 nov 2026). La placa usa entonces su tipo de fabrica y su control de velocidad
-    # sigue los rps y para con 0. Con el tipo 2 (JGA27, ganancias PID negativas en el firmware) nuestro encoder cuenta al
-    # reves y el control se embalaba: PWM a tope, no paraba con 0 y a veces iba hacia atras (1-4 nov). El MentorPi
-    # tampoco lo manda. Si la placa se reinicia, vuelve a su tipo de fabrica, que es el correcto.
+    port: ""          # empty = /dev/rrc_lite (udev) or /dev/ttyACM0
+    acker_channel: 1  # PWM channel of the steering servo: on our car, J4 is channel 1 (measured 1 Nov 2026)
+    # Motor type: -1 = do NOT send it (8 Nov 2026). The board then uses its factory type, and its speed loop follows
+    # the rps and stops at 0. With type 2 (JGA27, negative PID gains in the firmware) our encoder counts the other way
+    # and the loop ran away: full PWM, no stop at 0, sometimes reversing (1-4 Nov). MentorPi does not send it either.
+    # If the board resets it goes back to its factory type, which is the right one.
     motor_type: -1

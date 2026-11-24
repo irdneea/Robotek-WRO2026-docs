@@ -46,25 +46,25 @@ def score_directory(directory, write=True):
 def format_report(directory, report):
     judge, validation = report['rule_judge'], report['validation']
     b = judge['breakdown']
-    parts = (f'secciones {b["1.1_sections"]} + vueltas {b["1.2_laps"]} + parada {b["1.3_stop_in_finish"]}'
-             f' + señales {b["1.4-1.7_traffic_signs"]}')
+    parts = (f'sections {b["1.1_sections"]} + laps {b["1.2_laps"]} + stop {b["1.3_stop_in_finish"]}'
+             f' + signs {b["1.4-1.7_traffic_signs"]}')
     if b.get('1.8_parking') is not None:
-        parts += f' + aparcamiento {b["1.8_parking"]}'
-    lines = [f'Ronda: {directory}', f'Puntos: {judge["points"]} de {judge["max_points"]}   ({parts})']
+        parts += f' + parking {b["1.8_parking"]}'
+    lines = [f'Round: {directory}', f'Points: {judge["points"]} of {judge["max_points"]}   ({parts})']
     if judge.get('time_from_start_sim_seconds') is not None:
         laps = ' / '.join(f'{lap["sim_seconds"]:.1f}' for lap in judge['lap_splits'])
-        lines.append(f'Tiempo desde Start: {judge["time_from_start_sim_seconds"]:.2f} s simulados'
-                     + (f'   (vueltas: {laps} s)' if laps else ''))
+        lines.append(f'Time from Start: {judge["time_from_start_sim_seconds"]:.2f} simulated s'
+                     + (f'   (laps: {laps} s)' if laps else ''))
     for fault in judge['faults']:
-        lines.append(f'Falta: {fault["fault"]} (regla {fault["rule"]}) a los {fault["sim_time"]:.1f} s'
-                     + (f', señal {fault["pillar"]}' if fault.get('pillar') else ''))
+        lines.append(f'Fault: {fault["fault"]} (rule {fault["rule"]}) at {fault["sim_time"]:.1f} s'
+                     + (f', sign {fault["pillar"]}' if fault.get('pillar') else ''))
     park = report.get('parking')
     if park:
-        lines.append(f'Aparcamiento: {park["verdict"]}')
+        lines.append(f'Parking: {park["verdict"]}')
     margin = validation.get('min_clearance_m')
-    lines.append('Válida: ' + ('sí' if validation['passed'] else 'no (' + ', '.join(validation['failed']) + ')')
-                 + (f'   margen mínimo {margin * 100:.1f} cm' if margin is not None else ''))
-    lines.append('Son estimaciones de simulación, no puntuación oficial.')
+    lines.append('Valid: ' + ('yes' if validation['passed'] else 'no (' + ', '.join(validation['failed']) + ')')
+                 + (f'   minimum margin {margin * 100:.1f} cm' if margin is not None else ''))
+    lines.append('These are simulation estimates, not an official score.')
     return '\n'.join(lines)
 
 

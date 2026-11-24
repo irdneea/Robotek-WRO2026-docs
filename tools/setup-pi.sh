@@ -1,229 +1,136 @@
 #!/usr/bin/env bash
-# Prepara un Raspberry Pi (Ubuntu 24.04 arm64) para correr tu estrategia en el coche real de Robotek.
+# Prepares a Raspberry Pi (Ubuntu 24.04, arm64) to run the strategies on the Robotek car.
 #
-#   git clone https://github.com/renzodamgo/robotek-learn.git && cd robotek-learn
-#   bash tools/setup-pi.sh              # instala y compila (pide sudo cuando hace falta)
-#   bash tools/setup-pi.sh --check      # solo comprueba: no instala nada y no mueve nada
-#   bash tools/setup-pi.sh --dry-run    # muestra los comandos sin ejecutarlos
-#   bash tools/setup-pi.sh --with-reference   # además instala la estrategia de referencia (paso 9) como src/my_open
+#   git clone https://github.com/ilovmangos/Robotek-WRO2026.git && cd Robotek-WRO2026
+#   bash tools/setup-pi.sh              # installs and builds (asks for sudo when needed)
+#   bash tools/setup-pi.sh --check      # only checks: installs nothing and moves nothing
+#   bash tools/setup-pi.sh --dry-run    # shows the commands without running them
+#   bash tools/setup-pi.sh --skip-build # everything except the colcon build
 #
-# Qué hace (se puede repetir: lo que ya está hecho se salta):
-#   1. comprueba el sistema (Ubuntu 24.04);
-#   2. instala ROS 2 Jazzy base, sin Gazebo ni RViz (tools/install-ubuntu.sh --no-gazebo) y los paquetes apt del coche;
-#   3. instala las reglas de udev (tools/99-robotek.rules) y te añade a los grupos dialout, video y gpio;
-#   4. (con --with-reference) extrae la estrategia terminada de la etiqueta step-9 a src/my_open (tools/get-reference.sh);
-#   5. compila todo: colcon build --symlink-install.
+# What it does (it can be repeated: what is already done is skipped):
+#   1. checks the system (Ubuntu 24.04);
+#   2. installs ROS 2 Jazzy base, without Gazebo or RViz (tools/install-ubuntu.sh --no-gazebo), and the apt packages
+#      the car needs;
+#   3. installs the udev rules (tools/99-robotek.rules) and adds you to the groups dialout, video and gpio;
+#   4. builds the workspace: colcon build --symlink-install.
 #
-# SEGURIDAD: este script no arranca ningún nodo ni mueve el motor ni el servo. La primera vez que lances el coche
-# ponlo sobre soportes (ruedas en el aire). Ver src/robotek_hardware/README.md.
+# SAFETY: this script starts no node and moves neither the motor nor the servo. The first time you launch the car,
+# put it on supports with the wheels in the air. See src/robotek_hardware/README.md.
 set -euo pipefail
 
-MODE=install
-DRY=0
-SKIP_BUILD=0
-WITH_REFERENCE=0
+REPO=$(cd "$(dirname "$0")/.." && pwd)
+DRY=0; CHECK=0; SKIP_BUILD=0
 for arg in "$@"; do
   case "$arg" in
-    --check) MODE=check ;;
     --dry-run) DRY=1 ;;
+    --check) CHECK=1 ;;
     --skip-build) SKIP_BUILD=1 ;;
-    --with-reference) WITH_REFERENCE=1 ;;
-    -h|--help) sed -n '2,22p' "$0"; exit 0 ;;
-    *) echo "Opción desconocida: $arg (usa --help)" >&2; exit 2 ;;
+    -h|--help) sed -n '2,19p' "$0"; exit 0 ;;
+    *) echo "Unknown option: $arg (use --help)" >&2; exit 2 ;;
   esac
 done
 
-REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-SUDO=sudo
-if [ "$(id -u)" -eq 0 ]; then SUDO=; fi
-TARGET_USER="${SUDO_USER:-${USER:-$(id -un)}}"
+say()  { printf '\033[1;34m>>>\033[0m %s\n' "$*"; }
+warn() { printf '\033[1;33m!!!\033[0m %s\n' "$*" >&2; }
+good() { printf '  \033[1;32mok\033[0m   %s\n' "$*"; }
+bad()  { printf '  \033[1;31mFAIL\033[0m %s\n' "$*"; FAILED=1; }
+note() { printf '  \033[1;33minfo\033[0m %s\n' "$*"; }
+FAILED=0
 
-APT_PACKAGES=(
-  git build-essential cmake curl rsync
-  ros-jazzy-cv-bridge ros-jazzy-robot-state-publisher ros-jazzy-xacro ros-jazzy-tf2-ros
-  ros-jazzy-rmw-cyclonedds-cpp          # tools/car-run.sh and car-autostart.sh run on Cyclone DDS (the Mac sees the car)
-  python3-serial python3-yaml python3-numpy python3-opencv python3-lgpio v4l-utils
-)
-
-say() { echo ">>> $*"; }
-warn() { echo "!!! $*" >&2; }
-run() {   # ejecuta, o solo muestra el comando con --dry-run
-  if [ "$DRY" = 1 ]; then echo "+ $*"; else "$@"; fi
-}
-have_group() { getent group "$1" >/dev/null 2>&1; }
-udev_running() { [ "$DRY" = 1 ] || pgrep -x systemd-udevd >/dev/null 2>&1; }
-
-# ---------------------------------------------------------------------------------------------------------------
-check_os() {
-  local id="" version="" arch
-  if [ -r /etc/os-release ]; then id="$(. /etc/os-release && echo "${ID:-}")"; version="$(. /etc/os-release && echo "${VERSION_ID:-}")"; fi
-  arch="$(uname -m)"
-  if [ "$id" = ubuntu ] && [ "$version" = 24.04 ]; then
-    say "Sistema: Ubuntu 24.04 ($arch)"
-    if [ "$arch" != aarch64 ]; then warn "No es arm64 ($arch): funciona, pero el coche real es un Raspberry Pi 5 (aarch64)."; fi
-  elif [ "$DRY" = 1 ] || [ "${ROBOTEK_FORCE:-0}" = 1 ]; then
-    warn "Sistema ${id:-desconocido} ${version:-?}: esto solo está probado en Ubuntu 24.04. Sigo porque es --dry-run o ROBOTEK_FORCE=1."
-  else
-    echo "Este script es para Ubuntu 24.04 (el Raspberry Pi del coche). Sistema detectado: ${id:-desconocido} ${version:-?}." >&2
-    echo "Para el simulador en tu portátil usa tools/install-ubuntu.sh (o la guía, en macOS)." >&2
-    exit 1
-  fi
+# Runs a command, or only prints it with --dry-run.
+run() {
+  if [ "$DRY" = 1 ]; then printf '    $ %s\n' "$*"; else "$@"; fi
 }
 
-# ---------------------------------------------------------------------------------------------------------------
-install_ros() {
-  if [ -f /opt/ros/jazzy/setup.bash ]; then
-    say "ROS 2 Jazzy ya está instalado"
-  else
-    say "Instalando ROS 2 Jazzy base (sin Gazebo ni RViz)"
-    run bash "$REPO/tools/install-ubuntu.sh" --no-gazebo
-  fi
-}
+first_existing() { for f in "$@"; do [ -e "$f" ] && { echo "$f"; return 0; }; done; return 1; }
 
-install_apt() {
-  say "Paquetes apt del coche: ${APT_PACKAGES[*]}"
-  run $SUDO apt-get update
-  run $SUDO apt-get install -y "${APT_PACKAGES[@]}"
-}
-
-# ---------------------------------------------------------------------------------------------------------------
-install_udev() {
-  local rules=/etc/udev/rules.d/99-robotek.rules
-  if ! udev_running; then
-    warn "systemd-udevd no está corriendo (¿un contenedor?): salto las reglas de udev y los grupos."
-    return
-  fi
-  if [ -f "$rules" ] && cmp -s "$REPO/tools/99-robotek.rules" "$rules"; then
-    say "Reglas de udev ya instaladas"
-  else
-    say "Instalando reglas de udev ($rules)"
-    run $SUDO install -m 644 "$REPO/tools/99-robotek.rules" "$rules"
-    run $SUDO udevadm control --reload-rules
-    run $SUDO udevadm trigger
-  fi
-  if [ "$(id -u)" -eq 0 ] && [ -z "${SUDO_USER:-}" ]; then
-    warn "Corres como root sin SUDO_USER: no sé a qué usuario añadir a los grupos. Hazlo con: usermod -aG dialout,video,gpio USUARIO"
-    return
-  fi
-  if ! have_group gpio; then
-    say "Creando el grupo gpio"
-    run $SUDO groupadd -f gpio
-  fi
-  local missing=() group
+check_only() {
+  say "Check (nothing is installed or moved)"
+  if [ -f /opt/ros/jazzy/setup.bash ]; then good "ROS 2 Jazzy"; else bad "ROS 2 Jazzy is not installed"; fi
+  if [ -d "$REPO/install" ]; then good "workspace built (install/)"; else bad "the workspace is not built: colcon build --symlink-install"; fi
+  if board="$(first_existing /dev/rrc_lite /dev/ttyACM0)"; then good "RRC Lite board on $board"
+  else bad "RRC Lite board (USB 1a86:55d4, /dev/ttyACM0): plug it in with the data USB cable"; fi
+  if lidar="$(first_existing /dev/ldlidar /dev/ttyUSB0)"; then good "LiDAR on $lidar"
+  else bad "LD19 LiDAR (USB 10c4:ea60, /dev/ttyUSB0) not found"; fi
+  if command -v rpicam-vid >/dev/null 2>&1; then good "rpicam-vid (Pi camera on the flex cable, camera_driver:=picam)"
+  elif camera="$(first_existing /dev/v4l/by-id/*-video-index0 2>/dev/null)"; then good "USB camera on $camera"
+  else note "no rpicam-vid and no USB camera: the Open takes the direction_fallback and the LiDAR corrects it"; fi
   for group in dialout video gpio; do
-    if ! id -nG "$TARGET_USER" 2>/dev/null | tr ' ' '\n' | grep -qx "$group"; then missing+=("$group"); fi
+    if id -nG 2>/dev/null | tr ' ' '\n' | grep -qx "$group"; then good "you are in the group $group"
+    else bad "you are not in the group $group (sudo usermod -aG $group \$USER, then log in again)"; fi
   done
-  if [ ${#missing[@]} -gt 0 ]; then
-    local list; list="$(IFS=,; echo "${missing[*]}")"
-    say "Añadiendo a $TARGET_USER a los grupos: $list (cierra la sesión y vuelve a entrar para que cuenten)"
-    run $SUDO usermod -aG "$list" "$TARGET_USER"
-  else
-    say "$TARGET_USER ya está en dialout, video y gpio"
-  fi
+  [ "$FAILED" = 0 ] && say "Everything looks ready." || { warn "Something is missing (see above)."; return 1; }
 }
 
-# ---------------------------------------------------------------------------------------------------------------
-install_reference() {
-  if [ "$WITH_REFERENCE" = 0 ]; then return; fi
-  say "Estrategia de referencia (tools/get-reference.sh)"
-  run bash "$REPO/tools/get-reference.sh" --no-build
-}
+if [ "$CHECK" = 1 ]; then check_only; exit $?; fi
 
-build_workspace() {
-  if [ "$SKIP_BUILD" = 1 ]; then say "Salto la compilación (--skip-build)"; return; fi
-  if [ ! -d "$REPO/src/my_open" ]; then
-    warn "Aún no existe src/my_open (tu estrategia). Compilo el resto. Para la de referencia: bash tools/get-reference.sh; o crea la tuya (README, ros2 pkg create ... my_open)."
-  fi
-  say "Compilando: colcon build --symlink-install (varios minutos en un Pi)"
-  if [ "$DRY" = 1 ]; then
-    echo "+ (cd $REPO && source /opt/ros/jazzy/setup.bash && colcon build --symlink-install)"
-    return
-  fi
-  (
-    cd "$REPO"
-    set +u
-    # shellcheck disable=SC1091
-    source /opt/ros/jazzy/setup.bash
-    set -u
-    colcon build --symlink-install
-  )
-}
-
-next_steps() {
-  cat <<NEXT
-
->>> Listo. Siguientes pasos (en el Pi, desde $REPO):
-    1. Si te añadí a grupos nuevos, cierra la sesión y vuelve a entrar.
-    2. bash tools/setup-pi.sh --check          # placa, LiDAR, cámara y grupos
-    3. source install/setup.bash
-    4. PON EL COCHE SOBRE SOPORTES (ruedas en el aire) la primera vez.
-    5. ros2 launch robotek_course open_challenge.launch.py      # o: car.launch.py strategy:=<tu paquete>
-       Los LED de la placa se ponen verdes cuando LiDAR, IMU y cámara dan datos; el botón de la placa es el Start.
-NEXT
-}
-
-# ---------------------------------------------------------------------------------------------------------------
-# --check: solo mira, no cambia nada
-ok_count=0; bad_count=0
-good() { echo "  ok     $*"; ok_count=$((ok_count+1)); }
-bad() { echo "  FALTA  $*"; bad_count=$((bad_count+1)); }
-note() { echo "  aviso  $*"; }
-
-first_existing() { local p; for p in "$@"; do if [ -e "$p" ]; then echo "$p"; return 0; fi; done; return 1; }
-
-do_check() {
-  say "Comprobación (no se instala ni se mueve nada)"
-  local id="" version=""
-  if [ -r /etc/os-release ]; then id="$(. /etc/os-release && echo "${ID:-}")"; version="$(. /etc/os-release && echo "${VERSION_ID:-}")"; fi
-  if [ "$id" = ubuntu ] && [ "$version" = 24.04 ]; then good "Ubuntu 24.04 ($(uname -m))"; else bad "Ubuntu 24.04 (este sistema: ${id:-?} ${version:-?})"; fi
-  if [ -f /opt/ros/jazzy/setup.bash ]; then good "ROS 2 Jazzy"; else bad "ROS 2 Jazzy (bash tools/setup-pi.sh)"; fi
-  if [ -f "$REPO/install/setup.bash" ]; then
-    good "workspace compilado (install/setup.bash)"
-    local packages
-    packages="$(cd "$REPO" && set +u && source /opt/ros/jazzy/setup.bash 2>/dev/null && source install/setup.bash 2>/dev/null && ros2 pkg list 2>/dev/null || true)"
-    local pkg
-    for pkg in rrc_lite_msgs rrc_lite_driver ldlidar_stl_ros2 robotek_hardware robotek_course robotek_open; do
-      if grep -qx "$pkg" <<<"$packages"; then good "paquete $pkg"; else bad "paquete $pkg (compila: bash tools/setup-pi.sh)"; fi
-    done
-    # my_open is the reader's own package: the team's Open (tools/car-run.sh open) does not need it.
-    if grep -qx my_open <<<"$packages"; then good "paquete my_open"; else note "sin paquete my_open (solo hace falta para correr TU estrategia: créalo o usa --with-reference)"; fi
-    if python3 -c 'import os,sys; sys.exit(0 if os.path.exists("/opt/ros/jazzy/lib/librmw_cyclonedds_cpp.so") else 1)'; then good "Cyclone DDS (ros-jazzy-rmw-cyclonedds-cpp)"; else bad "Cyclone DDS (sudo apt install ros-jazzy-rmw-cyclonedds-cpp): lo usa tools/car-run.sh"; fi
-  else
-    bad "workspace sin compilar (bash tools/setup-pi.sh)"
-  fi
-
-  local board lidar camera
-  if board="$(first_existing /dev/rrc_lite /dev/ttyACM0)"; then good "placa RRC Lite en $board"; else bad "placa RRC Lite (USB 1a86:55d4, /dev/ttyACM0): enchúfala con el cable USB de datos"; fi
-  if lidar="$(first_existing /dev/ldlidar /dev/ttyUSB0)"; then good "LiDAR LD19 en $lidar"; else bad "LiDAR LD19 (USB 10c4:ea60, /dev/ttyUSB0): revisa el cable"; fi
-  if command -v rpicam-vid >/dev/null 2>&1; then good "rpicam-vid (cámara del Pi en el flex, camera_driver:=picam)"
-  elif camera="$(first_existing /dev/v4l/by-id/*-video-index0 2>/dev/null)"; then good "cámara en $camera"
-  elif [ -e /dev/video0 ]; then note "cámara solo como /dev/video0 (en el Pi 5 ese número puede ser de otro aparato): ls /dev/v4l/by-id/"
-  else note "sin rpicam-vid y sin cámara USB: el Open sale en el sentido de direction_fallback y el LiDAR lo corrige"; fi
-  if [ -e /dev/gpiochip4 ]; then good "GPIO del motor (/dev/gpiochip4)"; else bad "/dev/gpiochip4 (el motor TB6612 es del Pi 5; en otro Pi cambia gpiochip en robot.yaml)"; fi
-  if python3 -c 'import lgpio' 2>/dev/null; then good "python3-lgpio"; else bad "python3-lgpio (sudo apt install python3-lgpio)"; fi
-  if python3 -c 'import serial' 2>/dev/null; then good "python3-serial"; else bad "python3-serial (sudo apt install python3-serial)"; fi
-
-  local group
-  for group in dialout video gpio; do
-    if [ "$(id -u)" -eq 0 ]; then note "corres como root: no se comprueban los grupos"; break
-    elif id -nG 2>/dev/null | tr ' ' '\n' | grep -qx "$group"; then good "estás en el grupo $group"; else bad "no estás en el grupo $group (sudo usermod -aG $group \$USER y vuelve a entrar)"; fi
-  done
-  if [ -f /etc/udev/rules.d/99-robotek.rules ]; then good "reglas de udev instaladas"; else note "reglas de udev sin instalar (bash tools/setup-pi.sh)"; fi
-  echo
-  echo ">>> $ok_count bien, $bad_count por resolver"
-  [ "$bad_count" -eq 0 ]
-}
-
-# ---------------------------------------------------------------------------------------------------------------
-if [ "$MODE" = check ]; then
-  do_check
-  exit $?
+# 1. System
+. /etc/os-release 2>/dev/null || true
+if [ "${ID:-}" != ubuntu ] || [ "${VERSION_ID:-}" != "24.04" ]; then
+  warn "System ${ID:-unknown} ${VERSION_ID:-?}: this is only tested on Ubuntu 24.04. Continuing because of --dry-run or ROBOTEK_FORCE=1."
+  [ "$DRY" = 1 ] || [ "${ROBOTEK_FORCE:-0}" = 1 ] || { echo "For the simulator on a laptop use tools/install-ubuntu.sh." >&2; exit 1; }
 fi
 
-check_os
-install_ros
-install_apt
-install_udev
-install_reference
-build_workspace
-if [ "$DRY" = 1 ]; then say "Fin del --dry-run: no se ejecutó nada."; else next_steps; fi
+# 2. ROS 2 Jazzy and the apt packages
+if [ -f /opt/ros/jazzy/setup.bash ]; then
+  say "ROS 2 Jazzy is already installed"
+else
+  say "Installing ROS 2 Jazzy base"
+  run bash "$REPO/tools/install-ubuntu.sh" --no-gazebo
+fi
+say "Installing the apt packages of the car"
+run sudo apt-get install -y ros-jazzy-cv-bridge ros-jazzy-robot-state-publisher ros-jazzy-xacro ros-jazzy-tf2-ros \
+  python3-serial python3-lgpio python3-opencv python3-numpy python3-yaml v4l-utils
+
+# 3. udev rules and groups
+if ! pidof systemd-udevd >/dev/null 2>&1 && [ "$DRY" = 0 ]; then
+  warn "systemd-udevd is not running (a container?): skipping the udev rules and the groups."
+else
+  say "Installing the udev rules"
+  run sudo cp "$REPO/tools/99-robotek.rules" /etc/udev/rules.d/99-robotek.rules
+  run sudo udevadm control --reload-rules
+  run sudo udevadm trigger
+  TARGET_USER="${SUDO_USER:-${USER:-}}"
+  if [ -z "$TARGET_USER" ] || [ "$TARGET_USER" = root ]; then
+    warn "Running as root without SUDO_USER: add the user to the groups by hand: usermod -aG dialout,video,gpio USER"
+  else
+    missing=""
+    for group in dialout video gpio; do
+      getent group "$group" >/dev/null 2>&1 || run sudo groupadd "$group"
+      id -nG "$TARGET_USER" 2>/dev/null | tr ' ' '\n' | grep -qx "$group" || missing="$missing,$group"
+    done
+    if [ -n "$missing" ]; then
+      say "Adding $TARGET_USER to the groups: ${missing#,} (log out and in again for them to count)"
+      run sudo usermod -aG "${missing#,}" "$TARGET_USER"
+    else
+      say "$TARGET_USER is already in dialout, video and gpio"
+    fi
+  fi
+fi
+
+# 4. Build
+if [ "$SKIP_BUILD" = 1 ]; then
+  say "Skipping the build (--skip-build)"
+else
+  say "Building the workspace"
+  if [ "$DRY" = 1 ]; then
+    echo "    \$ (cd $REPO && source /opt/ros/jazzy/setup.bash && colcon build --symlink-install)"
+  else
+    ( cd "$REPO" && set +u && source /opt/ros/jazzy/setup.bash && colcon build --symlink-install )
+  fi
+fi
+
+if [ "$DRY" = 1 ]; then
+  say "End of --dry-run: nothing was executed."
+else
+  cat <<EOF
+
+Next steps:
+  1. If you were added to new groups, log out and in again.
+  2. bash tools/setup-pi.sh --check           # board, LiDAR, camera and groups
+  3. With the car on supports (wheels in the air):
+       bash tools/obstacle-round.sh            # Obstacle Challenge
+       bash tools/car-run.sh open              # Open Challenge
+     The board LEDs turn green when the sensors give data; the board button is Start (a second press stops).
+EOF
+fi

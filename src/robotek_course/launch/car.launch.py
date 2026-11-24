@@ -1,10 +1,11 @@
-"""Your strategy on the real car: the hardware nodes of robotek_hardware and your node. No Gazebo, no simulated actuators.
+"""The strategy on the real car: the hardware nodes of robotek_hardware plus the strategy node. No Gazebo, no simulated
+actuators. In practice it is started through tools/car-run.sh, which also cleans up leftover nodes:
 
-    ros2 launch robotek_course car.launch.py strategy:=my_open
-    ros2 launch robotek_course open_challenge.launch.py      (the same, with the Open challenge strategy my_open)
-    ros2 launch robotek_course car.launch.py strategy:=my_open battery_guard:=false status_leds:=false
+    bash tools/car-run.sh open        # = strategy:=robotek_open executable:=open_v5
+    bash tools/car-run.sh obstacle    # = strategy:=robotek_obstacle_v3
+    ros2 launch robotek_course car.launch.py strategy:=robotek_obstacle_v3 battery_guard:=false
 
-Your node (``strategy`` package, ``executable`` = drive) is the same one that runs in ``round.launch.py``. It reads /scan,
+The strategy node (``strategy`` package, ``executable`` = drive) is the same one that runs in ``round.launch.py``. It reads /scan,
 /imu, /camera/image and /start and publishes /cmd_vel_raw (linear.x = speed in m/s, angular.z = speed * tan(steer) / WHEELBASE).
 Here those names are connected to the car:
 
@@ -171,20 +172,16 @@ def _strategy_node(context):
 
 
 def _check_strategy(context):
-    """Before starting anything: is the strategy package built? If not, say how to get one and exit with code 1."""
+    """Before starting anything: is the strategy package built? If not, say what to build and exit with code 1."""
     if _arg(context, 'teleop').lower() == 'true':
         return []
     package = _arg(context, 'strategy')
     try:
         get_package_prefix(package)
     except PackageNotFoundError:
-        print('\n[car] No encuentro el paquete de la estrategia "%s" (strategy:=%s).\n'
-              '  Hay dos caminos:\n'
-              '    1) La estrategia de referencia (la terminada del paso 9):  bash tools/get-reference.sh\n'
-              '       y despues:  source install/setup.bash\n'
-              '    2) Tu propio paquete: crealo y compilalo como en el paso 0 de la guia\n'
-              '       (ros2 pkg create ... my_open; colcon build --symlink-install; source install/setup.bash).\n'
-              '  Si ya lo compilaste, falta cargar el entorno:  source install/setup.bash\n'
+        print('\n[car] The strategy package "%s" was not found (strategy:=%s).\n'
+              '  Build the workspace and load it:  colcon build --symlink-install; source install/setup.bash\n'
+              '  The packages of this repository are robotek_open (executable open_v5) and robotek_obstacle_v3.\n'
               % (package, package), file=sys.stderr)
         sys.exit(1)
     return []
@@ -267,7 +264,7 @@ def generate_launch_description():
         brake_defaults = {name: str(base.get(name, value)) for name, value in (
             ('brake_rps', 0.0), ('brake_hz', 10.0), ('brake_s', 1.5), ('brake_min_rps', 1.0))}
     return LaunchDescription([
-        DeclareLaunchArgument('strategy', default_value='my_open', description='the package with your node'),
+        DeclareLaunchArgument('strategy', default_value='my_open', description='the package with the strategy node'),
         DeclareLaunchArgument('executable', default_value='drive', description='the executable of that package'),
         DeclareLaunchArgument('controller', default_value='true', description='start rrc_lite_driver (the board)'),
         DeclareLaunchArgument('controller_launch', default_value='controller.launch.py',

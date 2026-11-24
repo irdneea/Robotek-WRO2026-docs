@@ -1,8 +1,5 @@
-# Aviso de procedencia
+# Provenance notice
 
-Código basado en Hiwonder MentorPi (https://github.com/Hiwonder/MentorPi, commit fb6d9969). Incluido con el permiso de
-Hiwonder, confirmado por el autor del repositorio. El código original no declara licencia; los cambios del equipo
-Robotek están bajo MIT.
+Code based on Hiwonder MentorPi (https://github.com/Hiwonder/MentorPi, commit fb6d9969). It is included with Hiwonder's permission, confirmed by the author of this repository. The original code declares no licence; the changes of the Robotek team are under MIT.
 
-Cambios del equipo respecto a MentorPi (`driver/ros_robot_controller_msgs`): el paquete se llama `rrc_lite_msgs` y
-tiene un mensaje más, `SetAckerServoState` (`float64 duration`, `uint16 position` en microsegundos).
+Changes of the team with respect to MentorPi (`driver/ros_robot_controller_msgs`): the package is called `rrc_lite_msgs` and has one more message, `SetAckerServoState` (`float64 duration`, `uint16 position` in microseconds).

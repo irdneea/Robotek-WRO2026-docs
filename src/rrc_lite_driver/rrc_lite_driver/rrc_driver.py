@@ -40,13 +40,13 @@ class RosRobotController(Node):
     def __init__(self, name):
         rclpy.init()
         super().__init__(name)
-        # Puerto serie de la placa: parametro `port`. Vacio = el primero que exista de /dev/rrc_lite (regla de udev
-        # de tools/99-robotek.rules, estable) y /dev/ttyACM0. Si la placa no esta enchufada el nodo no se cae:
-        # avisa y reintenta (Board tambien se reconecta solo si el USB se cae durante una corrida).
+        # Serial port of the board: parameter `port`. Empty means the first one that exists of /dev/rrc_lite (the stable
+        # udev rule of tools/99-robotek.rules) and /dev/ttyACM0. If the board is not plugged in the node does not crash:
+        # it warns and retries (Board also reconnects by itself if the USB drops during a round).
         self.declare_parameter("port", "")
         self.declare_parameter("servo_config", "")
         self.board = self.open_board(str(self.get_parameter("port").value))
-        if self.board is None:   # Ctrl+C mientras esperaba la placa
+        if self.board is None:   # Ctrl+C while waiting for the board
             raise SystemExit(0)
         self.board.enable_reception()
         self.running = True

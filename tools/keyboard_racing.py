@@ -42,8 +42,8 @@ def main():
     root.title('Robotek: conducir')
     label = tk.Label(root, font=('Helvetica', 16), justify='left', padx=20, pady=20)
     label.pack()
-    tk.Label(root, text='Mantén ↑ ↓ ← → (o W A S D) y combínalos. Suelta todo para parar.\n'
-                        'Si la ventana pierde el foco, el coche se para.', padx=20, pady=10).pack()
+    tk.Label(root, text='Hold ↑ ↓ ← → (or W A S D) and combine them. Release everything to stop.\n'
+                        'If the window loses focus, the car stops.', padx=20, pady=10).pack()
 
     def command():
         v = speed * ((1 if 'up' in held else 0) - (1 if 'down' in held else 0))
@@ -57,7 +57,7 @@ def main():
         cmd.angular.z = float(v * math.tan(steer) / WHEELBASE)
         pub.publish(cmd)
         label.config(text=f'velocidad {v:+.2f} m/s\ndirección {math.degrees(steer):+.0f}°  '
-                          f'({"izquierda" if steer > 0 else "derecha" if steer < 0 else "recta"})')
+                          f'({"left" if steer > 0 else "right" if steer < 0 else "straight"})')
         rclpy.spin_once(node, timeout_sec=0)
         root.after(50, publish)
 

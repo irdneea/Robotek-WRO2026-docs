@@ -1,15 +1,8 @@
-# Copia incluida de ldlidar_stl_ros2
+# Provenance of this copy
 
-Esta carpeta es una copia del driver del LiDAR LDROBOT LD19 (y LD06 / STL27L), incluida aquí para que
-`git clone` + `colcon build` baste en el Raspberry Pi.
+This folder is a copy of the driver of the LDROBOT LD19 LiDAR (and LD06 / STL27L), included here so that `git clone` plus `colcon build` is enough on the Raspberry Pi.
 
-* Origen: https://github.com/ldrobotSensorTeam/ldlidar_stl_ros2, commit `bf668a89baf722a787dadc442860dcbf33a82f5a`
-  (8 may 2023, "Update README.md").
-* Licencia: MIT, Copyright (c) 2020 SHENZHEN LDROBOT CO., LTD. El archivo `LICENSE` y los avisos de copyright de cada
-  archivo están sin tocar.
-* Cambios respecto al original: solo los dos arreglos de compilación para Ubuntu 24.04 / ROS 2 Jazzy de
-  `../robotek_hardware/patches/ldlidar_stl_ros2-build.patch` ya aplicados (`find_package(Threads)` y
-  `Threads::Threads` en `CMakeLists.txt`; `#include <pthread.h>` en `ldlidar_driver/src/logger/log_module.cpp`).
-  Y un tercer cambio: en sistemas que no son Linux (macOS, solo simulación) el `CMakeLists.txt` no compila nada,
-  para que `colcon build` no falle allí. No se quitó ni añadió nada más.
-* No se copió el directorio `.git` del original.
+* Origin: https://github.com/ldrobotSensorTeam/ldlidar_stl_ros2, commit `bf668a89baf722a787dadc442860dcbf33a82f5a` (8 May 2023, "Update README.md").
+* Licence: MIT, Copyright (c) 2020 SHENZHEN LDROBOT CO., LTD. The `LICENSE` file and the copyright notices of every file are untouched.
+* Changes with respect to the original: only the two build fixes for Ubuntu 24.04 / ROS 2 Jazzy of `../robotek_hardware/patches/ldlidar_stl_ros2-build.patch`, already applied (`find_package(Threads)` and `Threads::Threads` in `CMakeLists.txt`; `#include <pthread.h>` in `ldlidar_driver/src/logger/log_module.cpp`), and a third change: on systems that are not Linux (macOS, simulation only) the `CMakeLists.txt` builds nothing, so that `colcon build` does not fail there. Nothing else was removed or added.
+* The `.git` directory of the original was not copied.

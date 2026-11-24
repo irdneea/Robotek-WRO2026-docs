@@ -15,7 +15,7 @@ setup(
     zip_safe=True,
     maintainer='Renzo Damian',
     maintainer_email='renzo.damian.go@gmail.com',
-    description='Obstacle v3 de WRO-Strategies como solución de referencia del curso (LiDAR, giroscopio y cámara).',
+    description='Obstacle Challenge strategy of the Robotek car (LiDAR, gyroscope and camera).',
     license='MIT',
     extras_require={'test': ['pytest']},
     entry_points={
