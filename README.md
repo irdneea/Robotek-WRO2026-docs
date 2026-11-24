@@ -38,6 +38,10 @@ The documentation follows the five evaluation criteria of the WRO 2026 Future En
 | Software architecture and obstacle strategy | [docs/03-software-architecture-and-obstacle-strategy.md](docs/03-software-architecture-and-obstacle-strategy.md) | Packages and modules, state machine, perception, lane following and sign obedience, edge cases, tests and metrics |
 | Systems thinking and engineering decisions | [docs/04-systems-thinking-and-engineering-decisions.md](docs/04-systems-thinking-and-engineering-decisions.md) | How the subsystems interact, constraints, twelve "we chose X instead of Y because…" decisions with data, iteration cycles, risk table |
 | Reproducibility and GitHub quality | [docs/05-reproducibility-build-and-test.md](docs/05-reproducibility-build-and-test.md) | Installation, running, tests without the car, round records, test plan, versioning |
+| Obstacle in depth | [docs/06-obstacle-detection-and-avoidance.md](docs/06-obstacle-detection-and-avoidance.md) | How the car finds the signs (LiDAR clusters, colour blobs, pairing), remembers them by seat, chooses the side, plans the line and recovers from contacts |
+| Lot exit and parking | [docs/07-lot-exit-and-parallel-parking.md](docs/07-lot-exit-and-parallel-parking.md) | Reading the direction in the lot, the exit pulses, the parallel park step by step, what is validated and what is not |
+| Open Challenge | [docs/08-open-challenge.md](docs/08-open-challenge.md) | The Open v5 states, how it decides the direction, the heading law, the corners, the finish |
+| Diagrams | [docs/diagrams.md](docs/diagrams.md) | Index of every diagram and what still has to be drawn |
 | Journal | [docs/engineering-journal.md](docs/engineering-journal.md) | Timeline of the work and what we learned |
 | History of the car | [docs/vehicle-history.md](docs/vehicle-history.md) | The eleven versions with photos |
 | Rules | [docs/rules-compliance.md](docs/rules-compliance.md) | Rule by rule check of the vehicle and the repository |
@@ -209,3 +213,17 @@ The videos show the vehicle driving autonomously for more than 30 seconds, one f
 * Credits (LiDAR driver, Hiwonder SDK, tools): [CREDITS.md](CREDITS.md).
 * Licence: [MIT](LICENSE).
 * Version history of this repository: [CHANGELOG.md](CHANGELOG.md).
+
+## 11. What is still missing before the final
+
+The repository is complete as a record of the validated car. These items still need hands, a camera or a measuring tool, so they are not in it yet. They are ordered by how much they matter for the rubric and the rules.
+
+1. **Measure the car:** mass with batteries (limit 1.5 kg), height (limit 300 mm) and the current drawn by the electronics during a complete round. They go into [rules compliance](docs/rules-compliance.md) and the power budget of [docs/02](docs/02-power-and-sensor-architecture.md#3-power-budget).
+2. **Photos of the current car** from every side, top and bottom, plus the team photo, stored *in the repository* (`v-photos`, `t-photos`). Most pictures of this README are still hosted outside the repository and would be lost if it is cloned or republished.
+3. **Check the two videos:** that the first link is the Obstacle round and the second the Open round, that each shows more than 30 s of autonomous driving and that they show the final version of the car.
+4. **Draw the diagrams that cannot be generated from code** (list in [docs/diagrams.md](docs/diagrams.md#still-to-be-produced-as-images)): the wiring schematic of the current car, a dimensioned drawing, an exploded view of the mechanics and the Ackermann geometry.
+5. **CAD sources** of the chassis (STEP or the original CAD files) next to the STL files, and links or part numbers in the bill of materials.
+6. **A table of rounds** with ten complete rounds in each direction (points, time, faults), to fill the test plan of [docs/05](docs/05-reproducibility-build-and-test.md#5-test-plan-before-the-final).
+7. **Print the documentation** (this README and the `docs` pages) for the hard copy that the rules ask for at the international final.
+8. **Competition checklist items:** Wi-Fi and Bluetooth off before the vehicle check, spare batteries, the HSV colours checked under the venue's light.
+9. **Tag the release** `v2.0` on GitHub when everything above is in, and keep making small commits with clear messages afterwards: the rubric reads the history as evidence of the engineering process.

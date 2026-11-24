@@ -1,6 +1,6 @@
 # 03 · Software architecture and obstacle strategy
 
-*Rubric criterion 3.* How the code is organised, the state machine of the Obstacle Challenge, how the car follows the lane and obeys the signs, why each algorithm was chosen, which edge cases are handled and how we tested and measured it.
+*Rubric criterion 3.* The deeper explanations are in [06](06-obstacle-detection-and-avoidance.md) (signs and avoidance), [07](07-lot-exit-and-parallel-parking.md) (lot and parking) and [08](08-open-challenge.md) (Open). This page shows how the code is organised, the state machine of the Obstacle Challenge, how the car follows the lane and obeys the signs, why each algorithm was chosen, which edge cases are handled and how we tested and measured it.
 
 ## 1. Code structure
 
@@ -95,7 +95,7 @@ a feed-forward term for the curvature of the line plus feedback on the lateral e
 
 ## 6. Testing and tuning process, with metrics
 
-* **Unit tests** per package (`pytest`): the strategy checks, `steer_watch`, the lot exit, the parking planner and the corner planner. 45 tests in `robotek_obstacle_v3` pass at this version.
+* **Unit tests** per package (`pytest`): the strategy checks, `steer_watch`, the lot exit, the parking planner and the corner planner. At this version `robotek_obstacle_v3` passes 45 tests on the Pi (40 plus 1 skipped on a PC without ROS).
 * **Honest simulation.** Rounds in Gazebo and in a fast kinematic **lab** use only what the real car has: LiDAR, gyroscope and camera, with noise. No odometry, no pose of the pillars. The true pose is recorded only to audit. The judge module scores a round with the rules (sections, laps, signs, parking), flagging what is estimated.
 * **Metrics.** Estimated points, total round time from Start (laps as partial times), contacts, faults. Comparison rule: points first, then time. Every round on the car and in simulation writes `round.json`, `events.jsonl`, telemetry and scans, see [05](05-reproducibility-build-and-test.md).
 * **Tuning evidence.** The steering faults and corner crashes of 11 Nov (`23:56`, `23:59`) led to `steer_watch`; the camera stalls led to `CAMERA_MAX_AGE` / `CAMERA_LOST`; the lot exit pulses were tuned until the heading grew about 10° per pair of pulses. Details in [04](04-systems-thinking-and-engineering-decisions.md) and the [journal](engineering-journal.md).
@@ -103,4 +103,4 @@ a feed-forward term for the curvature of the line plus feedback on the lateral e
 
 ## 7. Open Challenge
 
-`robotek_open` (v5): three laps by wall following with a LiDAR corner detector; the corner turn is made at full lock until the heading change is within 0.3 rad of the target, then the controller takes over. The same hardware adapters and recording are used.
+`robotek_open` (v5) drives three laps with a heading law on the straights and full lock in the corners, using the LiDAR and the gyroscope, and the camera once at Start to choose the direction. See [08](08-open-challenge.md). The same hardware adapters and recording are used.
