@@ -179,4 +179,4 @@ Finally, we replaced the old L298N motor driver with a TB6612FNG. This made a bi
 | --- | --- | --- |
 | 2024 – Oct 2026 | L298N, then TB6612FNG on the Raspberry Pi GPIO | The TB6612FNG allowed smooth speeds from about 35 % PWM and reliable reversing; the L298N stalled at 50 % or less. |
 | 8 Oct 2026 | TB6612FNG, standby pin GPIO13 | The motor "worked only sometimes": a software bug (the standby pin was never raised by our node) and a PWM write that `lgpio` ignored. Both fixed and verified with the car in the air. |
-| From 1 Nov 2026 | RRC Lite board, motor port M2, closed-loop speed from the motor encoder (`rrc_lite_driver`) | The board holds the commanded speed itself, so the strategies ask for m/s and stop being sensitive to battery sag. See [01 Mobility](01-mobility-and-mechanical-design.md). |
+| From 1 Nov 2026 | RRC Lite board, motor port M2 (since 4 Nov), closed-loop speed from the motor encoder (`rrc_lite_driver`) | The board holds the commanded speed itself, so the strategies ask for m/s and stop being sensitive to battery sag. See [01 Mobility](01-mobility-and-mechanical-design.md). |
