@@ -1,30 +1,34 @@
-"""Fixed parallel park (``park_mode`` 1): a hard-coded manoeuvre whose every step ends on a sensor.
+"""Fixed parallel park (``park_mode`` 1): a hard-coded manoeuvre in which every step ends on a sensor.
 
-The planner of ``park.py`` drives ~14 short planned moves at 0.06 m/s. The real car of 8 nov 2026
-(54:30 gears) does not move at that speed with full lock, and with a speed floor (~0.25 m/s) it rolls
-3-12 cm after each stop, past the short moves' targets. This manoeuvre has no plan: each step uses
-all the room it has and ends on the gyro heading or on the LiDAR pose against the lot, anticipating
-the roll after the stop (the measured roll, as in ``park.py``).
+The planned parking of ``park.py`` drives about fourteen short moves at 0.06 m/s. The real car does not move at that
+speed with full lock and, because of the motor's speed floor of about 0.25 m/s, it rolls 3 to 12 cm after every stop,
+past the target of a short move. So this manoeuvre has no plan. Each step uses all the room it has and ends on the
+gyro heading or on the LiDAR pose against the lot, and it allows for the roll that follows a stop (the roll is
+measured as it happens).
 
-1. APPROACH: forward along a line ``GAP`` off the lot, until base_link is ``park_fixed_ahead`` past
-   the lot's far limit (LiDAR pose), aligned with the line; back along it if the line-up overshot.
-2. ENTRY: reverse at full lock toward the wall until the heading is ``park_fixed_entry`` (gyro), or
-   the guard (the outline, the roll ahead, closer than ``park_fixed_margin`` to a limit or the wall).
-3. DOWN: reverse straight until the guard (the rear near the wall or the near limit).
-4. STRAIGHTEN: alternate forward/reverse at full lock, both turning toward parallel, each until
-   parallel (gyro) or the guard (``park.Parking._straighten``).
-5. CENTRE: straight to the middle of the lot (LiDAR pose). Then PARKED or PARK_FAIL (it stays).
+1. APPROACH: forward along a line ``GAP`` off the lot until the reference point is ``park_fixed_ahead`` past the lot's
+   far limit (LiDAR pose), aligned with the line. If it overshoots, back along the line.
+2. ENTRY: reverse at full lock toward the wall until the heading reaches ``park_fixed_entry`` (gyro) or the guard stops
+   it (the outline, plus the expected roll, closer than ``park_fixed_margin`` to a limit or the wall).
+3. DOWN: reverse straight into the lot until the guard stops it.
+4. STRAIGHTEN: alternate forward and reverse at full lock, both turning toward parallel, each until parallel (gyro)
+   or the guard (``park.Parking._straighten``).
+5. CENTRE: straight to the middle of the lot (LiDAR pose). Then PARKED or PARK_FAIL, and the car stays still.
 
-The lot (``park_lot_length`` x ``park_lot_depth`` against the outer wall, far inner face at
-``park_lot_end`` along the start straight in CCW, mirrored in CW) defaults to the rules' lot and can be
-set to a measured field. Frame and approach as in ``park.py``.
+With ``park_fixed_partial`` the manoeuvre stops after step 3, pushes back a little with the rear sensor watching
+(``park_partial_back``) and runs the coach's finishing pulses (``park_finish_steps``) with the same executor as the lot
+exit. That is the version validated on the car.
 
-``park_fixed_sense`` 1: the lot is placed from what the LiDAR sees, not from the map pose alone. Every
-scan, the outer wall beside the lot (a line fitted to its returns) and the limit plates (returns near
-their expected x, inside the lot's depth) give a correction of the pose (along-track shift, distance
-to the wall, heading against the wall), low-passed and bounded; with nothing seen it keeps the last
-one. On the car (8 nov 2026) the outer wall showed at y -1.52..-1.57 instead of -1.50 and a limit
-~3 cm off: the map pose places the lot wrong by that much, in a lot with 2.6 cm of room per side.
+The lot (``park_lot_length`` by ``park_lot_depth`` against the outer wall, far inner face at ``park_lot_end`` along
+the start straight in counter-clockwise, mirrored in clockwise) defaults to the one of the rules and can be set to a
+measured field.
+
+``park_fixed_sense`` places the lot from what the LiDAR sees instead of from the map pose alone. On every scan, the
+outer wall beside the lot (a line fitted to its returns) and the limit plates (returns near their expected x, inside
+the lot's depth) give a correction of the pose: shift along the straight, distance to the wall, heading against the
+wall. It is low-pass filtered and bounded, and with nothing seen it keeps the last one. On our car the outer wall
+showed at y of -1.52 to -1.57 instead of -1.50 and a limit stood about 3 cm from where the map put it, which matters in
+a lot with only 2.6 cm of room per side.
 """
 import math
 

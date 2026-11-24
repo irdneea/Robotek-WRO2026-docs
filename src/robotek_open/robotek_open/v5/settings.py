@@ -1,8 +1,7 @@
 """ROS parameters of the Open v5 node: the mission's own plus the node's and the camera's.
 
-The defaults are the real car's (car.launch.py starts the node without a parameter file): start with the board
-button, keep the car stopped after DONE, telemetry in ~/runs, the profile values of the Gazebo runs (open_v5.yaml
-of WRO-Strategies) and the camera colours measured on the car (REAL_OPEN_CAMERA of its robot.launch.py).
+The defaults suit the real car: start with the board button, keep the car stopped after DONE, write telemetry to ~/runs
+and use the camera colours measured on the field. The speeds of the car's own profile are in config/car_picam.yaml.
 """
 from dataclasses import asdict
 

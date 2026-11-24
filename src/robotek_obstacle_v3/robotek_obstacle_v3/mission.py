@@ -1,8 +1,17 @@
-"""Obstacle v3 mission: SETUP -> RUN -> STOP, lane following plus a side offset per sign.
+"""The decisions of the Obstacle Challenge, as one state machine: SETUP, LOT_EXIT, RUN, PARK and STOP.
 
-One observation (``scene.Scene``), one heading law and one stop. The side of a sign is
-fixed as soon as its colour is known and held until the car has passed it, instead of
-being decided while approaching. No seat map, no beam search, no parking.
+* SETUP measures the gyro bias and decides the driving direction from the walls (or from the lot).
+* LOT_EXIT leaves the parking lot with the coach's pulses (lot_exit.py).
+* RUN follows a planned line along the lane. Every sign is filed under its seat on the straights, with colour votes; once a
+  sign's colour is known the side it is passed on is fixed and held until the car is past it. Corners are replaced by a
+  straight-arc-straight line chosen for the signs at both of its ends (corner.py). Contacts are handled by the front
+  recover, and a servo that stops following by the steer watch.
+* PARK runs the fixed parallel park (park_fixed.py) after three laps.
+* STOP is the end; the round is reported as DONE.
+
+The mission always works in a counter-clockwise frame: a clockwise round is mirrored (and the colours swapped) before it
+gets here, so nothing in this file needs to know the direction. The code that wires it to ROS is in drive.py and
+strategy.py. docs/06 and docs/07 of the repository explain the behaviour in detail.
 """
 import bisect
 import math
@@ -20,45 +29,46 @@ from .scene import Scene
 from .settings import make
 from .steer_watch import SteerWatch
 
-CALIBRATE_SECONDS = 0.3
-DIRECTION_MARGIN = (0.10, 0.03)  # inlier-fraction margin to pick the direction: at once, and after
-DIRECTION_WAIT = 1.0        # s of scans (the lot limits clutter the outer wall in CCW)
-SIDE_CENTER = math.pi / 2
-SIDE_HALF_WIDTH = 0.44
-FRONT_HALF_WIDTH = 0.35
-PREVIEW = 0.10              # m ahead for the curvature feed-forward (servo and motor lag)
+CALIBRATE_SECONDS = 0.3     # s standing still after Start to measure the gyro bias
+DIRECTION_MARGIN = (0.10, 0.03)  # how much better the winning direction must fit the walls: at once, and later
+DIRECTION_WAIT = 1.0        # s of scans before the direction is decided (the lot's limits clutter the outer wall)
+SIDE_CENTER = math.pi / 2   # bearing of the side windows used to read the walls
+SIDE_HALF_WIDTH = 0.44      # rad around it
+FRONT_HALF_WIDTH = 0.35     # rad around straight ahead for the front distance
+PREVIEW = 0.10              # m ahead where the line's curvature is read, to cover the lag of servo and motor
 STENCIL = 0.15              # m between the points the line's heading and curvature come from
-LATERAL_GAIN = 6.0          # rad of steer per metre off the planned line
-RECOVER_SPEED = 0.15
-RECOVER_INSIDE = math.radians(40.0)   # nose this far toward the inside of the lane -> back up on the other lock
-RECOVER_SECONDS = 0.8       # the contact guard's back-off (guard_gap)
-# Front recover (the coach, 9 nov 2026; plans/recover-propuesta.png in WRO-Strategies): something on the arc the car
-# drives, within RECOVER_LOOK of the nose -> brake dead RECOVER_BRAKE s, then reverse ``recover_back`` s at full lock, full
-# right in CCW and full left in CW (from the direction, not the heading estimate), then the Obstacle goes on.
-RECOVER_LOOK = 0.18         # m along the arc the car is driving (its current steering) that must be free: turning
-                            # away from a sign is not a hit (a fixed corridor ahead fired in every close dodge and
-                            # curve, and at 0.11 m head-on the car still touched; the coach, 9 nov 2026)
-RECOVER_CORRIDOR = OUTLINE_HALF_WIDTH + 0.01   # m: half width of the outline checked (+1 cm)
-RECOVER_STRAIGHT = 0.6      # s of reverse added per repeat
-RECOVER_NOSE = 0.05         # m: only the front of the outline counts (the sides swept a sign being passed close)
-RECOVER_REPEAT = (0.3, 8.0)  # m and s: a trigger this near the previous one is a repeat: each adds RECOVER_STRAIGHT of
-                             # reverse (at most 3), so the line gets room (it looped 5 times on one sign, 9 nov 2026)
-RECOVER_BRAKE = 0.2
-RECOVER_LAG = 0.3           # s the servo needs to reach full lock (p90 of the car's corners, steer_watch.py)
-SECTOR = 0.2                # m from the lane centre a sign still counts (rows at +-0.1; the lot limits reach -0.3)
-UNKNOWN_OFFSET = 0.12       # m away from a sign whose colour is still unknown
-LOOKOUT = 0.15              # m to the island side to see an inner sign ahead
-HOLD = 0.15                 # track units before and after a sign the side offset is held
-HORIZON = 3.0               # track units of remembered signs the lateral profile plans over
+LATERAL_GAIN = 6.0          # rad of steering per metre of lateral error to the planned line
+
+# Front recover: something is on the arc the car is driving, so brake dead, reverse at full lock, then go on.
+RECOVER_SPEED = 0.15        # m/s while reversing
+RECOVER_INSIDE = math.radians(40.0)  # if the nose already points this far to the inside of the lane, reverse on the other lock
+RECOVER_SECONDS = 0.8       # s of back-off of the optional contact guard (guard_gap)
+RECOVER_LOOK = 0.18         # m of the arc the car is driving that must be free. Turning away from a sign is not a hit:
+                            # a fixed corridor ahead fired on every close dodge and curve
+RECOVER_CORRIDOR = OUTLINE_HALF_WIDTH + 0.01   # m, half width of the outline that is checked (plus 1 cm)
+RECOVER_STRAIGHT = 0.6      # s of reverse added for every repeat
+RECOVER_NOSE = 0.05         # m: only the front of the outline counts, the sides sweep past a sign being passed close
+RECOVER_REPEAT = (0.3, 8.0)  # m and s: a trigger this close to the last one is a repeat and gets more room (at most 3)
+RECOVER_BRAKE = 0.2         # s of dead stop before reversing
+RECOVER_LAG = 0.3           # s the servo needs to reach full lock
+
+# Signs and the planned line.
+SECTOR = 0.2                # m from the lane centre within which a cluster can be a sign (the rows are at +-0.1)
+UNKNOWN_OFFSET = 0.12       # m away from a sign of unknown colour (the parameter unknown_offset decides what is used)
+LOOKOUT = 0.15              # m toward the island so the camera sees an inner sign earlier
+HOLD = 0.15                 # track units before and after a sign over which its side offset is held
+HORIZON = 3.0               # track units of remembered signs that the line is planned over
 SEAT_SNAP = 0.15            # track units between a cluster and the seat it is filed under
 SEAT_HITS = 2               # sightings before a seat counts as a sign
-START_LOOK = (0.25, 1.0)    # s stopped at Start to file the first signs; at most, for a near colour
+START_LOOK = (0.25, 1.0)    # s stopped at Start to file the first signs; the longer one if a near sign has no colour
 BACKUP_LIMIT = 0.5          # m the car may back up at Start
-GUARD_AHEAD = 0.06          # m of the current arc the contact guard looks along
-LOT_OFFSET = -0.19          # m; on the start straight beside the lot the car keeps off its limits
-PEEK_AT = (0.6, 1.4)        # track units to an unknown sign where the car stops to look at it
-PEEK_TURN = math.radians(15.0)  # rad the nose turns toward the sign, backing up at full lock
-PEEK_LOOK = 0.5             # s stopped looking
+GUARD_AHEAD = 0.06          # m of the current arc that the contact guard looks along
+LOT_OFFSET = -0.19          # m: on the start straight beside the lot the car keeps off the lot's limits
+
+# Peek: look at a sign whose colour is still unknown.
+PEEK_AT = (0.6, 1.4)        # track units to that sign at which the car stops to look at it
+PEEK_TURN = math.radians(15.0)  # how far the nose turns toward the sign while backing up at full lock
+PEEK_LOOK = 0.5             # s stopped, looking
 
 
 def _window(scan, center, half, floor=0.16):

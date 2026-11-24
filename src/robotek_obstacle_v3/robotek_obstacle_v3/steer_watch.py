@@ -1,21 +1,24 @@
-"""The steering stopped answering: the mission asks for full lock, the car moves, and the gyroscope sees no turn.
+"""Detects a steering servo that stopped following: the mission asks for full lock, the car moves, and the gyroscope sees
+no turn.
 
 On the car the servo sometimes does not follow a full-lock command, mostly right after a reversal from one lock to the
-other (11 nov 2026: Obstacle 23:59 corner 6, 3.6 s of full left at 0.15 m/s and the gyro at -0.07 rad/s against
-~0.4 expected, into the wall; Obstacle 23:56 and Open 23:28 the same). The strategy cannot see the servo, but the
-gyroscope says whether the wheels turned.
+other. On 11 Nov 2026 the Obstacle crashed twice into the wall in corner 6, with 3.6 s of full left at 0.15 m/s and the
+gyro at -0.07 rad/s where about 0.4 was expected. The strategy cannot see the servo, but the gyroscope tells whether the
+wheels turned.
 
-``SteerWatch.update`` is called every control tick with the command just sent (speed, steer), the gyro (bias removed)
-and the distance driven in that tick. It reports a fault when, over the last ``WINDOW`` s:
+``SteerWatch.update`` is called every control tick with the command just sent (speed, steering), the gyro with its bias
+removed and the distance driven in that tick. It reports a fault when, over the last ``WINDOW`` seconds:
 
-* the command was at full lock (``LOCK`` x the limit), on the same side, for at least ``LAG + WINDOW`` s (the servo
-  needs ~0.2-0.3 s to reach the lock: 50 % of the arc's yaw rate 0.20 s after the turn starts, p90 0.30);
-* the car moved (``MIN_SPEED`` m/s on average, from the distance, not the command);
-* the gyro gave less than ``RATIO`` of the kinematic yaw rate v tan(steer) / L, or turned the other way.
+* the command was at full lock (``LOCK`` times the limit), on the same side, for at least ``LAG + WINDOW`` seconds (the
+  servo needs 0.2 to 0.3 s to get to the lock: 50 % of the arc's yaw rate 0.20 s after the turn starts, 0.30 s at the
+  90th percentile);
+* the car moved (``MIN_SPEED`` on average, computed from the distance, not from the command);
+* the gyro gave less than ``RATIO`` of the kinematic yaw rate v * tan(steer) / L, or turned the other way.
 
-Good corners give 0.7-0.9 of it on the car (11 nov, 23:59 corners 1 and 5) and in the lab (real_v4); the faults
-gave -0.2 to 0. After a fault the mission stops for ``HOLD`` s with the wheels centred, then drives on (the command
-comes back to the servo from the centre); the watch starts over."""
+A good corner gives 0.7 to 0.9 of that rate on the car and in the lab; the faults gave -0.2 to 0. After a fault the
+mission stops for ``HOLD`` seconds with the wheels centred and then drives on, with the command coming back to the servo
+from the centre; the watch starts over.
+"""
 from collections import deque
 import math
 

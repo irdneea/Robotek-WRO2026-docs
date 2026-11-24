@@ -76,7 +76,7 @@ flowchart LR
 ```mermaid
 flowchart TD
   A[Sign seen as a LiDAR cluster] --> B{Colour known?}
-  B -- no --> C[Pass away from it by 0.12 m<br/>and look for the colour:<br/>lookout, peek]
+  B -- no --> C[Keep to the middle of the lane<br/>and look for the colour:<br/>lookout, peek]
   C --> B
   B -- yes --> D{Red or green?}
   D -- red --> E[Offset on the wall side:<br/>lateral − 0.18 − half the car]

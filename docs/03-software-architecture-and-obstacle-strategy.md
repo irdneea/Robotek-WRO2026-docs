@@ -64,7 +64,7 @@ stateDiagram-v2
 
 ## 4. Lane following and obedience to the signs
 
-**Reference line.** The planner keeps a *side offset* along the lane (progress, offset). Each sign ahead with a known colour holds the offset on its side (red: right, green: left, with `pillar_clearance` 0.18 m from the sign box to the car's side) for 0.15 track units before and after it, with ramps in between. Unknown colour: pass **away** from the sign until it is known.
+**Reference line.** The planner keeps a *side offset* along the lane (progress, offset). Each sign ahead with a known colour holds the offset on its side (red: right, green: left, with `pillar_clearance` 0.18 m from the sign box to the car's side) for 0.15 track units before and after it, with ramps in between. Unknown colour: stay in the middle of the lane until it is known.
 
 **Corners.** Each corner is replaced by a straight–arc–straight line chosen by `corner.py` among candidates that were scored by *driving them in a kinematic simulation* of the car (`corner_table.py`), keeping clearance from the signs at both ends of the corner.
 
@@ -84,7 +84,7 @@ a feed-forward term for the curvature of the line plus feedback on the lateral e
 
 | Case | Behaviour |
 | --- | --- |
-| Colour not yet known near a sign | Pass away from it; wait up to a limit at the start to read the first signs |
+| Colour not yet known near a sign | Keep to the middle of the lane, look for the colour (lookout, peek) and, at Start, wait briefly to read the first signs |
 | Colour read at a seat that cannot exist (rules figure 8c: only certain combinations per straight) | The layout rules keep the combination with most evidence; others wait in `_shadow` |
 | About to touch a sign or a wall | `guard_gap`: back off on the opposite lock, then continue |
 | Obstacle directly in front | **Front recover**: stop dead, reverse at full lock toward the inside of the lane (the coach's rule), or on the other lock when the nose already points more than 40° to the inside (a three-point turn), then retry; each repeat near the same spot adds 0.6 s of reverse. It fires only if full lock away from the obstacle still hits (after the servo lag of 0.3 s) |

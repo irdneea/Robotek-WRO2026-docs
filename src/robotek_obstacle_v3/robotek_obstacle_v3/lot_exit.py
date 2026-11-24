@@ -1,27 +1,27 @@
-"""Start inside the parking lot (``start_lot`` 1, 9 nov 2026): find the direction, leave the lot, then the laps.
+"""Leaving the parking lot at the start of the round.
 
-The car waits in the lot, parallel to the outer wall and ~1 cm from the rear limit (the team places it so). The
-direction comes from the LiDAR's sides: the outer wall is the near side (``direction_in_lot``). Wall on the right ->
-counter-clockwise, on the left -> clockwise (the car faces the driving direction).
+The car waits inside the lot, parallel to the outer wall and about 1 cm from the rear limit (we place it so). Nobody
+tells it the driving direction, so it reads it from the LiDAR: the outer wall is the near side, wall on the right means
+counter-clockwise and wall on the left means clockwise (``direction_in_lot``).
 
-The exit is the coach's sequence of full-lock pulses (9 nov 2026), ``lot_exit_steps``: space-separated steps
-``<side><direction><seconds>``, side L or R at full lock (written for CCW, mirrored for CW: L = away from the wall) or C
-with the wheels straight (servo centre, ~1403 us), direction + forward or - reverse. Default ``DEFAULT_STEPS``: L+0.45 R-0.55 L+0.45 R-0.55 L+0.45 R-0.55 L+0.78 C-0.4 at 0.9 m/s, the coach's sequence of the first complete car round
-from the lot (9 nov 2026, 23:3x; 0.12-0.25 m/s barely moved the car, a 0.5 s third pulse did not get it out). Then the wheels go
-straight and the laps take over (RUN).
+The way out is a short sequence of pulses that the coach recorded on the car (``lot_exit_steps``). Each word is
+``<side><direction><seconds>``: L or R is full lock (written for counter-clockwise and mirrored for clockwise, so L
+always means "away from the wall"), C is wheels straight, + is forward and - is reverse. The sequence of the validated
+profile is ``L+0.25 R-0.3 L+0.25 R-0.3 L+0.25 R-0.3 C-0.2`` at 0.2 m/s.
 
-Before each pulse the wheels turn with the car stopped (``PRESTEER_S``; the command is a Twist, so a tiny speed under
-the motor's deadband, ``PRESTEER_SPEED``, carries the angle), and after it the car stands for ``SETTLE_S``. While
-reversing, the rear sensor nearer than ``REAR_STOP_MM`` ends the pulse with a hard brake (``brake``: the node sends
-/robotek/estop, which drops the motor to 0 without base_adapter's deceleration ramp).
+One arc is not enough. In the car's outline model (lot 0.3675 m, 17.5 degrees of steering, car 1 cm from the rear limit
+and 2 cm from the wall) a forward arc at full lock meets the far limit after about 11 cm, at about 17 degrees of
+heading. Out, back and out again is what the geometry needs.
 
-Why not one arc: in the car's outline model (``parking_search.Lot.free``, lot 0.3675 m, steer 17.5 deg, car 1 cm off the
-rear limit and 2 cm off the wall) a forward arc at full lock meets the far limit after ~11 cm, at ~17 deg; out, then
-back, then out is what the model needs too. The speed is ``lot_exit_speed``; car.launch (start_lot:=true) gives
-base_adapter a kick and pulses below 1.8 rps and no speed ramps, for the LOT_EXIT state only.
+Every pulse has three parts. First the wheels turn to the lock with the car stopped (PRESTEER_S): the servo needs time
+to get there, and since the command is a speed plus an angle, a tiny speed under the motor's dead band carries the
+angle while the car stands still. Then the pulse is driven; when reversing, a rear distance under REAR_STOP_MM ends it
+with a hard brake (the node sends /robotek/estop, so the motor drops to zero without base_adapter's ramp). Finally the
+car stands for SETTLE_S so that the heading we read is the final one.
 
-The pose estimate for the localizer: the lot from the parameters (``park_fixed.make_lot``), x from the rear sensor,
-y from the wall gap, then the pulses as full-lock arcs (``parking_search.move``) that turn the gyro heading.
+While the pulses run nothing sees the walls well, so the exit keeps its own pose estimate: the lot from the
+parameters, x from the rear sensor, y from the wall gap, and then every pulse as a full-lock arc that turns the gyro
+heading. The mission hands that estimate to the localizer as a first guess when the pulses end.
 """
 import math
 

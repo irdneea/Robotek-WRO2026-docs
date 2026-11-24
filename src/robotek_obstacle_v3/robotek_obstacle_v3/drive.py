@@ -1,23 +1,20 @@
-"""The ROS node of Obstacle v3: sensors in, /cmd_vel_raw out. The decisions are in strategy.py and mission.py.
+"""The ROS node of the Obstacle: sensors in, ``/cmd_vel_raw`` out. The decisions are in strategy.py and mission.py.
 
-The same topics as a student's ``my_obstacle`` node, so it runs in ``obstacle_round.launch.py`` and
-``car.launch.py`` with ``strategy:=robotek_obstacle_v3``. Two things differ from the course's ``drive.py``, both
-taken from the v3 node of WRO-Strategies so the decisions stay the same:
+It listens to the same topics as any strategy node of the course (scan, IMU, camera image and Start) and publishes a
+speed and a steering angle as a ``Twist``. Two things differ from the course's own ``drive.py``:
 
-* every camera frame reaches the strategy: one with no scan within ``IMAGE_PAIRING`` gives an empty list of signs
-  (the course's node skips it). The strategy needs a fresh frame to keep driving;
-* the 35 mission parameters of ``settings.Params`` are ROS parameters (defaults = WRO-Strategies'
-  ``obstacle_v3.yaml``); ``parking`` (from the round launch) sets ``park``.
+* every camera frame reaches the strategy. A frame with no scan close enough in time gives an empty list of signs
+  (the course's node skips it), because the strategy needs a fresh frame to keep driving;
+* the parameters of ``settings.Params`` are ROS parameters, so they can be set at launch or from a YAML profile.
 
-The camera is ROS parameters too, for a camera other than the one of the defaults (the USB camera measured on
-8 oct 2026; ``car.launch.py strategy_params:=<file.yaml>`` sets them): ``camera_hfov``, ``camera_pitch`` and
-``camera_yaw`` (rad, + = looks left of the LiDAR's zero) turn an image column into a bearing, and ``red_hsv`` /
-``green_hsv`` are the colours of the signs as ``"h_min,h_max,s_min,v_min"`` (h_min > h_max wraps through 0, as red
-does). ``sign_min_area`` is the smallest blob in pixels.
+The camera is described by ROS parameters too: ``camera_hfov``, ``camera_pitch`` and ``camera_yaw`` (rad, + means the
+camera looks to the left of the LiDAR's zero) turn an image column into a bearing, ``red_hsv`` and ``green_hsv`` give the
+colours of the signs as ``"h_min,h_max,s_min,v_min"`` (h_min > h_max wraps through 0, as red does) and
+``sign_min_area`` is the smallest blob in pixels.
 
-For RViz, only while someone watches them: ``/obstacle/debug_image/compressed`` (the frame with the red and green
-blobs, thick when paired with a LiDAR cluster, the state and the steering) and ``/obstacle/signs`` (the paired signs
-as cylinders and the steering as an arrow, in base_link).
+For RViz, only while somebody is watching: ``/obstacle/debug_image/compressed`` (the frame with every red and green
+blob, thick when paired with a LiDAR cluster, plus the state and the steering) and ``/obstacle/signs`` (the paired signs
+as cylinders and the steering as an arrow in base_link). Every round is recorded in ``~/runs`` (``recording.py``).
 """
 from dataclasses import asdict
 import math

@@ -1,16 +1,15 @@
-"""Obstacle v3 as a course strategy: ``ObstacleStrategyBase`` wired to the v3 ``Mission``.
+"""Obstacle v3 as a strategy of the course: ``ObstacleStrategyBase`` wired to the ``Mission``.
 
-The base class already does what the v3 node did with the sensors (LiDAR odometry aligned once per scan stamp,
-the gyroscope integrated with the mission's bias, Start); ``update`` adds the three things of the v3 node that the
-base class does not do, so the decisions are the same as in WRO-Strategies:
+The base class already deals with the sensors (LiDAR odometry aligned once per scan stamp, the gyroscope integrated with
+the mission's bias, Start). ``update`` adds three things that the base class does not do:
 
 * the distance of a tick counts only once the wall localizer is ready (before that it is dropped);
-* the mission steps only while the scan, the camera and the gyroscope are fresh (``SENSOR_MAX_AGE``); otherwise
-  the car waits with speed 0 (``WAIT_SENSOR``). The camera's age is the age of the last ``on_signs`` call: the node
+* the mission steps only while the scan, the camera and the gyroscope are fresh (``SENSOR_MAX_AGE``); otherwise the car
+  waits at speed 0 (state ``WAIT_SENSOR``). The camera's age is the age of the last ``on_signs`` call: the node
   (``drive.py``) calls it for every frame, with an empty list when the frame has no scan to pair with;
 * 180 s after Start the round is over (``FAULT``), as the rules say.
 
-The mission's final state STOP is reported as ``DONE`` (as the v3 node did; the LEDs and the reporter know it).
+The mission's final state STOP is reported as ``DONE`` (the LEDs and the reporter know that name).
 """
 import math
 

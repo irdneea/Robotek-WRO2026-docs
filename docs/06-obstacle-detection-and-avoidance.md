@@ -60,7 +60,7 @@ For every remembered sign ahead the planner computes the lateral offset the car 
 
 In the lane frame, positive lateral means toward the island. Green is passed on the left (island side) and red on the right (wall side), which is exactly what these two lines say. The same lines work for both directions because a clockwise round is mirrored before the mission sees it.
 
-**Colour not known yet.** The sign is passed on the side *away* from where it stands by 0.12 m (`UNKNOWN_OFFSET`). This is a safe place for the car but not necessarily the right side; the camera then has the whole approach to resolve it.
+**Colour not known yet.** The car keeps to the middle of the lane (`unknown_offset` is 0 in the validated version; another version used 0.12 m away from the sign). From the middle it can still go to either side, and the camera has the whole approach to resolve the colour. The middle is not a safe place: the car is 14.8 cm wide and the inner row of signs is 10 cm from the lane centre, so the gap to a sign is about a millimetre. If the colour never arrives, the car brushes or touches the sign, which is why the peek and the lookout below exist.
 
 ## 4. The planned line
 
