@@ -32,7 +32,7 @@ The reference point of the software (`base_link`) is midway between the axles, o
 
 ## 3. Drive train: motor, gears, speed
 
-**Motor.** One Hiwonder 310 DC gear motor with encoder on port M2 of the RRC Lite board. The board runs the speed loop with the encoder, so the software commands m/s (converted to board rps) and the speed no longer depends on battery voltage.
+**Motor.** One Hiwonder JGA27-310R encoder motor (20:1 gearbox, 450 rpm) on port M2 of the RRC Lite board. The board runs the speed loop with the encoder, so the software commands m/s (converted to board rps) and the speed no longer depends on battery voltage.
 
 **Torque and speed reasoning.**
 

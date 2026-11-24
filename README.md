@@ -116,7 +116,7 @@ The documentation follows the five evaluation criteria of the WRO 2026 Future En
 | | |
 | --- | --- |
 | Name | **Sami** (version 11 of our car, 2024–2026) |
-| Drive | Rear wheels, one Hiwonder 310 motor with encoder on the RRC Lite board, 1:1 gearing |
+| Drive | Rear wheels, one Hiwonder JGA27-310R encoder motor on the RRC Lite board, 1:1 gearing |
 | Steering | Ackermann linkage, one 15 kg·cm servo, real wheel angle limited to 17.6° |
 | Computer | Raspberry Pi 5 (Ubuntu 24.04, ROS 2 Jazzy) and Hiwonder RRC Lite (STM32F407) |
 | Sensors | LDROBOT LD19 LiDAR, Pi camera with a wide lens, IMU of the RRC Lite, VL53L0X rear distance sensor |

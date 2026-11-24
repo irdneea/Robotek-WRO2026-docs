@@ -9,7 +9,7 @@ flowchart LR
   BAT1["Electronics battery<br/>2S LiPo 7.4 V"] -->|"6–14 V in"| RRC["RRC Lite board<br/>STM32F407, IMU, button, LEDs"]
   RRC -->|"5 V / 5 A Type-C (PD)"| PI["Raspberry Pi 5<br/>Ubuntu 24.04, ROS 2 Jazzy"]
   BAT2["Motor battery<br/>2S LiPo 7.4 V"] -->|"VIN"| MOTORPORT["RRC Lite motor port M2"]
-  MOTORPORT --> MOTOR["Hiwonder 310 DC motor + encoder<br/>(rear axle, 1:1 gear)"]
+  MOTORPORT --> MOTOR["Hiwonder JGA27-310R motor + encoder<br/>(rear axle, 1:1 gear)"]
   RRC -->|"PWM servo port J4 (channel 1)"| SERVO["15 kg·cm steering servo"]
   PI <-->|"USB serial 1 Mbaud"| RRC
   PI <-->|"USB, 230 400 baud"| LIDAR["LDROBOT LD19 LiDAR<br/>(via CP2102)"]
@@ -106,7 +106,7 @@ In a stress test the LiDAR did not lose a single message. Stable names for each 
 | Pi camera, wide lens | 1 | Colour of the signs |
 | VL53L0X distance sensor | 1 | Rear distance |
 | 15 kg·cm digital servo | 1 | Steering |
-| Hiwonder 310 DC gear motor with encoder | 1 | Drive |
+| Hiwonder JGA27-310R encoder motor (20:1 gearbox, 450 rpm) | 1 | Drive |
 | 2S LiPo 7.4 V batteries (electronics, motor) | 2 | Power; the electronics battery listed with 5000 mAh 20C in the earlier BOM |
 | 16-LED WS2812 ring | 1 | Steady lighting for colour detection |
 | 3D-printed base, housings and wheels; silicone tyres | – | See [01](01-mobility-and-mechanical-design.md) |
