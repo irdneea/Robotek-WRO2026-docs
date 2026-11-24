@@ -1,10 +1,10 @@
 """The referee's assistant of an Obstacle round: the Open one (``round_recorder``) with the Obstacle field and judge.
 
-* waits until the sensors and your node are up, publishes ``/start`` and writes the Start event;
-* records the true pose of the car (``audit_pose.csv``; your strategy never sees it);
+* waits until the sensors and the strategy node are up, publishes ``/start`` and writes the Start event;
+* records the true pose of the car (``audit_pose.csv``; the strategy never sees it);
 * ends the round after 180 s, after 30 s without reaching a new section during the laps, or when the car has
   driven the three laps (and, with the lot, parked) and stays still for 31 s, and then scores it
-  (``score_obstacle``). It does not read your node's state (STOP): only the true pose. A car that stops within
+  (``score_obstacle``). It does not read the strategy node's state (STOP): only the true pose. A car that stops within
   the 180 s is watched past them until its stop has lasted 31 s (the judge needs 30 s of stop observed).
 
 The field (``world.sdf`` and ``manifest.json`` with the signs and the lot) is written by the launch before the

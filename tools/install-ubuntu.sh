@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Install ROS 2 Jazzy, Gazebo Harmonic (through ros_gz) and the tools of the course on Ubuntu 24.04 (also WSL2).
+# Install ROS 2 Jazzy, Gazebo Harmonic (through ros_gz) and the tools of the project on Ubuntu 24.04 (also WSL2).
 #
 #   bash tools/install-ubuntu.sh
 #

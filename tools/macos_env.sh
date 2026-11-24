@@ -1,4 +1,4 @@
-# Prepare a terminal on macOS (RoboStack Jazzy) to build and run the course.
+# Prepare a terminal on macOS (RoboStack Jazzy) to build and run the workspace.
 # Source it from the repo root, in zsh or bash:
 #
 #   source tools/macos_env.sh                 # default env: ~/robotek-ros/jazzy

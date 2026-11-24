@@ -108,6 +108,8 @@ class Lot:
     """Lot interior [xa, xb] x [-OUTER, -OUTER + LOT_DEPTH] in the track frame."""
 
     def __init__(self, sign):
+        """The lot for a driving direction: counter-clockwise puts it at the end of the start straight, clockwise mirrors it.
+        """
         if sign > 0:
             self.xa, self.xb = LOT_END-LOT_LENGTH, LOT_END
         else:
@@ -120,11 +122,15 @@ class Lot:
                 (self.xb-margin, self.xb+LIMIT_THICKNESS+margin, self.y0, self.y1+margin)]
 
     def parked(self, x, y, th, inside=0., parallel=math.radians(3.)):
+        """True if the whole outline of the car is inside the lot (by ``inside`` metres) and the car is parallel to the wall.
+        """
         return abs(wrap(th)) <= parallel and all(
             self.xa+inside <= px <= self.xb-inside and self.y0+inside <= py <= self.y1-inside
             for px, py in footprint(x, y, th))
 
     def free(self, x, y, th, steer, margin):
+        """True if the car, at this pose and with this steering, touches neither the wall nor a limit plate (with ``margin`` of room).
+        """
         # Quick accept: the whole car (radius REACH) clear of wall and limits.
         if y-REACH > self.y1+margin or (y-REACH > self.y0+margin and (
                 x+REACH < self.xa-LIMIT_THICKNESS-margin or x-REACH > self.xb+LIMIT_THICKNESS+margin)):
@@ -178,6 +184,7 @@ class ObstacleParking:
     """Drives the parking phases on top of ObstacleDriver's localization."""
 
     def __init__(self, cfg, driver):
+        """Starts locating the lot; ``driver`` gives the direction and the speed the mission uses."""
         self.cfg = cfg
         self.driver = driver
         self.lot = Lot(driver.sign)
@@ -198,6 +205,7 @@ class ObstacleParking:
         self.log = []         # events for the recording
 
     def snapshot(self):
+        """A small dictionary of the state, the lot and the plan, for the log."""
         return dict(state=self.state, lot=[self.lot.xa, self.lot.xb], plans=self.plans,
                     arc=None if self.current is None else list(self.current), arcs_left=len(self.path))
 
@@ -288,6 +296,7 @@ class ObstacleParking:
         return self._out(0., 0.)
 
     def _out(self, speed, steer):
+        """Sets the speed in the driver and returns the command in the mirrored frame."""
         self.driver.speed = speed
         return speed, self.driver.sign*steer, self.state
 
@@ -331,6 +340,7 @@ class ObstacleParking:
         return tuple(self.path[0])
 
     def _still_valid(self, pose):
+        """Checks that the rest of the planned arcs still ends parked from the current pose."""
         margin = max(.001, self.plan_margin-VALID_SLACK)
         for steer, direction in self.path:
             pose = self.lot.arc(pose, steer, direction, margin)
@@ -340,6 +350,8 @@ class ObstacleParking:
 
     # ------------------------------------------------------------- phases
     def _approach(self, x, y, th):
+        """Follows the line parallel to the wall until the car is past the lot, then starts the entry (or backs up if it went too far).
+        """
         tx, ty = self.pre
         aligned = abs(y-ty) < .02 and abs(wrap(th)) < math.radians(2.)
         if x >= tx and (aligned or x >= tx+APPROACH_EXTRA):
@@ -371,6 +383,7 @@ class ObstacleParking:
         self.scans += 1
 
     def _fix_lot(self):
+        """Replaces the nominal limits by the median of where the LiDAR saw them."""
         seen = {k: sorted(v)[len(v)//2] for k, v in self.limit_seen.items() if v}
         if 0 in seen:
             self.lot.xa = seen[0]+LIMIT_THICKNESS/2

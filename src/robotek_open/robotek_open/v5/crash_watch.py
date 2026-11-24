@@ -15,7 +15,9 @@ import math
 
 
 class CrashWatch:
+    """Keeps the last seconds of the round and says when the car has hit something (LiDAR blind, gyro jump)."""
     def __init__(self, window_s=5.0, min_rays=120, clear_rays=180, blind_s=0.4, gyro_jump=3.0, min_speed=0.2):
+        """The thresholds: window length, rays that count as a clear view, blind time and gyro jump."""
         self.window_s, self.min_rays, self.clear_rays, self.blind_s = window_s, min_rays, clear_rays, blind_s
         self.gyro_jump, self.min_speed = gyro_jump, min_speed
         self.ticks, self.scans = deque(), deque()
@@ -25,9 +27,11 @@ class CrashWatch:
 
     @staticmethod
     def valid_rays(ranges, range_min, range_max):
+        """How many rays of a scan are real measurements."""
         return sum(1 for r in ranges if r is not None and math.isfinite(r) and range_min < r < range_max)
 
     def _trim(self, rows, t):
+        """Drops the samples older than the window."""
         while rows and t - rows[0]['t'] > self.window_s:
             rows.popleft()
 
@@ -61,10 +65,12 @@ class CrashWatch:
         return self.reason
 
     def window(self):
+        """The recent history, as a dictionary ready to be saved."""
         return {'reason': self.reason, 'window_s': self.window_s,
                 'ticks': list(self.ticks), 'scans': list(self.scans)}
 
     def dump(self, path, extra=None):
+        """Saves that history to a file for later analysis and returns its path."""
         data = self.window()
         data.update(extra or {})
         with open(path, 'w') as out:

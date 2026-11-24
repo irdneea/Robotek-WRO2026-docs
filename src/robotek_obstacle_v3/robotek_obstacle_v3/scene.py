@@ -18,15 +18,18 @@ CORNER_UNITS = math.pi / 4.0  # arc length of a 0.5 m quarter circle
 
 
 def wrap(angle):
+    """An angle brought into -pi..pi."""
     return math.atan2(math.sin(angle), math.cos(angle))
 
 
 def clamp(value, low, high):
+    """A value held between a low and a high limit."""
     return max(low, min(high, value))
 
 
 @dataclass(frozen=True)
 class Scene:
+    """What the mission knows at one instant, as plain numbers (distances, heading error, progress, the next sign)."""
     inner: float                 # m to the island side
     outer: float                 # m to the outer wall
     front: float                 # m of free space ahead
@@ -60,6 +63,7 @@ def lane_normal(progress):
 
 @lru_cache(maxsize=8)
 def _offsets(span, step):
+    """A list of offsets from 0 to ``span`` in steps of ``step``."""
     offsets, offset = [], 0.0
     while offset <= span:
         offsets.append(offset)

@@ -9,7 +9,7 @@
 #
 # It always waits for the board button: button:=false is refused here, because the car would drive off
 # 12 s after every boot. The arguments are saved in ~/.config/robotek/autostart-args; run "on" again to
-# change them. It runs the robotek-learn of this folder (git pull + colcon build as usual; it uses the
+# change them. It runs the code of this folder (git pull + colcon build as usual; it uses the
 # build at the next start). Needs lingering for the user (loginctl show-user $USER | grep Linger=yes) so it
 # starts without anyone logging in; the Pi of the team already has it.
 set -euo pipefail
@@ -63,7 +63,7 @@ case "${1:-}" in
         echo "$args" > "$ARGS_FILE"
         cat > "$UNIT_FILE" <<EOF
 [Unit]
-Description=robotek car launch at boot (robotek-learn: car.launch.py, waits for the board button)
+Description=robotek car launch at boot (car.launch.py, waits for the board button)
 
 [Service]
 Type=simple

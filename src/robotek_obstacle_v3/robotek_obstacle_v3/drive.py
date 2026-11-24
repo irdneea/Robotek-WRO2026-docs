@@ -67,11 +67,18 @@ def hsv_spec(bands):
 
 
 def stamp_of(msg):
+    """The time stamp of a ROS message, in seconds."""
     return msg.header.stamp.sec + msg.header.stamp.nanosec * 1e-9
 
 
 class Drive(Node):
+    """The Obstacle node: collects the sensors, runs the strategy at CONTROL_RATE and publishes the command and the debug views.
+    """
     def __init__(self):
+        """Reads the ROS parameters, builds the strategy and the camera model, and creates every publisher, subscriber and timer.
+
+        A bad lot-exit sequence stops the node here, at launch, instead of in the middle of the parking lot.
+        """
         super().__init__('strategy')
         parking = self.declare_parameter('parking', False).value
         defaults = asdict(Params())
@@ -152,14 +159,17 @@ class Drive(Node):
                 p.park_align_speed or p.park_speed, p.park_pulse_speed))
 
     def now(self):
+        """The ROS clock in seconds (simulation time in Gazebo, wall time on the car)."""
         return self.get_clock().now().nanoseconds * 1e-9
 
     def on_scan(self, msg):
+        """New LiDAR scan: keep it for the recording and the debug view and give it to the strategy."""
         self.scan_msg = msg
         self.rec.scan(msg)
         self.strategy.on_scan(msg)
 
     def on_imu(self, msg):
+        """New IMU sample: give the gyro z (yaw rate) to the strategy."""
         self.strategy.on_imu(stamp_of(msg), msg.angular_velocity.z)
 
     def on_compressed(self, msg):
@@ -223,10 +233,12 @@ class Drive(Node):
         self.signs_pub.publish(markers)
 
     def on_rear(self, msg):
+        """New rear distance in mm (-1 means nothing in range): give it to the mission."""
         self.rear_mm = int(msg.data)
         self.strategy.mission.rear(self.now(), self.rear_mm)
 
     def on_start(self, msg):
+        """The Start signal. Only the first one counts; it records the start time and wakes the strategy."""
         if msg.data and not self.strategy.started:
             self.get_logger().info('Start.')
             self.t_start = self.now()
@@ -234,6 +246,11 @@ class Drive(Node):
             self.strategy.request_start()
 
     def control(self):
+        """One control tick: ask the strategy for a speed and a wheel angle and publish them as a Twist.
+
+        The Twist carries the yaw rate that makes the bicycle model turn the wheels by ``steer``; base_adapter undoes that to get
+        the servo angle. It also sends the hard brake of the front recover on /robotek/estop, and the pose for the debug view.
+        """
         speed, steer = self.strategy.control(self.now(), 1.0 / CONTROL_RATE)
         self.steer = steer
         cmd = Twist()
@@ -330,6 +347,8 @@ class Drive(Node):
         self._log_signs(mission, t, phi)
 
     def _log_signs(self, mission, t, phi):
+        """Prints a line each time a sign is seen for the first time or its colour changes, with its seat on the track.
+        """
         for seat, (lateral, votes, hits) in mission._seats.items():
             if hits < SEAT_HITS:
                 continue
@@ -375,6 +394,8 @@ class Drive(Node):
         self.rec.event('round', t, end=how, laps=self.laps, sections=[list(s) for s in self.sections])
 
     def _record(self, mission, speed, steer):
+        """Writes one row of telemetry for this tick (state, pose, gyro, command, signs, parking) to the round recording.
+        """
         if not self.rec.on:
             return
         now, scan = self.now(), self.scan_msg
@@ -442,6 +463,7 @@ class Drive(Node):
 
 
 def main(args=None):
+    """Starts the node and, whatever ends it, closes the recording so that the round is saved."""
     rclpy.init(args=args)
     node = Drive()
     try:

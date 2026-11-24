@@ -15,9 +15,9 @@ What it does NOT model: wheel slip, the Ackermann plugin, camera images (so no c
 forces or signs that move. It is a one-way filter: failing here is bad news, passing proves nothing until Gazebo
 agrees.
 
-    python3 -m robotek_evaluation.obstacle_lab --strategy my_obstacle.strategy:Strategy --seed 2 --direction cw
-    python3 -m robotek_evaluation.obstacle_lab --strategy my_obstacle.strategy:Strategy --parking --seed 4
-    python3 -m robotek_evaluation.obstacle_lab --strategy my_obstacle.strategy:Strategy \\
+    python3 -m robotek_evaluation.obstacle_lab --strategy robotek_obstacle_v3.strategy:Strategy --seed 2 --direction cw
+    python3 -m robotek_evaluation.obstacle_lab --strategy robotek_obstacle_v3.strategy:Strategy --parking --seed 4
+    python3 -m robotek_evaluation.obstacle_lab --strategy robotek_obstacle_v3.strategy:Strategy \\
         --layouts 0-4 --seeds 0-4 --early --workers 8          # 10 fields x 5 noise seeds, in parallel
 
 The strategy is any ``robotek_course.obstacle_base.ObstacleStrategyBase`` subclass: ``on_scan(scan)``,
@@ -367,7 +367,7 @@ def format_result(r):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__.split('\n')[0])
-    parser.add_argument('--strategy', required=True, help='module:Class, e.g. my_obstacle.strategy:Strategy')
+    parser.add_argument('--strategy', required=True, help='module:Class, e.g. robotek_obstacle_v3.strategy:Strategy')
     parser.add_argument('--seed', type=int, help='layout of one round (default: --layouts)')
     parser.add_argument('--layouts', default='0-4', help='layouts of a batch, e.g. 0-4 or 0,3,7')
     parser.add_argument('--direction', choices=['ccw', 'cw'], help='one direction (default: both)')

@@ -1,7 +1,7 @@
-"""The precomputed v3 corner table matches the planner (WRO-Strategies' tools/build_corner_table.py built it).
+"""The precomputed v3 corner table matches the planner (it was computed offline with the same planner).
 
 The numbers are compared to 1e-12: the table was computed on another machine and the last bit of a float can
-differ (2e-16 on the Mac, also in WRO-Strategies). A real change of geometry (robotek_common's vehicle.py instead of
+differ (2e-16 between two machines). A real change of geometry (robotek_common's vehicle.py instead of
 car.py, for example) moves it by 1e-4 m and fails.
 """
 import random

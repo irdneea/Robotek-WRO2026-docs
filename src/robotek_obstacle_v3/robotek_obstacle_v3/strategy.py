@@ -26,7 +26,10 @@ CAMERA_LOST = 1.5       # s: an older camera no longer holds the car; it drives 
 
 
 class Strategy(ObstacleStrategyBase):
+    """The Obstacle strategy: the Mission plus the sensor watchdog and the 180 s limit of the round."""
     def __init__(self, direction='auto', parking=False, params=None, **overrides):
+        """Builds the mission. ``direction`` can be forced to ccw or cw (used in parking tests); otherwise the mission reads it from the walls.
+        """
         super().__init__()
         values = {**dict(params or {}), **overrides}
         if parking:
@@ -39,6 +42,7 @@ class Strategy(ObstacleStrategyBase):
         self.camera_lost = False              # True while the camera is older than CAMERA_LOST (the node logs it)
 
     def on_imu(self, now, gyro_z):
+        """New gyro sample: the base class integrates it, and the stamp is kept to know how fresh the gyro is."""
         super().on_imu(now, gyro_z)
         self._imu_stamp = now
 
@@ -59,6 +63,11 @@ class Strategy(ObstacleStrategyBase):
         return not self.stale(now)
 
     def update(self, now, dt):
+        """One tick of the strategy: wait for fresh sensors, enforce the time limit and let the mission decide.
+
+        The round clock starts at the first tick after Start with every sensor fresh. With a stale sensor the car stops (state
+        WAIT_SENSOR); 180 s after the start of the round it stops for good (FAULT).
+        """
         distance = self.travelled if self.mission.loc.ready else 0.0
         if self.label in ('DONE', 'FAULT'):
             return 0.0, 0.0

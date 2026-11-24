@@ -206,7 +206,7 @@ def judge_obstacle(directory,manifest,rows=None,events=None):
     drift=max((math.hypot(float(r['x_gt'])-float(stationary[0]['x_gt']),float(r['y_gt'])-float(stationary[0]['y_gt'])) for r in stationary),default=None)
     hold=None if done is None or not rows else float(rows[-1]['sim_time'])-done['sim_time']
     # Drift while stopped: the rules only require stopping in the start sector, and 2.5 mm of
-    # simulation creep was costing the 3 stop points (22 Oct 2026 decision, docs/obstacle-reimpl-v2.md).
+    # simulation creep was costing the 3 stop points (decision of 22 Oct 2026).
     stop_valid=bool(done and legal_stop and hold is not None and hold>=30 and drift is not None and drift<.02)
     complete=bool(done and len(laps)>=3 and not fault and legal_stop)
     counts={p['name']:sum(c['pillar']==p['name'] and c['correct_side'] for c in crossings) for p in pillars}  # crossings already cut at fault

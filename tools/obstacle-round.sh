@@ -6,7 +6,7 @@
 #   bash tools/obstacle-round.sh                        # exactly the coach's command
 #   bash tools/obstacle-round.sh direction:=cw park_fixed_sense:=2
 #
-# Best rounds and what is still missing: WRO-Strategies docs/robot-real-pi/obstacle-runs/20261111/README.md.
+# The results of this command are in the README, chapter 11.
 set -eo pipefail
 REPO=$(cd "$(dirname "$0")/.." && pwd)
 exec bash "$REPO/tools/car-run.sh" obstacle start_lot:=true \

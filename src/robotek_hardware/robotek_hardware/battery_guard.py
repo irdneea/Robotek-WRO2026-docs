@@ -12,9 +12,9 @@ trip it. The drive motor gets its own battery (team decision, 9 Oct 2026), so th
 feeds the electronics and does not sag with the motor; the motor battery is not monitored.
 (9 Oct 2026: changed from stopping the car at 6.6 V to only warning, at the team's request.)
 
-  ros2 launch robotek_course car.launch.py strategy:=my_open                    # on (6.8 V)
-  ros2 launch robotek_course car.launch.py strategy:=my_open battery_guard:=false   # off
-  ros2 launch robotek_course car.launch.py strategy:=my_open battery_min_v:=7.0     # other limit
+  ros2 launch robotek_course car.launch.py strategy:=robotek_obstacle_v3                    # on (6.8 V)
+  ros2 launch robotek_course car.launch.py strategy:=robotek_obstacle_v3 battery_guard:=false   # off
+  ros2 launch robotek_course car.launch.py strategy:=robotek_obstacle_v3 battery_min_v:=7.0     # other limit
 """
 import rclpy
 from rclpy.executors import ExternalShutdownException

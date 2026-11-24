@@ -27,7 +27,7 @@ from .settings import Params
 
 try:
     from .corner_table import TABLE
-except ImportError:      # before tools/build_corner_table.py has run
+except ImportError:      # without the table the planner simply works every corner out
     TABLE = {}
 
 SIGN_HALF = 0.025           # m, half of a 50 mm sign
@@ -88,6 +88,7 @@ def path(d_a, d_b, r):
 
 
 def _box_distance(px, py, bx, by):
+    """Distance from points to a sign, taken as a square box (zero inside it)."""
     dx = np.maximum(np.abs(px - bx) - SIGN_HALF, 0.0)
     dy = np.maximum(np.abs(py - by) - SIGN_HALF, 0.0)
     return np.hypot(dx, dy)
@@ -195,7 +196,7 @@ def _ends(spec):
 
 def line_knots(spec):
     """Knots of a corner line: ``(d_a, d_b, r)`` of the straight-arc-straight family, or
-    ``(('k', knots),)`` for a line found by tools/build_corner_table.py's search."""
+    ``(('k', knots),)`` for a line found by the offline search stored in corner_table.py."""
     return spec[0][1] if len(spec) == 1 else knots(*spec)
 
 
@@ -237,6 +238,8 @@ class _Profiles:
     (point, heading, curvature PREVIEW ahead) tabulated once; the tracker only interpolates."""
 
     def __init__(self, profiles):
+        """Puts every candidate offset profile on one progress grid and tabulates the reference (point, heading, curvature a little ahead) once.
+        """
         self.u0 = min(k[0][0] for k in profiles)
         grid = np.arange(self.u0, max(k[-1][0] for k in profiles) + RAMP_DS, RAMP_DS)
         self.table = np.stack([np.interp(grid, *zip(*k)) for k in profiles])
@@ -245,11 +248,14 @@ class _Profiles:
         self.kappa = self._reference(_advance(u, PREVIEW))[3]
 
     def _index(self, u):
+        """Grid cell and interpolation fraction for each progress value."""
         i = np.clip((u - self.u0) / RAMP_DS, 0, self.table.shape[1] - 1.001)
         j = i.astype(int)
         return np.arange(len(self.table)).reshape((-1,) + (1,) * (u.ndim - 1)), j, i - j
 
     def _point(self, u):
+        """The point of each candidate line at the given progress: the lane centre moved sideways by the candidate offset.
+        """
         rows, j, f = self._index(u)
         offset = self.table[rows, j] + (self.table[rows, j + 1] - self.table[rows, j]) * f
         cx, cy, nx, ny = _lane(u)
@@ -345,7 +351,7 @@ def plan(sign_a, sign_b, fixed_a, fixed_b, low_a=-1.0, low_b=-1.0, pin_a=False, 
     side has no sign and its neighbouring sign is on the adjacent seat (a short ramp): its
     (lateral, colour), which the driven path must also clear and pass on its side; else False.
     The clearance is the one of the driven path (see the module notes). Looked up in the table of
-    tools/build_corner_table.py when it is there (the car does not simulate during the round)."""
+    corner_table.py when the case is there (the car does not simulate during the round)."""
     args = (sign_a, sign_b, fixed_a, fixed_b, low_a, low_b, pin_a, pin_b)
     return TABLE[args] if args in TABLE else _choose(args)
 
@@ -373,6 +379,10 @@ def best(scored):
 
 
 def _choose(args, state=None, keep=None):
+    """Picks the best line for one corner: builds the candidates, keeps a short list and scores each by driving it in a simulation.
+
+    Returns None if there is no candidate. ``keep`` adds the line the car is already driving, so that a replan does not drop it.
+    """
     sign_a, sign_b = args[:2]
     prefs, entry, leave, lot, near = context(args)
     candidates = sorted(_candidates(*args[:6], prefs), reverse=True)

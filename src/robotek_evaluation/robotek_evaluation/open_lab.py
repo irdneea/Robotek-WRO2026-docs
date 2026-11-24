@@ -18,15 +18,15 @@ What it does NOT model: wheel slip, the Ackermann plugin dynamics, camera images
 forces (a contact ends the round) or the motor under load. Results must be compared with
 Gazebo before they are used to decide anything.
 
-    python3 -m robotek_evaluation.open_lab --strategy my_open.strategy:Strategy
-    python3 -m robotek_evaluation.open_lab --strategy my_open.strategy:Strategy --field square100 --direction ccw
+    python3 -m robotek_evaluation.open_lab --strategy <package.module>:<Class>
+    python3 -m robotek_evaluation.open_lab --strategy <package.module>:<Class> --field square100 --direction ccw
 
 Experiments (what happens if the servo is slower, the speed lower, the LiDAR noisier...), all optional and off by default::
 
     --act steer_delay=0.12 --act steer_rate=0.6      # the CAR's actuators (sim_actuator_model parameters)
     --act-scale speed_table_real=0.85                # multiply a parameter (or every entry of a list) by a factor
-    --set my_open.mission.CRUISE_SPEED=1.0           # a constant of the strategy (monkeypatch, see apply_sets)
-    --set 'my_open.*.STEER_LIMIT=0.25'               # '*' = the package and every submodule that has that name
+    --set <package>.mission.CRUISE_SPEED=1.0           # a constant of the strategy (monkeypatch, see apply_sets)
+    --set '<package>.*.STEER_LIMIT=0.25'               # '*' = the package and every submodule that has that name
     --set robotek_evaluation.open_lab.SCAN_DROPOUT=0.10   # the lab's own sensor noise
     --latency 0.04 --seeds 0,1,2 --jobs 8
 """
@@ -258,7 +258,7 @@ class Actuators:
 
 # ---------------------------------------------------------------- strategy
 def load_strategy(spec, overrides=None):
-    """Zero-argument factory for ``module:Class`` (for example ``my_open.strategy:Strategy``).
+    """Zero-argument factory for ``module:Class`` (for example ``<package.module>:<Class>``).
 
     The class must offer what ``run_round`` calls: ``on_scan(scan) -> bool`` (True on the first scan, the Start),
     ``on_imu(now, gyro_z)``, ``on_camera(direction)`` (+1 counter-clockwise, -1 clockwise, 0 unknown),
@@ -518,14 +518,14 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__.split('\n')[0])
     parser.add_argument('--suite', default='std12', choices=['std12'])
     parser.add_argument('--tag', default='lab')
-    parser.add_argument('--strategy', required=True, help='module:Class, for example my_open.strategy:Strategy')
+    parser.add_argument('--strategy', required=True, help='module:Class, for example <package.module>:<Class>')
     parser.add_argument('--param', action='append', default=[], help='name=value, passed to the constructor')
     parser.add_argument('--seed', type=int, default=0)
     parser.add_argument('--seeds', help='comma-separated seeds (replaces --seed), for example 0,1,2')
     parser.add_argument('--field', action='append')
     parser.add_argument('--direction', action='append')
     parser.add_argument('--set', dest='sets', action='append', default=[], metavar='MODULE.NAME=VALUE',
-                        help="monkeypatch a constant; 'my_open.*.NAME' patches every submodule that has it")
+                        help="monkeypatch a constant; '<package>.*.NAME' patches every submodule that has it")
     parser.add_argument('--act', action='append', default=[], metavar='NAME=VALUE',
                         help='override a parameter of the car\'s actuators (sim_actuator_model), for example steer_delay=0.12')
     parser.add_argument('--act-scale', action='append', default=[], metavar='NAME=FACTOR',

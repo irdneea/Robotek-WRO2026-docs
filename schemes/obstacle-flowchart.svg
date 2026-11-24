@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 690" width="1000" height="690" font-family="Arial, Helvetica, sans-serif">
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#333"/></marker></defs>
+<rect width="1000" height="690" fill="#ffffff"/>
+<text x="500.0" y="26" font-size="18" font-weight="bold" text-anchor="middle">Obstacle Challenge: what the car does, from Start to the final park</text>
+<rect x="380" y="50" width="240" height="44" rx="8" fill="#fff3b0" stroke="#333" stroke-width="1.2"/>
+<text x="500.0" y="76.0" font-size="12" font-weight="bold" text-anchor="middle">Press the button (Start)</text>
+<rect x="380" y="120" width="240" height="58" rx="8" fill="#d6e6fa" stroke="#333" stroke-width="1.2"/>
+<text x="500.0" y="145.5" font-size="12" font-weight="bold" text-anchor="middle">SETUP</text>
+<text x="500.0" y="160.5" font-size="12" font-weight="normal" text-anchor="middle">stand still 1 s, measure the gyro bias</text>
+<polygon points="500,203.0 625.0,235 500,267.0 375.0,235" fill="#fff3b0" stroke="#333" stroke-width="1.2"/>
+<text x="500" y="238.66666666666666" font-size="11" text-anchor="middle">Starting in the parking lot?</text>
+<rect x="70" y="290" width="280" height="90" rx="8" fill="#d6e6fa" stroke="#333" stroke-width="1.2"/>
+<text x="210.0" y="316.5" font-size="12" font-weight="bold" text-anchor="middle">LOT_EXIT</text>
+<text x="210.0" y="331.5" font-size="12" font-weight="normal" text-anchor="middle">read the direction from the near wall,</text>
+<text x="210.0" y="346.5" font-size="12" font-weight="normal" text-anchor="middle">drive the exit pulses (forward / reverse</text>
+<text x="210.0" y="361.5" font-size="12" font-weight="normal" text-anchor="middle">at full lock), hand the pose to the localizer</text>
+<rect x="380" y="290" width="240" height="60" rx="8" fill="#d6e6fa" stroke="#333" stroke-width="1.2"/>
+<text x="500.0" y="316.5" font-size="12" font-weight="bold" text-anchor="middle">Direction from the walls</text>
+<text x="500.0" y="331.5" font-size="12" font-weight="normal" text-anchor="middle">(open lane: the car is in the lane)</text>
+<rect x="380" y="400" width="240" height="100" rx="8" fill="#e6dcf5" stroke="#333" stroke-width="1.2"/>
+<text x="500.0" y="431.5" font-size="12" font-weight="bold" text-anchor="middle">RUN (3 laps)</text>
+<text x="500.0" y="446.5" font-size="12" font-weight="normal" text-anchor="middle">see signs: LiDAR cluster + colour</text>
+<text x="500.0" y="461.5" font-size="12" font-weight="normal" text-anchor="middle">file them by seat, choose the side</text>
+<text x="500.0" y="476.5" font-size="12" font-weight="normal" text-anchor="middle">follow the planned line, plan the corners</text>
+<rect x="690" y="400" width="260" height="100" rx="8" fill="#f8d9d9" stroke="#333" stroke-width="1.2"/>
+<text x="820.0" y="431.5" font-size="12" font-weight="bold" text-anchor="middle">Safety nets</text>
+<text x="820.0" y="446.5" font-size="12" font-weight="normal" text-anchor="middle">front recover: brake, reverse at full lock</text>
+<text x="820.0" y="461.5" font-size="12" font-weight="normal" text-anchor="middle">steer watch: servo not following</text>
+<text x="820.0" y="476.5" font-size="12" font-weight="normal" text-anchor="middle">camera lost: use remembered colours</text>
+<polygon points="500,528.0 635.0,560 500,592.0 365.0,560" fill="#fff3b0" stroke="#333" stroke-width="1.2"/>
+<text x="500" y="563.6666666666666" font-size="11" text-anchor="middle">Three laps done?</text>
+<rect x="70" y="530" width="280" height="60" rx="8" fill="#d6e6fa" stroke="#333" stroke-width="1.2"/>
+<text x="210.0" y="549.0" font-size="12" font-weight="bold" text-anchor="middle">PARK</text>
+<text x="210.0" y="564.0" font-size="12" font-weight="normal" text-anchor="middle">approach, reverse arc, straight down,</text>
+<text x="210.0" y="579.0" font-size="12" font-weight="normal" text-anchor="middle">finishing pulses</text>
+<rect x="110" y="615" width="200" height="40" rx="8" fill="#fff3b0" stroke="#333" stroke-width="1.2"/>
+<text x="210.0" y="639.0" font-size="12" font-weight="bold" text-anchor="middle">STOP: report DONE</text>
+<path d="M500,94 L500,120" fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#a)"/>
+<path d="M500,178 L500,203" fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#a)"/>
+<path d="M375,235 L210,235 L210,290" fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="290" y="228" font-size="11" fill="#222" text-anchor="middle" paint-order="stroke" stroke="#fff" stroke-width="4">yes</text>
+<path d="M500,267 L500,290" fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="515" y="282" font-size="11" fill="#222" text-anchor="middle" paint-order="stroke" stroke="#fff" stroke-width="4">no</text>
+<path d="M210,380 L210,450 L380,450" fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#a)"/>
+<path d="M500,350 L500,400" fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#a)"/>
+<path d="M620,450 L690,450" fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#a)" marker-start="url(#a)"/>
+<path d="M500,500 L500,528" fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#a)"/>
+<path d="M365,560 L350,560" fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="358" y="548" font-size="11" fill="#222" text-anchor="middle" paint-order="stroke" stroke="#fff" stroke-width="4">yes</text>
+<path d="M635,560 L655,560 L655,380 L570,380 L570,400" fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="700" y="552" font-size="11" fill="#222" text-anchor="middle" paint-order="stroke" stroke="#fff" stroke-width="4">no: next lap</text>
+<path d="M210,590 L210,615" fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="40" y="680" font-size="11" text-anchor="start" font-weight="normal">If 180 s pass after Start the round ends in FAULT. Everything is written for a counter-clockwise round. A clockwise round is mirrored (and the colours swapped) before the mission sees it.</text>
+</svg>

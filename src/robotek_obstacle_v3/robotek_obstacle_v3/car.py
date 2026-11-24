@@ -1,11 +1,10 @@
-"""The car geometry Obstacle v3 was tuned with: a copy of WRO-Strategies' robotek_common/vehicle.py (3 nov 2026).
+"""The geometry of the car and the camera as the Obstacle was tuned with them (the numbers of 3 Nov 2026).
 
-robotek-learn's robotek_common/vehicle.py still has the earlier caliper numbers (21 oct 2026): up to 1.4 mm away
-(WHEELBASE .1174 there, .11883 here). corner_table.py was computed with these numbers, so the v3 planners (corner, park, the
-mission's outline, the parking search, the LiDAR clusters) read them from here and decide as in WRO-Strategies. Only
-drive.py converts the steering to /cmd_vel_raw with robotek_common's WHEELBASE (the one base_adapter inverts).
-
-The original docstring follows.
+``robotek_common/vehicle.py`` has the same car with the caliper numbers of 21 Oct 2026, up to 1.4 mm away (wheelbase
+0.1174 m there, 0.11883 m here). corner_table.py was computed with the values of this file, so every planner of the
+Obstacle (corner, park, the outline of the mission, the parking search, the LiDAR clusters) reads them from here. Only
+drive.py converts the steering for ``/cmd_vel_raw`` with the wheelbase of robotek_common, because that is the one
+``base_adapter`` undoes.
 
 Robotek car geometry and sensor mounting; must match robotek_description's URDF.
 
@@ -34,7 +33,7 @@ CAMERA_OFFSET_X = .05579              # m ahead of base_link (camera body centre
 CAMERA_PITCH = .4                     # rad, tilted down
 CAMERA_HFOV = math.pi/3               # rad, horizontal field of view
 # Real camera after re-aiming it, measured 8 oct 2026 with a pillar on each side and the
-# LiDAR (docs/robot-real-pi.md). Image column -> LiDAR bearing: effective focal 486 px
+# LiDAR (our real-car notes). Image column -> LiDAR bearing: effective focal 486 px
 # (~67 deg; the lens has barrel distortion, ~590 px near the centre) and the camera turned
 # 4.4 deg to the left of the LiDAR; pitched ~10 deg down. The simulation keeps the values
 # above unless real_car:=true; the strategies get these as parameters on the car.

@@ -1,11 +1,11 @@
-"""The simulator of the course: Gazebo, the field, the car as measured, its sensors and (optionally) RViz.
+"""The simulator: Gazebo, the field, the car as measured, its sensors and (optionally) RViz.
 
     ros2 launch robotek_course sim.launch.py                    # Gazebo window
     ros2 launch robotek_course sim.launch.py gui:=false rviz:=true
     ros2 launch robotek_course sim.launch.py direction:=cw      # the car starts facing the other way
-    ros2 launch robotek_course sim.launch.py actuator_params:=steer_delay=0.18,steer_rate=0.6   # a slower servo (step 12)
+    ros2 launch robotek_course sim.launch.py actuator_params:=steer_delay=0.18,steer_rate=0.6   # a slower servo
 
-It does not drive the car and does not record anything: ``round.launch.py`` adds your node and the referee.
+It does not drive the car and does not record anything: ``round.launch.py`` adds the strategy node and the referee.
 The car is the real one: servo and motor with their delays (``real_car_v1.yaml``), a LiDAR that loses 4.3 % of
 its rays, a camera at 6 fps and a gyroscope with bias and noise.
 """

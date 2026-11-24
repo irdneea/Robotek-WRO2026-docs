@@ -8,7 +8,7 @@ Columns: time | state (/robotek/state) | camera blue/orange line length (px, the
 blue/orange (LineCounter, every frame) | LiDAR left, right, front (m, /robotek/scan) | gyro z (rad/s, /robotek/imu) |
 command: speed (m/s) and steering (deg, + = left, from /cmd_vel_raw) | drive motor rps (/rrc/set_motor).
 3.5 s after Start it prints the gyro bias at rest before Start and in the strategy's calibration window
-(0.5-2.0 s after Start: tools/patches/my_open-car-calibration.patch), to check the calibration.
+(the Open measures it between 0.5 and 2.0 s after Start), to check the calibration.
 
 While the strategy is in CALIBRATE or DETECT_DIRECTION (and the first 3 s of FOLLOW), it saves a camera frame every
 0.5 s to --frames (default ~/rondas-coche/frames-<time>): the raw image and the same image with what the detector

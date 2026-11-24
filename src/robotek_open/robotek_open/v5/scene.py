@@ -18,6 +18,8 @@ MAX_GAP_BEAMS = 2                 # beams off the wall line that do not end the 
 
 @dataclass(frozen=True)
 class Scene:
+    """What one LiDAR scan says, in four numbers: distances left and right, the wall ahead and where the island ends.
+    """
     left: float = math.inf         # median distance to the wall on the left (m)
     right: float = math.inf
     front_axis: float = math.inf   # distance to the wall ahead along the track axis
@@ -41,16 +43,19 @@ def scene_from_scan(scan, forward_yaw=0.0, direction='ccw'):
 
 
 def _window(angles, ok, centre, half):
+    """Which rays lie within ``half`` radians of the direction ``centre``."""
     relative = np.arctan2(np.sin(angles - centre), np.cos(angles - centre))
     return ok & (np.abs(relative) <= half)
 
 
 def _median_range(angles, ranges, ok, centre):
+    """Median distance of the rays in a window; infinity if there are none."""
     selected = _window(angles, ok, centre, SIDE_HALF)
     return float(np.median(ranges[selected])) if selected.any() else math.inf
 
 
 def _front_axis(angles, ranges, ok, forward_yaw):
+    """Distance to the wall ahead measured along the track axis (the rays are projected on it)."""
     selected = _window(angles, ok, forward_yaw, AXIS_HALF)
     if not selected.any():
         return math.inf

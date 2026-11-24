@@ -32,7 +32,9 @@ HOLD = 0.6           # s stopped with the wheels centred after a fault
 
 
 class SteerWatch:
+    """Compares the steering that was asked for with the turn the gyroscope actually saw."""
     def __init__(self, steer_limit, wheelbase):
+        """Needs the largest wheel angle and the wheelbase to work out the turn rate that full lock should give."""
         self.limit = steer_limit
         self.wheelbase = wheelbase
         self.samples = deque()        # (now, dt, steer, distance, gyro) since the lock began

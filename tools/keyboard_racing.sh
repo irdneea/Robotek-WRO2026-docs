@@ -14,5 +14,5 @@ export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp ROS_DOMAIN_ID=${REAL_CAR_DOMAIN_ID:
 export ROS_STATIC_PEERS=${ROS_STATIC_PEERS:-$PI_IP}
 IFACE=$(route -n get "$PI_IP" 2>/dev/null | awk '/interface:/{print $2}')
 [ -n "$IFACE" ] && export CYCLONEDDS_URI="<CycloneDDS><Domain><General><Interfaces><NetworkInterface name=\"$IFACE\" multicast=\"true\"/></Interfaces><AllowMulticast>true</AllowMulticast></General></Domain></CycloneDDS>"
-echo "keyboard_racing: dominio $ROS_DOMAIN_ID, coche $PI_IP ${IFACE:+(interfaz $IFACE)}"
+echo "keyboard_racing: ROS domain $ROS_DOMAIN_ID, car $PI_IP ${IFACE:+(interface $IFACE)}"
 exec python3 tools/keyboard_racing.py "${ARGS[@]}"

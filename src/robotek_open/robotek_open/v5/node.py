@@ -42,7 +42,11 @@ CRASH_HOLD = 1.0           # s between the crash stop and the node's end (the 0 
 
 
 class OpenV5Node(Node):
+    """The Open node: reads LiDAR, gyroscope and camera, runs the mission at a fixed rate and publishes /cmd_vel_raw.
+    """
     def __init__(self):
+        """Declares the parameters, builds the mission and the camera reader, and creates the subscribers, publishers and timers.
+        """
         super().__init__('open_strategy')
         for name, default in PARAMETERS.items():
             self.declare_parameter(name, default)
@@ -108,6 +112,8 @@ class OpenV5Node(Node):
 
     # ------------------------------------------------------------- callbacks
     def on_image(self, msg):
+        """New camera frame (at most about 10 per second): find the blue and orange lines and update the direction vote.
+        """
         stamp = msg.header.stamp.sec + msg.header.stamp.nanosec * 1e-9
         if self._image_stamp is not None and stamp - self._image_stamp < 0.09:
             return
@@ -130,6 +136,7 @@ class OpenV5Node(Node):
         self.recording.record_camera(stamp, self.vision)
 
     def on_scan(self, msg):
+        """New LiDAR scan: summarise it into a Scene (distances to the walls, island end) and record it."""
         self._scan_time = msg.header.stamp.sec + msg.header.stamp.nanosec * 1e-9
         stamp = (msg.header.stamp.sec, msg.header.stamp.nanosec)
         if stamp != self._scene_stamp:
@@ -148,23 +155,28 @@ class OpenV5Node(Node):
             self.request_start('auto_first_scan')
 
     def on_imu(self, msg):
+        """New IMU sample: keep the yaw rate and when it arrived."""
         self._imu_time = msg.header.stamp.sec + msg.header.stamp.nanosec * 1e-9
         self._gyro_z = msg.angular_velocity.z
 
     def on_clock(self, msg):
+        """The simulation clock; in Gazebo this is the time of the round."""
         self.sim_seconds = msg.clock.sec + msg.clock.nanosec * 1e-9
         self._clock_received = True
 
     def request_start(self, source):
+        """Start the mission once, and record where the Start came from."""
         if not self.mission.started:
             self.recording.record_event('start', source, self.sim_seconds)
             self.mission.request_start()
 
     def on_start(self, msg):
+        """The /start topic: the button of the board or the simulator."""
         if msg.data:
             self.request_start('start_topic')
 
     def on_operator_stop(self, msg):
+        """The /robotek/stop topic: the second press of the button."""
         if msg.data and self.mission.label != 'OPERATOR_STOP':
             self.recording.record_event('operator_stop', 'stop_topic', self.sim_seconds)
             self.mission.operator_stop()
@@ -187,10 +199,16 @@ class OpenV5Node(Node):
             self.get_logger().info(f'\033[1;32mDONE: {t:.2f} s from Start\033[0m')
 
     def _fresh(self, limit, stamp, now):
+        """True if a sensor stamp is recent enough (a limit of 0 disables the check)."""
         return limit <= 0.0 or (stamp is not None and now - stamp <= limit)
 
     # --------------------------------------------------------------- control
     def control(self):
+        """One control tick: work out the real time since the last one, ask the mission for speed and steering and publish them.
+
+        The time step is measured, not assumed: on the Pi the timer sometimes ran at 33 Hz instead of 50, and integrating the gyro
+        with the wrong step made a 115 degree corner look like 90. If the gyro or the scan is stale, the car stops.
+        """
         now = self.get_clock().now().nanoseconds * 1e-9
         # The real time since the last tick, not 1/CONTROL_RATE: on the car's Pi the timer ran at 33-39 Hz, and the gyro
         # integrated with 1/50 s per tick saw a 115 deg corner as 90 deg (4 nov 2026). Capped so a stall is not a leap.
@@ -270,6 +288,7 @@ class OpenV5Node(Node):
         return image
 
     def _check_joint_states(self):
+        """Publishes joint states for RViz when nothing else does (only the simulator has real ones)."""
         self._joint_check.cancel()
         if self.count_publishers('/joint_states') == 0:
             self._joint_pub = self.create_publisher(JointState, '/joint_states', 10)
@@ -357,6 +376,7 @@ class OpenV5Node(Node):
         self._turn_pub.publish(MarkerArray(markers=markers))
 
     def finish_if_done(self):
+        """Shuts the node down a moment after the round is over, so the recording is closed cleanly."""
         if self.mission.label == 'DONE':
             if self._done_mark is None:
                 self._done_clock, self._done_mark = mission_clock(
@@ -374,6 +394,8 @@ class OpenV5Node(Node):
 
 
 def main(args=None):
+    """Runs the node. Ctrl-C and SIGTERM are handled so that they wait for the current callback: stopping in the middle of writing the scan log corrupted it once.
+    """
     # Defer external shutdown until the current callback returns (a SIGINT inside gzip.write corrupts the scans).
     rclpy.init(args=args, signal_handler_options=SignalHandlerOptions.NO)
     node = OpenV5Node()

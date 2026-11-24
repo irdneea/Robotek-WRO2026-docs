@@ -11,7 +11,7 @@
 
 The mission always works in a counter-clockwise frame: a clockwise round is mirrored (and the colours swapped) before it
 gets here, so nothing in this file needs to know the direction. The code that wires it to ROS is in drive.py and
-strategy.py. docs/06 and docs/07 of the repository explain the behaviour in detail.
+strategy.py. Chapters 6 and 7 of the repository's README explain the behaviour in detail.
 """
 import bisect
 import math
@@ -92,6 +92,7 @@ class Mission:
     """The v3 decision chain; the ROS node and the lab only wire sensors to it."""
 
     def __init__(self, params=None):
+        """Start in SETUP with an empty memory of signs. ``params`` overrides any default of settings.Params."""
         self.p = make(params)
         self.loc = Localizer()
         self.state = 'SETUP'
@@ -153,14 +154,22 @@ class Mission:
         self._rear = (now, mm)
 
     def _rear_mm(self, now):
+        """The last rear distance in mm, or None if it is older than REAR_MAX_AGE or the sensor saw nothing."""
         t, mm = self._rear
         return mm if now - t <= REAR_MAX_AGE and mm >= 0 else None
 
     def observe(self, observations, stamp=None):
+        """Receives the signs the node paired this frame (LiDAR cluster + colour). ``stamp`` is the time of the image.
+        """
         self._observations = observations or []
         self._obs_stamp = stamp if stamp is not None else math.inf
 
     def step(self, now, scan, scan_stamp, image_stamp, yaw, gyro, distance):
+        """One control tick: takes the newest sensor data and returns ``(speed, steering, state)``.
+
+        The gyro bias is removed here. Depending on the state this hands the tick to the setup, the lot exit, the run or the
+        park. In RUN, the steering watch has the last word: if it trips, the car stops for a moment with the wheels centred.
+        """
         dt = 0.0 if self._last_now is None else max(0.0, min(0.1, now - self._last_now))
         self._last_now = now
         gyro -= self.gyro_bias
@@ -191,6 +200,12 @@ class Mission:
 
     # -------------------------------------------------------------- setup
     def _setup(self, dt, scan, new_scan, yaw, gyro):
+        """Stand still, measure the gyro bias, then read the driving direction from the walls and start the run.
+
+        The bias is the mean of the gyro for CALIBRATE_SECONDS after Start (the rules forbid calibrating before). The direction
+        needs a margin between how well the walls fit counter-clockwise and clockwise; the margin we accept drops after
+        DIRECTION_WAIT seconds, so a hard case still ends in a decision.
+        """
         if self._calib[0] < CALIBRATE_SECONDS:
             self._calib[0] += dt
             self._calib[1] += gyro
@@ -249,6 +264,11 @@ class Mission:
 
     # ---------------------------------------------------------------- run
     def _run(self, now, dt, yaw, gyro, distance):
+        """The main tick of the round: update the pose, remember the signs, replan the line, then steer and choose the speed.
+
+        It also decides when the run is over: it hands over to the park once ``park_after`` units are driven, or stops at
+        ``stop_progress`` when parking is off. A scan older than ``scan_max_age`` stops the car where it is.
+        """
         sign = 1.0 if self.selected_direction == 'ccw' else -1.0
         x, y, th = self._update_pose(distance, yaw, gyro, sign)
         _, _, front = self._walls(sign)
@@ -364,6 +384,8 @@ class Mission:
         return [seat, 'back', th, now, 1.0 if pillar[0] > 0.0 else -1.0]
 
     def _sign(self):
+        """The driving direction as a number: +1 counter-clockwise, -1 clockwise (the mission works mirrored in clockwise).
+        """
         return 1.0 if self.selected_direction == 'ccw' else -1.0
 
     def _backup(self):
@@ -421,6 +443,11 @@ class Mission:
         return -end + 0.5 - 0.20, -end + length + 0.5 + 0.18
 
     def _update_pose(self, distance, yaw, gyro, sign, travelled=None):
+        """Moves the pose forward with the distance driven and the gyro heading, then corrects it with the newest scan.
+
+        The correction fits the LiDAR points to the known walls (localizer.py) and shifts the gyro reference by the heading
+        the fit changed, so the drift of the gyro does not build up. Returns the pose and updates the lane progress ``phi``.
+        """
         if travelled is None:
             travelled = distance if self.speed >= 0 else -distance
         self.loc.predict(travelled, sign * wrap(yaw - self.yaw_zero) + self.loc_th0)
@@ -449,6 +476,7 @@ class Mission:
         return scene.clamp(steer, -self.p.steer_limit, self.p.steer_limit)
 
     def _point(self, progress):
+        """The point of the planned line at a given progress: the lane centre moved sideways by the planned offset."""
         lx, ly, _ = scene.lane_pose(progress)
         nx, ny = scene.lane_normal(progress)
         offset = self._offset_at(progress)
@@ -465,6 +493,12 @@ class Mission:
         return x1, y1, heading, 2.0 * cross / max(sides, 1e-9)
 
     def _speed(self, remaining, offset, front):
+        """Chooses the speed for this tick, taking the smallest of several limits.
+
+        Cruise on a free lane; the pillar speed near a sign or while changing side; a slower speed with a wall close ahead or in
+        a tight corner; a ramp down over the last metres; and the finish speed for the final 1.2 units. From the second lap
+        all signs are known, so the line does not change any more and ``known_speed_gain`` can speed the car up.
+        """
         # From lap 2 every sign is on the map: the line no longer changes, so it can be driven faster.
         gain = self.p.known_speed_gain if self.phi >= scene.UNITS_PER_LAP else 1.0
         speed = self.p.cruise_speed * gain
@@ -482,6 +516,10 @@ class Mission:
         return speed
 
     def _recover(self, now, front, speed, steer):
+        """Applies the recovery on top of the normal command: finish a running back-off, or start a new front recover.
+
+        Returns the command to send. When nothing is wrong it just keeps the normal speed and steering.
+        """
         if self._recover_until is not None:
             if now < self._recover_until:
                 self.speed = -RECOVER_SPEED
@@ -573,6 +611,12 @@ class Mission:
 
     # ------------------------------------------------------------- helpers
     def _walls(self, sign):
+        """Distances to the inner wall, the outer wall and the nearest thing ahead, from windows of the scan.
+
+        The side distances are the median of a window around +-90 degrees, so a sign or a gap does not move them. The front
+        distance is the minimum of a window straight ahead, starting at 0.12 m: the scan_adapter drops what is closer, which
+        is the chassis itself.
+        """
         left = _window(self._scan, SIDE_CENTER, SIDE_HALF_WIDTH) if self._scan else np.empty(0)
         right = _window(self._scan, -SIDE_CENTER, SIDE_HALF_WIDTH) if self._scan else np.empty(0)
         left = float(np.median(left)) if left.size else math.inf
@@ -621,6 +665,11 @@ class Mission:
         return best
 
     def _pillar_position(self, cluster, x, y, th, sign):
+        """Where a LiDAR cluster sits in the lane: ``(progress, lateral offset)``, or None if it is not a candidate.
+
+        The cluster is moved to world coordinates with the current pose, then projected on the lane. Clusters behind the car or
+        farther than the look-ahead are ignored.
+        """
         c, s = math.cos(th), math.sin(th)
         lx, ly, lane_heading = scene.lane_pose(self.phi)
         tangent = (math.cos(lane_heading), math.sin(lane_heading))
@@ -639,6 +688,10 @@ class Mission:
         return sign_progress, lateral
 
     def _colour(self, cluster, sign):
+        """The colour of the sign at this cluster if the camera saw one nearby, mirrored for clockwise; otherwise None.
+
+        A colour counts only if its frame is recent (0.6 s) and the blob is within 12 cm of the cluster.
+        """
         if self._obs_stamp < self._direction_scan - 0.6:
             return None
         for observation in self._observations:
@@ -758,6 +811,8 @@ class Mission:
         return max(offset, LOT_OFFSET) if self._lot_zone(progress) else offset
 
     def _planned(self, progress):
+        """The planned lateral offset at a given progress, by linear interpolation between the knots of the profile.
+        """
         knots = self.profile
         if not knots:
             return 0.0
@@ -772,7 +827,9 @@ class Mission:
     # --------------------------------------------------------------- state
     @property
     def label(self):
+        """The state name that the LEDs and the telemetry show."""
         return self.state
 
     def stopped(self):
+        """True once the round is over."""
         return self.state == 'STOP'

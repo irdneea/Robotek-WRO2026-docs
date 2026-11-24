@@ -12,6 +12,8 @@ class OpenVision:
     def __init__(self, min_length=40.0, min_confidence=0.25, confirmations=5,
                  blue_hsv=(90, 135, 60, 60), orange_hsv=(5, 28, 60, 60),
                  floor_mask=False, wall_v_max=40, wall_min_rows=8, line_contrast=0, line_tint=8):
+        """Colour bands for the blue and orange lines (HSV), how long a line must be to count and how many frames must agree.
+        """
         self.min_length = min_length
         self.min_confidence = min_confidence
         self.confirmations = confirmations
@@ -62,6 +64,7 @@ class OpenVision:
 
     @staticmethod
     def colour_mask(hsv, h_min, h_max, s_min, v_min):
+        """A mask of the pixels inside an HSV band. A band whose low hue is above its high hue wraps through red."""
         if h_min <= h_max:
             return cv2.inRange(hsv, np.array([h_min, s_min, v_min]), np.array([h_max, 255, 255]))
         return (cv2.inRange(hsv, np.array([h_min, s_min, v_min]), np.array([179, 255, 255]))

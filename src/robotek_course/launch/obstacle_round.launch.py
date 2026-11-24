@@ -1,13 +1,13 @@
-"""One round of the Obstacle Challenge: a field by the rules, the simulator, your node and the referee.
+"""One round of the Obstacle Challenge: a field by the rules, the simulator, the strategy node and the referee.
 
-    ros2 launch robotek_course obstacle_round.launch.py strategy:=my_obstacle seed:=0 direction:=ccw
-    ros2 launch robotek_course obstacle_round.launch.py strategy:=my_obstacle seed:=3 direction:=cw parking:=false
-    ros2 launch robotek_course obstacle_round.launch.py strategy:=my_obstacle gui:=false set:=my_obstacle.mission.CRUISE_SPEED=0.3
+    ros2 launch robotek_course obstacle_round.launch.py strategy:=robotek_obstacle_v3 seed:=0 direction:=ccw
+    ros2 launch robotek_course obstacle_round.launch.py strategy:=robotek_obstacle_v3 seed:=3 direction:=cw parking:=false
+    ros2 launch robotek_course obstacle_round.launch.py strategy:=robotek_obstacle_v3 gui:=false set:=my_obstacle.mission.CRUISE_SPEED=0.3
 
 ``seed`` chooses the layout of the signs with the procedure of the rules (the same seed is the same field);
 ``parking`` adds the parking lot (and moves the signs of the start section inward, as the rules say). The field is
 written into the round folder (``~/robotek_runs/<date>-<name>/world.sdf`` and ``manifest.json``) before Gazebo
-starts. Your node (``strategy`` package, ``executable`` = drive) reads /scan, /imu, /camera/image and /start and
+starts. The strategy node (``strategy`` package, ``executable`` = drive) reads /scan, /imu, /camera/image and /start and
 publishes /cmd_vel_raw; it gets the parameter ``parking`` (true when the field has the lot). The referee publishes
 /start, keeps the true pose of the car, the pose of the signs and the contacts, ends the round and prints the score
 (``score_obstacle``). The launch ends by itself when the round does.
@@ -85,7 +85,7 @@ def _round(context):
 
 def generate_launch_description():
     return LaunchDescription([
-        DeclareLaunchArgument('strategy', default_value='my_obstacle', description='the package with your node'),
+        DeclareLaunchArgument('strategy', default_value='robotek_obstacle_v3', description='the package with the strategy node'),
         DeclareLaunchArgument('executable', default_value='drive', description='the executable of that package'),
         DeclareLaunchArgument('seed', default_value='0', description='layout of the signs (rules procedure)'),
         DeclareLaunchArgument('direction', default_value='ccw', description='ccw or cw (where the car starts facing)'),

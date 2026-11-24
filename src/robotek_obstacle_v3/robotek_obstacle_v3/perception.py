@@ -1,6 +1,6 @@
-"""LiDAR sign clusters as Obstacle v3 sees them: WRO-Strategies' obstacle_perception.scan_clusters.
+"""Finds the signs in a LiDAR scan: groups the returns that are close together into clusters of a sign's size.
 
-The same code as robotek_course.obstacle_vision.scan_clusters, but with the LiDAR offset of car.py (v3's geometry).
+The same code as robotek_course.obstacle_vision.scan_clusters, but with the LiDAR offset of car.py (the geometry the Obstacle was tuned with).
 """
 import math
 

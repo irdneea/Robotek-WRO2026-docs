@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 640" width="900" height="640" font-family="Arial, Helvetica, sans-serif">
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#333"/></marker></defs>
+<rect width="900" height="640" fill="#ffffff"/>
+<text x="450.0" y="26" font-size="18" font-weight="bold" text-anchor="middle">Open Challenge: what the car does, from Start to the stop</text>
+<rect x="330" y="50" width="240" height="44" rx="8" fill="#fff3b0" stroke="#333" stroke-width="1.2"/>
+<text x="450.0" y="76.0" font-size="12" font-weight="bold" text-anchor="middle">Press the button (Start)</text>
+<rect x="330" y="120" width="240" height="92" rx="8" fill="#d6e6fa" stroke="#333" stroke-width="1.2"/>
+<text x="450.0" y="147.5" font-size="12" font-weight="bold" text-anchor="middle">SETUP</text>
+<text x="450.0" y="162.5" font-size="12" font-weight="normal" text-anchor="middle">stand still 0.3 s: gyro bias</text>
+<text x="450.0" y="177.5" font-size="12" font-weight="normal" text-anchor="middle">camera votes the direction from the</text>
+<text x="450.0" y="192.5" font-size="12" font-weight="normal" text-anchor="middle">blue / orange lines; LiDAR may correct it</text>
+<rect x="330" y="245" width="240" height="80" rx="8" fill="#e6dcf5" stroke="#333" stroke-width="1.2"/>
+<text x="450.0" y="266.5" font-size="12" font-weight="bold" text-anchor="middle">FOLLOW</text>
+<text x="450.0" y="281.5" font-size="12" font-weight="normal" text-anchor="middle">heading law: 0.8 * error - 0.1 * yaw rate</text>
+<text x="450.0" y="296.5" font-size="12" font-weight="normal" text-anchor="middle">lateral bias keeps the car off the</text>
+<text x="450.0" y="311.5" font-size="12" font-weight="normal" text-anchor="middle">inner wall; cruise 0.85 m/s</text>
+<polygon points="450,355.0 600.0,390 450,425.0 300.0,390" fill="#fff3b0" stroke="#333" stroke-width="1.2"/>
+<text x="450" y="387.1666666666667" font-size="11" text-anchor="middle">Turn allowed?</text>
+<text x="450" y="400.1666666666667" font-size="11" text-anchor="middle">(0.25 m driven, wall ahead &lt; 1.19 m)</text>
+<rect x="600" y="360" width="250" height="60" rx="8" fill="#d6e6fa" stroke="#333" stroke-width="1.2"/>
+<text x="725.0" y="379.0" font-size="12" font-weight="bold" text-anchor="middle">TURN</text>
+<text x="725.0" y="394.0" font-size="12" font-weight="normal" text-anchor="middle">full lock until within 0.3 rad</text>
+<text x="725.0" y="409.0" font-size="12" font-weight="normal" text-anchor="middle">of the new heading, 0.64 m/s</text>
+<polygon points="450,478.0 580.0,510 450,542.0 320.0,510" fill="#fff3b0" stroke="#333" stroke-width="1.2"/>
+<text x="450" y="513.6666666666666" font-size="11" text-anchor="middle">12 corners done?</text>
+<rect x="330" y="565" width="240" height="50" rx="8" fill="#d6e6fa" stroke="#333" stroke-width="1.2"/>
+<text x="450.0" y="586.5" font-size="12" font-weight="bold" text-anchor="middle">FINISH: slow to 0.32 m/s,</text>
+<text x="450.0" y="601.5" font-size="12" font-weight="normal" text-anchor="middle">stop at the start straight</text>
+<path d="M450,94 L450,120" fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#a)"/>
+<path d="M450,212 L450,245" fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#a)"/>
+<path d="M450,325 L450,355" fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#a)"/>
+<path d="M600,390 L600,390" fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="560" y="382" font-size="11" fill="#222" text-anchor="middle" paint-order="stroke" stroke="#fff" stroke-width="4">yes</text>
+<path d="M725,420 L725,510 L580,510" fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#a)"/>
+<path d="M320,510 L110,510 L110,285 L330,285" fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="215" y="503" font-size="11" fill="#222" text-anchor="middle" paint-order="stroke" stroke="#fff" stroke-width="4">no</text>
+<path d="M450,542 L450,565" fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="465" y="557" font-size="11" fill="#222" text-anchor="middle" paint-order="stroke" stroke="#fff" stroke-width="4">yes</text>
+<path d="M300,390 L110,390" fill="none" stroke="#333" stroke-width="1.6"/>
+<text x="205" y="383" font-size="11" fill="#222" text-anchor="middle" paint-order="stroke" stroke="#fff" stroke-width="4">no: keep following</text>
+<text x="40" y="630" font-size="11" text-anchor="start" font-weight="normal">Three laps are 12 corners. The strategy uses only the LiDAR and the gyroscope; the camera is used once, at Start, to choose the direction.</text>
+</svg>

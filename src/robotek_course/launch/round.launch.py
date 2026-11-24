@@ -1,11 +1,10 @@
-"""One round of the Open Challenge: the simulator, your node and the referee.
+"""One round of the Open Challenge: the simulator, the strategy node and the referee.
 
-    ros2 launch robotek_course round.launch.py strategy:=my_open
-    ros2 launch robotek_course round.launch.py strategy:=my_open direction:=cw gui:=false
-    ros2 launch robotek_course round.launch.py strategy:=my_open actuator_params:=steer_delay=0.18 \\
-        set:=my_open.mission.CRUISE_SPEED=1.0       # tuning experiments (step 12): a slower servo, a constant changed
+    ros2 launch robotek_course round.launch.py strategy:=robotek_open
+    ros2 launch robotek_course round.launch.py strategy:=robotek_open direction:=cw gui:=false
+    ros2 launch robotek_course round.launch.py strategy:=robotek_open actuator_params:=steer_delay=0.18   # a slower servo
 
-Your node (``strategy`` package, ``executable`` = drive) reads /scan, /imu, /camera/image and /start and publishes
+The strategy node (``strategy`` package, ``executable`` = open_v5 for the Open) reads /scan, /imu, /camera/image and /start and publishes
 /cmd_vel_raw. ``round_recorder`` publishes /start, keeps the true pose of the car, ends the round after 180 s,
 30 s without progress or three laps and a stop, and prints the score. Everything is saved in
 ``~/robotek_runs/<date>-<name>/``; the launch ends by itself when the round does.
@@ -41,7 +40,7 @@ def _round(context):
     recorder = Node(package='robotek_course', executable='round_recorder', output='screen',
                     parameters=[{'output_dir': directory, 'direction': direction, 'strategy': strategy, 'world': world},
                                 use_sim_time])
-    # Your strategy. With ``set:=`` it starts through a one-line wrapper that first changes constants of your package
+    # The strategy. With ``set:=`` it starts through a one-line wrapper that first changes constants of the package
     # (``module.NAME=value`` separated by ';', ``module.*.NAME`` = every submodule that has it); without it, as always.
     sets = [item for item in LaunchConfiguration('set').perform(context).split(';') if item.strip()]
     executable = LaunchConfiguration('executable').perform(context)
@@ -53,7 +52,7 @@ def _round(context):
                                    '-p', 'use_sim_time:=true'], output='screen', on_exit=Shutdown())
     else:
         mine = Node(package=strategy, executable=executable, name='strategy',
-                    output='screen', on_exit=Shutdown(), parameters=[use_sim_time])     # your node died: end the round now
+                    output='screen', on_exit=Shutdown(), parameters=[use_sim_time])     # the strategy node died: end the round now
     return [
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(os.path.join(share('robotek_course'), 'launch', 'sim.launch.py')),
@@ -81,8 +80,8 @@ def _round(context):
 
 def generate_launch_description():
     return LaunchDescription([
-        DeclareLaunchArgument('strategy', default_value='my_open', description='the package with your node'),
-        DeclareLaunchArgument('executable', default_value='drive', description='the executable of that package'),
+        DeclareLaunchArgument('strategy', default_value='robotek_open', description='the package with the strategy node'),
+        DeclareLaunchArgument('executable', default_value='open_v5', description='the executable of that package'),
         DeclareLaunchArgument('direction', default_value='ccw', description='ccw or cw (where the car starts facing)'),
         DeclareLaunchArgument('gui', default_value='true', description='the Gazebo window'),
         DeclareLaunchArgument('rviz', default_value='false', description='RViz with the scan and the camera'),

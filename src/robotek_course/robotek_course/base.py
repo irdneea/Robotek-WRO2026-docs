@@ -1,13 +1,13 @@
-"""The base class of every strategy in the course.
+"""The base class of every strategy.
 
 A strategy is plain Python: no ROS inside. It receives what the sensors say through four hooks and answers with
 (speed, steer) every control tick. The same class runs in three places, which is why it is written this way:
 
   * in Gazebo, inside the node ``drive.py`` (it forwards the ROS topics to these hooks);
-  * in the Open lab (``python3 -m robotek_evaluation.open_lab --strategy my_open.strategy:Strategy``);
-  * in your tests (``pytest``).
+  * in the Open lab (``python3 -m robotek_evaluation.open_lab``);
+  * in the unit tests (``pytest``).
 
-You extend it and write ``update``. The base class takes care of the parts that are not the point of the course:
+A strategy extends it and writes ``update``. The base class takes care of the parts that are not the strategy's business:
 the scans that arrive several times with the same time stamp, and waiting for Start.
 """
 
@@ -28,7 +28,7 @@ class StrategyBase:
         self.gyro = 0.0             # the latest gyroscope reading, rad/s (z), bias included
         self.camera = 0             # +1 blue lines (counter-clockwise), -1 orange (clockwise), 0 unknown
         self.started = False
-        self.yaw = 0.0              # YOUR heading estimate (rad): set it from step 2 on (telemetry reads it)
+        self.yaw = 0.0              # the strategy's own heading estimate (rad); telemetry reads it
         self._stamp = None
         self._seen_first = False
 
@@ -65,4 +65,4 @@ class StrategyBase:
     # ---------------------------------------------------------------------------------- what you write
     def update(self, dt):
         """Decide (speed, steer) for this tick from ``self.scan``, ``self.gyro`` and ``self.camera``."""
-        raise NotImplementedError('write update(self, dt) in your Strategy')
+        raise NotImplementedError('write update(self, dt) in the Strategy')

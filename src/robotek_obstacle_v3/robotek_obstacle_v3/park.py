@@ -112,6 +112,8 @@ class Parking:
     """PARK_APPROACH -> PARK_PLAN -> (PARK_STEER -> PARK_MOVE)* -> PARKED or PARK_FAIL."""
 
     def __init__(self, mission, speed, margin):
+        """Takes the mission (for the direction and the steering limit), builds the lot and starts in PARK_APPROACH.
+        """
         self.speed = speed
         self.steer_limit = mission.p.steer_limit
         self.lot = Lot(1.0 if mission.selected_direction == 'ccw' else -1.0)
@@ -192,6 +194,8 @@ class Parking:
         return -self.speed, max(-self.steer_limit, min(self.steer_limit, steer))
 
     def _plan(self, now, pose):
+        """Decides what to do once the car is aligned: back up and approach again if it is off the line, or load the nominal list of moves.
+        """
         line = self.lot.y1 + OUTLINE_HALF_WIDTH + GAP
         aligned = abs(pose[1] - line) < ALIGNED[0] and abs(wrap(pose[2])) < ALIGNED[1]
         if self.plans == 0 and not aligned and self.reapproaches < MAX_REAPPROACH:
@@ -247,6 +251,8 @@ class Parking:
         return (-sign * direction * self.steer_limit, direction, 0.3, ('heading', 0.0))
 
     def _next(self, now, pose):
+        """Takes the next move of the list (or the finishing move) and ends the park when there is none: PARKED if the car is inside the lot and parallel, PARK_FAIL if not.
+        """
         move_ = self.moves.pop(0) if self.moves else self._finishing(pose)
         if move_ is None:
             parked = self.lot.parked(*pose, inside=INSIDE, parallel=PARALLEL)
@@ -288,6 +294,10 @@ class Parking:
         self._next(now, pose)
 
     def _drive(self, now, x, y, th):
+        """Drives the current move: forward or backward at the park speed with the steering of the move, until its target is reached.
+
+        A look-ahead guard stops the move if the outline would touch a limit or the wall, and so does driving longer than planned.
+        """
         steer, direction, length, _, (x0, y0, _) = self.current
         overrun = math.hypot(x - x0, y - y0) >= length + OVERRUN
         ahead = move(x, y, th, steer, direction * GUARD_AHEAD)

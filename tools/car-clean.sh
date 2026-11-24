@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Stop every car node still running from an earlier launch, then set the motors to 0.
 #
-#   bash tools/car-clean.sh            # before each Open (car-autostart.sh and open-debug-run.sh call it)
+#   bash tools/car-clean.sh            # before each Open (car-autostart.sh and car-run.sh call it)
 #
 # A launch stopped from a script or over ssh can leave its children running (a background job ignores Ctrl-C). On
 # 4 nov 2026 such leftovers ran a second strategy and a second board driver next to the new launch, and three
@@ -14,9 +14,9 @@ set -uo pipefail
 
 REPO=$(cd "$(dirname "$0")/.." && pwd)
 # Bracketed first letters: the grep does not match its own command line.
-PATTERN="[$(echo "${REPO:0:1}")]${REPO:1}/install/[^ ]*/lib/|[o]pt/ros/jazzy/lib/robot_state_publisher/|[o]pt/ros/jazzy/lib/tf2_ros/static_transform_publisher|[u]sb_cam_node|[r]os2 launch robotek_course|[r]os2 bag record|[o]pen-debug-run.sh|[t]op -b -d 1 -o %CPU|[r]os2 topic echo --once /start|[j]ournalctl -k -f -n 0|[r]picam-vid -t 0 -n --codec yuv420"
+PATTERN="[$(echo "${REPO:0:1}")]${REPO:1}/install/[^ ]*/lib/|[o]pt/ros/jazzy/lib/robot_state_publisher/|[o]pt/ros/jazzy/lib/tf2_ros/static_transform_publisher|[u]sb_cam_node|[r]os2 launch robotek_course|[r]os2 bag record|[t]op -b -d 1 -o %CPU|[r]os2 topic echo --once /start|[j]ournalctl -k -f -n 0|[r]picam-vid -t 0 -n --codec yuv420"
 
-# Never this script nor any of its callers (open-debug-run.sh calls it and matches the pattern: 8 nov 2026 it killed itself).
+# Never this script nor any of its callers: a caller whose own command line matches the pattern would kill itself (it happened on 8 Nov 2026).
 ANCESTORS=" "
 p=$$
 while [ -n "$p" ] && [ "$p" -gt 1 ] 2>/dev/null; do ANCESTORS="$ANCESTORS$p "; p=$(ps -o ppid= -p "$p" | tr -d ' '); done

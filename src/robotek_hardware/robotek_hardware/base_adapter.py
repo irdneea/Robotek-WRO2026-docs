@@ -57,7 +57,11 @@ except ImportError:  # only installed on the robot (HiWonder image)
 
 
 class BaseAdapter(Node):
+    """The last link between the strategy and the car: turns speed and wheel angle into servo microseconds and motor speed.
+    """
     def __init__(self):
+        """Declares the calibration parameters (servo centre and gains, wheel table, motor scale, limits, ramps) and creates the publishers and subscribers.
+        """
         super().__init__('base_adapter')
         p = {k: self.declare_parameter(k, v).value for k, v in dict(
             wheelbase=.13, servo_topic='/rrc/acker_servo/set_state',
@@ -171,6 +175,8 @@ class BaseAdapter(Node):
         self.create_timer(TICK, self.on_tick)
 
     def on_state(self, msg):
+        """The strategy's state. In the final states the motor is told 0 and the board is reset, so that nothing can keep it turning.
+        """
         self.state = msg.data
         if self.state in self.done_reset_states and not self.motor_halted:
             self.target = self.speed = 0.
@@ -187,6 +193,8 @@ class BaseAdapter(Node):
         return (self.get_clock().now()-self.last).nanoseconds*1e-9 > self.p['watchdog']
 
     def on_cmd(self, msg):
+        """A new /cmd_vel_raw: remember the target speed, turn the yaw rate into a wheel angle, map it through the wheel table to servo microseconds and send it.
+        """
         self.last = self.get_clock().now()
         self.target = 0. if self.stopped else float(msg.linear.x)
         self.steer = steer_from_twist(msg.linear.x, msg.angular.z, self.p['wheelbase'], self.steer)
@@ -194,6 +202,7 @@ class BaseAdapter(Node):
         self.send_servo(servo_us(servo, self.servo))
 
     def on_scan(self, msg):
+        """Keeps the distance to the wall ahead, so the adapter can slow down by itself when a wall is close."""
         front = front_distance(msg.ranges, msg.angle_min, msg.angle_increment, float(self.p['wall_half_deg']))
         # Very close the LiDAR returns nothing (scan_adapter drops ranges under min_valid_range, ~0.12 m): an
         # obstacle that was near and vanishes is still there, so keep the last near reading until a finite one.
@@ -224,11 +233,13 @@ class BaseAdapter(Node):
         return target*wall_speed_factor(self.front, float(self.p['wall_stop_m']), float(self.p['wall_slow_m']))
 
     def on_estop(self, msg):
+        """Hard brake: the speed goes to 0 immediately, without the ramp."""
         if msg.data:
             self.target = self.speed = 0.
             self.send_speed(0.)
 
     def on_stop(self, msg):
+        """The operator's stop (second press of the button): hold the motor at 0 until released."""
         self.stopped = bool(msg.data)
         if self.stopped:
             self.target = self.speed = 0.
@@ -262,6 +273,7 @@ class BaseAdapter(Node):
             self.motor_pub.publish(Float32(data=float(motor_pct(speed, self.motor))))
 
     def send_servo(self, us):
+        """Publishes a servo position in microseconds to the board driver."""
         if self.servo_pub is not None:
             command = SetAckerServoState()
             command.position = int(round(us))
@@ -269,6 +281,8 @@ class BaseAdapter(Node):
             self.servo_pub.publish(command)
 
     def on_tick(self):
+        """Periodic tick: apply the watchdog (no command for a moment means stop), ramp the speed toward the target and send it to the motor.
+        """
         if (self.get_clock().now()-self.last).nanoseconds*1e-9 > self.p['watchdog']:
             self.target = 0.               # commands stopped: slow down to 0 (decel_limit)
         if self.stopped:
@@ -286,6 +300,7 @@ class BaseAdapter(Node):
 
 
 def main(args=None):
+    """Runs the node until it is stopped."""
     rclpy.init(args=args)
     node = BaseAdapter()
     try:

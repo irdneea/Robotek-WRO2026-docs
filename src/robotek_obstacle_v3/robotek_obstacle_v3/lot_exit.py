@@ -100,6 +100,8 @@ class LotExit:
     """The pulses out of the lot. ``step`` -> (speed, steer) in the mirrored frame (+ steer = away from the wall)."""
 
     def __init__(self, lot, wall_distance, rear_mm, speed, steer_limit, steps=DEFAULT_STEPS):
+        """Sets up the exit: where the car starts in the lot (the rear sensor gives x, the wall gap gives y) and the pulses to drive.
+        """
         self.lot, self.speed, self.steer_limit = lot, speed, steer_limit
         self.PULSES = tuple((name, d, side) for name, d, side, _ in parse_steps(steps)) + (('STRAIGHT', 0.0, 0.0),)
         self.lengths = [seconds for *_, seconds in parse_steps(steps)]
@@ -118,10 +120,12 @@ class LotExit:
 
     @property
     def done(self):
+        """True once the last pulse is finished."""
         return self.index >= len(self.PULSES)
 
     @property
     def name(self):
+        """The name of the pulse being driven, for the log, or DONE."""
         return 'DONE' if self.done else self.PULSES[self.index][0]
 
     def step(self, now, heading, rear_mm):

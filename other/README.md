@@ -1,3 +1,3 @@
 # Other material
 
-Extra documentation that does not belong to a rubric page. The engineering journal is in [../docs/engineering-journal.md](../docs/engineering-journal.md).
+Extra material that does not belong anywhere else. The story of the project is in chapter 13 of the main [README](../README.md#13-history-of-the-car-and-engineering-journal).

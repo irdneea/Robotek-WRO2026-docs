@@ -2,13 +2,13 @@
 
 The Obstacle Challenge strategy of the car: three laps with red and green signs, starting inside the parking lot and finishing parked in it. It only uses honest sensors, the LiDAR, the gyroscope and the camera, plus the rear distance sensor. There is no encoder and no ground-truth pose.
 
-The long explanations live in the repository documentation. Start with these:
+The long explanations are in the main README. Start with these chapters:
 
-| Topic | Page |
+| Topic | Where |
 | --- | --- |
-| Code structure and state machine | [docs/03](../../docs/03-software-architecture-and-obstacle-strategy.md) |
-| Finding signs, remembering them, choosing sides, recovering from contacts | [docs/06](../../docs/06-obstacle-detection-and-avoidance.md) |
-| Leaving the lot and parking in parallel | [docs/07](../../docs/07-lot-exit-and-parallel-parking.md) |
+| Code structure and state machine | [chapter 5](../../README.md#5-software-architecture) |
+| Finding signs, remembering them, choosing sides, recovering from contacts | [chapter 6](../../README.md#6-obstacle-challenge-finding-and-avoiding-the-signs) |
+| Leaving the lot and parking in parallel | [chapter 7](../../README.md#7-obstacle-challenge-leaving-the-lot-and-parking-in-parallel) |
 | Parameters and their defaults | [PARAMETERS.md](PARAMETERS.md) |
 | Simulation results | [RESULTS.md](RESULTS.md) |
 
@@ -17,7 +17,7 @@ The long explanations live in the repository documentation. Start with these:
 | File | What it does |
 | --- | --- |
 | `drive.py` | The ROS node: scan, IMU, camera, rear distance and Start in, `/cmd_vel_raw` out; records every round |
-| `strategy.py` | The course's `Strategy` class: pauses the mission when a sensor is stale and ends the round at 180 s |
+| `strategy.py` | The `Strategy` class: pauses the mission when a sensor is stale and ends the round at 180 s |
 | `mission.py` | The state machine and every decision: SETUP, LOT_EXIT, RUN, PARK, STOP |
 | `scene.py`, `field.py` | Lane geometry in track units and the mapping from LiDAR points to the lane |
 | `localizer.py` | Pose from the walls plus the gyro heading |

@@ -23,7 +23,7 @@ on a laptop; see src/robotek_hardware/README.md for how to install them):
   - the camera: robotek_hardware/camera_publisher (camera_driver:=usb_cam for the ROS package)
   - robotek_hardware: scan_adapter, imu_adapter, motor_driver, base_adapter, start_button, gpio_button, rear_range, battery_guard, status_leds
   - robot_state_publisher with robotek_description (only if installed; useful to see the car in RViz on a laptop)
-  - your strategy, with use_sim_time false
+  - the strategy node, with use_sim_time false
 
 Press the button of the board once to start. Press it again to stop: base_adapter and motor_driver hold the motor
 at 0 until you launch again. The parameters of the car (servo, motor, wheelbase, LiDAR, IMU axes) are in
@@ -108,7 +108,7 @@ def _node_params_file(values, node='strategy'):
 
 
 def _strategy_node(context):
-    """Your node; strategy_params:=<file.yaml> adds its ROS parameters (e.g. inner_gap: 0.35 for the Open v5)."""
+    """The strategy node; strategy_params:=<file.yaml> adds its ROS parameters (e.g. inner_gap: 0.35 for the Open v5)."""
     parameters = [{'use_sim_time': False}]
     extra = _arg(context, 'strategy_params')
     if extra == 'auto':
@@ -264,7 +264,7 @@ def generate_launch_description():
         brake_defaults = {name: str(base.get(name, value)) for name, value in (
             ('brake_rps', 0.0), ('brake_hz', 10.0), ('brake_s', 1.5), ('brake_min_rps', 1.0))}
     return LaunchDescription([
-        DeclareLaunchArgument('strategy', default_value='my_open', description='the package with the strategy node'),
+        DeclareLaunchArgument('strategy', default_value='robotek_obstacle_v3', description='the package with the strategy node'),
         DeclareLaunchArgument('executable', default_value='drive', description='the executable of that package'),
         DeclareLaunchArgument('controller', default_value='true', description='start rrc_lite_driver (the board)'),
         DeclareLaunchArgument('controller_launch', default_value='controller.launch.py',
@@ -304,7 +304,7 @@ def generate_launch_description():
         DeclareLaunchArgument('teleop', default_value='false',
                               description='true: no strategy, drive with keyboard_drive (hold:=true) from another terminal'),
         DeclareLaunchArgument('strategy_params', default_value='auto',
-                              description='optional YAML file with ROS parameters for your node (strategy: ros__parameters: ...); '
+                              description='optional YAML file with ROS parameters for the strategy node (strategy: ros__parameters: ...); '
                                           'auto = <strategy>/config/car_picam.yaml for the Obstacle v3 or the Open with the picam, '
                                           "else none; '' = none"),
         DeclareLaunchArgument('debug', default_value='false',
@@ -519,6 +519,6 @@ def generate_launch_description():
         OpaqueFunction(function=_description),
         # debug:=true: live report of the round (states, direction, corners, laps, lines) in this terminal.
         OpaqueFunction(function=_reporter_node),
-        # Your strategy: real clock, waits for /start (the button of the board).
+        # The strategy: real clock, waits for /start (the button of the board).
         OpaqueFunction(function=_strategy_node),
     ])

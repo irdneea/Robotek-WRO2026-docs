@@ -1,6 +1,6 @@
 """The Obstacle Challenge field by the rules: traffic signs, the parking lot and the Gazebo world.
 
-Simulation only (the strategy never imports it). ``robotek_course.obstacle_field`` re-exports it for the course.
+Simulation only (the strategy never imports it). ``robotek_course.obstacle_field`` re-exports it.
 
 * ``regulation_signs(seed, parking)``: where the signs go, with the procedure of the rules (section 8): two coins
   choose the section with a single sign and one coin its colour; 35 of the 36 cards (figure 8c) are drawn without

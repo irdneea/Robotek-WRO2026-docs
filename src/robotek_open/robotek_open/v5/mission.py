@@ -13,66 +13,67 @@ from robotek_common.vehicle import REAL_STEER_LIMIT, WHEELBASE
 LAPS = 3
 CORNERS = 4 * LAPS
 
-STEER = REAL_STEER_LIMIT
-KP = 0.8                    # heading error -> steering
-DAMPING = 0.1               # yaw rate -> steering
-TURN_TOLERANCE = 0.3        # rad: arc done within this of the goal heading (0.12, 0.4 on the last, before 12 nov 2026)
-CONFIRMATIONS = 2           # consecutive scans with the island end inside the look-ahead
-ARM_DISTANCE = 0.25         # m driven after a corner before the next one can start
-ISLAND_OPEN = 1.0           # m: an island wall farther than this beside the car means it has ended
-END_CLEARANCE = 0.08        # m: the look-ahead shrinks in a narrow lane (inner distance minus this)
-LATERAL_GAIN, LATERAL_MAX = 0.3, 0.4
-OUTER_GAP = 0.25            # m kept from the outer wall (LiDAR) when the corridor is too narrow for inner_gap
-BRAKE_GAIN = 2.0            # 1/s: speed above the corner speed grows this much per metre of gap
-DIRECTION_TIMEOUT = 15.0    # s without a direction from the camera: stop instead of guessing
-DIRECTION_FALLBACK_WAIT = 1.0   # s the camera gets before direction_fallback is taken
-CALIBRATE_SECONDS = 0.3     # s still after Start: gyro bias and the start's front range
-FINISH_STOP_WAIT = 0.9      # s at rest before DONE
-FINISH_STRAIGHT = 0.1       # rad: the final brake waits until the car is within this of the straight
-WALL_HEADING_MAX = math.radians(25.0)   # rad: a larger gyro-vs-wall difference is a bad fit, not drift
-WRONG_SIDE_OPEN = 1.2       # m: before the first corner, the side away from the island wider than this (outer walls
-WRONG_SIDE_SCANS = 3        # are continuous) in this many scans while the island stays beside: the direction is wrong
+STEER = REAL_STEER_LIMIT    # the largest wheel angle the car really reaches
+KP = 0.8                    # steering per radian of heading error on the straights
+DAMPING = 0.1               # steering per rad/s of yaw rate, so the car does not swing
+TURN_TOLERANCE = 0.3        # rad: the arc ends this short of the goal heading and the straight control takes over
+CONFIRMATIONS = 2           # scans in a row that must show the island's end before a corner starts
+ARM_DISTANCE = 0.25         # m to drive after a corner before the next one is allowed to start
+ISLAND_OPEN = 1.0           # m: an island wall farther than this beside the car means the island has ended
+END_CLEARANCE = 0.08        # m: in a narrow lane the look-ahead shrinks (inner distance minus this)
+LATERAL_GAIN, LATERAL_MAX = 0.3, 0.4   # default gain and cap of the correction that keeps the car off the island
+OUTER_GAP = 0.25            # m kept from the outer wall when the lane is too narrow for inner_gap
+BRAKE_GAIN = 2.0            # 1/s: how fast the allowed speed above the corner speed grows with the gap to the wall
+DIRECTION_TIMEOUT = 15.0    # s without a direction from the camera: stop rather than guess
+DIRECTION_FALLBACK_WAIT = 1.0   # s the camera gets before direction_fallback is used
+CALIBRATE_SECONDS = 0.3     # s standing still after Start to measure the gyro bias and the first front distance
+FINISH_STOP_WAIT = 0.9      # s at rest before the round is reported as DONE
+FINISH_STRAIGHT = 0.1       # rad: the final brake waits until the car is this close to straight
+WALL_HEADING_MAX = math.radians(25.0)   # a bigger gyro-versus-wall difference is a bad fit, not gyro drift
+WRONG_SIDE_OPEN = 1.2       # m: before the first corner the outer walls are continuous, so an open side wider than this
+WRONG_SIDE_SCANS = 3        # (seen in this many scans, with the island still beside) means the direction was wrong
 
 
 @dataclass
 class Params:
-    cruise_speed: float = 1.28
-    # m/s in every corner. The car slows down to it on the approach, once the front wall is near, and drives the arc
-    # at it. (Before 12 nov 2026 the last corner had its own last_corner_speed; one speed was as good in the lab.)
-    corner_speed: float = 1.0
-    # rad: the arc ends this short of the 90 deg goal and the straight-line control takes over (keeps inner_gap from
-    # the island); higher = a shorter turn.
-    turn_tolerance: float = TURN_TOLERANCE
-    # Straight line: a heading offset of lateral_kp x (island distance - inner_gap), at most LATERAL_MAX. 0.3 before
-    # 11 nov 2026 (5 cm off -> 0.9 deg only: after a corner the car took the whole straight to line up, the coach).
+    """Every number the Open strategy can be tuned with. The ROS parameters of the node have the same names."""
+    cruise_speed: float = 1.28            # m/s on the straights (the car's profile sets a lower one, config/car_picam.yaml)
+    corner_speed: float = 1.0             # m/s in every corner: the car slows to it before the wall and drives the arc at it
+    turn_tolerance: float = TURN_TOLERANCE  # rad short of the 90 degree goal where the arc ends; higher = a shorter turn
+    # On a straight the heading target is shifted by lateral_kp x (island distance - inner_gap), up to LATERAL_MAX.
+    # 0.3 was too weak: 5 cm off the line gave under 1 degree, so after a corner the car needed the whole straight to line up.
     lateral_kp: float = LATERAL_GAIN
-    brake_margin: float = 0.15            # m: the slow-down for a corner ends this far before turn_front_distance;
-                                          # higher = brakes earlier (it starts (speed - corner speed) / 2 m before that)
+    brake_margin: float = 0.15            # m: the slowdown ends this far before turn_front_distance (higher = brakes earlier)
     inner_gap: float = 0.25               # m kept from the island wall
-    turn_front_distance: float = 1.19     # m: front wall (along the track) at which a turn may start
-    corner_lookahead: float = 0.35        # m: island end this close (or an open side) starts the turn
-    wall_heading_gain: float = 0.0        # share of the gyro-vs-island-wall heading difference corrected per scan
-                                          # (0 = off; the car needs it: its gyro reads ~6 % short, 0/320 without, lab)
-    finish_speed: float = 0.15
-    finish_lead: float = 0.08             # m: brake when the front range is this close to the start's
-    direction: str = 'auto'               # ccw, cw or auto (camera)
-    # auto and the camera still undecided DIRECTION_FALLBACK_WAIT s after the calibration: take direction_fallback
-    # (ccw or cw) and let the LiDAR check fix it before corner 1. '' = wait up to DIRECTION_TIMEOUT and stop (direction_fault).
-    # 4 nov 2026, real car with the IMX708: both lines equally long from the start (confidence 0.09).
+    turn_front_distance: float = 1.19     # m of wall ahead (along the track) at which a turn may start
+    corner_lookahead: float = 0.35        # m: an island end this close (or an open side) starts the turn
+    wall_heading_gain: float = 0.0        # share of the gyro-versus-wall heading difference corrected per scan (0 = off)
+    finish_speed: float = 0.15            # m/s over the last stretch
+    finish_lead: float = 0.08             # m: the car brakes when the front distance is this close to the one at Start
+    direction: str = 'auto'               # 'ccw', 'cw' or 'auto' (the camera decides)
+    # If the camera has not decided DIRECTION_FALLBACK_WAIT seconds after the calibration, take this direction and let the
+    # LiDAR check correct it before corner 1. '' means wait up to DIRECTION_TIMEOUT and then stop. On the real car the
+    # two lines were once equally long from the start (confidence 0.09), so the camera cannot always decide.
     direction_fallback: str = ''
-    laps: int = LAPS                      # 3 in a round; fewer only for tests on the car (e.g. the finish and brake)
+    laps: int = LAPS                      # 3 in a round; fewer only for tests on the car (the finish and the brake)
 
 
 def wrap(angle):
+    """An angle brought into -pi..pi."""
     return math.atan2(math.sin(angle), math.cos(angle))
 
 
 def clamp(value, low, high):
+    """A value held between a low and a high limit."""
     return max(low, min(high, value))
 
 
 class OpenMission:
+    """The whole Open strategy as one object: feed it a scan summary and the gyro every tick, it returns speed and steering.
+    """
     def __init__(self, params=None):
+        """Starts in SETUP. The corners to drive are four per lap; the direction can be given in the parameters or left to the camera.
+        """
         self.p = params or Params()
         self.corners = 4 * max(1, int(self.p.laps))
         self.state = 'SETUP'
@@ -103,12 +104,15 @@ class OpenMission:
 
     # ----------------------------------------------------------------- API
     def request_start(self):
+        """Called when the Start arrives: the mission begins to calibrate."""
         self.started = True
 
     def operator_stop(self):
+        """The second press of the button: stop at once."""
         self._stop('operator_stop')
 
     def crash_stop(self):
+        """Called by the crash watch when the car has hit something: stop at once."""
         self._stop('crash')
 
     @property
@@ -127,10 +131,17 @@ class OpenMission:
         return wrap(self.goal - self.yaw) if self.state == 'RUN' else 0.0
 
     def _stop(self, reason):
+        """Ends the round with a reason that goes into the log."""
         self.state, self.stop_reason = 'STOP', reason
 
     # ---------------------------------------------------------------- step
     def step(self, dt, scene, gyro_z, camera=0):
+        """One control tick. Returns ``(speed, steering)``.
+
+        The gyro is integrated into the heading here. The distance driven on a straight is not measured by an encoder: it is how
+        much nearer the front wall has become since the straight began, and between two scans it is extrapolated from the
+        commanded speed (the LiDAR sometimes skips a few tenths of a second while driving).
+        """
         if self.state == 'SETUP':
             return self._setup(dt, scene, gyro_z, camera)
         if self.state == 'STOP':
@@ -168,12 +179,16 @@ class OpenMission:
         return 0.0, 0.0
 
     def _calibrate(self):
+        """Averages the gyro while standing still (the bias) and takes the median front distance, which is the reference for the finish.
+        """
         self._calibrated, self._time = True, 0.0
         self._bias = sum(self._gyro) / len(self._gyro) if self._gyro else 0.0
         finite = [f for f in self._fronts if math.isfinite(f)]
         self._start_front = median(finite) if finite else math.inf
 
     def _choose_direction(self, camera):
+        """Takes the camera's vote as the driving direction. If the camera cannot decide in time, uses the fallback or stops with a direction fault.
+        """
         if not self.direction and camera:
             self.direction = 'ccw' if camera > 0 else 'cw'
         if not self.direction and self.p.direction_fallback in ('ccw', 'cw') \
@@ -185,6 +200,8 @@ class OpenMission:
             self._stop('direction_fault')
 
     def _run(self, dt, scene, gyro):
+        """The driving tick: check the direction, find the island, start a corner when one is due, and steer along the straight or the arc.
+        """
         if self.completed == 0 and not self.arc:
             self._check_direction(scene)
         sign = 1.0 if self.direction == 'ccw' else -1.0

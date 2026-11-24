@@ -1,4 +1,4 @@
-"""Drive the car with the keyboard (step 0): w/s speed, a/d steering, space stops, q quits.
+"""Drive the car with the keyboard: w/s speed, a/d steering, space stops, q quits.
 
     ros2 run robotek_course keyboard_drive
     ros2 run robotek_course keyboard_drive --ros-args -p hold:=true     # real car: move it to the start

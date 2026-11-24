@@ -1,4 +1,4 @@
-"""Camera helper for step 8: how long are the blue and the orange lines in one image?
+"""Camera helper: how long are the blue and the orange lines in one image?
 
 The vote (which direction, and how sure) is the exercise; measuring the lines is OpenCV work that is not.
 The colour ranges are the simulation's (OpenCV HSV: h_min, h_max, s_min, v_min).

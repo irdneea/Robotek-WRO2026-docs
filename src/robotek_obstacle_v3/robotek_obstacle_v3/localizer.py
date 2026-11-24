@@ -10,18 +10,26 @@ class Localizer:
     """Odometry/IMU dead reckoning corrected by fitting lidar points to the known walls."""
 
     def __init__(self):
+        """No pose yet: ``ready`` turns True after ``initialize`` fits the first scan to the walls."""
         self.x = self.y = self.th = 0.
         self.ready = False
         self.inliers = 0
         self.rms = math.nan
 
     def predict(self, distance, heading):
+        """Dead reckoning: move by the distance driven along the mean of the old and new heading (the heading comes from the gyro).
+        """
         mid = self.th + .5*wrap(heading-self.th)
         self.x += distance*math.cos(mid)
         self.y += distance*math.sin(mid)
         self.th = heading
 
     def _fit(self, bx, by, x, y, th, gate):
+        """Residuals of the LiDAR points against the nearest wall, for a candidate pose.
+
+        Every point is moved to world coordinates and compared with the outer walls (the nearest side of the 3 m square) or the
+        island (only the face the point is beside). Returns the points, the wall normal each one belongs to, and the distances.
+        """
         c, s = math.cos(th), math.sin(th)
         px, py = x+c*bx-s*by, y+s*bx+c*by
         ax, ay = np.abs(px), np.abs(py)
@@ -43,6 +51,11 @@ class Localizer:
         return px[keep], py[keep], nx[keep], ny[keep], r[keep]
 
     def correct(self, bx, by, gain=1., gate=.08, iterations=2, damping=2.):
+        """Adjusts the pose so that the scan fits the known walls better (a few Gauss-Newton steps).
+
+        A Huber weight reduces the pull of points that are far from any wall (signs, the lot limits), and a small damping keeps
+        the step from jumping. ``gain`` lets the caller apply only part of the correction.
+        """
         x, y, th = self.x, self.y, self.th
         for _ in range(iterations):
             px, py, nx, ny, r = self._fit(bx, by, x, y, th, gate)

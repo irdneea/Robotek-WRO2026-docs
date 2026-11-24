@@ -1,10 +1,10 @@
-"""The base class of every Obstacle strategy in the course.
+"""The base class of every Obstacle strategy.
 
 A strategy is plain Python: no ROS inside. It receives what the sensors say through four hooks and answers with
 (speed, steer) every control tick. The same class runs in three places:
 
   * in Gazebo, inside the node ``drive.py`` (it forwards the ROS topics to these hooks);
-  * in the Obstacle lab (``python3 -m robotek_evaluation.obstacle_lab --strategy my_obstacle.strategy:Strategy``);
+  * in the Obstacle lab (``python3 -m robotek_evaluation.obstacle_lab --strategy robotek_obstacle_v3.strategy:Strategy``);
   * in your tests (``pytest``).
 
 You extend it and write ``update(now, dt)``. The base class takes care of the parts that are not the point of the
@@ -101,4 +101,4 @@ class ObstacleStrategyBase:
     def update(self, now, dt):
         """Decide (speed, steer) for this tick from ``self.scan``, ``self.yaw``, ``self.gyro``, ``self.travelled``
         and ``self.signs``."""
-        raise NotImplementedError('write update(self, now, dt) in your Strategy')
+        raise NotImplementedError('write update(self, now, dt) in the Strategy')

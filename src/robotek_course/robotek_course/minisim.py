@@ -1,4 +1,4 @@
-"""Mini simulator for the guide: a car, a field and a LiDAR, in plain Python (no ROS, no Gazebo).
+"""Mini simulator for quick tests: a car, a field and a LiDAR, in plain Python (no ROS, no Gazebo).
 
 Provided to the student; nothing here is an exercise. It mirrors the pieces that matter of the real simulation:
 

@@ -82,6 +82,8 @@ class FixedParking(Parking):
     """PARK_APPROACH -> PARK_PLAN -> (PARK_STEER -> PARK_MOVE -> PARK_SETTLE)* -> PARKED or PARK_FAIL."""
 
     def __init__(self, mission, speed, margin):
+        """Reads the parameters of the fixed park (how far past the lot to start, the entry heading, the margins, the rolling allowance) and builds the lot.
+        """
         super().__init__(mission, speed, margin)
         p = mission.p
         self.replan = False
@@ -131,12 +133,15 @@ class FixedParking(Parking):
         return [v if abs(v) >= d else 0.0 for v, d in zip(self.fix, SENSE_DEADBAND)]
 
     def _corrected(self, x, y, th, fix=None):
+        """The pose corrected by what the LiDAR saw of the lot (``park_fixed_sense``), turned around a pivot so that the whole lot moves as one.
+        """
         dx, dy, dth = self._applied() if fix is None else fix
         cx, cy = self.pivot
         c, s = math.cos(dth), math.sin(dth)
         return cx + c * (x - cx) - s * (y - cy) + dx, cy + s * (x - cx) + c * (y - cy) + dy, wrap(th + dth)
 
     def step(self, now, x, y, th):
+        """One tick: correct the pose with the sensed lot, then hand it to the pulses or to the planned moves."""
         self.raw = (x, y, th)
         if self.state == 'PARK_PULSES':
             return self._pulse(now, *self._corrected(x, y, th))
@@ -233,9 +238,13 @@ class FixedParking(Parking):
         return [best[1] - expected[0], best[2] - expected[1]]
 
     def _line(self):
+        """The y of the line the car follows to approach the lot: the wall of the lot plus half the car plus the gap.
+        """
         return self.lot.y1 + OUTLINE_HALF_WIDTH + GAP
 
     def _approach(self, now, x, y, th):
+        """Drives forward along the approach line until the reference point is past the far limit and the car is aligned, then switches to PARK_BACK.
+        """
         line, target = self._line(), self.lot.xb + self.ahead
         aligned = abs(y - line) < 0.008 and abs(wrap(th)) < math.radians(2.0)
         if self.state == 'PARK_APPROACH' and x >= target and (aligned or x >= target + RUN_PAST):
@@ -256,6 +265,8 @@ class FixedParking(Parking):
             self.speed = speed
 
     def _plan(self, now, pose):
+        """Loads the fixed manoeuvre. If the car arrives off the line or not parallel, it first backs up and approaches again (twice at most).
+        """
         if self.plans == 0:          # the approach line of this lot, not park.py's
             line = self._line()
             if abs(pose[1] - line) >= 0.015 or abs(wrap(pose[2])) >= math.radians(3.0):
@@ -281,6 +292,10 @@ class FixedParking(Parking):
                              fix=[round(v, 4) for v in self.fix], seen=list(self.seen)))
 
     def _finishing(self, pose):
+        """What comes after the straight reverse: the push back (a move by time, stopped early by the rear sensor), then the finishing pulses.
+
+        Returns the next move, or None when everything is done.
+        """
         if self.partial:             # partial: end after the entry and the straight into the lot (and the push)
             if self.partial_back > 0.0 and self.push_start is None:
                 self.push_start = -1.0
@@ -303,6 +318,8 @@ class FixedParking(Parking):
         return move_
 
     def _reached(self, x, y, th, early):
+        """Whether a move is finished. Moves by time end when they are stopped; moves with a guard end only on the guard.
+        """
         if self.current[3][0] == 'time':
             return True              # done when it stops (it never resumes)
         if self.current[3][0] == 'guard':
@@ -326,9 +343,12 @@ class FixedParking(Parking):
         self._next(now, pose)
 
     def _is_arc(self, steer):
+        """True for a move at (almost) full lock, whose end is read from the gyro heading instead of the LiDAR pose.
+        """
         return abs(steer) >= GYRO_ARC * self.steer_limit
 
     def _next(self, now, pose):
+        """Next move; in the partial park it hands over to the push and the pulses when the planned moves are over."""
         if self.partial and not self.moves:          # the push, then the finishing pulses (_finishing)
             move_ = self._finishing(pose)
             if move_ == ('pulses',):
@@ -343,6 +363,8 @@ class FixedParking(Parking):
             self.coast = self.rolls[self._is_arc(self.current[0]) and self.split]
 
     def _drive(self, now, x, y, th):
+        """Drives the current move with the guard and, for the last push, with the rear distance sensor and a timer.
+        """
         steer, direction, length, target, (x0, y0, _) = self.current
         if target[0] == 'time':      # the partial park's last push: by time, ended early by the rear sensor
             if self.push_start is None or self.push_start < 0.0:

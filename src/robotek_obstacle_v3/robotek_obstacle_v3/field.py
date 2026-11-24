@@ -23,6 +23,7 @@ SWAP = {'red': 'green', 'green': 'red'}
 
 
 def wrap(angle):
+    """An angle brought into -pi..pi."""
     return math.atan2(math.sin(angle), math.cos(angle))
 
 
@@ -59,10 +60,13 @@ def track_heading(x, y):
 
 
 def unwrap_s(previous, current):
+    """The lane progress ``current`` (which wraps every 8 units) shifted by whole laps so that it continues from ``previous``.
+    """
     return previous+((current-previous+4.) % 8.-4.)
 
 
 def make_seats():
+    """The 24 seats where a sign may stand: three along each straight, two rows, with their position on the field."""
     seats = []
     for k, (t, n) in enumerate(STRAIGHTS):
         for along in (-.5, 0., .5):

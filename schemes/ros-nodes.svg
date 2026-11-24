@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1010 480" width="1010" height="480" font-family="Arial, Helvetica, sans-serif">
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#333"/></marker></defs>
+<rect width="1010" height="480" fill="#ffffff"/>
+<text x="505.0" y="26" font-size="18" font-weight="bold" text-anchor="middle">ROS 2 nodes and topics on the car</text>
+<rect x="30" y="60" width="170" height="44" rx="8" fill="#dff3df" stroke="#333" stroke-width="1.2"/>
+<text x="115.0" y="86.0" font-size="12" font-weight="bold" text-anchor="middle">ldlidar node</text>
+<rect x="250" y="60" width="170" height="44" rx="8" fill="#d6e6fa" stroke="#333" stroke-width="1.2"/>
+<text x="335.0" y="86.0" font-size="12" font-weight="bold" text-anchor="middle">scan_adapter</text>
+<rect x="30" y="140" width="170" height="44" rx="8" fill="#dff3df" stroke="#333" stroke-width="1.2"/>
+<text x="115.0" y="166.0" font-size="12" font-weight="bold" text-anchor="middle">camera_publisher</text>
+<rect x="30" y="220" width="170" height="44" rx="8" fill="#d6e6fa" stroke="#333" stroke-width="1.2"/>
+<text x="115.0" y="246.0" font-size="12" font-weight="bold" text-anchor="middle">rrc_driver (inputs)</text>
+<rect x="250" y="220" width="170" height="44" rx="8" fill="#d6e6fa" stroke="#333" stroke-width="1.2"/>
+<text x="335.0" y="246.0" font-size="12" font-weight="bold" text-anchor="middle">imu_adapter</text>
+<rect x="250" y="300" width="170" height="44" rx="8" fill="#d6e6fa" stroke="#333" stroke-width="1.2"/>
+<text x="335.0" y="326.0" font-size="12" font-weight="bold" text-anchor="middle">start_button</text>
+<rect x="30" y="380" width="170" height="44" rx="8" fill="#dff3df" stroke="#333" stroke-width="1.2"/>
+<text x="115.0" y="406.0" font-size="12" font-weight="bold" text-anchor="middle">rear_range (VL53L0X)</text>
+<rect x="520" y="150" width="210" height="80" rx="8" fill="#e6dcf5" stroke="#333" stroke-width="1.2"/>
+<text x="625.0" y="179.0" font-size="12" font-weight="bold" text-anchor="middle">Strategy node</text>
+<text x="625.0" y="194.0" font-size="12" font-weight="normal" text-anchor="middle">drive.py (Obstacle)</text>
+<text x="625.0" y="209.0" font-size="12" font-weight="normal" text-anchor="middle">or the Open node</text>
+<rect x="790" y="60" width="190" height="44" rx="8" fill="#d6e6fa" stroke="#333" stroke-width="1.2"/>
+<text x="885.0" y="86.0" font-size="12" font-weight="bold" text-anchor="middle">rrc_driver (outputs)</text>
+<rect x="790" y="170" width="190" height="44" rx="8" fill="#d6e6fa" stroke="#333" stroke-width="1.2"/>
+<text x="885.0" y="196.0" font-size="12" font-weight="bold" text-anchor="middle">base_adapter</text>
+<rect x="790" y="300" width="190" height="44" rx="8" fill="#f8d9d9" stroke="#333" stroke-width="1.2"/>
+<text x="885.0" y="326.0" font-size="12" font-weight="bold" text-anchor="middle">status_leds</text>
+<rect x="790" y="400" width="190" height="44" rx="8" fill="#d6e6fa" stroke="#333" stroke-width="1.2"/>
+<text x="885.0" y="426.0" font-size="12" font-weight="bold" text-anchor="middle">battery_guard</text>
+<path d="M200,82 L250,82" fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="225.0" y="77.0" font-size="11" fill="#222" text-anchor="middle" paint-order="stroke" stroke="#fff" stroke-width="4">/scan</text>
+<path d="M420,82 L625,82 L625,150" fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="520" y="75" font-size="11" fill="#222" text-anchor="middle" paint-order="stroke" stroke="#fff" stroke-width="4">/robotek/scan</text>
+<path d="M200,162 L520,175" fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="360" y="156" font-size="11" fill="#222" text-anchor="middle" paint-order="stroke" stroke="#fff" stroke-width="4">/picam/image_raw/compressed</text>
+<path d="M200,242 L250,242" fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="225" y="234" font-size="11" fill="#222" text-anchor="middle" paint-order="stroke" stroke="#fff" stroke-width="4">/rrc/imu_raw</text>
+<path d="M420,242 L520,215" fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="470" y="240" font-size="11" fill="#222" text-anchor="middle" paint-order="stroke" stroke="#fff" stroke-width="4">/robotek/imu</text>
+<path d="M115,264 L115,322 L250,322" fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="170" y="315" font-size="11" fill="#222" text-anchor="middle" paint-order="stroke" stroke="#fff" stroke-width="4">/rrc/button</text>
+<path d="M420,322 L570,322 L570,230" fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="490" y="315" font-size="11" fill="#222" text-anchor="middle" paint-order="stroke" stroke="#fff" stroke-width="4">/start, /robotek/stop</text>
+<path d="M200,402 L680,402 L680,230" fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="440" y="395" font-size="11" fill="#222" text-anchor="middle" paint-order="stroke" stroke="#fff" stroke-width="4">/robotek/rear_range_mm</text>
+<path d="M730,190 L790,192" fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="760" y="180" font-size="11" fill="#222" text-anchor="middle" paint-order="stroke" stroke="#fff" stroke-width="4">/cmd_vel_raw</text>
+<path d="M885,170 L885,104" fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="885" y="140" font-size="11" fill="#222" text-anchor="middle" paint-order="stroke" stroke="#fff" stroke-width="4">/rrc/acker_servo/set_state</text>
+<text x="895" y="128" font-size="11" text-anchor="start" font-weight="normal">/rrc/set_motor</text>
+<path d="M710,230 L710,322 L790,322" fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="750" y="337" font-size="11" fill="#222" text-anchor="middle" paint-order="stroke" stroke="#fff" stroke-width="4">/robotek/state</text>
+<path d="M885,400 L885,344" fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="885" y="372" font-size="11" fill="#222" text-anchor="middle" paint-order="stroke" stroke="#fff" stroke-width="4">/robotek/battery_low</text>
+<text x="30" y="462" font-size="11" text-anchor="start" font-weight="normal">Boxes are ROS 2 nodes, arrows are topics. rrc_driver is drawn twice (what it reads and what it sends): it is one node talking to the board.</text>
+</svg>

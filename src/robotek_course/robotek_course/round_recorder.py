@@ -117,7 +117,7 @@ class RoundRecorder(Node):
         if self.start is None:
             ready = all(t is not None for t in self.alive.values()) and now - max(self.alive.values()) >= SETTLE_S
             if ready and self.start_pub.get_subscription_count() == 0:
-                self.get_logger().warning('Waiting for your node to subscribe to /start (is it running?)',
+                self.get_logger().warning('Waiting for the strategy node to subscribe to /start (is it running?)',
                                           throttle_duration_sec=10.0)
             if ready and self.start_pub.get_subscription_count() > 0:
                 self.start = now
