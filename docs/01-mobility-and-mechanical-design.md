@@ -66,3 +66,30 @@ Each folder has an STL and a preview image. The kit parts (Ackermann linkage, hu
 ## 6. What we would change next
 
 A rear VL53L0X distance sensor stops reversing moves before the car touches the parking limits (see 02). The wheel encoder is still not read by the software; using it would remove the dead reckoning drift we see after the lot exit (the estimated pose is up to 0.2 m away from the LiDAR localisation).
+
+## 7. Torque and speed, worked out
+
+The tyres are 61 mm in diameter, so one wheel turn moves the car 0.1916 m. The speeds we use correspond to these wheel speeds:
+
+| Speed | Where we use it | Wheel speed |
+| --- | --- | --- |
+| 0.25 m/s | Slowest the motor holds (the motor floor) | 78 rpm |
+| 0.28–0.30 m/s | Obstacle lane following | 88–94 rpm |
+| 0.64 m/s | Open corners | 200 rpm |
+| 0.85 m/s | Open straights | 266 rpm |
+
+**How much torque does the car need?** Take the worst case allowed by the rules, 1.5 kg, a rolling resistance coefficient of 0.03 for silicone on the mat (an assumption, to be checked with a pull test) and a hard acceleration of 1 m/s². The force at the tyres is 0.03 × 1.5 × 9.81 + 1.5 × 1 = 1.94 N, which at a wheel radius of 30.5 mm is **0.059 N·m (0.6 kg·cm)** at the axle. That is small, and the motor has plenty of margin; the limit of our car was never torque, it was the **minimum speed at which the motor and its driver start moving** (see section 3), and the electrical limits of the board when the motor is blocked. This is why the gearing was chosen by what happened on the track (starting at full lock, speed at 0.28 m/s) and not by a torque calculation.
+
+**Why the steering lock matters for speed.** At 17.6° of wheel angle and a wheelbase of 118.83 mm the turning radius of the rear axle is 0.118 83 / tan 17.6° = **0.375 m**. At 0.28 m/s the car then turns at 0.75 rad/s (43°/s). The corner planner and the steering watch use exactly this relation: if the gyroscope reads much less than speed × tan(wheel angle) / wheelbase, the wheels did not turn.
+
+## 8. Building the mechanics, step by step
+
+These are the steps in the order we assemble the car; the photos of the finished car from every side are in [`v-photos`](../v-photos).
+
+1. **Base.** Print `vehicle_base` (or cut it) and fit the rear axle supports. If there is a gap between the chassis part and the supports, fit the printed spacer cylinders before tightening: a loose axle makes the drive train wobble.
+2. **Drive axle.** Fix the motor mount to the base and the motor to the mount. Put the axle through its two bearings, secure it with the two locking rings and join the motor shaft to the axle with the spacers, keeping them clear of the motor screws. The rear wheels go on the hubs with the silicone tyres.
+3. **Steering.** Screw the fixed Ackermann part to the base. Fit the two movable pieces on its sides and check they turn freely. Join the wheel pieces with the long linkage (bearings at both ends) and fit the shorter second linkage on the side opposite to the servo output shaft. Mount the servo **vertically** (a horizontal servo limited the left angle) so that its horn moves the short linkage. Fit the front wheel hubs on bearings.
+4. **Centre the steering.** With the electronics running, send 1403 µs to the servo and tighten the horn so that the wheels point straight. Then check the left and right limits with the calibration tool (`tools/steer_calibration.py`): about 19.7° left and 17.6° right at 25° of servo.
+5. **Housings.** LiDAR housing at the front with a free field of view, camera housing right behind it (inclined down about 8°), the batteries and the Raspberry Pi housing behind, over the servo.
+6. **Electronics** as in the README and [02](02-power-and-sensor-architecture.md), then the checks of [05](05-reproducibility-build-and-test.md#2-running-the-challenges) before the first round.
+7. **Weigh and measure** the finished car against the limits in [rules-compliance](rules-compliance.md).

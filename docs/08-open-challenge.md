@@ -41,11 +41,11 @@ The car drives at a **heading law**. The goal heading is a multiple of 90° (it 
 
 `steer = 0.8 · (goal heading + bias − heading) − 0.1 · yaw rate`
 
-limited to the real wheel limit of 17.6°. The `bias` term moves the goal heading by up to 0.4 rad so that the car keeps **0.25 m from the island wall**: it is 0.3 rad of heading per metre of error, i.e. a gentle correction.
+limited to the real wheel limit of 17.6°. The `bias` term moves the goal heading by up to 0.4 rad so that the car keeps **0.50 m from the island wall** on the real car (`inner_gap`): 1.0 rad of heading per metre of error (`lateral_kp`), so the car lines up quickly after a corner instead of using the whole straight to do it.
 
 The gyro integrates a small error each lap, and the LiDAR corrects it: on a straight, the island wall shows the real heading of the car, and the yaw is pulled toward it once per scan. This fixed a drift we saw on 4 Nov (after two laps the car pointed 35–40° off while the mission thought it was straight), because our gyro reads about 6 % short in the corners.
 
-**Speed.** Cruise speed is 1.28 m/s on straights. The car slows to 1.0 m/s on approach to a corner: when the front wall is closer than the turn distance plus a braking margin, the speed above the corner speed falls with the gap (2 per second per metre).
+**Speed.** On the real car the cruise speed is 0.85 m/s on the straights and the corner speed 0.64 m/s (`config/car_picam.yaml`; the defaults in `settings.py` are the higher simulation values). The car slows down on the approach to a corner: when the front wall is closer than the turn distance plus a braking margin of 0.35 m, the speed above the corner speed falls with the gap.
 
 ### TURN (corners)
 
@@ -55,11 +55,15 @@ Three conditions must hold at the same time (`turn_checks`):
 2. The front wall is closer than **1.19 m** along the track axis.
 3. The island has ended: either the side that was the island now reads open (farther than 1.0 m) or the end of the island wall has been seen ahead in two consecutive scans, closer than 0.35 m (shorter in a narrow lane).
 
-When all three are true the goal heading changes by 90° in the driving direction and the car turns at **full lock** at 1.0 m/s. The arc ends when the heading is within 0.3 rad of the goal; at that moment the straight-line law, which is on from the first moment, finishes the turn and returns the car to 25 cm from the island. We tested a ramped steering reference and it gave the same results in the lab, so the full-lock arc stayed because it is simpler.
+When all three are true the goal heading changes by 90° in the driving direction and the car turns at **full lock** at the corner speed. The arc ends when the heading is within 0.3 rad (about 17°) of the goal; ending early avoids overshooting into the island, which a tolerance of 0.12 rad did. From that moment the straight-line law finishes the turn and returns the car to 50 cm from the island. We tested a ramped steering reference and it gave the same results in the lab, so the full-lock arc stayed because it is simpler.
 
 ### FINISH and STOP
 
-After 12 corners the car is back in the starting section. It drives at 0.15 m/s with the wheels straight until the front range matches the one measured at Start (within 8 cm) and the heading is within 0.1 rad of straight, then brakes and waits 0.9 s at rest before reporting DONE. It brakes only when it is straight again: braking with the wheels still turned left the car rolling into the island in some lab rounds.
+After 12 corners the car is back in the starting section. It drives at 0.32 m/s with the wheels straight until the front range matches the one measured at Start (14 cm early, `finish_lead`, to compensate for the braking distance) and the heading is within 0.1 rad of straight, then brakes and waits 0.9 s at rest before reporting DONE. It brakes only when it is straight again: braking with the wheels still turned left the car rolling into the island in some lab rounds.
+
+## Results
+
+On 11 Nov 2026 (17:29, new motor, 54:30 gears) the car completed three laps in **30.9 s** from Start to DONE, the round the coach called perfect (no judge, so no official score). An earlier record of 23.4 s used a higher cruise speed and no corner speed; it crashed on fields with a narrow corner, so we chose the slower and repeatable settings. In the lab the same speeds had no contact in the standard set of twelve fields.
 
 ## Crash detector
 
