@@ -1,6 +1,6 @@
 """Tests of every function of the RRC Lite board, one after the other, on the car.
 
-  # the team's stack stopped (~/scripts/stop_ros.sh) and the board node alone:
+  # the team's stack stopped (~/scripts/stop_ros.py) and the board node alone:
   source ~/wro_controller_ws/install/setup.bash && source ~/Projects/WRO-Strategies/install/setup.bash
   ros2 run rrc_lite_driver rrc_driver &
   ros2 run robotek_hardware rrc_test                                  # safe tests only

@@ -4,7 +4,7 @@ button (/rrc/button, press edges only, state 1 or 5; ``board_button``, off by de
 like the team's robot_node (1.5 s).
 
 Any press after the first one publishes /robotek/stop (Bool true, two beeps): base_adapter
-and motor_driver hold the motor at 0 and the Open strategy stops for good. Restart the
+holds the motor at 0 and the Open strategy stops for good. Restart the
 launch to run again. (8 Oct 2026: the car hit a wall and could not be stopped.)
 Presses in the first stop_lockout seconds (default 5) after the start are ignored: on 4 nov 2026 a start pressed twice
 by mistake stopped the round before the car moved.

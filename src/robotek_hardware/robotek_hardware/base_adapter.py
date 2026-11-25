@@ -1,10 +1,8 @@
 """/cmd_vel (Twist) -> RRC Lite servo (us) + drive motor, for the real car.
 
-The drive motor goes one of two ways (motor_backend in robot.yaml):
-  - 'tb6612' (default): a DC motor on the TB6612 bridge, as a % on /motor_vel for motor_driver;
-  - 'rrc': an encoder motor on a motor port of the RRC Lite (rrc_motor_port, e.g. 4 = M4), as revolutions
-    per second on /rrc/set_motor; the board holds that speed with the encoder. motor_rps_per_mps must be
-    measured on the car (motor rps per m/s); until it is (0), the motor stays at 0.
+The drive motor is an encoder motor on a motor port of the RRC Lite (rrc_motor_port, e.g. 2 = M2). It is commanded as
+revolutions per second on /rrc/set_motor and the board holds that speed with the encoder. motor_rps_per_mps (motor
+rps per m/s of the car) must be measured on the car; while it is 0, the motor stays at 0.
 
 Wall guard (wall_stop_m > 0): with the nearest LiDAR return within +-wall_half_deg of straight ahead
 (/robotek/scan, 0 rad ahead) nearer than wall_slow_m, the forward speed is scaled down linearly, to 0 at
@@ -23,7 +21,7 @@ full-power start lifts the front wheels and a hard stop makes the wheels skid
 /robotek/stop (Bool true, second press of the board button) does the same and holds the
 motor at 0, ignoring cmd_vel speed, until /robotek/stop false or a restart.
 
-Brake (rrc backend, brake_rps > 0): the RRC Lite did not hold 0 with the 310 motor (it ran on, sped up or rolled
+Brake (brake_rps > 0): the RRC Lite did not hold 0 with the 310 motor (it ran on, sped up or rolled
 back, 4 nov 2026). When the speed goes to 0 after moving (target 0, the board button, estop or the watchdog),
 the ramp is skipped and the motor gets +-brake_rps alternating at brake_hz for brake_s (reverse first), then 0
 (mapping.DitherBrake): on the floor that stopped the car ~12 cm after the order, 3 times out of 3.
@@ -45,7 +43,7 @@ from rclpy.executors import ExternalShutdownException
 from rclpy.node import Node
 from std_msgs.msg import Bool, Empty, Float32, String
 
-from .mapping import (DitherBrake, LowSpeedDrive, MotorCalibration, ServoCalibration, front_distance, motor_pct, motor_rps, rate_limit,
+from .mapping import (DitherBrake, LowSpeedDrive, ServoCalibration, front_distance, motor_rps, rate_limit,
                       servo_for_wheel, servo_us, steer_from_twist, wall_speed_factor)
 
 TICK = .02  # s, motor update period
@@ -65,14 +63,13 @@ class BaseAdapter(Node):
         super().__init__('base_adapter')
         p = {k: self.declare_parameter(k, v).value for k, v in dict(
             wheelbase=.13, servo_topic='/rrc/acker_servo/set_state',
-            motor_topic='/motor_vel', servo_duration=.05, watchdog=.3,
+            servo_duration=.05, watchdog=.3,
             servo_center_us=1500., servo_gain_pos=550./29., servo_gain_neg=500./29., servo_sign=-1.,
             servo_min_us=1000., servo_max_us=2050., steer_limit_deg=25.,
-            motor_pct_per_mps=40., motor_min_pct=12., motor_max_pct=100.,
             accel_limit=1., decel_limit=.6,
             wheel_table_servo_deg=[0.], wheel_table_left_deg=[0.], wheel_table_right_deg=[0.],
             wheel_limit_deg=0., servo_measured=True,
-            motor_backend='tb6612', rrc_motor_topic='/rrc/set_motor', rrc_motor_port=4, rrc_motor_sign=1.,
+            rrc_motor_topic='/rrc/set_motor', rrc_motor_port=4, rrc_motor_sign=1.,
             motor_rps_per_mps=0., motor_max_rps=0., motor_min_rps=0.,
             motor_kick_rps=0., motor_kick_s=.2, motor_pulse_rps=0., motor_pulse_period_s=.5, low_speed_states='', no_ramp_states='',
             brake_rps=0., brake_hz=10., brake_s=1.5, brake_min_rps=1., brake_reset=False,
@@ -93,26 +90,18 @@ class BaseAdapter(Node):
         self.servo = ServoCalibration(p['servo_center_us'], p['servo_gain_pos'], p['servo_gain_neg'],
                                       p['servo_sign'], p['servo_min_us'], p['servo_max_us'],
                                       p['steer_limit_deg'])
-        self.motor = MotorCalibration(p['motor_pct_per_mps'], p['motor_min_pct'], p['motor_max_pct'])
         if SetAckerServoState is None:
             self.get_logger().error('rrc_lite_msgs missing: servo commands disabled.')
             self.servo_pub = None
         else:
             self.servo_pub = self.create_publisher(SetAckerServoState, p['servo_topic'], 10)
-        self.backend = str(p['motor_backend'])
-        if self.backend not in ('tb6612', 'rrc'):
-            raise ValueError(f"motor_backend must be 'tb6612' or 'rrc', got {self.backend!r}")
-        if self.backend == 'rrc':
-            if MotorsState is None:
-                raise RuntimeError("motor_backend 'rrc' needs rrc_lite_msgs")
-            self.motor_pub = self.create_publisher(MotorsState, p['rrc_motor_topic'], 10)
-            if float(p['motor_rps_per_mps']) <= 0.:
-                self.get_logger().error('motor_backend rrc with motor_rps_per_mps <= 0: not measured yet, the motor '
-                                        'stays at 0 (robot.yaml).')
-            self.get_logger().info(f"Drive motor: RRC Lite port M{int(p['rrc_motor_port'])}, "
-                                   f"{float(p['motor_rps_per_mps']):.2f} rps per m/s.")
-        else:
-            self.motor_pub = self.create_publisher(Float32, p['motor_topic'], 10)
+        if MotorsState is None:
+            raise RuntimeError('The motor needs the messages of rrc_lite_msgs: build the workspace first.')
+        self.motor_pub = self.create_publisher(MotorsState, p['rrc_motor_topic'], 10)
+        if float(p['motor_rps_per_mps']) <= 0.:
+            self.get_logger().error('motor_rps_per_mps <= 0: not measured yet, the motor stays at 0 (robot.yaml).')
+        self.get_logger().info(f"Drive motor: RRC Lite port M{int(p['rrc_motor_port'])}, "
+                               f"{float(p['motor_rps_per_mps']):.2f} rps per m/s.")
         self.create_subscription(Twist, 'cmd_vel', self.on_cmd, 10)
         self.front = math.inf             # nearest obstacle ahead (m), from the LiDAR
         self.front_time = None
@@ -139,16 +128,14 @@ class BaseAdapter(Node):
                                    f"(period {float(p['motor_pulse_period_s']):.2f} s)"
                                    + (f" in {', '.join(sorted(self.low_speed_states))} only." if self.low_speed_states
                                       else "."))
-        self.brake = DitherBrake(p['brake_rps'], p['brake_hz'], p['brake_s'], p['brake_min_rps']) \
-            if self.backend == 'rrc' else DitherBrake()
+        self.brake = DitherBrake(p['brake_rps'], p['brake_hz'], p['brake_s'], p['brake_min_rps'])
         # brake_reset: instead of the back-and-forth, reset the board (rrc_driver /rrc/reset, RTS = RESET): the stop
         # the 310 motor obeyed every time (4 nov 2026). The board is set up again ~2.5 s later.
         self.brake_reset = bool(p['brake_reset']) and self.brake.enabled
-        # done_reset_states (rrc backend): when /robotek/state becomes one of these, send 0 and then reset the board
+        # done_reset_states: when /robotek/state becomes one of these, send 0 and then reset the board
         # once; no motor command after it. The new motor of 11 nov 2026 ran on at ~0.35 m/s for 4 s after the Open's
         # 0 and DONE, into the wall (no board reboot): a board reset is the stop it always obeyed (4 nov).
-        self.done_reset_states = {s.strip() for s in str(p['done_reset_states']).split(',') if s.strip()} \
-            if self.backend == 'rrc' else set()
+        self.done_reset_states = {s.strip() for s in str(p['done_reset_states']).split(',') if s.strip()}
         self.reset_pub = self.create_publisher(Empty, '/rrc/reset', 1) \
             if (self.brake_reset or self.done_reset_states) else None
         self.reset_sent = False
@@ -213,12 +200,8 @@ class BaseAdapter(Node):
     def top_speed(self):
         """Fastest the motor can really go (m/s) with the configured cap, inf if uncapped."""
         p = self.p
-        if self.backend == 'rrc':
-            if float(p['motor_max_rps']) > 0. and float(p['motor_rps_per_mps']) > 0.:
-                return float(p['motor_max_rps'])/float(p['motor_rps_per_mps'])
-            return math.inf
-        if float(p['motor_pct_per_mps']) > 0.:
-            return max(0., (float(p['motor_max_pct'])-float(p['motor_min_pct']))/float(p['motor_pct_per_mps']))
+        if float(p['motor_max_rps']) > 0. and float(p['motor_rps_per_mps']) > 0.:
+            return float(p['motor_max_rps'])/float(p['motor_rps_per_mps'])
         return math.inf
 
     def guarded(self, target):
@@ -247,30 +230,27 @@ class BaseAdapter(Node):
             self.get_logger().warning('Operator stop: motor held at 0.')
 
     def send_speed(self, speed):
-        """Car speed (m/s) to the drive motor of the chosen backend."""
+        """Car speed (m/s) to the drive motor, as revolutions per second for the board."""
         p = self.p
-        if self.backend == 'rrc':
-            if self.motor_halted:
-                return
-            rps_per_mps = float(p['motor_rps_per_mps'])
-            rps = motor_rps(speed, rps_per_mps, float(p['motor_max_rps']), float(p['rrc_motor_sign']),
-                            min_rps=float(p['motor_min_rps'])) if rps_per_mps > 0. else 0.
-            if not self.low_speed_states or self.state in self.low_speed_states:
-                rps = self.low_speed.rps(self.get_clock().now().nanoseconds * 1e-9, rps)
-            rps = self.brake.rps(self.get_clock().now().nanoseconds * 1e-9, rps)
-            if self.brake_reset:
-                if self.brake.start is not None:      # braking: one board reset (at the end), else plain 0
-                    if not self.reset_sent and self.final_stop():
-                        self.reset_pub.publish(Empty())
-                        self.reset_sent = self.motor_halted = True
-                        self.get_logger().warning('Stopping after moving: board reset. No more motor commands '
-                                                  'until a restart.')
-                    rps = 0.
-                else:
-                    self.reset_sent = False
-            self.motor_pub.publish(MotorsState(data=[MotorState(id=int(p['rrc_motor_port']), rps=float(rps))]))
-        else:
-            self.motor_pub.publish(Float32(data=float(motor_pct(speed, self.motor))))
+        if self.motor_halted:
+            return
+        rps_per_mps = float(p['motor_rps_per_mps'])
+        rps = motor_rps(speed, rps_per_mps, float(p['motor_max_rps']), float(p['rrc_motor_sign']),
+                        min_rps=float(p['motor_min_rps'])) if rps_per_mps > 0. else 0.
+        if not self.low_speed_states or self.state in self.low_speed_states:
+            rps = self.low_speed.rps(self.get_clock().now().nanoseconds * 1e-9, rps)
+        rps = self.brake.rps(self.get_clock().now().nanoseconds * 1e-9, rps)
+        if self.brake_reset:
+            if self.brake.start is not None:      # braking: one board reset (at the end), else plain 0
+                if not self.reset_sent and self.final_stop():
+                    self.reset_pub.publish(Empty())
+                    self.reset_sent = self.motor_halted = True
+                    self.get_logger().warning('Stopping after moving: board reset. No more motor commands '
+                                              'until a restart.')
+                rps = 0.
+            else:
+                self.reset_sent = False
+        self.motor_pub.publish(MotorsState(data=[MotorState(id=int(p['rrc_motor_port']), rps=float(rps))]))
 
     def send_servo(self, us):
         """Publishes a servo position in microseconds to the board driver."""
@@ -308,7 +288,7 @@ def main(args=None):
     except (KeyboardInterrupt, ExternalShutdownException):
         pass
     finally:
-        if rclpy.ok():   # on a launch shutdown the context is gone; motor_driver's / rrc_driver's watchdog stops it
+        if rclpy.ok():   # on a launch shutdown the context is gone; rrc_driver's watchdog stops it
             node.send_speed(0.)
         node.destroy_node()
         rclpy.try_shutdown()

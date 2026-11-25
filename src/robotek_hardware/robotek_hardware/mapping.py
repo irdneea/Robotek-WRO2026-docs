@@ -6,7 +6,7 @@ straight ahead and angles growing counter-clockwise.
 
 The car: HiWonder RRC Lite servo commanded in
 microseconds (centre 1500 us, 550/29 us per degree on one side and 500/29 on the
-other, SERVO_SIGN -1, team convention +delta = right), TB6612 motor in percent, and
+other, SERVO_SIGN -1, team convention +delta = right), drive motor speed, and
 an STL-19P lidar whose 0 deg points backwards (front 180, left 240, right 120 deg).
 """
 from dataclasses import dataclass
@@ -22,14 +22,6 @@ class ServoCalibration:
     min_us: float = 1000.
     max_us: float = 2050.
     limit_deg: float = 25.                  # rule-compliant limit used by the strategies
-
-
-@dataclass
-class MotorCalibration:
-    pct_per_mps: float = 40.    # TO MEASURE on the field: % of PWM per m/s
-    min_pct: float = 12.        # TO MEASURE: least % that moves the car (static friction)
-    max_pct: float = 100.
-    deadband_mps: float = .005  # |v| below this is a stop
 
 
 def steer_from_twist(linear, angular, wheelbase, previous):
@@ -81,14 +73,6 @@ def rate_limit(current, target, accel, decel, dt):
         return target
     step = limit*dt
     return current+max(-step, min(step, target-current))
-
-
-def motor_pct(speed_mps, cal: MotorCalibration):
-    """Signed motor command in % (negative = reverse)."""
-    if abs(speed_mps) < cal.deadband_mps:
-        return 0.
-    pct = cal.min_pct+cal.pct_per_mps*abs(speed_mps)
-    return math.copysign(min(cal.max_pct, pct), speed_mps)
 
 
 def wall_speed_factor(front_m, stop_m, slow_m):

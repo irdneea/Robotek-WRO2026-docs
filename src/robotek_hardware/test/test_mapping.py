@@ -2,7 +2,7 @@ import math
 
 import pytest
 
-from robotek_hardware.mapping import (MotorCalibration, ServoCalibration, front_distance, mask_scan, motor_pct,
+from robotek_hardware.mapping import (ServoCalibration, front_distance, mask_scan,
                                       motor_rps, rate_limit, wall_speed_factor,
                                       servo_for_wheel,
                                       rotate_scan_angles, servo_us, steer_from_twist)
@@ -29,14 +29,6 @@ def test_steer_from_twist_inverts_the_bicycle_model_and_holds_when_stopped():
     assert math.isclose(steer_from_twist(v, w, .13, 0.), steer)
     assert math.isclose(steer_from_twist(-v, -w, .13, 0.), steer)   # reverse keeps the angle
     assert steer_from_twist(0., 0., .13, .3) == .3
-
-
-def test_motor_percent_is_signed_with_a_deadband():
-    cal = MotorCalibration(pct_per_mps=40., min_pct=12.)
-    assert motor_pct(0., cal) == 0.
-    assert motor_pct(.5, cal) == 32.
-    assert motor_pct(-.5, cal) == -32.
-    assert motor_pct(10., cal) == 100.
 
 
 def test_scan_rotation_puts_the_lidar_front_at_zero():

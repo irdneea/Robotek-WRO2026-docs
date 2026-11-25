@@ -9,8 +9,7 @@
 #  * 10c4:ea60  CP210x USB-serial adapter of the LDROBOT LD19 LiDAR (shows up as /dev/ttyUSB0). It is the one in the
 #               ldlidar.rules of LDROBOT's repository (src/ldlidar_stl_ros2/scripts/ldlidar.rules). Careful: any other
 #               generic CP210x device (10c4:ea60) will also be named /dev/ldlidar.
-#  * gpiochip   the GPIO rule gives the gpio group access to /dev/gpiochip* (used by the push button and by the old
-#               TB6612 motor driver through lgpio). It is the usual Raspberry Pi rule and has not been checked on a clean
+#  * gpiochip   the GPIO rule gives the gpio group access to /dev/gpiochip* (used by the push button and the rear sensor, through lgpio). It is the usual Raspberry Pi rule and has not been checked on a clean
 #               Pi: if a node says "GPIO chip not usable", look here first.
 #  * The USB camera (icSpring, 32e6:9005, used on earlier versions) needs no rule: the video group is enough.
 

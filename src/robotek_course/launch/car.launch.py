@@ -15,17 +15,17 @@ Here those names are connected to the car:
   RRC Lite button -> start_button -> /start (first press) and /robotek/stop (any later press)
   GPIO 16 button  -> gpio_button  -> /robotek/gpio_button (true = pressed; only reported for now)
   VL53L0X (I2C)   -> rear_range   -> /robotek/rear_range (m) and /robotek/rear_range_mm (only reported for now)
-  your /cmd_vel_raw -> base_adapter -> servo (microseconds) on the RRC Lite + /motor_vel -> motor_driver (TB6612)
+  your /cmd_vel_raw -> base_adapter -> servo (microseconds) on the RRC Lite + /rrc/set_motor (drive motor)
 
 Started here (each driver is skipped with a message when its package is not installed, so the launch can be tried
 on a laptop; see src/robotek_hardware/README.md for how to install them):
   - rrc_lite_driver (the RRC Lite board: IMU, button, servo, RGBs) and the LiDAR driver (ldlidar_stl_ros2, LD19)
   - the camera: robotek_hardware/camera_publisher (camera_driver:=usb_cam for the ROS package)
-  - robotek_hardware: scan_adapter, imu_adapter, motor_driver, base_adapter, start_button, gpio_button, rear_range, battery_guard, status_leds
+  - robotek_hardware: scan_adapter, imu_adapter, base_adapter, start_button, gpio_button, rear_range, battery_guard, status_leds
   - robot_state_publisher with robotek_description (only if installed; useful to see the car in RViz on a laptop)
   - the strategy node, with use_sim_time false
 
-Press the button of the board once to start. Press it again to stop: base_adapter and motor_driver hold the motor
+Press the button of the board once to start. Press it again to stop: base_adapter holds the motor
 at 0 until you launch again. The parameters of the car (servo, motor, wheelbase, LiDAR, IMU axes) are in
 robotek_hardware/config/robot.yaml.
 """
@@ -256,11 +256,9 @@ def generate_launch_description():
     hardware_config = os.path.join(get_package_share_directory('robotek_hardware'), 'config', 'robot.yaml')
     with open(hardware_config) as stream:
         base = yaml.safe_load(stream)['base_adapter']['ros__parameters']
-        default_max_pct = str(base['motor_max_pct'])
         default_max_rps = str(base.get('motor_max_rps', 0.0))
         default_rps_per_mps = str(base.get('motor_rps_per_mps', 0.0))
         default_min_rps = str(base.get('motor_min_rps', 0.0))
-        motor_backend = str(base.get('motor_backend', 'tb6612'))
         brake_defaults = {name: str(base.get(name, value)) for name, value in (
             ('brake_rps', 0.0), ('brake_hz', 10.0), ('brake_s', 1.5), ('brake_min_rps', 1.0))}
     return LaunchDescription([
@@ -424,8 +422,6 @@ def generate_launch_description():
                                 description='base_adapter brake (robot.yaml; brake_rps 0 = off): +-brake_rps at brake_hz '
                                             'for brake_s, reverse first, when stopping from at least brake_min_rps')
           for name, value in brake_defaults.items()],
-        DeclareLaunchArgument('motor_max_pct', default_value=default_max_pct,
-                              description='motor ceiling in % (robot.yaml). First run on the car: 30, on blocks'),
         DeclareLaunchArgument('battery_guard', default_value='true',
                               description='red blinking RGBs when the battery is low (does not stop the car)'),
         DeclareLaunchArgument('battery_min_v', default_value='6.8', description='battery voltage (V) under which to change it'),
@@ -440,14 +436,9 @@ def generate_launch_description():
         Node(package='robotek_hardware', executable='imu_adapter', name='imu_adapter', output='screen',
              parameters=[hardware_config],
              remappings=[('imu_in', LaunchConfiguration('imu_topic')), ('imu_out', '/robotek/imu')]),
-        # The TB6612 bridge only with motor_backend tb6612 (robot.yaml): the car's motor is on the RRC Lite (M2).
-        Node(package='robotek_hardware', executable='motor_driver', name='tb6612fng_motor', output='screen',
-             parameters=[hardware_config], condition=IfCondition(str(motor_backend == 'tb6612'))),
         # Your /cmd_vel_raw is the base_adapter's input (in the simulator sim_actuator_model reads the same topic).
         Node(package='robotek_hardware', executable='base_adapter', name='base_adapter', output='screen',
-             parameters=[hardware_config, {'motor_max_pct': ParameterValue(LaunchConfiguration('motor_max_pct'),
-                                                                           value_type=float),
-                                           'motor_rps_per_mps': ParameterValue(PythonExpression(
+             parameters=[hardware_config, {'motor_rps_per_mps': ParameterValue(PythonExpression(
                                                ["(", default_rps_per_mps, ") if '", LaunchConfiguration('motor_rps_per_mps'),
                                                 "' == 'auto' else ", LaunchConfiguration('motor_rps_per_mps')]),
                                                value_type=float),

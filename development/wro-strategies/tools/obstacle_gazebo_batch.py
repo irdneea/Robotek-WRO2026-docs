@@ -6,7 +6,7 @@
 
 Meant for the remote machine (docs/maquina-remota.md). Each round is the normal runner
 (run_obstacle_gui_experiment.py: same world, judge, round.json and ledger line); this script only
-gives every job its own ROS_DOMAIN_ID and GZ_PARTITION, runs clean_sim.sh once before and after the
+gives every job its own ROS_DOMAIN_ID and GZ_PARTITION, runs clean_sim.py once before and after the
 batch (never between rounds: it would kill the other jobs), and adds the quality gate of the quiet
 suites to each line: clean=1 when control ticks are never more than 0.2 s apart and LiDAR stamps stay
 within 0.1 s of /clock. `speed` is simulated per wall seconds while the
@@ -26,12 +26,12 @@ from concurrent.futures import ThreadPoolExecutor
 
 ROOT = Path(__file__).resolve().parents[1]
 RUNNER = ROOT/'src/robotek_evaluation/tools/run_obstacle_gui_experiment.py'
-CLEAN = ROOT/'src/robotek_evaluation/tools/clean_sim.sh'
+CLEAN = ROOT/'src/robotek_evaluation/tools/clean_sim.py'
 
 
 def quality(directory):
     """(clean, speed): clean=1 when the strategy kept up with the simulation (same test as
-    tools/obstacle_suite_quiet.sh); speed is simulated over wall seconds while the strategy ran."""
+    tools/obstacle_suite_quiet.py); speed is simulated over wall seconds while the strategy ran."""
     try:
         rows = list(csv.DictReader(open(directory/'telemetry.csv')))
         t = [float(r['sim_time']) for r in rows]
@@ -100,7 +100,7 @@ def main():
     fields = args.fields.split(',') if args.fields else [f'reg{n}-{d}' for n in range(5) for d in ('ccw', 'cw')]
     jobs = [(f'{args.tag}-{f}' + (f'-r{k}' if args.repeat > 1 else ''), int(f[3:].split('-')[0]), f.split('-')[1])
             for k, f in itertools.product(range(args.repeat), fields)]
-    subprocess.run(['bash', str(CLEAN)], capture_output=True)
+    subprocess.run([sys.executable, str(CLEAN)], capture_output=True)
     slots = list(range(args.jobs))
     started = time.time()
 
@@ -124,7 +124,7 @@ def main():
             if args.out:
                 with args.out.open('a') as f:
                     f.write(json.dumps(r)+'\n')
-    subprocess.run(['bash', str(CLEAN)], capture_output=True)
+    subprocess.run([sys.executable, str(CLEAN)], capture_output=True)
     ok = [r for r in results if 'error' not in r]
     print(f"valid {sum(bool(r['valid']) for r in ok)}/{len(results)}  clean {sum(r['clean'] for r in ok)}/{len(ok)}  "
           f"jobs {args.jobs} rtf {args.rtf:g}  wall {time.time()-started:.0f} s")

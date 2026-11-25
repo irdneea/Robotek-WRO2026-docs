@@ -163,7 +163,7 @@ bool LDLidarDriver::Start(LDType product_name,
         LD_LOG_ERROR("client host: create socket is fail.","");
         return false;
       }
-      // 主动向服务端发布消息使服务端保存客户端ip，port 信息，建立沟通渠道
+      // send a first message to the server so that it keeps the client address and port
       uint8_t trans_buf[4] = {0xa5, 0x5a, 0x00, 0x00};
       uint32_t tx_len;
       if (!comm_udp_network_->TransToNet((uint8_t *)trans_buf, sizeof(trans_buf), &tx_len)) {

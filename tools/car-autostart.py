@@ -20,7 +20,7 @@ import subprocess
 import sys
 import time
 
-from robotek_env import REPO, TOOLS, ros_environment, tool
+from robotek_env import TOOLS, ros_environment, tool
 
 UNIT = 'robotek-car.service'
 UNIT_FILE = Path.home() / '.config/systemd/user' / UNIT

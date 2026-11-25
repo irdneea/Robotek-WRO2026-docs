@@ -749,7 +749,7 @@ Inside `robotek_obstacle_v3/robotek_obstacle_v3` each file has one job:
 
 ### Testing and tuning process, with metrics
 
-* **Unit tests** per package (`pytest`): the strategy checks, `steer_watch`, the lot exit, the parking planner and the corner planner. With ROS 2 Jazzy on Ubuntu 24.04 the 198 tests of the five packages that have tests pass (`robotek_obstacle_v3` 45, `robotek_open` 62, `robotek_hardware` 33, `robotek_evaluation` 47, `robotek_course` 11).
+* **Unit tests** per package (`pytest`): the strategy checks, `steer_watch`, the lot exit, the parking planner and the corner planner. With ROS 2 Jazzy on Ubuntu 24.04 the 197 tests of the five packages that have tests pass (`robotek_obstacle_v3` 45, `robotek_open` 62, `robotek_hardware` 32, `robotek_evaluation` 47, `robotek_course` 11).
 * **Honest simulation.** Rounds in Gazebo and in a fast kinematic **lab** use only what the real car has: LiDAR, gyroscope and camera, with noise. No odometry, no pose of the pillars. The true pose is recorded only to audit. The judge module scores a round with the rules (sections, laps, signs, parking), flagging what is estimated.
 * **Metrics.** Estimated points, total round time from Start (laps as partial times), contacts, faults. Comparison rule: points first, then time. Every round on the car and in simulation writes `round.json`, `events.jsonl`, telemetry and scans, see [chapter 9](#9-build-run-and-test-it-yourself).
 * **Tuning evidence.** The steering faults and corner crashes of 11 Nov (`23:56`, `23:59`) led to `steer_watch`; the camera stalls led to `CAMERA_MAX_AGE` / `CAMERA_LOST`; the lot exit pulses were tuned until the heading grew about 10° per pair of pulses. Details in [chapter 8](#8-systems-thinking-and-engineering-decisions) and the [journal](#12-history-of-the-car-and-engineering-journal).
@@ -1218,7 +1218,7 @@ How another team can install the software, run both challenges and repeat our te
 
 ### Programming language
 
-The code of the team is **Python**: the strategies, the hardware nodes, the launch files and the scripts in `tools`. The exception in `src` is the driver of the LiDAR, third-party C++ from LDROBOT with one change of ours ([notice](src/ldlidar_stl_ros2/NOTICE-ROBOTEK.md)). The other files are data and build descriptions that ROS 2 needs (YAML, XML, URDF, SDF, message definitions and `CMakeLists.txt`). The [development workspace](development/wro-strategies/README.md) keeps some shell scripts as they were used.
+The code of the team is **Python**: the strategies, the hardware nodes, the launch files and the scripts in `tools`. The exception in `src` is the driver of the LiDAR, third-party C++ from LDROBOT with one change of ours ([notice](src/ldlidar_stl_ros2/NOTICE-ROBOTEK.md)). The other files are data and build descriptions that ROS 2 needs (YAML, XML, URDF, SDF, message definitions and `CMakeLists.txt`). The scripts of the [development workspace](development/wro-strategies/README.md) are Python too.
 
 ### Install the software (Raspberry Pi 5)
 

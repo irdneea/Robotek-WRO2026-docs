@@ -98,7 +98,7 @@ class SimActuatorModel(Node):
             if v is None:
                 v = self.delayed_v if hasattr(self, 'delayed_v') else 0.
             self.delayed_v = v
-        # base_adapter ramps its speed command, then clamps motor_pct to 100 %.
+        # base_adapter ramps its speed command, then clamps the motor command.
         drive_limit = p.get('drive_command_limit', 0.0)
         if drive_limit > 0.0:
             v = max(-drive_limit, min(drive_limit, v))

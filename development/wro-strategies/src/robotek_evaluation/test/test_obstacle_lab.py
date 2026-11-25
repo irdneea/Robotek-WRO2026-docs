@@ -1,18 +1,39 @@
 """Obstacle lab: world parsing, LiDAR rays, camera observations and a short round."""
+import json
 import math
 from pathlib import Path
 
 import numpy as np
 import pytest
 
-from robotek_evaluation import obstacle_lab
+from robotek_evaluation import obstacle_experiment_setup, obstacle_lab
 
 
-def _round():
+@pytest.fixture(scope='module', autouse=True)
+def _rebuilt_round(tmp_path_factory):
+    """The world of the recorded round obs-base-a-reg0-ccw is not in git, so it is generated again (layout 0).
+
+    The round's own manifest is kept, and the signs of the generated world must be the recorded ones: that checks that
+    the generator still builds the field that was recorded. The record itself is not modified.
+    """
+    global _ROUND
     rounds = sorted((Path(obstacle_lab.ROOT) / 'docs' / 'obstacle-challenge-runs').glob('*-obs-base-a-reg0-ccw'))
     if not rounds:
         pytest.skip('no recorded obstacle round to reuse')
-    return rounds[-1]
+    manifest = json.loads((rounds[-1] / 'manifest.json').read_text())
+    folder = tmp_path_factory.mktemp('obs-reg0-ccw')
+    pillars = obstacle_experiment_setup.build_world(folder, 0, Path(obstacle_lab.ROOT))
+
+    def seats(signs):
+        return sorted((round(p['x'], 3), round(p['y'], 3), p['color']) for p in signs)
+
+    assert seats(pillars) == seats(manifest['pillars'])
+    (folder / 'manifest.json').write_text(json.dumps(manifest))
+    _ROUND = folder
+
+
+def _round():
+    return _ROUND
 
 
 def test_world_reads_walls_and_signs():

@@ -37,11 +37,36 @@ Each batch has 200 rounds. We repeated them on a Windows PC with 16 threads, rep
 
 The second differs by one round; we have not found out why. These are lab rounds with estimated points, not rounds on the car.
 
+## Scripts: Python instead of shell
+
+The scripts of this workspace were shell scripts when they were used. They were rewritten in Python with the same steps. **The notes in `docs/` were not rewritten**: where they say `bash tools/something.sh`, use the Python file with the same name (`python3 tools/something.py`). Two names changed:
+
+| In the notes | Now |
+| --- | --- |
+| `run_gui_experiment.sh` | `src/robotek_evaluation/tools/run_open_round.py` |
+| `run_obstacle_gui_experiment.sh` | `src/robotek_evaluation/tools/run_obstacle_round.py` |
+| `source tools/macos_env.sh` | `python3 tools/macos_env.py -- <command>` (a program cannot change your terminal) |
+
+`docs/robot-real-pi/autostart/` and `docs/robot-real-pi/rename/` are records of the old configuration of the Pi; their Python files are translations, not what ran there.
+
+How the rewrite was checked: each of the 19 originals and its Python version ran on Linux with stand-in commands (a fake round runner, `ssh`, `rsync`, `ros2` and system commands), 95 comparisons of what they call, print and write, with no difference. Differences that the comparison leaves aside on purpose: the calls the old scripts made to read the machine load, and a comment line that `pi_use_cyclone` writes. The original parameter ablation only worked on macOS (it read the load with a command Linux does not have); the new one works on both. The macOS and remote-machine scripts were never run on a real Mac or a real remote machine.
+
+## Checks of this copy
+
+With ROS 2 Jazzy on Ubuntu 24.04 its 8 packages build and 223 tests pass. One headless round of each challenge in Gazebo, started with the new scripts, was valid (Open 30 points; Obstacle 40 points in a round without parking). These are simulator estimates.
+
+To make that possible this copy needed things that were missing:
+
+* `robotek_bringup`, the package whose launch files the runners use, had been left out.
+* The six Open fields used by the suites and tests were never in git; they are copies of the car workspace's fields ([note](docs/open-challenge-runs/field-size-driver/worlds/README.md)).
+* The mat texture is the team's own drawing, instead of the official playfield artwork that was removed.
+* One test needs the simulator world of a recorded round, which was never in git. It now generates it again and checks that the signs match the record.
+
 ## What is missing or was removed
 
 * **Raw telemetry** of most simulator rounds. Git has ignored it since 9 Oct 2026, so only the summaries are here.
-* **Helpers that were not in Python or shell:** two macOS window-capture utilities (Swift and shell), a web page that simulated the car and the page that rendered assembly pictures. No result depends on them. `tools/assembly/write_chapter.py` and `save_server.py` belonged to those pages.
-* **Third-party material:** the WRO rules and playfield artwork, Hiwonder manuals and shop screenshots, and vendor packages. Without the playfield texture, `robotek_game_field.sdf` shows no mat drawing; use the open field.
+* **Helpers in other languages:** two macOS window-capture utilities (Swift and shell), a web page that simulated the car and the page that rendered assembly pictures. No result depends on them.
+* **Third-party material:** the WRO rules and playfield artwork, Hiwonder manuals and shop screenshots, and vendor packages.
 * **Private data:** e-mail addresses, network addresses and user names in paths were replaced by placeholders. Two photos with people or the room were left out. Set your own addresses before using the remote or car scripts.
 * Links inside the notes may point to files that were not copied.
-* Apart from the two lab batches above, we have not re-run these tools in this copy (`round_digest.py` was tried on one record).
+* Many analysis tools were only checked to load, not run on data.

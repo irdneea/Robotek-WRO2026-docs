@@ -12,7 +12,7 @@ verde: izquierda, nada: centro); el motor no se toca. Con leds:=true, tira LED. 
     source ~/wro_controller_ws/install/setup.bash
     source ~/Projects/WRO-Strategies/install/setup.bash
 No correr junto con wro.launch.py: usan los mismos puertos (detenerlo con
-~/scripts/stop_ros.sh). En la PC usar el mismo ROS_DOMAIN_ID.
+~/scripts/stop_ros.py). En la PC usar el mismo ROS_DOMAIN_ID.
 """
 
 import math

@@ -87,7 +87,7 @@ Chapter 5 and chapter 6 of the main [README](../README.md) explain what these fi
 | `battery_guard.py` | Warns when the battery is low; it never stops the car |
 | `status_leds.py`, `status_colors.py` | Shows the car's state on the two RGB LEDs of the board |
 | `mapping.py` | The unit conversions (m/s to motor rps, wheel angle to servo microseconds), without ROS so that they can be tested |
-| `motor_driver.py`, `servo_steer.py` | Older direct drivers (a TB6612 motor driver on the Pi, a servo test node); the car now uses the RRC Lite board for both |
+| `servo_steer.py` | Small node that moves only the steering servo, for bench tests |
 
 The wiring and the calibration of each of these are in [`robotek_hardware/README.md`](robotek_hardware/README.md).
 

@@ -101,8 +101,8 @@ class LDLidarDriver {
    * @param [in]
    * *@param timeout: Wait timeout, in milliseconds
    * @retval value is ldlidar::LidarStatus Enum Type, definition in "ldlidar_driver/include/ldlidar_datatype.h", value is:
-   *  ldlidar::LidarStatus::NORMAL   // 雷达正常
-   *  lldlidar::LidarStatus::ERROR    // 雷达异常错误
+   *  ldlidar::LidarStatus::NORMAL   // the LiDAR works
+   *  lldlidar::LidarStatus::ERROR    // the LiDAR reports a fault
    *  ....
   */
   LidarStatus GetLaserScanData(Points2D& dst, int64_t timeout = 1000);

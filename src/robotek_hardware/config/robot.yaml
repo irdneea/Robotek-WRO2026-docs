@@ -16,12 +16,6 @@ base_adapter:
     servo_max_us: 2050.0
     steer_limit_deg: 25.0
     servo_duration: 0.05
-    # Measured 8 oct 2026 (motor_driver, 1 s straight pulses at 10-30 %, battery 7.3 V, i.e.
-    # low): v = 0.0137 * (pct - 6.5) m/s. Only checked up to 30 % (0.32 m/s); re-measure with a
-    # charged battery.
-    motor_pct_per_mps: 73.0          # % of PWM per m/s (was a 40.0 guess)
-    motor_min_pct: 6.5               # % where the car starts to move (was a 12.0 guess)
-    motor_max_pct: 50.0              # real Open tests 8 oct 2026: 40 ok, 90 too fast (crash); now 50; was 100
     accel_limit: 1.0                 # m/s^2 (a full-power start lifts the front wheels)
     # Real wheel angle per servo angle (1 nov 2026, steer_calibration.py; servo deg = (us - 1403) / 20), interpolated
     # at the same servo angles on both sides. Measured: left 1300 4.4, 1200 9.6, 1100 15.7, 1050 19.9 deg;
@@ -37,11 +31,8 @@ base_adapter:
     wheel_limit_deg: 19.0
     servo_measured: true
     decel_limit: 0.6                 # m/s^2 (a hard stop makes the wheels skid)
-    # Drive motor (1 nov 2026): the team's car now uses an encoder motor on port M4 of the RRC Lite (+rps = backward),
-    # not the DC motor on the TB6612 (its channel B gave no output). 'tb6612' goes back to /motor_vel and the motor_pct_*
-    # values above. motor_rps_per_mps = motor revolutions per second per m/s of the car: MEASURE IT (until then 0 keeps
-    # the motor at 0). motor_max_rps 0 = no cap.
-    motor_backend: rrc
+    # Drive motor: an encoder motor on a port of the RRC Lite (1 nov 2026). motor_rps_per_mps = motor revolutions per
+    # second per m/s of the car: MEASURE IT (while it is 0 the motor stays at 0). motor_max_rps 0 = no cap.
     rrc_motor_port: 2                # 8 nov 2026: the 310 motor on M2 (as the MentorPi), with no motor type sent (rrc_lite_driver
                                      # motor_type -1): the board's own speed loop then follows the rps and stops on 0.
                                      # (1-4 nov: M1/M2 with motor_type 2 = the JGA27's negative PID gains against our encoder:
@@ -88,17 +79,6 @@ scan_adapter:
     frame_id: lidar_link
     fov_deg: 110.0                   # measured: beyond +-110 deg the rays hit the car itself
     min_valid_range: 0.12            # m: drops those 2-8 cm returns of the chassis
-tb6612fng_motor:
-  ros__parameters:
-    gpiochip: 4
-    pwm_a: 12
-    ain1: 5
-    ain2: 6
-    stby: 13
-    pwm_hz: 1000
-    watchdog_s: 0.30
-    brake_mode: ramp                 # soft stop; 'reverse' = old brake (skids)
-    stop_ramp_s: 0.6
 
 # IMU of the RRC Lite -> car frame (x forward, y left, z up) before the strategies read it.
 # The Raspberry Pi and the RRC Lite stand on their long edge in the new build (21 oct 2026). Measured on

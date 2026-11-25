@@ -18,7 +18,6 @@ Everything is started with one launch file, `ros2 launch robotek_course car.laun
 | Node | What it does |
 | --- | --- |
 | `base_adapter` | Turns `/cmd_vel_raw` into servo microseconds (through the measured wheel table, capped at 25°) and into motor rps for `/rrc/set_motor`. It limits acceleration (`accel_limit`) and deceleration (`decel_limit`), stops the motor if commands stop arriving (`watchdog`) and stops it dead on `/robotek/estop` |
-| `motor_driver` | Only with `motor_backend: tb6612`, the setup before 1 Nov 2026: a TB6612FNG bridge on the Pi GPIO driven through `lgpio`. With the motor on the RRC Lite it starts but does nothing |
 | `scan_adapter` | Takes the LD19 scan (its zero points backwards) to `/robotek/scan` with 0 rad ahead, and discards what the car cannot see (beyond ±110° the rays hit the chassis) |
 | `imu_adapter` | Rotates the board's IMU into car axes (x ahead, y left, z up). The strategies integrate the gyro z, so the axes must be right |
 | `start_button` | The first press of the board button publishes `/start` (and beeps), any later press publishes `/robotek/stop` and the car stays stopped until the next launch |
@@ -77,7 +76,7 @@ Changes of the team with respect to MentorPi:
 
 * **RRC Lite board**: appears as `/dev/ttyACM0` (USB `1a86:55d4`); the udev rule adds the stable name `/dev/rrc_lite`. Your user must be in the `dialout` group.
 * **LD19 LiDAR**: CP210x adapter (USB `10c4:ea60`), `/dev/ttyUSB0` at 230400 baud, the port `ld19.launch.py` opens; the udev rule adds `/dev/ldlidar`.
-* **Motor**: a Hiwonder JGA27-310R encoder motor (20:1 gearbox, 450 rpm) on port **M2** of the RRC Lite (`rrc_motor_port: 2`), with no motor type sent. Before 1 Nov 2026 a motor without encoder ran through a TB6612 bridge on the Pi GPIO (`motor_backend: tb6612`).
+* **Motor**: a Hiwonder JGA27-310R encoder motor (20:1 gearbox, 450 rpm) on port **M2** of the RRC Lite (`rrc_motor_port: 2`), with no motor type sent.
 * **Cameras**: the Pi camera (IMX708 wide) through `rpicam`; a USB camera is still supported (`camera_driver:=usb_cam` or the team's `camera_publisher`, which picks the first `/dev/v4l/by-id/*-video-index0` because the `/dev/videoN` numbers change on the Pi 5).
 
 The udev rules only use USB identifiers that were confirmed: `1a86:55d4` for the board and `10c4:ea60` for the LiDAR.
@@ -114,7 +113,7 @@ Wait until the board LEDs turn **green** (the strategy is waiting for the button
 All values are in [`config/robot.yaml`](config/robot.yaml). They are the ones of our car; **measure your own** before trusting them.
 
 * **Steering servo** (`base_adapter`): centre (`servo_center_us`, 1403 µs), gains (`servo_gain_pos`, `servo_gain_neg`, 20 µs per servo degree), direction (`servo_sign`) and the `wheel_table_*` table (the real wheel angle for each servo angle, measured by driving circles). Test the servo alone with `ros2 run robotek_hardware servo_steer` and publishing on `/steer`.
-* **Motor** (`motor_backend`, `rrc_motor_port`, `rrc_motor_sign`, `motor_rps_per_mps`, `motor_max_rps`) and `motor_type` in `src/rrc_lite_driver/config/controller_params.yaml`. If you change the port or the type, check the direction again. Measure the speed with the LiDAR (distance to a wall before and after) with short pulses.
+* **Motor** (`rrc_motor_port`, `rrc_motor_sign`, `motor_rps_per_mps`, `motor_max_rps`) and `motor_type` in `src/rrc_lite_driver/config/controller_params.yaml`. If you change the port or the type, check the direction again. Measure the speed with the LiDAR (distance to a wall before and after) with short pulses.
 * **Wheelbase** (`wheelbase`): must match `WHEELBASE` in `robotek_common/vehicle.py`.
 * **IMU axes** (`imu_adapter`): with the Pi and the board mounted the axes change. With the car still, run `ros2 run robotek_hardware imu_axes`, push it forward, copy the block it prints into `robot.yaml` and set `measured: true`.
 * **LiDAR** (`scan_adapter`): `angle_offset` (π for the LD19 mounted with the cable at the back) and `reverse` if your driver's angles grow clockwise. Check in RViz: a wall ahead must appear ahead.

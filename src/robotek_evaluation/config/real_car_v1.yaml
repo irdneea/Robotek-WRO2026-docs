@@ -27,7 +27,7 @@ sim_actuator_model:
     drive_tau: 0.15
     # (100 % - 6.5 %) / (73 % per m/s), rounded to the table endpoint.
     drive_command_limit: 1.28
-    drive_deadband: 0.005  # base_adapter MotorCalibration.deadband_mps
+    drive_deadband: 0.005  # base_adapter speed deadband
     # Speed really reached vs commanded through /cmd_vel (cmdvel test): exact-ish up to
     # 0.3 m/s, ~70 % above (low battery). The last point (1.28 m/s = 100 % motor) is
     # INFERRED, not measured: a saturating fit of every point gives 0.52 m/s (90 %

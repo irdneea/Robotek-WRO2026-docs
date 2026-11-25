@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Look for an encoder (or any wheel/servo feedback) in what the car publishes, while the robot runs.
 
-Runs on the Pi next to the car's stack (``bash tools/car-run.sh obstacle ...``), reads only, and writes to
+Runs on the Pi next to the car's stack (``python3 tools/car-run.py obstacle ...``), reads only, and writes to
 ``~/runs/<date>-encoder-probe/``:
 
 * ``topics.json``  every topic seen: type, publishing nodes, message count, rate, first message and, for each numeric
