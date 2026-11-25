@@ -37,7 +37,7 @@ def diagnose(data):
     t0, ticks, scans = data['crash_time'], data['ticks'], data['scans']
     params = data.get('params', {})
     min_rays = params.get('crash_min_rays', 120)
-    out = [f"motivo de la parada: {data['reason']}"]
+    out = [f"reason of the stop: {data['reason']}"]
     st = [s['t'] - t0 for s in scans]
     # Impact ~ the first scan of the last blind run.
     onset = 0.0
@@ -46,35 +46,35 @@ def diagnose(data):
             break
         if s['valid'] < min_rays:
             onset = x
-    out.append(f'impacto aprox. (empieza el LiDAR ciego): {onset:+.2f} s')
+    out.append(f'impact, about (the LiDAR goes blind): {onset:+.2f} s')
     # 1. LiDAR scans lost (no message): the LD19 sends one every ~0.1 s.
     gaps = [(a, b) for a, b in zip(st, st[1:]) if b - a > 0.2]
     before = [g for g in gaps if g[1] <= onset + 0.05]
     if before:
         worst = max(before, key=lambda g: g[1] - g[0])
         last = before[-1]
-        out.append(f'LiDAR: {len(before)} huecos sin scan (> 0,2 s) antes del impacto; el mayor {worst[1] - worst[0]:.2f} s '
-                   f'en {worst[0]:+.2f}; el último {last[1] - last[0]:.2f} s en {last[0]:+.2f}'
-                   + ('  <-- en el último segundo' if last[1] > onset - 1.0 else ''))
+        out.append(f'LiDAR: {len(before)} gaps without a scan (> 0.2 s) before the impact; the longest {worst[1] - worst[0]:.2f} s '
+                   f'at {worst[0]:+.2f}; the last one {last[1] - last[0]:.2f} s at {last[0]:+.2f}'
+                   + ('  <-- in the last second' if last[1] > onset - 1.0 else ''))
     else:
-        out.append('LiDAR: sin huecos de scans antes del impacto (todos llegaron)')
+        out.append('LiDAR: no gaps before the impact (every scan arrived)')
     weak = [x for x, s in zip(st, scans) if s['valid'] < min_rays and x < onset - 0.05]
     if weak:
-        out.append(f'LiDAR: {len(weak)} scans con < {min_rays} rayos antes del impacto (primero en {weak[0]:+.2f})')
+        out.append(f'LiDAR: {len(weak)} scans con < {min_rays} rays before the impact (the first at {weak[0]:+.2f})')
     tt = [r['t'] - t0 for r in ticks]
     # 2. Stale sensors as the node saw them (it brakes at 0.35 s of LiDAR, 0.2 s of IMU).
     for key, limit, name in (('scan_age', params.get('scan_max_age', 0.35), 'LiDAR'),
-                             ('imu_age', params.get('imu_max_age', 0.2), 'IMU (placa)')):
+                             ('imu_age', params.get('imu_max_age', 0.2), 'IMU (board)')):
         ages = [(x, r.get(key)) for x, r in zip(tt, ticks) if r.get(key) is not None and x <= onset]
         if ages:
             worst = max(ages, key=lambda a: a[1])
             runs = _runs([a[0] for a in ages], [a[1] > limit for a in ages])
-            out.append(f'{name}: edad máx. {worst[1]:.2f} s en {worst[0]:+.2f}; viejo (> {limit} s, frena) '
-                       + (', '.join(f'{a:+.2f}..{b:+.2f}' for a, b in runs) if runs else 'nunca'))
+            out.append(f'{name}: oldest {worst[1]:.2f} s at {worst[0]:+.2f}; stale (> {limit} s, it brakes) '
+                       + (', '.join(f'{a:+.2f}..{b:+.2f}' for a, b in runs) if runs else 'never'))
     # 3. Control loop lag (50 Hz expected).
     lags = [(a, b - a) for a, b in zip(tt, tt[1:]) if b - a > 0.08 and b <= onset]
-    out.append('lazo de control: ' + (f'{len(lags)} ticks tardíos, máx. {max(l for _, l in lags):.2f} s en '
-                                       f'{max(lags, key=lambda g: g[1])[0]:+.2f}' if lags else 'a tiempo'))
+    out.append('control loop: ' + (f'{len(lags)} late ticks, worst {max(l for _, l in lags):.2f} s at '
+                                       f'{max(lags, key=lambda g: g[1])[0]:+.2f}' if lags else 'on time'))
     # 4. Car not moving while asked to: the walls do not move (motor, board or stuck).
     still = []
     for i, (x, r) in enumerate(zip(tt, ticks)):
@@ -89,8 +89,8 @@ def diagnose(data):
             spans.append(max(vals) - min(vals) if len(vals) > 5 else math.inf)
         if max(spans) < 0.03:
             still.append(x)
-    out.append('movimiento: ' + (f'paredes quietas 0,5 s con velocidad pedida desde {still[0]:+.2f} s '
-                                 '(motor/placa parados o atascado)' if still else 'se movía hasta el impacto'))
+    out.append('motion: ' + (f'walls still for 0.5 s while a speed was asked, from {still[0]:+.2f} s '
+                                 '(motor or board stopped, or stuck)' if still else 'it was moving until the impact'))
     # 5. Steering ordered but the car did not turn (servo frozen?): gyro vs steering sign, 0.3 s windows.
     bad = []
     for x, r in zip(tt, ticks):
@@ -102,14 +102,14 @@ def diagnose(data):
             mean = sum(q['gyro'] for q in window) / len(window)
             if mean * math.copysign(1, steer) < 0.15:
                 bad.append(x)
-    out.append('dirección: ' + (f'giro pedido sin giro del coche desde {bad[0]:+.2f} s (¿servo congelado o '
-                                f'patinando?)' if bad else 'el coche giró hacia donde pedía el servo'))
+    out.append('steering: ' + (f'a turn was asked and the car did not turn from {bad[0]:+.2f} s (frozen servo or '
+                                f'skidding?)' if bad else 'the car turned the way the servo asked'))
     # 6. What the strategy was doing.
     states = [(x, r['state'], r.get('corners')) for x, r in zip(tt, ticks)]
     at = next((s for s in reversed(states) if s[0] <= onset), states[-1] if states else None)
     if at:
         turn = next((x for x, s, _ in reversed(states) if s == 'TURN' and x <= onset), None)
-        line = f'estrategia en el impacto: {at[1]} (giros {at[2]})'
+        line = f'strategy at the impact: {at[1]} (turns {at[2]})'
         if turn is not None:
             start = turn
             for x, s, _ in reversed(states):
@@ -118,7 +118,7 @@ def diagnose(data):
                 elif x < start:
                     break
             row = next(r for x, r in zip(tt, ticks) if x >= start)
-            line += f'; último TURN empezó en {start:+.2f} s con front_axis ' + (f'{row["front_axis"]:.2f} m' if row.get('front_axis') is not None else '?')
+            line += f'; the last TURN started at {start:+.2f} s with front_axis ' + (f'{row["front_axis"]:.2f} m' if row.get('front_axis') is not None else '?')
         out.append(line)
     return out
 
@@ -142,24 +142,24 @@ def main():
     axes = [fig.add_subplot(grid[i, 0]) for i in range(4)]
     for ax in axes[1:]:
         ax.sharex(axes[0])
-    axes[0].plot(t, column(ticks, 'v_mission'), label='v pedida (misión)')
-    axes[0].plot(t, column(ticks, 'v_cmd'), label='v enviada')
+    axes[0].plot(t, column(ticks, 'v_mission'), label='speed asked (mission)')
+    axes[0].plot(t, column(ticks, 'v_cmd'), label='speed sent')
     axes[0].set_ylabel('m/s')
-    axes[1].plot(t, [math.degrees(v) for v in column(ticks, 'steer')], label='dirección (°)')
-    axes[1].plot(t, [math.degrees(v) for v in column(ticks, 'gyro')], label='giroscopio (°/s)')
+    axes[1].plot(t, [math.degrees(v) for v in column(ticks, 'steer')], label='steering (°)')
+    axes[1].plot(t, [math.degrees(v) for v in column(ticks, 'gyro')], label='gyroscope (°/s)')
     axes[1].set_ylabel('° / °/s')
     for key in ('left', 'right', 'front_axis', 'island_end'):
         axes[2].plot(t, column(ticks, key), label=key)
     axes[2].set_ylabel('m')
     axes[2].set_ylim(0, 3.2)
-    axes[3].plot([s['t'] - t0 for s in scans], [s['valid'] for s in scans], '.-', label='rayos válidos')
-    axes[3].axhline(data['params'].get('crash_min_rays', 120), color='r', ls=':', label='umbral')
+    axes[3].plot([s['t'] - t0 for s in scans], [s['valid'] for s in scans], '.-', label='valid rays')
+    axes[3].axhline(data['params'].get('crash_min_rays', 120), color='r', ls=':', label='threshold')
     ages = column(ticks, 'scan_age')
     ax_age = axes[3].twinx()
-    ax_age.plot(t, ages, color='gray', alpha=0.6, label='edad del scan (s)')
+    ax_age.plot(t, ages, color='gray', alpha=0.6, label='scan age (s)')
     ax_age.set_ylabel('s')
-    axes[3].set_ylabel('rayos')
-    axes[3].set_xlabel('s (0 = parada por choque)')
+    axes[3].set_ylabel('rays')
+    axes[3].set_xlabel('s (0 = crash stop)')
     # State changes as shaded text along the top plot.
     previous = None
     for row, x in zip(ticks, t):
@@ -191,15 +191,15 @@ def main():
                 xs.append(r * math.cos(a))
                 ys.append(r * math.sin(a))
         ax.scatter(xs, ys, s=3, alpha=min(1.0, 0.2 + 0.8 * (i + 1) / len(last)),
-                   label=f"{s['t'] - t0:+.2f} s, {s['valid']} rayos")
+                   label=f"{s['t'] - t0:+.2f} s, {s['valid']} rays")
     ax.add_patch(plt.Rectangle((-0.17, -0.09), 0.26, 0.18, fill=False, color='r'))
     ax.set_aspect('equal')
     ax.set_xlim(-1.5, 3.0)
     ax.set_ylim(-1.5, 1.5)
     ax.grid(alpha=0.3)
     ax.legend(fontsize=7)
-    ax.set_title('últimos scans (x adelante, y izquierda)')
-    fig.suptitle(f"{args.file}: {data['reason']} | sentido {data.get('direction')}")
+    ax.set_title('last scans (x forward, y left)')
+    fig.suptitle(f"{args.file}: {data['reason']} | direction {data.get('direction')}")
     fig.tight_layout()
     if args.output:
         fig.savefig(args.output, dpi=110)

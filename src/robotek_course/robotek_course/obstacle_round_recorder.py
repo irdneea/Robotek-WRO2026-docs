@@ -53,11 +53,11 @@ class ObstacleRoundRecorder(RoundRecorder):
         self.event('end', reason=reason)
         self.file.close()
         self.events.close()
-        print('\nRonda terminada (%s).\n' % reason, flush=True)
+        print('\nRound over (%s).\n' % reason, flush=True)
         try:
             print(format_report(self.directory, score_directory(self.directory)), flush=True)
         except Exception as error:   # the files stay on disk: the score can be run again by hand
-            print('No se pudo puntuar la ronda: %r\nPuedes repetirlo con: ros2 run robotek_course score_obstacle %s'
+            print('The round could not be scored: %r\nYou can score it again with: ros2 run robotek_course score_obstacle %s'
                   % (error, self.directory), flush=True)
         rclpy.shutdown()
 

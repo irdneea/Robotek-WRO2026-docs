@@ -16,8 +16,8 @@ setup(
     zip_safe=True,
     maintainer='Renzo Damian',
     maintainer_email='renzo.damian.go@gmail.com',
-    description='Driver ROS 2 de la placa HiWonder RRC Lite (IMU, boton, bateria, LED, servo de direccion).',
-    license='Hiwonder (con permiso); cambios del equipo Robotek: MIT',
+    description='ROS 2 driver of the HiWonder RRC Lite board (IMU, button, battery, LEDs, steering servo).',
+    license='Hiwonder (with permission); changes of the Robotek team: MIT',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [

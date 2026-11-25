@@ -1340,6 +1340,8 @@ ros2 launch robotek_course round.launch.py strategy:=robotek_open direction:=ccw
 ros2 run robotek_course score                                                        # scores the last round again
 ```
 
+If a round does not print `Start` within about 30 seconds, the simulator did not deliver its sensor data (we have seen this happen now and then, also with the version that ran on the car): stop it with Ctrl-C, run `python3 src/robotek_evaluation/tools/clean_sim.py` and launch it again.
+
 Rounds are saved in `~/robotek_runs/`. The simulation is **honest**: the strategy only gets what the real car has (LiDAR, gyroscope and camera, with noise); the true pose of the car is recorded apart, only to audit.
 
 **Without Gazebo.** The Obstacle also has a fast lab written in plain Python (it needs only Python and NumPy). One round of the Obstacle takes about 10 seconds:

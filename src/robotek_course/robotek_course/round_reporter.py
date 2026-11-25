@@ -70,7 +70,7 @@ class RoundReporter(Node):
             self.corners += 1
             lap = (self.corners - 1) // 4 + 1
             if self.direction is None:
-                self.direction = 'antihorario (izquierda)' if self.turn_yaw > 0 else 'horario (derecha)'
+                self.direction = 'counter-clockwise (left)' if self.turn_yaw > 0 else 'clockwise (right)'
                 self.say(f'Direction: {self.direction} ({math.degrees(self.turn_yaw):+.0f} degrees at the 1st corner)')
             self.say(f'Corner {self.corners}/{CORNERS} (lap {lap}, {math.degrees(self.turn_yaw):+.0f} degrees)')
             if self.corners % 4 == 0:

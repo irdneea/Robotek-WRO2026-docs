@@ -72,7 +72,7 @@ def latest_run(root=RUNS):
     runs = sorted(p for p in Path(root).expanduser().glob('*')
                   if (p / 'audit_pose.csv').exists() and (p / 'pillars-gt.jsonl').exists())
     if not runs:
-        raise SystemExit(f'No hay rondas del Obstacle en {root}: corre antes  '
+        raise SystemExit(f'No Obstacle rounds in {root}: first run  '
                          'ros2 launch robotek_course obstacle_round.launch.py')
     return runs[-1]
 

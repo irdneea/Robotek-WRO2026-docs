@@ -41,7 +41,7 @@ from rclpy.qos import DurabilityPolicy, QoSProfile, qos_profile_sensor_data
 from sensor_msgs.msg import LaserScan
 from rclpy.executors import ExternalShutdownException
 from rclpy.node import Node
-from std_msgs.msg import Bool, Empty, Float32, String
+from std_msgs.msg import Bool, Empty, String
 
 from .mapping import (DitherBrake, LowSpeedDrive, ServoCalibration, front_distance, motor_rps, rate_limit,
                       servo_for_wheel, servo_us, steer_from_twist, wall_speed_factor)

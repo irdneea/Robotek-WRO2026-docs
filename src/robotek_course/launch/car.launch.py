@@ -176,6 +176,10 @@ def _check_strategy(context):
     if _arg(context, 'teleop').lower() == 'true':
         return []
     package = _arg(context, 'strategy')
+    if package == 'none':
+        print('\n[car] Choose a strategy: strategy:=robotek_obstacle_v3, or strategy:=robotek_open executable:=open_v5\n'
+              '  (tools/car-run.py open|obstacle does it for you). To drive by hand: teleop:=true.\n', file=sys.stderr)
+        sys.exit(1)
     try:
         get_package_prefix(package)
     except PackageNotFoundError:
@@ -262,7 +266,11 @@ def generate_launch_description():
         brake_defaults = {name: str(base.get(name, value)) for name, value in (
             ('brake_rps', 0.0), ('brake_hz', 10.0), ('brake_s', 1.5), ('brake_min_rps', 1.0))}
     return LaunchDescription([
-        DeclareLaunchArgument('strategy', default_value='robotek_obstacle_v3', description='the package with the strategy node'),
+        # 'none' on purpose: several settings below depend on the strategy, and driving by hand (teleop) must not
+        # inherit those of one challenge.
+        DeclareLaunchArgument('strategy', default_value='none',
+                              description='the package with the strategy node (required unless teleop:=true): '
+                                          'robotek_obstacle_v3, or robotek_open with executable:=open_v5'),
         DeclareLaunchArgument('executable', default_value='drive', description='the executable of that package'),
         DeclareLaunchArgument('controller', default_value='true', description='start rrc_lite_driver (the board)'),
         DeclareLaunchArgument('controller_launch', default_value='controller.launch.py',
