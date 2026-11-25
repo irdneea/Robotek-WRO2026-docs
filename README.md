@@ -337,7 +337,7 @@ We removed the LiDAR housing because, after testing the robot multiple times, we
 We noticed that the room lights were affecting our color detection, so we added a 16-LED WS2812 RGB ring light (5V) to keep the lighting consistent. We also moved the LiDAR again. We printed a new housing and placed it at the front, right under the chassis, an adjustment that significantly improved wall detection.
 Finally, we replaced the old L298N motor driver with a TB6612FNG. This made a big difference because we can now control the speed more smoothly, starting at around 35%, and we have much better control when reversing and stopping.
 <br><br>
-  <a href="v-photos/vehicle-versions/README.md#version-10">➡️ See more photos 🚗</a><br><br>
+  <a href="v-photos/vehicle-versions/README.md#version-11">➡️ See more photos 🚗</a><br><br>
     </td>
   </tr>
   
