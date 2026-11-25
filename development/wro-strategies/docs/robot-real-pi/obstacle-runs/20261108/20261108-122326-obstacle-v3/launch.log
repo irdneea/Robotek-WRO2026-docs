@@ -1,0 +1,203 @@
+[INFO] [launch]: All log files can be found below /home/user/.ros/log/2026-11-08-12-23-27-124651-user-desktop-3333
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [rrc_driver-1]: process started with pid [3338]
+[INFO] [ldlidar_stl_ros2_node-2]: process started with pid [3339]
+[INFO] [static_transform_publisher-3]: process started with pid [3340]
+[INFO] [pi_camera_publisher-4]: process started with pid [3341]
+[INFO] [scan_adapter-5]: process started with pid [3342]
+[INFO] [imu_adapter-6]: process started with pid [3343]
+[INFO] [motor_driver-7]: process started with pid [3344]
+[INFO] [base_adapter-8]: process started with pid [3345]
+[INFO] [start_button-9]: process started with pid [3346]
+[INFO] [battery_guard-10]: process started with pid [3347]
+[INFO] [status_leds-11]: process started with pid [3350]
+[INFO] [robot_state_publisher-12]: process started with pid [3353]
+[INFO] [drive-13]: process started with pid [3354]
+[static_transform_publisher-3] [WARN] [1794158607.532341300] []: Old-style arguments are deprecated; see --help for new-style arguments
+[ldlidar_stl_ros2_node-2] [INFO] [1794158607.591057570] [LD19]: LDLiDAR SDK Pack Version is: v3.0.3
+[ldlidar_stl_ros2_node-2] [INFO] [1794158607.591318565] [LD19]: <product_name>: LDLiDAR_LD19
+[ldlidar_stl_ros2_node-2] [INFO] [1794158607.591356712] [LD19]: <topic_name>: scan
+[ldlidar_stl_ros2_node-2] [INFO] [1794158607.591371916] [LD19]: <frame_id>: base_laser
+[ldlidar_stl_ros2_node-2] [INFO] [1794158607.591385508] [LD19]: <port_name>: /dev/ldlidar
+[ldlidar_stl_ros2_node-2] [INFO] [1794158607.591398323] [LD19]: <port_baudrate>: 230400
+[ldlidar_stl_ros2_node-2] [INFO] [1794158607.591421878] [LD19]: <laser_scan_dir>: Counterclockwise
+[ldlidar_stl_ros2_node-2] [INFO] [1794158607.591438396] [LD19]: <enable_angle_crop_func>: false
+[ldlidar_stl_ros2_node-2] [INFO] [1794158607.591449803] [LD19]: <angle_crop_min>: 135.000000
+[ldlidar_stl_ros2_node-2] [INFO] [1794158607.591476210] [LD19]: <angle_crop_max>: 225.000000
+[ldlidar_stl_ros2_node-2] [INFO] [1794158607.613491348] [LD19]: ldlidar node start is success
+[ldlidar_stl_ros2_node-2] [INFO] [1794158607.617930842] [LD19]: ldlidar communication is normal.
+[static_transform_publisher-3] [INFO] [1794158607.616868657] [base_link_to_base_laser_ld19]: Spinning until stopped - publishing transform
+[static_transform_publisher-3] translation: ('0.000000', '0.000000', '0.180000')
+[static_transform_publisher-3] rotation: ('0.000000', '0.000000', '0.000000', '1.000000')
+[static_transform_publisher-3] from 'base_link' to 'base_laser'
+[ldlidar_stl_ros2_node-2] [INFO] [1794158607.625800107] [LD19]: Publish topic message:ldlidar scan data.
+[robot_state_publisher-12] [INFO] [1794158607.794669084] [robot_state_publisher]: Robot initialized
+[imu_adapter-6] [INFO] [1794158609.618675224] [imu_adapter]: IMU axes forward=-x left=+z up=+y
+[battery_guard-10] [INFO] [1794158610.722110216] [battery_guard]: Battery guard: red blinking below 6.80 V (5 consecutive readings); it does not stop the car.
+[motor_driver-7] [INFO] [1794158610.823522642] [tb6612fng_motor]: TB6612FNG ready (forward and reverse).
+[start_button-9] [INFO] [1794158611.068326592] [start_button]: Press the button to start; press it again to stop.
+[status_leds-11] [INFO] [1794158611.071153468] [status_leds]: Status RGBs at level 2/255: green = ready, blue = running.
+[base_adapter-8] [INFO] [1794158611.147751010] [base_adapter]: Drive motor: RRC Lite port M1, 4.80 rps per m/s.
+[base_adapter-8] [INFO] [1794158611.160997814] [base_adapter]: Wall guard: slows down from 0.30 m, 0 at 0.10 m (+-15 deg).
+[base_adapter-8] [INFO] [1794158611.174072621] [base_adapter]: Brake: board reset (/rrc/reset) when stopping after moving in DIRECTION_FAULT, DONE, FINISH, OPERATOR_STOP, the button stop or the watchdog; other stops send 0.
+[pi_camera_publisher-4] [INFO] [1794158611.528157784] [pi_camera_publisher]: Pi camera: rpicam-vid -t 0 -n --codec yuv420 -o - --width 640 --height 360 --framerate 30.0 --mode 2304:1296:10:P --rotation 180
+[rrc_driver-1] [INFO] [1794158611.580709415] [rrc_driver]: RRC Lite board on /dev/rrc_lite
+[rrc_driver-1] [INFO] [1794158611.586304854] [rrc_driver]: Motor type 2 sent to the board.
+[rrc_driver-1] [INFO] [1794158611.744229040] [rrc_driver]: Settings servo 1 - Offset 0
+[rrc_driver-1] [INFO] [1794158611.745066933] [rrc_driver]: Settings servo 2 - Offset 0
+[rrc_driver-1] [INFO] [1794158611.746035990] [rrc_driver]: Settings servo 3 - Offset 0
+[rrc_driver-1] [INFO] [1794158611.746997880] [rrc_driver]: Settings servo 4 - Offset 0
+[rrc_driver-1] [INFO] [1794158611.754412602] [rrc_driver]: [1;32mstart[0m
+[drive-13] [INFO] [1794158611.962010970] [strategy]: Obstacle v3 ready (park=0, steer_limit=0.307 rad, changed: {}; camera {'hfov': 1.78, 'pitch': 0.14, 'yaw': 0.054, 'ranges': {'red': [((0, 90, 80), (6, 255, 255)), ((170, 90, 80), (179, 255, 255))], 'green': [((40, 70, 60), (85, 255, 255))]}, 'min_area': 30})
+[drive-13] [INFO] [1794158611.963917214] [strategy]: state WAIT_START
+[ldlidar_stl_ros2_node-2] [LDS][INFO][1794158607.613275834][Actual BaudRate reported:230400]
+[rrc_driver-1] [INFO] [1794158614.588403339] [rrc_driver]: Motor type 2 sent again.
+[pi_camera_publisher-4] [INFO] [1794158621.505969559] [pi_camera_publisher]: Pi camera: 27.6 frames/s at 640x360.
+[rrc_driver-1] [INFO] [1794158677.588747460] [rrc_driver]: Motor type 2 sent again.
+[pi_camera_publisher-4] [INFO] [1794158691.505713942] [pi_camera_publisher]: Pi camera: 30.0 frames/s at 640x360.
+[start_button-9] [INFO] [1794158724.541374638] [start_button]: Start.
+[drive-13] [INFO] [1794158724.550307532] [strategy]: Start
+[drive-13] [INFO] [1794158724.561217244] [strategy]: state SETUP
+[drive-13] [INFO] [1794158724.986464497] [strategy]: state RUN
+[pi_camera_publisher-4] [INFO] [1794158751.505906092] [pi_camera_publisher]: Pi camera: 30.0 frames/s at 640x360.
+[base_adapter-8] [WARN] [1794158785.536428805] [base_adapter]: Stopping after moving: board reset. No more motor commands until a restart.
+[drive-13] [INFO] [1794158785.537702669] [strategy]: state WAIT_SENSOR
+[drive-13] [INFO] [1794158785.558943395] [strategy]: state RUN
+[rrc_driver-1] [WARN] [1794158785.640487002] [rrc_driver]: Board reset (RTS): drive motor stopped; setting the board up again in 2.5 s.
+[drive-13] [INFO] [1794158786.149208703] [strategy]: state WAIT_SENSOR
+[drive-13] [INFO] [1794158788.002307682] [strategy]: state RUN
+[rrc_driver-1] [INFO] [1794158788.143765298] [rrc_driver]: Settings servo 1 - Offset 0
+[rrc_driver-1] [INFO] [1794158788.144634683] [rrc_driver]: Settings servo 2 - Offset 0
+[rrc_driver-1] [INFO] [1794158788.146143249] [rrc_driver]: Settings servo 3 - Offset 0
+[rrc_driver-1] [INFO] [1794158788.147850333] [rrc_driver]: Settings servo 4 - Offset 0
+[rrc_driver-1] [INFO] [1794158788.149746602] [rrc_driver]: Board set up again after the reset.
+[rrc_driver-1] [INFO] [1794158788.589123820] [rrc_driver]: Motor type 2 sent again.
+[drive-13] [INFO] [1794158802.031136518] [strategy]: state WAIT_SENSOR
+[drive-13] [INFO] [1794158802.056381534] [strategy]: state RUN
+[drive-13] [INFO] [1794158803.440347057] [strategy]: state WAIT_SENSOR
+[rrc_driver-1] [INFO] [1794158805.547823636] [rrc_driver]: Settings servo 1 - Offset 0
+[rrc_driver-1] [INFO] [1794158805.548642132] [rrc_driver]: Settings servo 2 - Offset 0
+[rrc_driver-1] [INFO] [1794158805.549699183] [rrc_driver]: Settings servo 3 - Offset 0
+[rrc_driver-1] [INFO] [1794158805.550644456] [rrc_driver]: Settings servo 4 - Offset 0
+[rrc_driver-1] [WARN] [1794158805.551257028] [rrc_driver]: Board data back after 2.5 s (the board rebooted?): motor type 2 and servo offsets sent again.
+[drive-13] [INFO] [1794158805.558672754] [strategy]: state RUN
+[start_button-9] [WARN] [1794158807.336661842] [start_button]: Stop (button pressed again).
+[base_adapter-8] [WARN] [1794158807.337207673] [base_adapter]: Operator stop: motor held at 0.
+[motor_driver-7] [WARN] [1794158807.337720078] [tb6612fng_motor]: Operator stop: ignoring motor commands.
+[pi_camera_publisher-4] [INFO] [1794158811.506032973] [pi_camera_publisher]: Pi camera: 30.0 frames/s at 640x360.
+[drive-13] [INFO] [1794158823.256115244] [strategy]: state WAIT_SENSOR
+[rrc_driver-1] [INFO] [1794158825.460911774] [rrc_driver]: Settings servo 1 - Offset 0
+[rrc_driver-1] [INFO] [1794158825.461825678] [rrc_driver]: Settings servo 2 - Offset 0
+[rrc_driver-1] [INFO] [1794158825.462786063] [rrc_driver]: Settings servo 3 - Offset 0
+[rrc_driver-1] [INFO] [1794158825.463765708] [rrc_driver]: Settings servo 4 - Offset 0
+[rrc_driver-1] [WARN] [1794158825.464313780] [rrc_driver]: Board data back after 2.6 s (the board rebooted?): motor type 2 and servo offsets sent again.
+[drive-13] [INFO] [1794158825.488192576] [strategy]: state RUN
+[ldlidar_stl_ros2_node-2] [INFO] [1794158827.978959501] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[static_transform_publisher-3] [INFO] [1794158827.979349351] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[robot_state_publisher-12] [INFO] [1794158827.979943108] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[rrc_driver-1] Exception in thread Thread-2 (pub_callback):
+[rrc_driver-1] Traceback (most recent call last):
+[rrc_driver-1]   File "/usr/lib/python3.12/threading.py", line 1073, in _bootstrap_inner
+[rrc_driver-1]     self.run()
+[rrc_driver-1]   File "/usr/lib/python3.12/threading.py", line 1010, in run
+[rrc_driver-1]     self._target(*self._args, **self._kwargs)
+[rrc_driver-1]   File "/home/user/robotek-learn/install/rrc_lite_driver/lib/python3.12/site-packages/rrc_lite_driver/rrc_driver.py", line 232, in pub_callback
+[rrc_driver-1]     rclpy.shutdown()
+[rrc_driver-1]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/__init__.py", line 134, in shutdown
+[rrc_driver-1]     _shutdown(context=context)
+[rrc_driver-1]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/utilities.py", line 82, in shutdown
+[rrc_driver-1]     context.shutdown()
+[rrc_driver-1]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/context.py", line 129, in shutdown
+[rrc_driver-1]     self.__context.shutdown()
+[rrc_driver-1] rclpy._rclpy_pybind11.RCLError: failed to shutdown: rcl_shutdown already called on the given context, at ./src/rcl/init.c:333
+[ldlidar_stl_ros2_node-2] [INFO] [1794158828.000348882] [LD19]: ldlidar_published is end
+[INFO] [static_transform_publisher-3]: process has finished cleanly [pid 3340]
+[rrc_driver-1] shutdown finish: motors at 0
+[INFO] [ldlidar_stl_ros2_node-2]: process has finished cleanly [pid 3339]
+[INFO] [robot_state_publisher-12]: process has finished cleanly [pid 3353]
+[start_button-9] Traceback (most recent call last):
+[start_button-9]   File "/home/user/robotek-learn/install/robotek_hardware/lib/robotek_hardware/start_button", line 33, in <module>
+[start_button-9]     sys.exit(load_entry_point('robotek-hardware==0.1.0', 'console_scripts', 'start_button')())
+[start_button-9]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[start_button-9]   File "/home/user/robotek-learn/install/robotek_hardware/lib/python3.12/site-packages/robotek_hardware/start_button.py", line 94, in main
+[start_button-9]     rclpy.spin(node)
+[start_button-9]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/__init__.py", line 247, in spin
+[start_button-9]     executor.spin_once()
+[start_button-9]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 926, in spin_once
+[start_button-9]     self._spin_once_impl(timeout_sec)
+[start_button-9]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 907, in _spin_once_impl
+[start_button-9]     handler, entity, node = self.wait_for_ready_callbacks(
+[start_button-9]                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[start_button-9]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 877, in wait_for_ready_callbacks
+[start_button-9]     return next(self._cb_iter)
+[start_button-9]            ^^^^^^^^^^^^^^^^^^^
+[start_button-9]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 785, in _wait_for_ready_callbacks
+[start_button-9]     raise ExternalShutdownException()
+[start_button-9] rclpy.executors.ExternalShutdownException
+[scan_adapter-5] Traceback (most recent call last):
+[scan_adapter-5]   File "/home/user/robotek-learn/install/robotek_hardware/lib/robotek_hardware/scan_adapter", line 33, in <module>
+[scan_adapter-5]     sys.exit(load_entry_point('robotek-hardware==0.1.0', 'console_scripts', 'scan_adapter')())
+[scan_adapter-5]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[scan_adapter-5]   File "/home/user/robotek-learn/install/robotek_hardware/lib/python3.12/site-packages/robotek_hardware/scan_adapter.py", line 56, in main
+[scan_adapter-5]     rclpy.spin(node)
+[scan_adapter-5]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/__init__.py", line 247, in spin
+[scan_adapter-5]     executor.spin_once()
+[scan_adapter-5]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 926, in spin_once
+[scan_adapter-5]     self._spin_once_impl(timeout_sec)
+[scan_adapter-5]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 907, in _spin_once_impl
+[scan_adapter-5]     handler, entity, node = self.wait_for_ready_callbacks(
+[scan_adapter-5]                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[scan_adapter-5]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 877, in wait_for_ready_callbacks
+[scan_adapter-5]     return next(self._cb_iter)
+[scan_adapter-5]            ^^^^^^^^^^^^^^^^^^^
+[scan_adapter-5]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 785, in _wait_for_ready_callbacks
+[scan_adapter-5]     raise ExternalShutdownException()
+[scan_adapter-5] rclpy.executors.ExternalShutdownException
+[imu_adapter-6] Traceback (most recent call last):
+[imu_adapter-6]   File "/home/user/robotek-learn/install/robotek_hardware/lib/robotek_hardware/imu_adapter", line 33, in <module>
+[imu_adapter-6]     sys.exit(load_entry_point('robotek-hardware==0.1.0', 'console_scripts', 'imu_adapter')())
+[imu_adapter-6]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[imu_adapter-6]   File "/home/user/robotek-learn/install/robotek_hardware/lib/python3.12/site-packages/robotek_hardware/imu_adapter.py", line 55, in main
+[imu_adapter-6]     rclpy.spin(node)
+[imu_adapter-6]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/__init__.py", line 247, in spin
+[imu_adapter-6]     executor.spin_once()
+[imu_adapter-6]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 926, in spin_once
+[imu_adapter-6]     self._spin_once_impl(timeout_sec)
+[imu_adapter-6]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 907, in _spin_once_impl
+[imu_adapter-6]     handler, entity, node = self.wait_for_ready_callbacks(
+[imu_adapter-6]                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[imu_adapter-6]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 877, in wait_for_ready_callbacks
+[imu_adapter-6]     return next(self._cb_iter)
+[imu_adapter-6]            ^^^^^^^^^^^^^^^^^^^
+[imu_adapter-6]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 785, in _wait_for_ready_callbacks
+[imu_adapter-6]     raise ExternalShutdownException()
+[imu_adapter-6] rclpy.executors.ExternalShutdownException
+[INFO] [base_adapter-8]: process has finished cleanly [pid 3345]
+[motor_driver-7] Traceback (most recent call last):
+[motor_driver-7]   File "/home/user/robotek-learn/install/robotek_hardware/lib/robotek_hardware/motor_driver", line 33, in <module>
+[motor_driver-7]     sys.exit(load_entry_point('robotek-hardware==0.1.0', 'console_scripts', 'motor_driver')())
+[motor_driver-7]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[motor_driver-7]   File "/home/user/robotek-learn/install/robotek_hardware/lib/python3.12/site-packages/robotek_hardware/motor_driver.py", line 184, in main
+[motor_driver-7]     rclpy.spin(node)
+[motor_driver-7]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/__init__.py", line 247, in spin
+[motor_driver-7]     executor.spin_once()
+[motor_driver-7]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 926, in spin_once
+[motor_driver-7]     self._spin_once_impl(timeout_sec)
+[motor_driver-7]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 907, in _spin_once_impl
+[motor_driver-7]     handler, entity, node = self.wait_for_ready_callbacks(
+[motor_driver-7]                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[motor_driver-7]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 877, in wait_for_ready_callbacks
+[motor_driver-7]     return next(self._cb_iter)
+[motor_driver-7]            ^^^^^^^^^^^^^^^^^^^
+[motor_driver-7]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 785, in _wait_for_ready_callbacks
+[motor_driver-7]     raise ExternalShutdownException()
+[motor_driver-7] rclpy.executors.ExternalShutdownException
+[INFO] [rrc_driver-1]: process has finished cleanly [pid 3338]
+[ERROR] [start_button-9]: process has died [pid 3346, exit code 1, cmd '/home/user/robotek-learn/install/robotek_hardware/lib/robotek_hardware/start_button --ros-args -r __node:=start_button --params-file /tmp/launch_params_a3v6847o -r start:=/start'].
+[ERROR] [scan_adapter-5]: process has died [pid 3342, exit code 1, cmd '/home/user/robotek-learn/install/robotek_hardware/lib/robotek_hardware/scan_adapter --ros-args -r __node:=scan_adapter --params-file /home/user/robotek-learn/install/robotek_hardware/share/robotek_hardware/config/robot.yaml -r scan_in:=/scan -r scan_out:=/robotek/scan'].
+[INFO] [battery_guard-10]: process has finished cleanly [pid 3347]
+[INFO] [status_leds-11]: process has finished cleanly [pid 3350]
+[INFO] [drive-13]: process has finished cleanly [pid 3354]
+[INFO] [pi_camera_publisher-4]: process has finished cleanly [pid 3341]
+[ERROR] [imu_adapter-6]: process has died [pid 3343, exit code 1, cmd '/home/user/robotek-learn/install/robotek_hardware/lib/robotek_hardware/imu_adapter --ros-args -r __node:=imu_adapter --params-file /home/user/robotek-learn/install/robotek_hardware/share/robotek_hardware/config/robot.yaml -r imu_in:=/rrc/imu_raw -r imu_out:=/robotek/imu'].
+[ERROR] [motor_driver-7]: process has died [pid 3344, exit code 1, cmd '/home/user/robotek-learn/install/robotek_hardware/lib/robotek_hardware/motor_driver --ros-args -r __node:=tb6612fng_motor --params-file /home/user/robotek-learn/install/robotek_hardware/share/robotek_hardware/config/robot.yaml'].

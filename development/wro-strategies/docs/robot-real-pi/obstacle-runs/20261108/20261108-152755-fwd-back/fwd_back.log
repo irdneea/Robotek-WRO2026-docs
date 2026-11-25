@@ -1,0 +1,13 @@
+car-clean: motors at 0.
+start: front 1.23 m, back nan m, battery 7941 mV
+1 rps forward : front 1.23 -> 1.12 m = +0.11 m in 1 s (+0.11 m/s avg incl. start), then rolled +0.12 m after the 0
+1 rps backward: not enough room (front 1.00, back nan)
+2 rps forward : front 1.00 -> 0.84 m = +0.16 m in 1 s (+0.16 m/s avg incl. start), then rolled +0.14 m after the 0
+2 rps backward: not enough room (front 0.69, back nan)
+3 rps forward: not enough room (front 0.69, back nan)
+3 rps backward: not enough room (front 0.69, back nan)
+start: front 0.69 m, back nan m, battery 7919 mV
+1 rps backward: front 0.69 -> 0.78 m = -0.09 m in 1 s (-0.09 m/s avg incl. start), then rolled -0.13 m after the 0
+2 rps backward: front 0.92 -> 1.12 m = -0.20 m in 1 s (-0.20 m/s avg incl. start), then rolled -0.14 m after the 0
+3 rps forward : front 1.26 -> 1.03 m = +0.23 m in 1 s (+0.23 m/s avg incl. start), then rolled +0.13 m after the 0
+3 rps backward: front 0.90 -> 1.09 m = -0.19 m in 1 s (-0.19 m/s avg incl. start), then rolled -0.16 m after the 0

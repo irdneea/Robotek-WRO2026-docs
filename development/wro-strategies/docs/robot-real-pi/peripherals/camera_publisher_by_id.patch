@@ -1,0 +1,27 @@
+--- camera_publisher.py.bak-antes-by-id	2026-10-09 18:16:01.457655563 -0400
++++ camera_publisher.py	2026-10-09 18:16:01.481655684 -0400
+@@ -26,6 +26,8 @@
+ import shutil
+ import subprocess
+ 
++import os
++
+ import cv2
+ import rclpy
+ from rclpy.node import Node
+@@ -37,7 +39,14 @@
+     def __init__(self):
+         super().__init__('camera_publisher')
+ 
+-        self.device = self.declare_parameter('device', '/dev/video0').value
++        # Por id de USB, no por /dev/videoN: la Pi 5 tiene ~19 nodos de video propios (codec,
++        # pisp_be) y el numero de la camara USB puede cambiar con el orden de arranque.
++        # index0 = nodo de captura; index1 es el de metadatos.
++        self.device = self.declare_parameter(
++            'device', '/dev/v4l/by-id/usb-icSpring_icspring_camera-video-index0').value
++        if not os.path.exists(self.device):
++            self.get_logger().warning(f'{self.device} no existe: uso /dev/video0')
++            self.device = '/dev/video0'
+         self.width = int(self.declare_parameter('width', 640).value)
+         self.height = int(self.declare_parameter('height', 480).value)
+         self.fps = int(self.declare_parameter('fps', 15).value)

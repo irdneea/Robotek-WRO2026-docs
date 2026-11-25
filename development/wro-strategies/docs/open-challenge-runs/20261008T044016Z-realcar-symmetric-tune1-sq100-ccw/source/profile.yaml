@@ -1,0 +1,14 @@
+# Candidate for honest real_car_v1; speeds are commands, not measured wheel speed.
+open_strategy:
+  ros__parameters:
+    direction: auto
+    cruise_speed: 1.28
+    corner_speed: 1.28
+    first_corner_speed: 1.0
+    turn_steer: 0.30718
+    outer_lane_distance: 0.6
+    turn_front_distance: 0.6
+    turn_front_latency: 0.12
+    finish_distance: 0.3
+    finish_speed: 0.15
+    finish_stop_wait: 2.0

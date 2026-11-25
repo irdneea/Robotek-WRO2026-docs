@@ -1,0 +1,199 @@
+[INFO] [launch]: All log files can be found below /home/user/.ros/log/2026-11-04-17-02-22-503737-user-desktop-64943
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [rrc_driver-1]: process started with pid [64994]
+[INFO] [ldlidar_stl_ros2_node-2]: process started with pid [64995]
+[INFO] [static_transform_publisher-3]: process started with pid [64996]
+[INFO] [camera_publisher-4]: process started with pid [64997]
+[INFO] [scan_adapter-5]: process started with pid [64998]
+[INFO] [imu_adapter-6]: process started with pid [64999]
+[INFO] [motor_driver-7]: process started with pid [65000]
+[INFO] [base_adapter-8]: process started with pid [65001]
+[INFO] [start_button-9]: process started with pid [65002]
+[INFO] [battery_guard-10]: process started with pid [65003]
+[INFO] [status_leds-11]: process started with pid [65004]
+[INFO] [robot_state_publisher-12]: process started with pid [65005]
+[INFO] [round_reporter-13]: process started with pid [65006]
+[INFO] [open_v5-14]: process started with pid [65007]
+[static_transform_publisher-3] [WARN] [1793829743.565213757] []: Old-style arguments are deprecated; see --help for new-style arguments
+[static_transform_publisher-3] [INFO] [1793829743.934446375] [base_link_to_base_laser_ld19]: Spinning until stopped - publishing transform
+[static_transform_publisher-3] translation: ('0.000000', '0.000000', '0.180000')
+[static_transform_publisher-3] rotation: ('0.000000', '0.000000', '0.000000', '1.000000')
+[static_transform_publisher-3] from 'base_link' to 'base_laser'
+[robot_state_publisher-12] [INFO] [1793829744.131485777] [robot_state_publisher]: Robot initialized
+[ldlidar_stl_ros2_node-2] [INFO] [1793829744.241628529] [LD19]: LDLiDAR SDK Pack Version is: v3.0.3
+[ldlidar_stl_ros2_node-2] [INFO] [1793829744.241835306] [LD19]: <product_name>: LDLiDAR_LD19
+[ldlidar_stl_ros2_node-2] [INFO] [1793829744.241894398] [LD19]: <topic_name>: scan
+[ldlidar_stl_ros2_node-2] [INFO] [1793829744.241927398] [LD19]: <frame_id>: base_laser
+[ldlidar_stl_ros2_node-2] [INFO] [1793829744.241951972] [LD19]: <port_name>: /dev/ttyUSB0
+[ldlidar_stl_ros2_node-2] [INFO] [1793829744.241980231] [LD19]: <port_baudrate>: 230400
+[ldlidar_stl_ros2_node-2] [INFO] [1793829744.242013694] [LD19]: <laser_scan_dir>: Counterclockwise
+[ldlidar_stl_ros2_node-2] [INFO] [1793829744.242052027] [LD19]: <enable_angle_crop_func>: false
+[ldlidar_stl_ros2_node-2] [INFO] [1793829744.242092119] [LD19]: <angle_crop_min>: 135.000000
+[ldlidar_stl_ros2_node-2] [INFO] [1793829744.242134489] [LD19]: <angle_crop_max>: 225.000000
+[ldlidar_stl_ros2_node-2] [INFO] [1793829744.275970862] [LD19]: ldlidar node start is success
+[ldlidar_stl_ros2_node-2] [INFO] [1793829744.297412587] [LD19]: ldlidar communication is normal.
+[ldlidar_stl_ros2_node-2] [INFO] [1793829744.342808316] [LD19]: Publish topic message:ldlidar scan data.
+[start_button-9] [WARN] [1793829747.260397584] [start_button]: No button: the car starts by itself in 12 s; press the button to stop.
+[start_button-9] [INFO] [1793829747.270807115] [start_button]: Press the button to start; press it again to stop.
+[ldlidar_stl_ros2_node-2] [LDS][INFO][1793829744.275784289][Actual BaudRate reported:230400]
+[motor_driver-7] [WARN] [1793829749.550500895] [tb6612fng_motor]: GPIO chip 4 not usable ('GPIO busy'): motor disabled, retrying every 5 s. Is this a Raspberry Pi 5 with python3-lgpio, and is your user in the "gpio" group (or is another program holding the pins)? The motor does NOT move without this.
+[camera_publisher-4] [WARN] [1793829749.579671980] [camera_publisher]: No se pudo abrir la camara /dev/v4l/by-id/usb-icSpring_icspring_camera-video-index0 (permisos? el usuario debe estar en el grupo "video"; o la usa otro programa); reintento cada 1 s
+[imu_adapter-6] [INFO] [1793829750.138177321] [imu_adapter]: IMU axes forward=-x left=+z up=+y
+[base_adapter-8] [INFO] [1793829751.038200738] [base_adapter]: Drive motor: RRC Lite port M1, 4.80 rps per m/s.
+[base_adapter-8] [INFO] [1793829751.100507830] [base_adapter]: Wall guard: slows down from 0.30 m, 0 at 0.10 m (+-15 deg).
+[rrc_driver-1] [INFO] [1793829751.106184000] [rrc_driver]: RRC Lite board on /dev/rrc_lite
+[rrc_driver-1] [INFO] [1793829751.118795239] [rrc_driver]: Motor type 2 sent to the board.
+[battery_guard-10] [INFO] [1793829751.176207860] [battery_guard]: Battery guard: red blinking below 6.80 V (5 consecutive readings); it does not stop the car.
+[status_leds-11] [INFO] [1793829751.573911825] [status_leds]: Status RGBs at level 2/255.
+[rrc_driver-1] [INFO] [1793829751.840402367] [rrc_driver]: Settings servo 1 - Offset 0
+[rrc_driver-1] [INFO] [1793829751.849458776] [rrc_driver]: Settings servo 2 - Offset 0
+[rrc_driver-1] [INFO] [1793829751.867332077] [rrc_driver]: Settings servo 3 - Offset 0
+[rrc_driver-1] [INFO] [1793829751.900066363] [rrc_driver]: Settings servo 4 - Offset 0
+[rrc_driver-1] [INFO] [1793829751.937859582] [rrc_driver]: [1;32mstart[0m
+[open_v5-14] [INFO] [1793829752.875380626] [strategy]: Open v5 | direction=auto cruise=1.28 m/s | telemetry /home/user/runs/20261104-170232-open-v5/telemetry.csv
+[open_v5-14] [WARN] [1793829752.940243406] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829753.983523726] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[rrc_driver-1] board: error al leer (device reports readiness to read but returned no data (device disconnected or multiple access on port?))
+[rrc_driver-1] board: error al escribir (Attempting to use a port that is not open)
+[rrc_driver-1] board: puerto reconectado (lectura)
+[rrc_driver-1] shutdown finish: motors at 0
+[round_reporter-13] [INFO] [1793829754.540135001] [round_reporter]: Round report on (debug): states, direction, corners, laps and lines.
+[rrc_driver-1] Traceback (most recent call last):
+[rrc_driver-1]   File "/home/user/robotek-learn/install/rrc_lite_driver/lib/rrc_lite_driver/rrc_driver", line 33, in <module>
+[rrc_driver-1]     sys.exit(load_entry_point('rrc-lite-driver==0.0.1', 'console_scripts', 'rrc_driver')())
+[rrc_driver-1]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rrc_driver-1]   File "/home/user/robotek-learn/install/rrc_lite_driver/lib/python3.12/site-packages/rrc_lite_driver/rrc_driver.py", line 455, in main
+[rrc_driver-1]     rclpy.spin(node)
+[rrc_driver-1]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/__init__.py", line 247, in spin
+[rrc_driver-1]     executor.spin_once()
+[rrc_driver-1]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 926, in spin_once
+[rrc_driver-1]     self._spin_once_impl(timeout_sec)
+[rrc_driver-1]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 918, in _spin_once_impl
+[rrc_driver-1]     raise handler.exception()
+[rrc_driver-1]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/task.py", line 286, in _execute_coroutine_step
+[rrc_driver-1]     result = coro.send(None)
+[rrc_driver-1]              ^^^^^^^^^^^^^^^
+[rrc_driver-1]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 592, in handler
+[rrc_driver-1]     await call_coroutine()
+[rrc_driver-1]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 480, in _execute
+[rrc_driver-1]     await await_or_execute(sub.callback, *msg_tuple)
+[rrc_driver-1]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 115, in await_or_execute
+[rrc_driver-1]     return callback(*args)
+[rrc_driver-1]            ^^^^^^^^^^^^^^^
+[rrc_driver-1]   File "/home/user/robotek-learn/install/rrc_lite_driver/lib/python3.12/site-packages/rrc_lite_driver/rrc_driver.py", line 203, in set_motor_state
+[rrc_driver-1]     self.board.set_motor_speed(data)
+[rrc_driver-1]   File "/home/user/robotek-learn/install/rrc_lite_driver/lib/python3.12/site-packages/rrc_lite_driver/rrc_lite_driver_sdk/board.py", line 396, in set_motor_speed
+[rrc_driver-1]     self.buf_write(PacketFunction.PACKET_FUNC_MOTOR, data)
+[rrc_driver-1]   File "/home/user/robotek-learn/install/rrc_lite_driver/lib/python3.12/site-packages/rrc_lite_driver/rrc_lite_driver_sdk/board.py", line 370, in buf_write
+[rrc_driver-1]     self.port.write(buf)
+[rrc_driver-1]   File "/usr/lib/python3/dist-packages/serial/serialposix.py", line 642, in write
+[rrc_driver-1]     os.read(self.pipe_abort_write_r, 1)
+[rrc_driver-1] TypeError: 'NoneType' object cannot be interpreted as an integer
+[rrc_driver-1] board: error al leer (device reports readiness to read but returned no data (device disconnected or multiple access on port?))
+[rrc_driver-1] board: puerto reconectado (lectura)
+[round_reporter-13] [INFO] [1793829754.855006662] [round_reporter]: [   0.0 s] Estado: WAIT_START
+[open_v5-14] [WARN] [1793829755.038481624] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[ERROR] [rrc_driver-1]: process has died [pid 64994, exit code 1, cmd '/home/user/robotek-learn/install/rrc_lite_driver/lib/rrc_lite_driver/rrc_driver --ros-args -r __node:=rrc_driver --params-file /home/user/robotek-learn/install/rrc_lite_driver/share/rrc_lite_driver/config/controller_params.yaml --params-file /tmp/launch_params_vt86jweb'].
+[open_v5-14] [WARN] [1793829756.044330386] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[battery_guard-10] [WARN] [1793829756.656306923] [battery_guard]: Battery 6.63 V < 6.80 V: change it before the next round (the car keeps going).
+[ldlidar_stl_ros2_node-2] [ERROR] [1793829757.442917047] [LD19]: get ldlidar data is time out, please check your lidar device.
+[open_v5-14] [WARN] [1793829757.483360250] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[start_button-9] [INFO] [1793829758.980917855] [start_button]: Start (no button).
+[round_reporter-13] [INFO] [1793829758.992521823] [round_reporter]: [   0.0 s] Start
+[round_reporter-13] [INFO] [1793829759.065323592] [round_reporter]: [   0.1 s] Estado: CALIBRATE
+[round_reporter-13] [INFO] [1793829759.188208692] [round_reporter]: [   0.2 s] Cámara: azul 107 px, naranja 626 px
+[round_reporter-13] [INFO] [1793829759.548794856] [round_reporter]: [   0.6 s] Estado: DETECT_DIRECTION
+[round_reporter-13] [INFO] [1793829759.601059785] [round_reporter]: [   0.6 s] Estado: FOLLOW
+[camera_publisher-4] [WARN] [1793829759.990220648] [camera_publisher]: No se pudo abrir la camara /dev/v4l/by-id/usb-icSpring_icspring_camera-video-index0 (permisos? el usuario debe estar en el grupo "video"; o la usa otro programa); reintento cada 1 s
+[open_v5-14] [WARN] [1793829760.439210895] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829762.839579125] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829764.210877401] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829765.381145227] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829767.003874794] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829769.964278640] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[camera_publisher-4] [WARN] [1793829770.319543091] [camera_publisher]: No se pudo abrir la camara /dev/v4l/by-id/usb-icSpring_icspring_camera-video-index0 (permisos? el usuario debe estar en el grupo "video"; o la usa otro programa); reintento cada 1 s
+[open_v5-14] [WARN] [1793829771.027733857] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829772.111247657] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829773.648228428] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829775.209200146] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829776.331957280] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829777.480593868] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829779.749467675] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[camera_publisher-4] [WARN] [1793829780.649475119] [camera_publisher]: No se pudo abrir la camara /dev/v4l/by-id/usb-icSpring_icspring_camera-video-index0 (permisos? el usuario debe estar en el grupo "video"; o la usa otro programa); reintento cada 1 s
+[open_v5-14] [WARN] [1793829782.707497718] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829784.198113194] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[ldlidar_stl_ros2_node-2] [ERROR] [1793829784.945866657] [LD19]: get ldlidar data is time out, please check your lidar device.
+[ldlidar_stl_ros2_node-2] [ERROR] [1793829785.044679121] [LD19]: get ldlidar data is time out, please check your lidar device.
+[ldlidar_stl_ros2_node-2] [ERROR] [1793829785.146012421] [LD19]: get ldlidar data is time out, please check your lidar device.
+[open_v5-14] [WARN] [1793829785.254472697] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829786.660230678] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829788.166654627] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829790.440670933] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[camera_publisher-4] [WARN] [1793829791.116859247] [camera_publisher]: No se pudo abrir la camara /dev/v4l/by-id/usb-icSpring_icspring_camera-video-index0 (permisos? el usuario debe estar en el grupo "video"; o la usa otro programa); reintento cada 1 s
+[open_v5-14] [WARN] [1793829791.464114126] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829793.905225959] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829795.499231500] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829796.799516008] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829800.936678469] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[camera_publisher-4] [WARN] [1793829801.384840423] [camera_publisher]: No se pudo abrir la camara /dev/v4l/by-id/usb-icSpring_icspring_camera-video-index0 (permisos? el usuario debe estar en el grupo "video"; o la usa otro programa); reintento cada 1 s
+[open_v5-14] [WARN] [1793829802.169978982] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829803.364345099] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829804.930137240] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829807.020435167] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829809.222639584] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[motor_driver-7] [WARN] [1793829809.667986959] [tb6612fng_motor]: GPIO chip 4 not usable ('GPIO busy'): motor disabled, retrying every 5 s. Is this a Raspberry Pi 5 with python3-lgpio, and is your user in the "gpio" group (or is another program holding the pins)? The motor does NOT move without this.
+[camera_publisher-4] [WARN] [1793829811.654985184] [camera_publisher]: No se pudo abrir la camara /dev/v4l/by-id/usb-icSpring_icspring_camera-video-index0 (permisos? el usuario debe estar en el grupo "video"; o la usa otro programa); reintento cada 1 s
+[open_v5-14] [WARN] [1793829811.871406178] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829813.201078746] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829815.333719846] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829816.944718881] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829817.998672215] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[ldlidar_stl_ros2_node-2] [ERROR] [1793829819.144668900] [LD19]: get ldlidar data is time out, please check your lidar device.
+[ldlidar_stl_ros2_node-2] [ERROR] [1793829819.242900549] [LD19]: get ldlidar data is time out, please check your lidar device.
+[ldlidar_stl_ros2_node-2] [ERROR] [1793829819.345767077] [LD19]: get ldlidar data is time out, please check your lidar device.
+[ldlidar_stl_ros2_node-2] [ERROR] [1793829819.445582679] [LD19]: get ldlidar data is time out, please check your lidar device.
+[ldlidar_stl_ros2_node-2] [ERROR] [1793829819.543384756] [LD19]: get ldlidar data is time out, please check your lidar device.
+[ldlidar_stl_ros2_node-2] [ERROR] [1793829819.642908619] [LD19]: get ldlidar data is time out, please check your lidar device.
+[ldlidar_stl_ros2_node-2] [ERROR] [1793829819.744651321] [LD19]: get ldlidar data is time out, please check your lidar device.
+[ldlidar_stl_ros2_node-2] [ERROR] [1793829819.842906191] [LD19]: get ldlidar data is time out, please check your lidar device.
+[ldlidar_stl_ros2_node-2] [ERROR] [1793829819.942951570] [LD19]: get ldlidar data is time out, please check your lidar device.
+[ldlidar_stl_ros2_node-2] [ERROR] [1793829820.044789104] [LD19]: get ldlidar data is time out, please check your lidar device.
+[ldlidar_stl_ros2_node-2] [ERROR] [1793829820.144675669] [LD19]: get ldlidar data is time out, please check your lidar device.
+[ldlidar_stl_ros2_node-2] [ERROR] [1793829820.243011705] [LD19]: get ldlidar data is time out, please check your lidar device.
+[camera_publisher-4] [WARN] [1793829822.067367853] [camera_publisher]: No se pudo abrir la camara /dev/v4l/by-id/usb-icSpring_icspring_camera-video-index0 (permisos? el usuario debe estar en el grupo "video"; o la usa otro programa); reintento cada 1 s
+[open_v5-14] [WARN] [1793829823.213081925] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829825.706059330] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829826.874094244] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829829.139287738] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829830.860572808] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829831.967840102] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[camera_publisher-4] [WARN] [1793829832.458096011] [camera_publisher]: No se pudo abrir la camara /dev/v4l/by-id/usb-icSpring_icspring_camera-video-index0 (permisos? el usuario debe estar en el grupo "video"; o la usa otro programa); reintento cada 1 s
+[open_v5-14] [WARN] [1793829833.136127693] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829834.152895995] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829835.273870351] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829838.341064515] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829842.656286287] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[camera_publisher-4] [WARN] [1793829842.849362526] [camera_publisher]: No se pudo abrir la camara /dev/v4l/by-id/usb-icSpring_icspring_camera-video-index0 (permisos? el usuario debe estar en el grupo "video"; o la usa otro programa); reintento cada 1 s
+[open_v5-14] [WARN] [1793829845.835855879] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829847.449969163] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829849.127746189] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[camera_publisher-4] [WARN] [1793829853.314786602] [camera_publisher]: No se pudo abrir la camara /dev/v4l/by-id/usb-icSpring_icspring_camera-video-index0 (permisos? el usuario debe estar en el grupo "video"; o la usa otro programa); reintento cada 1 s
+[open_v5-14] [WARN] [1793829853.477194692] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829854.713511421] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829857.027715559] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829858.032667280] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829859.049252948] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829860.120534580] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829861.551952562] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829862.623638023] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[camera_publisher-4] [WARN] [1793829863.584597191] [camera_publisher]: No se pudo abrir la camara /dev/v4l/by-id/usb-icSpring_icspring_camera-video-index0 (permisos? el usuario debe estar en el grupo "video"; o la usa otro programa); reintento cada 1 s
+[open_v5-14] [WARN] [1793829863.734049043] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829864.828861491] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829866.080731372] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829867.127431332] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829868.325675462] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829869.483854280] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829870.749738367] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829871.832871749] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793829873.228721118] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 

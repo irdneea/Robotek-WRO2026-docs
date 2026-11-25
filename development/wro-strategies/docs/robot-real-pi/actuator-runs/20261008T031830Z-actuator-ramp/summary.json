@@ -1,0 +1,38 @@
+{
+  "run_dir": "/home/user/robotek-runs/20261008T031830Z-actuator-ramp",
+  "wheelbase_m": 0.13,
+  "steps": [
+    {
+      "kind": "motor",
+      "motor_pct": 40.0,
+      "pulso_s": 0.68,
+      "delay_aceleracion_s": 0.725,
+      "delay_movimiento_lidar_s": 0.052,
+      "velocidad_max_imu_mps": 0.039,
+      "velocidad_max_lidar_mps": 0.436,
+      "velocidad_estable_mps": 0.408,
+      "se_mueve": true,
+      "tiempo_hasta_parar_s": 0.272,
+      "distancia_total_m": 0.327,
+      "cabeceo_max_rad_s": 0.464,
+      "az_min_m_s2": 8.0,
+      "step": "motor 40%"
+    },
+    {
+      "kind": "motor",
+      "motor_pct": 50.0,
+      "pulso_s": 0.66,
+      "delay_aceleracion_s": 0.064,
+      "delay_movimiento_lidar_s": 0.072,
+      "velocidad_max_imu_mps": 0.369,
+      "velocidad_max_lidar_mps": 0.498,
+      "velocidad_estable_mps": 0.392,
+      "se_mueve": true,
+      "tiempo_hasta_parar_s": 0.212,
+      "distancia_total_m": 0.331,
+      "cabeceo_max_rad_s": 0.804,
+      "az_min_m_s2": 3.5,
+      "step": "motor 50%"
+    }
+  ]
+}

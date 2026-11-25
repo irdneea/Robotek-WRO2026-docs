@@ -1,0 +1,53 @@
+{
+  "run": "20261008T181826Z-realcar-hw-v4-floormask-90pct-r6",
+  "status": "failed",
+  "platform": "real_car_hardware",
+  "start_source": "button",
+  "end_source": "stalled_state",
+  "time_from_start_wall_seconds": 30.96,
+  "time_from_start_sim_seconds": null,
+  "calibration_and_detection_wall_seconds": 12.81,
+  "motion_wall_seconds": 0.0,
+  "motion_sim_seconds": null,
+  "lap_splits": [],
+  "points_estimated": 0,
+  "points_official": null,
+  "score_status": "real_car_operator_observation",
+  "points_breakdown": {
+    "1.1_sections": 0,
+    "1.2_laps": 0,
+    "1.3_stop_in_finish": 0
+  },
+  "profile": "open_realcar_v4.yaml",
+  "motor_cap_pct": 90,
+  "battery_mV_before": 7691,
+  "code": "e6aea27 + uncommitted: floor mask, real HSV, stall stop",
+  "failure": {
+    "cause": "a cable came loose (operator); the car did not drive",
+    "sequence": "direction took 12.4 s (orange line short at Start, O 74-322 px) -> CW; FOLLOW 15.8 s with front 1.70 -> 1.61 m, RECOVER, STALLED at 31 s"
+  },
+  "findings": [
+    "LiDAR odometry reported 3.6 m travelled (0.31 -> 3.87 m) in 15.8 s while the front range changed only 9 cm: scan-to-scan noise adds up as distance when the car is still, so the stall stop fired late (same likely cause as the 48 s without stall in r5)."
+  ],
+  "start_pose": {
+    "x": null,
+    "y": null,
+    "yaw": null,
+    "lidar_at_start_m": {
+      "left": 0.493,
+      "right": 0.522,
+      "front": 1.705
+    }
+  },
+  "limitations": [
+    "Real car: no ground-truth pose, no judge.",
+    "Start pose not measured."
+  ],
+  "evidence": [
+    "telemetry.csv",
+    "events.jsonl",
+    "camera-evidence.csv",
+    "launch.log",
+    "params/"
+  ]
+}

@@ -1,0 +1,212 @@
+Nov 04 14:18:01 user-desktop bash[1455]: [WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+Nov 04 14:18:01 user-desktop systemd[1394]: Stopping robotek-car.service - robotek car launch at boot (robotek-learn: car.launch.py, waits for the board button)...
+Nov 04 14:18:01 user-desktop bash[1455]: [INFO] [open_v5-13]: sending signal 'SIGINT' to process[open_v5-13]
+Nov 04 14:18:01 user-desktop bash[1455]: [INFO] [robot_state_publisher-12]: sending signal 'SIGINT' to process[robot_state_publisher-12]
+Nov 04 14:18:01 user-desktop bash[1455]: [INFO] [status_leds-11]: sending signal 'SIGINT' to process[status_leds-11]
+Nov 04 14:18:01 user-desktop bash[1455]: [INFO] [battery_guard-10]: sending signal 'SIGINT' to process[battery_guard-10]
+Nov 04 14:18:01 user-desktop bash[1455]: [INFO] [start_button-9]: sending signal 'SIGINT' to process[start_button-9]
+Nov 04 14:18:01 user-desktop bash[1455]: [INFO] [base_adapter-8]: sending signal 'SIGINT' to process[base_adapter-8]
+Nov 04 14:18:01 user-desktop bash[1455]: [INFO] [motor_driver-7]: sending signal 'SIGINT' to process[motor_driver-7]
+Nov 04 14:18:01 user-desktop bash[1455]: [INFO] [imu_adapter-6]: sending signal 'SIGINT' to process[imu_adapter-6]
+Nov 04 14:18:01 user-desktop bash[1455]: [INFO] [scan_adapter-5]: sending signal 'SIGINT' to process[scan_adapter-5]
+Nov 04 14:18:01 user-desktop bash[1455]: [INFO] [camera_publisher-4]: sending signal 'SIGINT' to process[camera_publisher-4]
+Nov 04 14:18:01 user-desktop bash[1455]: [INFO] [static_transform_publisher-3]: sending signal 'SIGINT' to process[static_transform_publisher-3]
+Nov 04 14:18:01 user-desktop bash[1455]: [INFO] [ldlidar_stl_ros2_node-2]: sending signal 'SIGINT' to process[ldlidar_stl_ros2_node-2]
+Nov 04 14:18:01 user-desktop bash[1455]: [INFO] [rrc_driver-1]: sending signal 'SIGINT' to process[rrc_driver-1]
+Nov 04 14:18:01 user-desktop bash[1455]: [static_transform_publisher-3] [INFO] [1793819881.598514005] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+Nov 04 14:18:01 user-desktop bash[1455]: [ldlidar_stl_ros2_node-2] [INFO] [1793819881.599848510] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+Nov 04 14:18:01 user-desktop bash[1455]: [ldlidar_stl_ros2_node-2] [INFO] [1793819881.613063098] [LD19]: ldlidar_published is end
+Nov 04 14:18:01 user-desktop bash[1455]: [robot_state_publisher-12] [INFO] [1793819881.607527003] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+Nov 04 14:18:01 user-desktop bash[1455]: [rrc_driver-1] Exception in thread Thread-2 (pub_callback):
+Nov 04 14:18:01 user-desktop bash[1455]: [rrc_driver-1] Traceback (most recent call last):
+Nov 04 14:18:01 user-desktop bash[1455]: [rrc_driver-1]   File "/usr/lib/python3.12/threading.py", line 1073, in _bootstrap_inner
+Nov 04 14:18:01 user-desktop bash[1455]: [rrc_driver-1]     self.run()
+Nov 04 14:18:01 user-desktop bash[1455]: [rrc_driver-1]   File "/usr/lib/python3.12/threading.py", line 1010, in run
+Nov 04 14:18:01 user-desktop bash[1455]: [rrc_driver-1]     self._target(*self._args, **self._kwargs)
+Nov 04 14:18:01 user-desktop bash[1455]: [rrc_driver-1]   File "/home/user/robotek-learn/build/rrc_lite_driver/rrc_lite_driver/rrc_driver.py", line 178, in pub_callback
+Nov 04 14:18:01 user-desktop bash[1455]: [rrc_driver-1]     rclpy.shutdown()
+Nov 04 14:18:01 user-desktop bash[1455]: [rrc_driver-1]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/__init__.py", line 134, in shutdown
+Nov 04 14:18:01 user-desktop bash[1455]: [rrc_driver-1]     _shutdown(context=context)
+Nov 04 14:18:01 user-desktop bash[1455]: [rrc_driver-1]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/utilities.py", line 82, in shutdown
+Nov 04 14:18:01 user-desktop bash[1455]: [rrc_driver-1]     context.shutdown()
+Nov 04 14:18:01 user-desktop bash[1455]: [rrc_driver-1]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/context.py", line 129, in shutdown
+Nov 04 14:18:01 user-desktop bash[1455]: [rrc_driver-1]     self.__context.shutdown()
+Nov 04 14:18:01 user-desktop bash[1455]: [rrc_driver-1] rclpy._rclpy_pybind11.RCLError: failed to shutdown: rcl_shutdown already called on the given context, at ./src/rcl/init.c:333
+Nov 04 14:18:01 user-desktop bash[1455]: [ERROR] [static_transform_publisher-3]: process has died [pid 2071, exit code -2, cmd '/opt/ros/jazzy/lib/tf2_ros/static_transform_publisher 0 0 0.18 0 0 0 base_link base_laser --ros-args -r __node:=base_link_to_base_laser_ld19'].
+Nov 04 14:18:01 user-desktop bash[1455]: [robot_state_publisher-12] [INFO] [1793819881.650743223] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+Nov 04 14:18:01 user-desktop bash[1455]: [ERROR] [ldlidar_stl_ros2_node-2]: process has died [pid 2070, exit code -2, cmd '/home/user/robotek-learn/install/ldlidar_stl_ros2/lib/ldlidar_stl_ros2/ldlidar_stl_ros2_node --ros-args -r __node:=LD19 --params-file /tmp/launch_params_r_ab9xn7 --params-file /tmp/launch_params_8sss4qfj --params-file /tmp/launch_params_6f6dqcty --params-file /tmp/launch_params_5mgexho9 --params-file /tmp/launch_params_74fr7ges --params-file /tmp/launch_params_ibzr3amv --params-file /tmp/launch_params_63z9v9dt --params-file /tmp/launch_params_i4itzewg --params-file /tmp/launch_params_rmi4apqh'].
+Nov 04 14:18:01 user-desktop bash[1455]: [battery_guard-10] Traceback (most recent call last):
+Nov 04 14:18:01 user-desktop bash[1455]: [battery_guard-10]   File "/home/user/robotek-learn/install/robotek_hardware/lib/robotek_hardware/battery_guard", line 33, in <module>
+Nov 04 14:18:01 user-desktop bash[1455]: [battery_guard-10]     sys.exit(load_entry_point('robotek-hardware', 'console_scripts', 'battery_guard')())
+Nov 04 14:18:01 user-desktop bash[1455]: [battery_guard-10]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Nov 04 14:18:01 user-desktop bash[1455]: [battery_guard-10]   File "/home/user/robotek-learn/build/robotek_hardware/robotek_hardware/battery_guard.py", line 58, in main
+Nov 04 14:18:01 user-desktop bash[1455]: [battery_guard-10]     node.destroy_node()
+Nov 04 14:18:01 user-desktop bash[1455]: [battery_guard-10]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/node.py", line 1958, in destroy_node
+Nov 04 14:18:01 user-desktop bash[1455]: [battery_guard-10]     self.destroy_subscription(self._subscriptions[0])
+Nov 04 14:18:01 user-desktop bash[1455]: [battery_guard-10]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/node.py", line 1854, in destroy_subscription
+Nov 04 14:18:01 user-desktop bash[1455]: [battery_guard-10]     subscription.destroy()
+Nov 04 14:18:01 user-desktop bash[1455]: [battery_guard-10]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/subscription.py", line 101, in destroy
+Nov 04 14:18:01 user-desktop bash[1455]: [battery_guard-10]     self.handle.destroy_when_not_in_use()
+Nov 04 14:18:01 user-desktop bash[1455]: [battery_guard-10] KeyboardInterrupt
+Nov 04 14:18:01 user-desktop bash[1455]: [start_button-9] Traceback (most recent call last):
+Nov 04 14:18:01 user-desktop bash[1455]: [start_button-9]   File "/home/user/robotek-learn/install/robotek_hardware/lib/robotek_hardware/start_button", line 33, in <module>
+Nov 04 14:18:01 user-desktop bash[1455]: [start_button-9]     sys.exit(load_entry_point('robotek-hardware', 'console_scripts', 'start_button')())
+Nov 04 14:18:01 user-desktop bash[1455]: [start_button-9]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Nov 04 14:18:01 user-desktop bash[1455]: [start_button-9]   File "/home/user/robotek-learn/build/robotek_hardware/robotek_hardware/start_button.py", line 88, in main
+Nov 04 14:18:01 user-desktop bash[1455]: [start_button-9]     node.destroy_node()
+Nov 04 14:18:01 user-desktop bash[1455]: [start_button-9]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/node.py", line 1962, in destroy_node
+Nov 04 14:18:01 user-desktop bash[1455]: [start_button-9]     self.destroy_service(self._services[0])
+Nov 04 14:18:01 user-desktop bash[1455]: [start_button-9]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/node.py", line 1886, in destroy_service
+Nov 04 14:18:01 user-desktop bash[1455]: [start_button-9]     service.destroy()
+Nov 04 14:18:01 user-desktop bash[1455]: [start_button-9]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/service.py", line 123, in destroy
+Nov 04 14:18:01 user-desktop bash[1455]: [start_button-9]     self.__service.destroy_when_not_in_use()
+Nov 04 14:18:01 user-desktop bash[1455]: [start_button-9] KeyboardInterrupt
+Nov 04 14:18:01 user-desktop bash[1455]: [motor_driver-7] Traceback (most recent call last):
+Nov 04 14:18:01 user-desktop bash[1455]: [motor_driver-7]   File "/home/user/robotek-learn/install/robotek_hardware/lib/robotek_hardware/motor_driver", line 33, in <module>
+Nov 04 14:18:01 user-desktop bash[1455]: [motor_driver-7]     sys.exit(load_entry_point('robotek-hardware', 'console_scripts', 'motor_driver')())
+Nov 04 14:18:01 user-desktop bash[1455]: [motor_driver-7]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Nov 04 14:18:01 user-desktop bash[1455]: [motor_driver-7]   File "/home/user/robotek-learn/build/robotek_hardware/robotek_hardware/motor_driver.py", line 188, in main
+Nov 04 14:18:01 user-desktop bash[1455]: [motor_driver-7]     node.destroy_node()
+Nov 04 14:18:01 user-desktop bash[1455]: [motor_driver-7]   File "/home/user/robotek-learn/build/robotek_hardware/robotek_hardware/motor_driver.py", line 175, in destroy_node
+Nov 04 14:18:01 user-desktop bash[1455]: [motor_driver-7]     lgpio.gpiochip_close(self.gpio)
+Nov 04 14:18:01 user-desktop bash[1455]: [motor_driver-7]   File "/usr/lib/python3/dist-packages/lgpio.py", line 661, in gpiochip_close
+Nov 04 14:18:01 user-desktop bash[1455]: [imu_adapter-6] Traceback (most recent call last):
+Nov 04 14:18:01 user-desktop bash[1455]: [imu_adapter-6]   File "/home/user/robotek-learn/install/robotek_hardware/lib/robotek_hardware/imu_adapter", line 33, in <module>
+Nov 04 14:18:01 user-desktop bash[1455]: [imu_adapter-6]     sys.exit(load_entry_point('robotek-hardware', 'console_scripts', 'imu_adapter')())
+Nov 04 14:18:01 user-desktop bash[1455]: [imu_adapter-6]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Nov 04 14:18:01 user-desktop bash[1455]: [imu_adapter-6]   File "/home/user/robotek-learn/build/robotek_hardware/robotek_hardware/imu_adapter.py", line 59, in main
+Nov 04 14:18:01 user-desktop bash[1455]: [imu_adapter-6]     node.destroy_node()
+Nov 04 14:18:01 user-desktop bash[1455]: [imu_adapter-6]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/node.py", line 1962, in destroy_node
+Nov 04 14:18:01 user-desktop bash[1455]: [imu_adapter-6]     self.destroy_service(self._services[0])
+Nov 04 14:18:01 user-desktop bash[1455]: [imu_adapter-6]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/node.py", line 1886, in destroy_service
+Nov 04 14:18:01 user-desktop bash[1455]: [imu_adapter-6]     service.destroy()
+Nov 04 14:18:01 user-desktop bash[1455]: [imu_adapter-6]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/service.py", line 123, in destroy
+Nov 04 14:18:01 user-desktop bash[1455]: [imu_adapter-6]     self.__service.destroy_when_not_in_use()
+Nov 04 14:18:01 user-desktop bash[1455]: [imu_adapter-6] KeyboardInterrupt
+Nov 04 14:18:01 user-desktop bash[1455]: [scan_adapter-5] Traceback (most recent call last):
+Nov 04 14:18:01 user-desktop bash[1455]: [scan_adapter-5]   File "/home/user/robotek-learn/install/robotek_hardware/lib/robotek_hardware/scan_adapter", line 33, in <module>
+Nov 04 14:18:01 user-desktop bash[1455]: [scan_adapter-5]     sys.exit(load_entry_point('robotek-hardware', 'console_scripts', 'scan_adapter')())
+Nov 04 14:18:01 user-desktop bash[1455]: [scan_adapter-5]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Nov 04 14:18:01 user-desktop bash[1455]: [scan_adapter-5]   File "/home/user/robotek-learn/build/robotek_hardware/robotek_hardware/scan_adapter.py", line 60, in main
+Nov 04 14:18:01 user-desktop bash[1455]: [motor_driver-7]     return _u2i(_lgpio._gpiochip_close(handle&0xffff))
+Nov 04 14:18:01 user-desktop bash[1455]: [motor_driver-7]                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Nov 04 14:18:01 user-desktop bash[1455]: [motor_driver-7] KeyboardInterrupt
+Nov 04 14:18:01 user-desktop bash[1455]: [scan_adapter-5]     node.destroy_node()
+Nov 04 14:18:01 user-desktop bash[1455]: [scan_adapter-5]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/node.py", line 1962, in destroy_node
+Nov 04 14:18:01 user-desktop bash[1455]: [rrc_driver-1] Traceback (most recent call last):
+Nov 04 14:18:01 user-desktop bash[1455]: [rrc_driver-1]   File "/home/user/robotek-learn/install/rrc_lite_driver/lib/rrc_lite_driver/rrc_driver", line 33, in <module>
+Nov 04 14:18:01 user-desktop bash[1455]: [rrc_driver-1]     sys.exit(load_entry_point('rrc-lite-driver', 'console_scripts', 'rrc_driver')())
+Nov 04 14:18:01 user-desktop bash[1455]: [rrc_driver-1]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Nov 04 14:18:01 user-desktop bash[1455]: [rrc_driver-1]   File "/home/user/robotek-learn/build/rrc_lite_driver/rrc_lite_driver/rrc_driver.py", line 465, in main
+Nov 04 14:18:01 user-desktop bash[1455]: [rrc_driver-1]     node.destroy_node()
+Nov 04 14:18:01 user-desktop bash[1455]: [rrc_driver-1]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/node.py", line 1956, in destroy_node
+Nov 04 14:18:01 user-desktop bash[1455]: [rrc_driver-1]     self.destroy_publisher(self._publishers[0])
+Nov 04 14:18:01 user-desktop bash[1455]: [rrc_driver-1]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/node.py", line 1836, in destroy_publisher
+Nov 04 14:18:01 user-desktop bash[1455]: [rrc_driver-1]     publisher.destroy()
+Nov 04 14:18:01 user-desktop bash[1455]: [rrc_driver-1]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/publisher.py", line 105, in destroy
+Nov 04 14:18:01 user-desktop bash[1455]: [rrc_driver-1]     self.__publisher.destroy_when_not_in_use()
+Nov 04 14:18:01 user-desktop bash[1455]: [rrc_driver-1] KeyboardInterrupt
+Nov 04 14:18:01 user-desktop bash[1455]: [scan_adapter-5]     self.destroy_service(self._services[0])
+Nov 04 14:18:01 user-desktop bash[1455]: [scan_adapter-5]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/node.py", line 1886, in destroy_service
+Nov 04 14:18:01 user-desktop bash[1455]: [scan_adapter-5]     service.destroy()
+Nov 04 14:18:01 user-desktop bash[1455]: [scan_adapter-5]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/service.py", line 123, in destroy
+Nov 04 14:18:01 user-desktop bash[1455]: [scan_adapter-5]     self.__service.destroy_when_not_in_use()
+Nov 04 14:18:01 user-desktop bash[1455]: [scan_adapter-5] KeyboardInterrupt
+Nov 04 14:18:01 user-desktop bash[1455]: [base_adapter-8] Traceback (most recent call last):
+Nov 04 14:18:01 user-desktop bash[1455]: [base_adapter-8]   File "/home/user/robotek-learn/install/robotek_hardware/lib/robotek_hardware/base_adapter", line 33, in <module>
+Nov 04 14:18:01 user-desktop bash[1455]: [base_adapter-8]     sys.exit(load_entry_point('robotek-hardware', 'console_scripts', 'base_adapter')())
+Nov 04 14:18:01 user-desktop bash[1455]: [base_adapter-8]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Nov 04 14:18:01 user-desktop bash[1455]: [base_adapter-8]   File "/home/user/robotek-learn/build/robotek_hardware/robotek_hardware/base_adapter.py", line 206, in main
+Nov 04 14:18:01 user-desktop bash[1455]: [base_adapter-8]     node.destroy_node()
+Nov 04 14:18:01 user-desktop bash[1455]: [base_adapter-8]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/node.py", line 1956, in destroy_node
+Nov 04 14:18:01 user-desktop bash[1455]: [base_adapter-8]     self.destroy_publisher(self._publishers[0])
+Nov 04 14:18:01 user-desktop bash[1455]: [base_adapter-8]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/node.py", line 1836, in destroy_publisher
+Nov 04 14:18:01 user-desktop bash[1455]: [base_adapter-8]     publisher.destroy()
+Nov 04 14:18:01 user-desktop bash[1455]: [base_adapter-8]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/publisher.py", line 105, in destroy
+Nov 04 14:18:01 user-desktop bash[1455]: [base_adapter-8]     self.__publisher.destroy_when_not_in_use()
+Nov 04 14:18:01 user-desktop bash[1455]: [base_adapter-8] KeyboardInterrupt
+Nov 04 14:18:02 user-desktop bash[1455]: [camera_publisher-4] Traceback (most recent call last):
+Nov 04 14:18:02 user-desktop bash[1455]: [camera_publisher-4]   File "/home/user/robotek-learn/install/robotek_hardware/lib/robotek_hardware/camera_publisher", line 33, in <module>
+Nov 04 14:18:02 user-desktop bash[1455]: [camera_publisher-4]     sys.exit(load_entry_point('robotek-hardware', 'console_scripts', 'camera_publisher')())
+Nov 04 14:18:02 user-desktop bash[1455]: [camera_publisher-4]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Nov 04 14:18:02 user-desktop bash[1455]: [camera_publisher-4]   File "/home/user/robotek-learn/build/robotek_hardware/robotek_hardware/camera_publisher.py", line 266, in main
+Nov 04 14:18:02 user-desktop bash[1455]: [camera_publisher-4]     node.destroy_node()
+Nov 04 14:18:02 user-desktop bash[1455]: [camera_publisher-4]   File "/home/user/robotek-learn/build/robotek_hardware/robotek_hardware/camera_publisher.py", line 255, in destroy_node
+Nov 04 14:18:02 user-desktop bash[1455]: [camera_publisher-4]     super().destroy_node()
+Nov 04 14:18:02 user-desktop bash[1455]: [camera_publisher-4]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/node.py", line 1968, in destroy_node
+Nov 04 14:18:02 user-desktop bash[1455]: [camera_publisher-4]     self.__node.destroy_when_not_in_use()
+Nov 04 14:18:02 user-desktop bash[1455]: [camera_publisher-4] KeyboardInterrupt
+Nov 04 14:18:02 user-desktop bash[1455]: [ERROR] [camera_publisher-4]: process has died [pid 2072, exit code -2, cmd '/home/user/robotek-learn/install/robotek_hardware/lib/robotek_hardware/camera_publisher --ros-args -r __node:=camera_publisher --params-file /home/user/robotek-learn/install/robotek_hardware/share/robotek_hardware/config/robot.yaml --params-file /tmp/launch_params_2sm4h9f2'].
+Nov 04 14:18:02 user-desktop bash[1455]: [INFO] [robot_state_publisher-12]: process has finished cleanly [pid 2081]
+Nov 04 14:18:02 user-desktop bash[1455]: [ERROR] [start_button-9]: process has died [pid 2078, exit code -2, cmd '/home/user/robotek-learn/install/robotek_hardware/lib/robotek_hardware/start_button --ros-args -r __node:=start_button --params-file /tmp/launch_params_0ugkosiu -r start:=/start'].
+Nov 04 14:18:03 user-desktop bash[1455]: [ERROR] [battery_guard-10]: process has died [pid 2079, exit code -2, cmd '/home/user/robotek-learn/install/robotek_hardware/lib/robotek_hardware/battery_guard --ros-args -r __node:=battery_guard --params-file /tmp/launch_params_bizkjyjz'].
+Nov 04 14:18:03 user-desktop bash[1455]: [ERROR] [imu_adapter-6]: process has died [pid 2074, exit code -2, cmd '/home/user/robotek-learn/install/robotek_hardware/lib/robotek_hardware/imu_adapter --ros-args -r __node:=imu_adapter --params-file /home/user/robotek-learn/install/robotek_hardware/share/robotek_hardware/config/robot.yaml -r imu_in:=/rrc/imu_raw -r imu_out:=/robotek/imu'].
+Nov 04 14:18:03 user-desktop bash[1455]: [ERROR] [rrc_driver-1]: process has died [pid 2069, exit code -2, cmd '/home/user/robotek-learn/install/rrc_lite_driver/lib/rrc_lite_driver/rrc_driver --ros-args -r __node:=rrc_driver --params-file /home/user/robotek-learn/install/rrc_lite_driver/share/rrc_lite_driver/config/controller_params.yaml --params-file /tmp/launch_params_nua7b_r5'].
+Nov 04 14:18:03 user-desktop bash[1455]: [INFO] [status_leds-11]: process has finished cleanly [pid 2080]
+Nov 04 14:18:03 user-desktop bash[1455]: [ERROR] [motor_driver-7]: process has died [pid 2075, exit code -2, cmd '/home/user/robotek-learn/install/robotek_hardware/lib/robotek_hardware/motor_driver --ros-args -r __node:=tb6612fng_motor --params-file /home/user/robotek-learn/install/robotek_hardware/share/robotek_hardware/config/robot.yaml'].
+Nov 04 14:18:03 user-desktop bash[1455]: [ERROR] [scan_adapter-5]: process has died [pid 2073, exit code -2, cmd '/home/user/robotek-learn/install/robotek_hardware/lib/robotek_hardware/scan_adapter --ros-args -r __node:=scan_adapter --params-file /home/user/robotek-learn/install/robotek_hardware/share/robotek_hardware/config/robot.yaml -r scan_in:=/scan -r scan_out:=/robotek/scan'].
+Nov 04 14:18:03 user-desktop bash[1455]: [ERROR] [base_adapter-8]: process has died [pid 2076, exit code -2, cmd '/home/user/robotek-learn/install/robotek_hardware/lib/robotek_hardware/base_adapter --ros-args -r __node:=base_adapter --params-file /home/user/robotek-learn/install/robotek_hardware/share/robotek_hardware/config/robot.yaml --params-file /tmp/launch_params_s0yz7k0e -r cmd_vel:=/cmd_vel_raw'].
+Nov 04 14:18:03 user-desktop bash[1455]: [INFO] [open_v5-13]: process has finished cleanly [pid 2082]
+Nov 04 14:18:03 user-desktop systemd[1394]: Stopped robotek-car.service - robotek car launch at boot (robotek-learn: car.launch.py, waits for the board button).
+Nov 04 14:18:03 user-desktop systemd[1394]: robotek-car.service: Consumed 4min 59.833s CPU time.
+Nov 04 14:18:06 user-desktop systemd[1394]: Started robotek-car.service - robotek car launch at boot (robotek-learn: car.launch.py, waits for the board button).
+Nov 04 14:18:07 user-desktop bash[5952]: robotek-car: ros2 launch robotek_course car.launch.py strategy:=robotek_open executable:=open_v5 motor_max_rps:=6
+Nov 04 14:18:08 user-desktop bash[5952]: [INFO] [launch]: All log files can be found below /home/user/.ros/log/2026-11-04-14-18-08-043938-user-desktop-5952
+Nov 04 14:18:08 user-desktop bash[5952]: [INFO] [launch]: Default logging verbosity is set to INFO
+Nov 04 14:18:08 user-desktop bash[5952]: [INFO] [rrc_driver-1]: process started with pid [5977]
+Nov 04 14:18:08 user-desktop bash[5952]: [INFO] [ldlidar_stl_ros2_node-2]: process started with pid [5978]
+Nov 04 14:18:08 user-desktop bash[5952]: [INFO] [static_transform_publisher-3]: process started with pid [5979]
+Nov 04 14:18:08 user-desktop bash[5952]: [INFO] [camera_publisher-4]: process started with pid [5980]
+Nov 04 14:18:08 user-desktop bash[5952]: [INFO] [scan_adapter-5]: process started with pid [5981]
+Nov 04 14:18:08 user-desktop bash[5952]: [INFO] [imu_adapter-6]: process started with pid [5982]
+Nov 04 14:18:08 user-desktop bash[5952]: [INFO] [motor_driver-7]: process started with pid [5983]
+Nov 04 14:18:08 user-desktop bash[5952]: [INFO] [base_adapter-8]: process started with pid [5984]
+Nov 04 14:18:08 user-desktop bash[5952]: [INFO] [start_button-9]: process started with pid [5987]
+Nov 04 14:18:08 user-desktop bash[5952]: [INFO] [battery_guard-10]: process started with pid [5988]
+Nov 04 14:18:08 user-desktop bash[5952]: [INFO] [status_leds-11]: process started with pid [5989]
+Nov 04 14:18:08 user-desktop bash[5952]: [INFO] [robot_state_publisher-12]: process started with pid [5993]
+Nov 04 14:18:08 user-desktop bash[5952]: [INFO] [open_v5-13]: process started with pid [5999]
+Nov 04 14:18:08 user-desktop bash[5952]: [static_transform_publisher-3] [WARN] [1793819888.439214889] []: Old-style arguments are deprecated; see --help for new-style arguments
+Nov 04 14:18:08 user-desktop bash[5952]: [static_transform_publisher-3] [INFO] [1793819888.503805098] [base_link_to_base_laser_ld19]: Spinning until stopped - publishing transform
+Nov 04 14:18:08 user-desktop bash[5952]: [static_transform_publisher-3] translation: ('0.000000', '0.000000', '0.180000')
+Nov 04 14:18:08 user-desktop bash[5952]: [static_transform_publisher-3] rotation: ('0.000000', '0.000000', '0.000000', '1.000000')
+Nov 04 14:18:08 user-desktop bash[5952]: [static_transform_publisher-3] from 'base_link' to 'base_laser'
+Nov 04 14:18:08 user-desktop bash[5952]: [ldlidar_stl_ros2_node-2] [INFO] [1793819888.551489543] [LD19]: LDLiDAR SDK Pack Version is: v3.0.3
+Nov 04 14:18:08 user-desktop bash[5952]: [ldlidar_stl_ros2_node-2] [INFO] [1793819888.571194668] [LD19]: <product_name>: LDLiDAR_LD19
+Nov 04 14:18:08 user-desktop bash[5952]: [ldlidar_stl_ros2_node-2] [INFO] [1793819888.571226539] [LD19]: <topic_name>: scan
+Nov 04 14:18:08 user-desktop bash[5952]: [ldlidar_stl_ros2_node-2] [INFO] [1793819888.571236779] [LD19]: <frame_id>: base_laser
+Nov 04 14:18:08 user-desktop bash[5952]: [ldlidar_stl_ros2_node-2] [INFO] [1793819888.571247057] [LD19]: <port_name>: /dev/ttyUSB0
+Nov 04 14:18:08 user-desktop bash[5952]: [ldlidar_stl_ros2_node-2] [INFO] [1793819888.571256113] [LD19]: <port_baudrate>: 230400
+Nov 04 14:18:08 user-desktop bash[5952]: [ldlidar_stl_ros2_node-2] [INFO] [1793819888.571265335] [LD19]: <laser_scan_dir>: Counterclockwise
+Nov 04 14:18:08 user-desktop bash[5952]: [ldlidar_stl_ros2_node-2] [INFO] [1793819888.571274391] [LD19]: <enable_angle_crop_func>: false
+Nov 04 14:18:08 user-desktop bash[5952]: [ldlidar_stl_ros2_node-2] [INFO] [1793819888.571283576] [LD19]: <angle_crop_min>: 135.000000
+Nov 04 14:18:08 user-desktop bash[5952]: [ldlidar_stl_ros2_node-2] [INFO] [1793819888.571300650] [LD19]: <angle_crop_max>: 225.000000
+Nov 04 14:18:08 user-desktop bash[5952]: [ldlidar_stl_ros2_node-2] [INFO] [1793819888.587582263] [LD19]: ldlidar node start is success
+Nov 04 14:18:08 user-desktop bash[5952]: [ldlidar_stl_ros2_node-2] [INFO] [1793819888.592324353] [LD19]: ldlidar communication is normal.
+Nov 04 14:18:08 user-desktop bash[5952]: [ldlidar_stl_ros2_node-2] [INFO] [1793819888.594637602] [LD19]: Publish topic message:ldlidar scan data.
+Nov 04 14:18:08 user-desktop bash[5952]: [robot_state_publisher-12] [INFO] [1793819888.649838926] [robot_state_publisher]: Robot initialized
+Nov 04 14:18:11 user-desktop bash[5952]: [start_button-9] [INFO] [1793819891.707831001] [start_button]: Press the button to start; press it again to stop.
+Nov 04 14:18:11 user-desktop bash[5952]: [imu_adapter-6] [INFO] [1793819891.967450125] [imu_adapter]: IMU axes forward=-x left=+z up=+y
+Nov 04 14:18:12 user-desktop bash[5952]: [battery_guard-10] [INFO] [1793819892.396221497] [battery_guard]: Battery guard: red blinking below 6.80 V (5 consecutive readings); it does not stop the car.
+Nov 04 14:18:12 user-desktop bash[5952]: [motor_driver-7] [INFO] [1793819892.555822090] [tb6612fng_motor]: TB6612FNG ready (forward and reverse).
+Nov 04 14:18:12 user-desktop bash[5952]: [status_leds-11] [INFO] [1793819892.855739397] [status_leds]: Status RGBs at level 2/255.
+Nov 04 14:18:12 user-desktop bash[5952]: [base_adapter-8] [INFO] [1793819892.922178472] [base_adapter]: Drive motor: RRC Lite port M1, 4.80 rps per m/s.
+Nov 04 14:18:12 user-desktop bash[5952]: [base_adapter-8] [INFO] [1793819892.935813333] [base_adapter]: Wall guard: slows down from 0.30 m, 0 at 0.10 m (+-15 deg).
+Nov 04 14:18:13 user-desktop bash[5952]: [rrc_driver-1] [INFO] [1793819893.465357249] [rrc_driver]: RRC Lite board on /dev/rrc_lite
+Nov 04 14:18:13 user-desktop bash[5952]: [ldlidar_stl_ros2_node-2] [LDS][INFO][1793819888.587347873][Actual BaudRate reported:230400]
+Nov 04 14:18:13 user-desktop bash[5952]: [open_v5-13] [INFO] [1793819893.554615936] [strategy]: Open v5 | direction=auto cruise=1.28 m/s | telemetry /home/user/runs/20261104-141813-open-v5/telemetry.csv
+Nov 04 14:18:13 user-desktop bash[5952]: [rrc_driver-1] [INFO] [1793819893.650975461] [rrc_driver]: Settings servo 1 - Offset 0
+Nov 04 14:18:13 user-desktop bash[5952]: [camera_publisher-4] [INFO] [1793819893.651500389] [camera_publisher]: Controles -> white_balance_automatic: 1 | brightness: 0 | auto_exposure: 3 (Aperture Priority Mode)
+Nov 04 14:18:13 user-desktop bash[5952]: [rrc_driver-1] [INFO] [1793819893.652759208] [rrc_driver]: Settings servo 2 - Offset 0
+Nov 04 14:18:13 user-desktop bash[5952]: [camera_publisher-4] [INFO] [1793819893.652928782] [camera_publisher]: Camara /dev/v4l/by-id/usb-icSpring_icspring_camera-video-index0 640x480 @ 15 fps, modo=auto
+Nov 04 14:18:13 user-desktop bash[5952]: [rrc_driver-1] [INFO] [1793819893.654728899] [rrc_driver]: Settings servo 3 - Offset 0
+Nov 04 14:18:13 user-desktop bash[5952]: [rrc_driver-1] [INFO] [1793819893.657680205] [rrc_driver]: Settings servo 4 - Offset 0
+Nov 04 14:18:13 user-desktop bash[5952]: [rrc_driver-1] [INFO] [1793819893.663253631] [rrc_driver]: start
+Nov 04 14:18:13 user-desktop bash[5952]: [open_v5-13] [WARN] [1793819893.674574632] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+Nov 04 14:18:14 user-desktop bash[5952]: [open_v5-13] [WARN] [1793819894.683655919] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+Nov 04 14:18:30 user-desktop bash[5952]: [open_v5-13] [WARN] [1793819910.884514837] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+Nov 04 14:18:31 user-desktop bash[5952]: [open_v5-13] [WARN] [1793819911.900002262] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+Nov 04 14:18:33 user-desktop bash[5952]: [open_v5-13] [WARN] [1793819913.837908993] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+Nov 04 14:18:34 user-desktop bash[5952]: [open_v5-13] [WARN] [1793819914.900299718] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+Nov 04 14:18:43 user-desktop bash[5952]: [start_button-9] [INFO] [1793819923.962297911] [start_button]: Start.
+Nov 04 14:18:56 user-desktop bash[5952]: [open_v5-13] [WARN] [1793819936.157465569] [strategy]: Stale LiDAR/IMU: braking until sensors recover.

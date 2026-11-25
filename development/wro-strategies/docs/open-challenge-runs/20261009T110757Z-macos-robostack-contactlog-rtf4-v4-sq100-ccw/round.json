@@ -1,0 +1,134 @@
+{
+  "run": "20261009T110757Z-macos-robostack-contactlog-rtf4-v4-sq100-ccw",
+  "status": "incomplete",
+  "start_source": "auto_first_scan",
+  "end_source": "last_sample",
+  "time_from_start_wall_seconds": 11.561550855636597,
+  "time_from_start_sim_seconds": 43.897,
+  "motion_wall_seconds": 11.460041999816895,
+  "motion_sim_seconds": 43.339999999999996,
+  "lap_splits": [],
+  "points_estimated": 7,
+  "points_official": null,
+  "score_status": "simulation_rule_judge_v2",
+  "points_breakdown": {
+    "1.1_sections": 7,
+    "1.2_laps": 0,
+    "1.3_stop_in_finish": 0
+  },
+  "limitations": [
+    "Sections and laps estimated from ground-truth winding, not judged section exits.",
+    "Contacts, wall movement, start legality and human repairs are not adjudicated.",
+    "Finish bonus is provisional; DONE does not prove 30 seconds stationary."
+  ],
+  "points_estimated_legacy": 7,
+  "points_breakdown_legacy": {
+    "sections_estimated": 7,
+    "laps_estimated": 0,
+    "finish_provisional": 0
+  },
+  "rule_judge": {
+    "version": 2,
+    "challenge": "open",
+    "max_points": 30,
+    "points": 7,
+    "breakdown": {
+      "1.1_sections": 7,
+      "1.2_laps": 0,
+      "1.3_stop_in_finish": 0
+    },
+    "faults": [
+      {
+        "rule": "9.18",
+        "fault": "outer_wall_contact",
+        "sim_time": 12.666,
+        "consequence": "not specified by the rules; flagged, not deducted"
+      }
+    ],
+    "notes": [
+      "Wall movement cannot occur in simulation (walls are static)."
+    ],
+    "round_end": {
+      "reason": "end_of_recording",
+      "sim_time": 43.96,
+      "wall_time": 1791544092.556756
+    },
+    "time_from_start_sim_seconds": 43.957,
+    "time_from_start_wall_seconds": 11.577019929885864,
+    "lap_splits": [],
+    "contact_evaluated": true,
+    "contacts_first_sim_time": {
+      "outer_wall": 12.666
+    },
+    "pose_source": "audit_pose.csv",
+    "pose_sample_count": 2097
+  },
+  "validation": {
+    "version": 1,
+    "passed": false,
+    "checks": {
+      "rule_maximum": {
+        "value": 7,
+        "threshold": 30,
+        "passed": false
+      },
+      "no_rule_faults": {
+        "value": 1,
+        "threshold": 0,
+        "passed": false
+      },
+      "stop_observed": {
+        "value": null,
+        "threshold": 30.0,
+        "passed": false
+      },
+      "no_contacts": {
+        "value": true,
+        "threshold": false,
+        "passed": false,
+        "note": "Gazebo contact sensors"
+      },
+      "min_outer_wall_clearance_m": {
+        "value": 0.006000127720598963,
+        "threshold": 0.01,
+        "passed": false,
+        "note": "sampled at telemetry rate"
+      },
+      "min_inner_wall_clearance_m": {
+        "value": 0.09974910485076048,
+        "threshold": 0.01,
+        "passed": true,
+        "note": "sampled at telemetry rate"
+      },
+      "steering_limit": {
+        "value": 19.86492951313604,
+        "threshold": 25.5,
+        "passed": true
+      }
+    },
+    "failed": [
+      "rule_maximum",
+      "no_rule_faults",
+      "stop_observed",
+      "no_contacts",
+      "min_outer_wall_clearance_m"
+    ],
+    "min_clearance_m": 0.006000127720598963,
+    "margin_class": "risky",
+    "thresholds": {
+      "min_clearance_m": 0.01,
+      "comfortable_m": 0.05,
+      "tight_m": 0.02,
+      "stop_observed_s": 30.0,
+      "steer_limit_deg": 25.5
+    }
+  },
+  "platform_context": {
+    "platform": "macos_robostack",
+    "host": "Apple M4 Pro, macOS (Darwin 27), RoboStack Jazzy ~/Projects/WRO/.mamba/jazzy, gz-sim 8.10",
+    "platform_doc": "docs/simulacion-macos.md",
+    "rtf": 4,
+    "env_fixes": "tools/macos_env.sh",
+    "note": "Live test of the episode contact log (contact_log.py); crash expected at real-time factor 4."
+  }
+}

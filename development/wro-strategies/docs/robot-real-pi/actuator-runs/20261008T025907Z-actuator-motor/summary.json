@@ -1,0 +1,81 @@
+{
+  "run_dir": "/home/user/robotek-runs/20261008T025907Z-actuator-motor",
+  "wheelbase_m": 0.13,
+  "steps": [
+    {
+      "kind": "motor",
+      "motor_pct": 10.0,
+      "pulso_s": 0.24,
+      "delay_aceleracion_s": 0.072,
+      "delay_movimiento_lidar_s": 0.449,
+      "velocidad_max_imu_mps": 0.119,
+      "velocidad_max_lidar_mps": 0.095,
+      "se_mueve": true,
+      "tiempo_hasta_parar_s": 0.209,
+      "distancia_total_m": 0.006,
+      "cabeceo_max_rad_s": 0.43,
+      "az_min_m_s2": 7.9,
+      "step": "motor 10%"
+    },
+    {
+      "kind": "motor",
+      "motor_pct": 20.0,
+      "pulso_s": 0.24,
+      "delay_aceleracion_s": 0.031,
+      "delay_movimiento_lidar_s": 0.289,
+      "velocidad_max_imu_mps": 0.184,
+      "velocidad_max_lidar_mps": 0.195,
+      "se_mueve": true,
+      "tiempo_hasta_parar_s": 0.249,
+      "distancia_total_m": 0.037,
+      "cabeceo_max_rad_s": 0.626,
+      "az_min_m_s2": 8.0,
+      "step": "motor 20%"
+    },
+    {
+      "kind": "motor",
+      "motor_pct": 30.0,
+      "pulso_s": 0.24,
+      "delay_aceleracion_s": 0.032,
+      "delay_movimiento_lidar_s": 0.229,
+      "velocidad_max_imu_mps": 0.335,
+      "velocidad_max_lidar_mps": 0.235,
+      "se_mueve": true,
+      "tiempo_hasta_parar_s": 0.289,
+      "distancia_total_m": 0.071,
+      "cabeceo_max_rad_s": 0.739,
+      "az_min_m_s2": 8.1,
+      "step": "motor 30%"
+    },
+    {
+      "kind": "motor",
+      "motor_pct": 40.0,
+      "pulso_s": 0.24,
+      "delay_aceleracion_s": 0.051,
+      "delay_movimiento_lidar_s": 0.269,
+      "velocidad_max_imu_mps": 0.443,
+      "velocidad_max_lidar_mps": 0.27,
+      "se_mueve": true,
+      "tiempo_hasta_parar_s": 0.329,
+      "distancia_total_m": 0.081,
+      "cabeceo_max_rad_s": 1.069,
+      "az_min_m_s2": 8.2,
+      "step": "motor 40%"
+    },
+    {
+      "kind": "motor",
+      "motor_pct": 50.0,
+      "pulso_s": 0.24,
+      "delay_aceleracion_s": 0.052,
+      "delay_movimiento_lidar_s": 0.309,
+      "velocidad_max_imu_mps": 0.532,
+      "velocidad_max_lidar_mps": 0.33,
+      "se_mueve": true,
+      "tiempo_hasta_parar_s": 0.269,
+      "distancia_total_m": 0.087,
+      "cabeceo_max_rad_s": 1.071,
+      "az_min_m_s2": 4.4,
+      "step": "motor 50%"
+    }
+  ]
+}

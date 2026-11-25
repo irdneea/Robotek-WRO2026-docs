@@ -1,0 +1,19 @@
+{
+  "run_dir": "/home/user/robotek-runs/20261008T022952Z-actuator-motor",
+  "wheelbase_m": 0.13,
+  "steps": [
+    {
+      "kind": "motor",
+      "motor_pct": 30.0,
+      "pulso_s": 0.24,
+      "delay_aceleracion_s": 0.076,
+      "delay_movimiento_lidar_s": 0.359,
+      "velocidad_max_imu_mps": 0.091,
+      "velocidad_max_lidar_mps": 0.118,
+      "se_mueve": true,
+      "tiempo_hasta_parar_s": 0.319,
+      "distancia_total_m": 0.03,
+      "step": "motor 30%"
+    }
+  ]
+}

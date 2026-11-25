@@ -1,0 +1,184 @@
+{
+  "scope": "round",
+  "layout": "regulation",
+  "parking_lot": null,
+  "strategy": "v2",
+  "seed": 4,
+  "pillars": [
+    {
+      "color": "red",
+      "x": -1.1,
+      "y": 0.0,
+      "side": "left",
+      "seat": {
+        "along_ccw_m": 0.0,
+        "from_inner_wall_m": 0.6
+      },
+      "name": "sign_red_1",
+      "size_m": [
+        0.05,
+        0.05,
+        0.1
+      ]
+    },
+    {
+      "color": "red",
+      "x": 0.0,
+      "y": 0.9,
+      "side": "top",
+      "seat": {
+        "along_ccw_m": 0.0,
+        "from_inner_wall_m": 0.4
+      },
+      "name": "sign_red_2",
+      "size_m": [
+        0.05,
+        0.05,
+        0.1
+      ]
+    },
+    {
+      "color": "green",
+      "x": 1.1,
+      "y": -0.5,
+      "side": "right",
+      "seat": {
+        "along_ccw_m": -0.5,
+        "from_inner_wall_m": 0.6
+      },
+      "name": "sign_green_1",
+      "size_m": [
+        0.05,
+        0.05,
+        0.1
+      ]
+    },
+    {
+      "color": "red",
+      "x": 1.1,
+      "y": 0.5,
+      "side": "right",
+      "seat": {
+        "along_ccw_m": 0.5,
+        "from_inner_wall_m": 0.6
+      },
+      "name": "sign_red_3",
+      "size_m": [
+        0.05,
+        0.05,
+        0.1
+      ]
+    },
+    {
+      "color": "red",
+      "x": -0.5,
+      "y": -0.9,
+      "side": "bottom",
+      "seat": {
+        "along_ccw_m": -0.5,
+        "from_inner_wall_m": 0.4
+      },
+      "name": "sign_red_4",
+      "size_m": [
+        0.05,
+        0.05,
+        0.1
+      ]
+    },
+    {
+      "color": "green",
+      "x": 0.5,
+      "y": -0.9,
+      "side": "bottom",
+      "seat": {
+        "along_ccw_m": 0.5,
+        "from_inner_wall_m": 0.4
+      },
+      "name": "sign_green_2",
+      "size_m": [
+        0.05,
+        0.05,
+        0.1
+      ]
+    }
+  ],
+  "name": "cap-ref-gpu-reg4-ccw",
+  "direction": "ccw",
+  "spawn_progress": -0.25,
+  "params": {
+    "cruise_speed": 0.35,
+    "pillar_speed": 0.3,
+    "finish_speed": 0.15,
+    "pillar_clearance": 0.18,
+    "pillar_lookahead": 1.8,
+    "steer_kp": 1.5,
+    "steer_kd": 0.2,
+    "steer_limit": 0.307,
+    "stop_progress": 24.7,
+    "park": 0.0,
+    "park_after": 24.0,
+    "park_speed": 0.06,
+    "park_margin": 0.015,
+    "scan_max_age": 0.35,
+    "imu_max_age": 0.2,
+    "telemetry_path": "/home/user/Projects/WRO-Strategies/docs/obstacle-challenge-runs/20261026-120406-cap-ref-gpu-reg4-ccw/telemetry.csv",
+    "direction": "auto"
+  },
+  "fixed_values": null,
+  "profile": "/home/user/Projects/WRO-Strategies/src/robotek_obstacle/config/obstacle_v2.yaml",
+  "command": [
+    "ros2",
+    "launch",
+    "robotek_bringup",
+    "obstacle_challenge.launch.py",
+    "gui:=false",
+    "rviz:=false",
+    "spawn_x:=-0.25",
+    "world:=/home/user/Projects/WRO-Strategies/docs/obstacle-challenge-runs/20261026-120406-cap-ref-gpu-reg4-ccw/world.sdf",
+    "params_file:=/home/user/Projects/WRO-Strategies/docs/obstacle-challenge-runs/20261026-120406-cap-ref-gpu-reg4-ccw/params.yaml",
+    "audit_dir:=/home/user/Projects/WRO-Strategies/docs/obstacle-challenge-runs/20261026-120406-cap-ref-gpu-reg4-ccw",
+    "spawn_yaw:=0.0",
+    "ackermann_velocity_limit:=4.0",
+    "ackermann_steer_p_gain:=20.0",
+    "strategy:=obstacle_strategy_v2",
+    "real_car:=true"
+  ],
+  "source_sha256": {
+    "src/robotek_obstacle/robotek_obstacle/obstacle_driver.py": "109599df3391a66ab8640cb19ad1a8bc59f05928c0d6360b404e4affb7a2b127",
+    "src/robotek_obstacle/robotek_obstacle/obstacle_beam_planner.py": "66258aec48c65aab13c9a1728779422f2890cbd8bc3e65e0e146bdbf08c3c707",
+    "src/robotek_obstacle/robotek_obstacle/obstacle_field.py": "f84036c9c1e0da90124977884b1605430561f186cb4c2a224221915070b2c56c",
+    "src/robotek_obstacle/robotek_obstacle/obstacle_parking.py": "ba0917b2e479354d3707fbe8a08c0fc8b9e0f05e193e15d04c7755f694d2fbb2",
+    "src/robotek_obstacle/robotek_obstacle/obstacle_recording.py": "064002b3e948045b6496b14ab76fed5e256850bc26ad09347b63782d619291ad",
+    "src/robotek_obstacle/robotek_obstacle/obstacle_detector_node.py": "098fdb0957b73eec909aaec7d9b770b542d35d61b397ddb659e6b93be2079c64",
+    "src/robotek_obstacle/robotek_obstacle/obstacle_localizer.py": "ca7b7f265d2fb56f225f141d65e3600663a98bfdba6856bbc3a5487f03502770",
+    "src/robotek_obstacle/robotek_obstacle/obstacle_perception.py": "9d0ad479096831940f1b300bcafce231ca38fbdb84925db53f2950ecb3f51e41",
+    "src/robotek_obstacle/robotek_obstacle/obstacle_strategy_node.py": "9db2b28e98301d5b342e75905a8a5d000d3092dcd2c1d50743f76811294a2ba6",
+    "src/robotek_obstacle/robotek_obstacle/obstacle_mission.py": "deb74ed8cec56e3b11f96acd9642448e1db7abe43558853b49b7ec092ef16fcc",
+    "src/robotek_obstacle/robotek_obstacle/obstacle_seat_map.py": "ab99953b4e9e63337cf7e95ed52e0c072cf61a0f09974f206717e2bea891de98",
+    "src/robotek_obstacle/robotek_obstacle/obstacle_config.py": "fe0df6629431215609a91deaaf068527de8fb55f7d795cae74d20cfee6137f4c",
+    "src/robotek_obstacle/robotek_obstacle/v2/mission.py": "e59e11509d4eeb9452479acdeca5407392d6c17b234e8d406ab1087b7117b4af",
+    "src/robotek_obstacle/robotek_obstacle/v2/park.py": "396e7fd8777e3dc130cfa4065e4e8af7d131cc604753ab217e77ac746c12e643",
+    "src/robotek_obstacle/robotek_obstacle/v2/corner.py": "985996922d158c70000eeee81c72c686962aadc8ceef431fb7cd52e45eb8d318",
+    "src/robotek_obstacle/robotek_obstacle/v2/settings.py": "20a22ad66c98a45390f946f47adcb6a7004fac4bffbf4b32359c20f1d8b0ce83",
+    "src/robotek_obstacle/robotek_obstacle/v2/scene.py": "8f80208eabef4bb708be2badacdc5bbcf4f458fd5c765357d9c77fb71fa21fa2",
+    "src/robotek_obstacle/robotek_obstacle/v2/node.py": "3e8ad650318140a526704f7b311a77b14933520b4bf953453580b7bbc9fabb9d",
+    "src/robotek_common/robotek_common/vehicle.py": "549e1947dfbb4b995f3279e8998ac5a2eff8e70a8e02b411d04e73f8592e0f73",
+    "src/robotek_common/robotek_common/lidar_odometry.py": "5d2131ad581a01d77b8c9cc5847ff8186c898b22ec98099ed40d8694a204a06d",
+    "src/robotek_description/urdf/robotek.urdf.xacro": "e61501de619ee027061804c26ddd7acad6071b617ea8344ea2f395c54e06433e",
+    "src/robotek_evaluation/tools/run_obstacle_gui_experiment.py": "9ee8f8b443d87bb83945ccf3c632abd55180304e9e8c1d33ff607963b4bba0f3",
+    "src/robotek_bringup/launch/obstacle_challenge.launch.py": "8638f4c6518a347f023b6002da2f9db2caf6c43444e1416e80ae20aaa541ea9b"
+  },
+  "gui": false,
+  "rviz": false,
+  "steer_p_gain": 20.0,
+  "launch_args": [],
+  "honest": true,
+  "real_time_factor": 1.0,
+  "start_wall_time": 1793034246.1850865,
+  "stopped_on_pillar_fault": {
+    "pillar": "sign_green_2",
+    "wall_time": 1793034247.1859002
+  },
+  "wall_timeout_reached": false,
+  "end_wall_time": 1793034251.3517854
+}

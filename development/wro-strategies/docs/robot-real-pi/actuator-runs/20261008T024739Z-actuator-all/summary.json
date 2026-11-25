@@ -1,0 +1,155 @@
+{
+  "run_dir": "/home/user/robotek-runs/20261008T024739Z-actuator-all",
+  "wheelbase_m": 0.13,
+  "steps": [
+    {
+      "kind": "servo_banco",
+      "servo_deg": 10.0,
+      "servo_us": 1690.0,
+      "delay_vibracion_gyro_s": 0.078,
+      "delay_vibracion_acc_y_s": 0.14,
+      "nota": "aproximado: vibracion del chasis, no el angulo de las ruedas",
+      "step": "servo +10"
+    },
+    {
+      "kind": "servo_banco",
+      "servo_deg": 0.0,
+      "servo_us": 1500.0,
+      "delay_vibracion_gyro_s": 0.065,
+      "delay_vibracion_acc_y_s": 0.085,
+      "nota": "aproximado: vibracion del chasis, no el angulo de las ruedas",
+      "step": "servo +0"
+    },
+    {
+      "kind": "servo_banco",
+      "servo_deg": -10.0,
+      "servo_us": 1328.0,
+      "delay_vibracion_gyro_s": null,
+      "delay_vibracion_acc_y_s": null,
+      "nota": "aproximado: vibracion del chasis, no el angulo de las ruedas",
+      "step": "servo -10"
+    },
+    {
+      "kind": "servo_banco",
+      "servo_deg": 0.0,
+      "servo_us": 1500.0,
+      "delay_vibracion_gyro_s": null,
+      "delay_vibracion_acc_y_s": null,
+      "nota": "aproximado: vibracion del chasis, no el angulo de las ruedas",
+      "step": "servo +0"
+    },
+    {
+      "kind": "servo_banco",
+      "servo_deg": 25.0,
+      "servo_us": 1974.0,
+      "delay_vibracion_gyro_s": 0.068,
+      "delay_vibracion_acc_y_s": 0.109,
+      "nota": "aproximado: vibracion del chasis, no el angulo de las ruedas",
+      "step": "servo +25"
+    },
+    {
+      "kind": "servo_banco",
+      "servo_deg": 0.0,
+      "servo_us": 1500.0,
+      "delay_vibracion_gyro_s": 0.074,
+      "delay_vibracion_acc_y_s": 0.095,
+      "nota": "aproximado: vibracion del chasis, no el angulo de las ruedas",
+      "step": "servo +0"
+    },
+    {
+      "kind": "servo_banco",
+      "servo_deg": -25.0,
+      "servo_us": 1069.0,
+      "delay_vibracion_gyro_s": 0.06,
+      "delay_vibracion_acc_y_s": 0.183,
+      "nota": "aproximado: vibracion del chasis, no el angulo de las ruedas",
+      "step": "servo -25"
+    },
+    {
+      "kind": "servo_banco",
+      "servo_deg": 0.0,
+      "servo_us": 1500.0,
+      "delay_vibracion_gyro_s": 0.066,
+      "delay_vibracion_acc_y_s": 0.108,
+      "nota": "aproximado: vibracion del chasis, no el angulo de las ruedas",
+      "step": "servo +0"
+    },
+    {
+      "kind": "motor",
+      "motor_pct": 15.0,
+      "pulso_s": 0.24,
+      "delay_aceleracion_s": null,
+      "delay_movimiento_lidar_s": null,
+      "velocidad_max_imu_mps": 0.002,
+      "velocidad_max_lidar_mps": 0.012,
+      "se_mueve": false,
+      "step": "motor 15%"
+    },
+    {
+      "kind": "motor",
+      "motor_pct": 20.0,
+      "pulso_s": 0.24,
+      "delay_aceleracion_s": null,
+      "delay_movimiento_lidar_s": null,
+      "velocidad_max_imu_mps": 0.001,
+      "velocidad_max_lidar_mps": 0.02,
+      "se_mueve": false,
+      "step": "motor 20%"
+    },
+    {
+      "kind": "motor",
+      "motor_pct": 30.0,
+      "pulso_s": 0.24,
+      "delay_aceleracion_s": null,
+      "delay_movimiento_lidar_s": null,
+      "velocidad_max_imu_mps": 0.0,
+      "velocidad_max_lidar_mps": 0.013,
+      "se_mueve": false,
+      "step": "motor 30%"
+    },
+    {
+      "kind": "giro",
+      "servo_deg": 10.0,
+      "motor_pct": 30.0,
+      "giro_total_deg": -0.0,
+      "distancia_m": 0.0,
+      "velocidad_max_mps": 0.015,
+      "signo_ok": null,
+      "nota": "el coche no avanzo lo suficiente (> 2 cm)",
+      "step": "giro +10"
+    },
+    {
+      "kind": "giro",
+      "servo_deg": -10.0,
+      "motor_pct": 30.0,
+      "giro_total_deg": 0.2,
+      "distancia_m": -0.001,
+      "velocidad_max_mps": 0.017,
+      "signo_ok": null,
+      "nota": "el coche no avanzo lo suficiente (> 2 cm)",
+      "step": "giro -10"
+    },
+    {
+      "kind": "giro",
+      "servo_deg": 25.0,
+      "motor_pct": 30.0,
+      "giro_total_deg": 0.1,
+      "distancia_m": 0.001,
+      "velocidad_max_mps": 0.014,
+      "signo_ok": null,
+      "nota": "el coche no avanzo lo suficiente (> 2 cm)",
+      "step": "giro +25"
+    },
+    {
+      "kind": "giro",
+      "servo_deg": -25.0,
+      "motor_pct": 30.0,
+      "giro_total_deg": -0.1,
+      "distancia_m": -0.0,
+      "velocidad_max_mps": 0.005,
+      "signo_ok": null,
+      "nota": "el coche no avanzo lo suficiente (> 2 cm)",
+      "step": "giro -25"
+    }
+  ]
+}

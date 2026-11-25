@@ -1,0 +1,89 @@
+{
+  "rule_judge": {
+    "version": 2,
+    "challenge": "open",
+    "max_points": 30,
+    "points": 7,
+    "breakdown": {
+      "1.1_sections": 7,
+      "1.2_laps": 0,
+      "1.3_stop_in_finish": 0
+    },
+    "faults": [],
+    "notes": [
+      "Wall movement cannot occur in simulation (walls are static)."
+    ],
+    "round_end": {
+      "reason": "end_of_recording",
+      "sim_time": 48.56,
+      "wall_time": 1792609805.844295
+    },
+    "time_from_start_sim_seconds": 48.557,
+    "time_from_start_wall_seconds": 29.892204999923706,
+    "lap_splits": [],
+    "contact_evaluated": true,
+    "contacts_first_sim_time": {
+      "inner_wall": 15.144
+    },
+    "pose_source": "audit_pose.csv",
+    "pose_sample_count": 2155
+  },
+  "validation": {
+    "version": 1,
+    "passed": false,
+    "checks": {
+      "rule_maximum": {
+        "value": 7,
+        "threshold": 30,
+        "passed": false
+      },
+      "no_rule_faults": {
+        "value": 0,
+        "threshold": 0,
+        "passed": true
+      },
+      "stop_observed": {
+        "value": null,
+        "threshold": 30.0,
+        "passed": false
+      },
+      "no_contacts": {
+        "value": true,
+        "threshold": false,
+        "passed": false,
+        "note": "Gazebo contact sensors"
+      },
+      "min_outer_wall_clearance_m": {
+        "value": 0.09519232998226657,
+        "threshold": 0.01,
+        "passed": true,
+        "note": "sampled at telemetry rate"
+      },
+      "min_inner_wall_clearance_m": {
+        "value": 0.028129334723227636,
+        "threshold": 0.01,
+        "passed": true,
+        "note": "sampled at telemetry rate"
+      },
+      "steering_limit": {
+        "value": 18.89172512462705,
+        "threshold": 25.5,
+        "passed": true
+      }
+    },
+    "failed": [
+      "rule_maximum",
+      "stop_observed",
+      "no_contacts"
+    ],
+    "min_clearance_m": 0.028129334723227636,
+    "margin_class": "tight",
+    "thresholds": {
+      "min_clearance_m": 0.01,
+      "comfortable_m": 0.05,
+      "tight_m": 0.02,
+      "stop_observed_s": 30.0,
+      "steer_limit_deg": 25.5
+    }
+  }
+}

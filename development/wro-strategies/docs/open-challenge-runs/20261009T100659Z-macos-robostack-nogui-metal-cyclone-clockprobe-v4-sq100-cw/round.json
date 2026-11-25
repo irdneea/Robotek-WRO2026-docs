@@ -1,0 +1,127 @@
+{
+  "run": "20261009T100659Z-macos-robostack-nogui-metal-cyclone-clockprobe-v4-sq100-cw",
+  "status": "incomplete",
+  "start_source": "auto_first_scan",
+  "end_source": "last_sample",
+  "time_from_start_wall_seconds": 34.902419090270996,
+  "time_from_start_sim_seconds": 33.537,
+  "motion_wall_seconds": 34.42216420173645,
+  "motion_sim_seconds": 33.14,
+  "lap_splits": [],
+  "points_estimated": 4,
+  "points_official": null,
+  "score_status": "simulation_rule_judge_v2",
+  "points_breakdown": {
+    "1.1_sections": 4,
+    "1.2_laps": 0,
+    "1.3_stop_in_finish": 0
+  },
+  "limitations": [
+    "Sections and laps estimated from ground-truth winding, not judged section exits.",
+    "Contacts, wall movement, start legality and human repairs are not adjudicated.",
+    "Finish bonus is provisional; DONE does not prove 30 seconds stationary."
+  ],
+  "points_estimated_legacy": 3,
+  "points_breakdown_legacy": {
+    "sections_estimated": 3,
+    "laps_estimated": 0,
+    "finish_provisional": 0
+  },
+  "rule_judge": {
+    "version": 2,
+    "challenge": "open",
+    "max_points": 30,
+    "points": 4,
+    "breakdown": {
+      "1.1_sections": 4,
+      "1.2_laps": 0,
+      "1.3_stop_in_finish": 0
+    },
+    "faults": [],
+    "notes": [
+      "Wall movement cannot occur in simulation (walls are static)."
+    ],
+    "round_end": {
+      "reason": "end_of_recording",
+      "sim_time": 33.56,
+      "wall_time": 1791540457.425529
+    },
+    "time_from_start_sim_seconds": 33.557,
+    "time_from_start_wall_seconds": 34.92425203323364,
+    "lap_splits": [],
+    "contact_evaluated": true,
+    "contacts_first_sim_time": {
+      "inner_wall": 2.994
+    },
+    "pose_source": "audit_pose.csv",
+    "pose_sample_count": 1461
+  },
+  "validation": {
+    "version": 1,
+    "passed": false,
+    "checks": {
+      "rule_maximum": {
+        "value": 4,
+        "threshold": 30,
+        "passed": false
+      },
+      "no_rule_faults": {
+        "value": 0,
+        "threshold": 0,
+        "passed": true
+      },
+      "stop_observed": {
+        "value": null,
+        "threshold": 30.0,
+        "passed": false
+      },
+      "no_contacts": {
+        "value": true,
+        "threshold": false,
+        "passed": false,
+        "note": "Gazebo contact sensors"
+      },
+      "min_outer_wall_clearance_m": {
+        "value": 0.29981403166941945,
+        "threshold": 0.01,
+        "passed": true,
+        "note": "sampled at telemetry rate"
+      },
+      "min_inner_wall_clearance_m": {
+        "value": -0.03175579871983393,
+        "threshold": 0.01,
+        "passed": false,
+        "note": "sampled at telemetry rate"
+      },
+      "steering_limit": {
+        "value": 19.86492951248375,
+        "threshold": 25.5,
+        "passed": true
+      }
+    },
+    "failed": [
+      "rule_maximum",
+      "stop_observed",
+      "no_contacts",
+      "min_inner_wall_clearance_m"
+    ],
+    "min_clearance_m": -0.03175579871983393,
+    "margin_class": "risky",
+    "thresholds": {
+      "min_clearance_m": 0.01,
+      "comfortable_m": 0.05,
+      "tight_m": 0.02,
+      "stop_observed_s": 30.0,
+      "steer_limit_deg": 25.5
+    }
+  },
+  "platform_context": {
+    "platform": "macos_robostack",
+    "host": "Apple M4 Pro, macOS (Darwin 27), RoboStack Jazzy ~/Projects/WRO/.mamba/jazzy, gz-sim 8.10",
+    "platform_doc": "docs/simulacion-macos.md",
+    "rtf": 1,
+    "env_fixes": "OGRE2_RESOURCE_PATH, Cyclone DDS",
+    "clock_lag_issue": true,
+    "note": "Strategy /clock was 1.0-1.5 s behind Gazebo during 05:03-05:21 local; steering reacted ~0.3 s late. Cause not found; not a strategy result."
+  }
+}

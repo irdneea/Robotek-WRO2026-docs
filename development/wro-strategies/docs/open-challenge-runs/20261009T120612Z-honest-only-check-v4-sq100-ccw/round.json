@@ -1,0 +1,154 @@
+{
+  "run": "20261009T120612Z-honest-only-check-v4-sq100-ccw",
+  "status": "completed",
+  "start_source": "auto_first_scan",
+  "end_source": "done_event",
+  "time_from_start_wall_seconds": 16.68602681159973,
+  "time_from_start_sim_seconds": 32.997,
+  "motion_wall_seconds": 16.515787839889526,
+  "motion_sim_seconds": 32.6,
+  "lap_splits": [
+    {
+      "lap": 1,
+      "wall_seconds": 5.322319984436035,
+      "cumulative_wall_seconds": 5.322319984436035
+    },
+    {
+      "lap": 2,
+      "wall_seconds": 5.013340950012207,
+      "cumulative_wall_seconds": 10.335660934448242
+    },
+    {
+      "lap": 3,
+      "wall_seconds": 5.06535005569458,
+      "cumulative_wall_seconds": 15.401010990142822
+    }
+  ],
+  "points_estimated": 30,
+  "points_official": null,
+  "score_status": "simulation_rule_judge_v2",
+  "points_breakdown": {
+    "1.1_sections": 24,
+    "1.2_laps": 3,
+    "1.3_stop_in_finish": 3
+  },
+  "limitations": [
+    "Sections and laps estimated from ground-truth winding, not judged section exits.",
+    "Contacts, wall movement, start legality and human repairs are not adjudicated.",
+    "Finish bonus is provisional; DONE does not prove 30 seconds stationary."
+  ],
+  "points_estimated_legacy": 30,
+  "points_breakdown_legacy": {
+    "sections_estimated": 24,
+    "laps_estimated": 3,
+    "finish_provisional": 3
+  },
+  "rule_judge": {
+    "version": 2,
+    "challenge": "open",
+    "max_points": 30,
+    "points": 30,
+    "breakdown": {
+      "1.1_sections": 24,
+      "1.2_laps": 3,
+      "1.3_stop_in_finish": 3
+    },
+    "faults": [],
+    "notes": [
+      "Wall movement cannot occur in simulation (walls are static)."
+    ],
+    "round_end": {
+      "reason": "stopped_after_three_laps",
+      "sim_time": 33.0,
+      "wall_time": 1791547591.909051
+    },
+    "time_from_start_sim_seconds": 32.997,
+    "time_from_start_wall_seconds": 16.68602681159973,
+    "lap_splits": [
+      {
+        "lap": 1,
+        "sim_seconds": 10.757,
+        "cumulative_sim_seconds": 10.757
+      },
+      {
+        "lap": 2,
+        "sim_seconds": 9.92,
+        "cumulative_sim_seconds": 20.677
+      },
+      {
+        "lap": 3,
+        "sim_seconds": 10.280000000000001,
+        "cumulative_sim_seconds": 30.957
+      }
+    ],
+    "contact_evaluated": true,
+    "stop_hold_sim_seconds": 35.18000000000001,
+    "stop_drift_m": 7.162267154561642e-06,
+    "stop_inside_finish_section": true,
+    "contacts_first_sim_time": {},
+    "pose_source": "audit_pose.csv",
+    "pose_sample_count": 3434
+  },
+  "validation": {
+    "version": 1,
+    "passed": true,
+    "checks": {
+      "rule_maximum": {
+        "value": 30,
+        "threshold": 30,
+        "passed": true
+      },
+      "no_rule_faults": {
+        "value": 0,
+        "threshold": 0,
+        "passed": true
+      },
+      "stop_observed": {
+        "value": 35.18000000000001,
+        "threshold": 30.0,
+        "passed": true
+      },
+      "no_contacts": {
+        "value": false,
+        "threshold": false,
+        "passed": true,
+        "note": "Gazebo contact sensors"
+      },
+      "min_outer_wall_clearance_m": {
+        "value": 0.29981616089897495,
+        "threshold": 0.01,
+        "passed": true,
+        "note": "sampled at telemetry rate"
+      },
+      "min_inner_wall_clearance_m": {
+        "value": 0.11572759479187066,
+        "threshold": 0.01,
+        "passed": true,
+        "note": "sampled at telemetry rate"
+      },
+      "steering_limit": {
+        "value": 19.86492950844098,
+        "threshold": 25.5,
+        "passed": true
+      }
+    },
+    "failed": [],
+    "min_clearance_m": 0.11572759479187066,
+    "margin_class": "comfortable",
+    "thresholds": {
+      "min_clearance_m": 0.01,
+      "comfortable_m": 0.05,
+      "tight_m": 0.02,
+      "stop_observed_s": 30.0,
+      "steer_limit_deg": 25.5
+    }
+  },
+  "platform_context": {
+    "platform": "macos_robostack",
+    "host": "Apple M4 Pro, macOS (Darwin 27), RoboStack Jazzy ~/Projects/WRO/.mamba/jazzy, gz-sim 8.10",
+    "platform_doc": "docs/simulacion-macos.md",
+    "env_fixes": "tools/macos_env.sh",
+    "rtf": 2,
+    "note": "Smoke check after removing the honest launch argument (sensor noise always on)."
+  }
+}

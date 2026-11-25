@@ -3,7 +3,9 @@
 The car does not simulate during a round, so ``corner.plan`` looks the answer up here and only plans (``corner._choose``)
 when a combination is missing. Entries with four numbers are what the planner of corner.py returns for that case
 (``test_v3_corner_table.py`` recomputes a sample of them and compares). Entries of the form ``(gap, ('k', knots))`` are
-lines found by a longer offline search that beat the planner's own line. This is data, not code: do not edit it by
+lines found by a longer offline search that beat the planner's own line.
+The generator used during development is development/wro-strategies/tools/build_corner_table.py (it is written for the
+layout of that workspace; we have not adapted it to this package). This is data, not code: do not edit it by
 hand, and compute it again if the corner geometry or the side offsets of the mission change."""
 TABLE = {
     ((-0.1, 'green'), (-0.1, 'green'), 0.15, 0.15, -0.19, -1.0, False, False): (0.12569160216651107, 0.0788, 0.0988, 0.75),

@@ -1,0 +1,401 @@
+<!doctype html>
+<!-- Robotek car on the Open Challenge field (square100), drivable with the keyboard.
+     Geometry: src/robotek_common/robotek_common/vehicle.py and
+     docs/open-challenge-runs/field-size-driver/worlds/square100.sdf.
+     Run from the repository root (the page reads the Gazebo mat texture under src/):
+       python3 -m http.server 8000   ->  http://localhost:8000/tools/car_sim_web/
+     (Three.js is loaded from a CDN, so it needs internet the first time.) -->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Robotek: carrito en el campo</title>
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #b2b8c7; font-family: ui-monospace, Menlo, monospace; }
+  #hud { position: fixed; top: 10px; left: 10px; padding: 8px 12px; background: rgba(20,22,30,.78); color: #e8ecf4;
+         font-size: 13px; line-height: 1.5; border-radius: 6px; white-space: pre; pointer-events: none; }
+  #keys { position: fixed; bottom: 10px; left: 10px; padding: 8px 12px; background: rgba(20,22,30,.78); color: #e8ecf4;
+          font-size: 12px; line-height: 1.5; border-radius: 6px; pointer-events: none; }
+  #camframe { position: fixed; top: 12px; right: 12px; width: 320px; height: 240px; box-sizing: border-box;
+              border: 2px solid rgba(232,236,244,.85); border-radius: 4px; pointer-events: none; }
+  #camframe span { position: absolute; left: 0; top: 0; padding: 2px 8px; background: rgba(20,22,30,.78);
+                   color: #e8ecf4; font-size: 11px; border-bottom-right-radius: 4px; }
+  #hit { position: fixed; inset: 0; background: #e33; opacity: 0; pointer-events: none; transition: opacity .25s; }
+</style>
+</head>
+<body>
+<div id="hud"></div>
+<div id="keys">W/↑ acelerar · S/↓ reversa · A/← D/→ girar · Espacio freno · R reiniciar · V cámara · L LiDAR · T límite ±17,6°/±25°</div>
+<div id="hit"></div>
+<div id="camframe"><span>cámara del coche · 640×480</span></div>
+<script type="importmap">
+{ "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+               "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/" } }
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { STLLoader } from 'three/addons/loaders/STLLoader.js';
+
+// ---- Car (vehicle.py), metres / radians. Sim frame: x forward, y left, z up. ----
+const WHEELBASE = 0.11883;
+const REAR_AXLE_X = -0.059415;                // from base_link
+const OUTLINE_FRONT = 0.14699, OUTLINE_REAR = 0.08591, OUTLINE_HALF_WIDTH = 0.0738;
+const HALF_LENGTH = 0.0945, HALF_WIDTH = 0.045;   // chassis plate
+const FRONT_TRACK = 0.13305, REAR_TRACK = 0.1235;
+const WHEEL_RADIUS = 0.0305, WHEEL_WIDTH = 0.0145;
+const STEER_LIMITS = { real: 0.30718, rule: 0.4363323129985824 };   // 17.6 deg / 25 deg
+const STEER_RATE = 1.22;                      // rad/s, servo ~70 deg/s (real_car_v1 model)
+const MAX_SPEED = 1.28, ACCEL = 2.0, BRAKE = 4.0, DRAG = 0.8;       // m/s, m/s^2
+
+// ---- Field (square100.sdf): [centre x, centre y, size x, size y] ----
+const WALLS = [
+  [ 1.52, 0, 0.04, 3.08], [-1.52, 0, 0.04, 3.08], [0,  1.52, 3.08, 0.04], [0, -1.52, 3.08, 0.04],   // outer
+  [ 0.48, 0, 0.04, 1.00], [-0.48, 0, 0.04, 1.00], [0,  0.48, 1.00, 0.04], [0, -0.48, 1.00, 0.04],   // island
+];
+const START = { x: 0, y: -1.15, yaw: 0 };
+
+// ---- Scene (three: x = sim x, y = up, z = -sim y) ----
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(devicePixelRatio);
+renderer.setSize(innerWidth, innerHeight);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+document.body.appendChild(renderer.domElement);
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xb2b8c7);
+scene.add(new THREE.HemisphereLight(0xffffff, 0x8a8a99, 1.6));
+const sun = new THREE.DirectionalLight(0xffffff, 2.2);
+sun.position.set(-1.5, 3, 1.5);
+sun.castShadow = true;
+Object.assign(sun.shadow.camera, { left: -2.2, right: 2.2, top: 2.2, bottom: -2.2, near: 0.5, far: 8 });
+sun.shadow.mapSize.set(2048, 2048);
+scene.add(sun);
+
+// The game mat Gazebo uses (robotek_game_mat: 3.2 x 3.2 m, playfield.png). With the plane rotated
+// -90 deg about x, the image's right is sim +x and its top is sim +y, the orientation Gazebo shows
+// (checked against a Gazebo camera frame: orange line near the SW corner, blue from the west wall).
+const floorMaterial = new THREE.MeshStandardMaterial({ color: 0xd9d6cc, roughness: 1.0 });   // fallback without the image
+const floor = new THREE.Mesh(new THREE.PlaneGeometry(3.2, 3.2), floorMaterial);
+floor.rotation.x = -Math.PI / 2;
+floor.receiveShadow = true;
+scene.add(floor);
+new THREE.TextureLoader().load('../../src/robotek_gazebo/models/robotek_game_mat/materials/textures/playfield.png', texture => {
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+  floorMaterial.map = texture;
+  floorMaterial.color.set(0xffffff);
+  floorMaterial.needsUpdate = true;
+}, undefined, () => console.warn('playfield.png not found: serve the repository root (see the header comment)'));
+const ground = new THREE.Mesh(new THREE.PlaneGeometry(30, 30), new THREE.MeshStandardMaterial({ color: 0x59595f }));
+ground.rotation.x = -Math.PI / 2;
+ground.position.y = -0.002;
+scene.add(ground);
+const startZone = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.002, 0.2), new THREE.MeshStandardMaterial({ color: 0xf2f2f2 }));
+startZone.position.set(START.x, 0.002, -START.y);
+scene.add(startZone);
+
+const wallMaterial = new THREE.MeshStandardMaterial({ color: 0x15151a, roughness: 0.7 });
+const wallMeshes = WALLS.map(([cx, cy, sx, sy]) => {
+  const mesh = new THREE.Mesh(new THREE.BoxGeometry(sx, 0.10, sy), wallMaterial.clone());
+  mesh.position.set(cx, 0.06, -cy);
+  mesh.castShadow = mesh.receiveShadow = true;
+  scene.add(mesh);
+  return mesh;
+});
+
+// ---- Car model from robotek_description/urdf/robotek.urdf.xacro ----
+// `car` sits at base_link in the scene (y up, z = -sim y). Inside it, `urdf` is rotated -90 deg about x
+// so everything below is written in the URDF frame: +x forward, +y left, +z up, metres.
+const car = new THREE.Group();
+scene.add(car);
+const urdf = new THREE.Group();
+urdf.rotation.x = -Math.PI / 2;
+car.add(urdf);
+
+const material = (color, roughness = 0.55, metalness = 0.05) => new THREE.MeshStandardMaterial({ color, roughness, metalness });
+const materials = {                                      // the URDF's <material> colours
+  purple: material(new THREE.Color(0.40, 0.17, 0.70)), black: material(new THREE.Color(0.05, 0.05, 0.05), 0.5),
+  pcb: material(new THREE.Color(0.04, 0.32, 0.20), 0.45), navy: material(new THREE.Color(0.07, 0.07, 0.20)),
+  lilac: material(new THREE.Color(0.72, 0.65, 0.93), 0.9, 0), olive: material(new THREE.Color(0.30, 0.35, 0.20), 0.8, 0),
+  silver: material(new THREE.Color(0.70, 0.70, 0.70), 0.3, 0.6),
+};
+// STL meshes: millimetres, Y up, front towards -X (Assembly3.stp). URDF: origin (0.0242354, 0, 0.0354947),
+// rpy (pi/2, 0, pi) -> R = Rz(pi) Rx(pi/2) = Euler order 'ZYX' with (x = roll, y = pitch, z = yaw).
+const MESH_BASE = '../../src/robotek_description/meshes/';
+const stlLoader = new STLLoader();
+[['base_plate', 'purple'], ['case', 'purple'], ['camera_support', 'purple'], ['camera', 'black'],
+ ['servo', 'black'], ['raspberry_pi', 'pcb'], ['driver_board', 'pcb']].forEach(([file, name]) => {
+  stlLoader.load(`${MESH_BASE}${file}.stl`, geometry => {
+    const mesh = new THREE.Mesh(geometry, materials[name]);
+    mesh.scale.setScalar(0.001);
+    mesh.position.set(0.0242354, 0, 0.0354947);
+    mesh.rotation.set(Math.PI / 2, 0, Math.PI, 'ZYX');
+    mesh.castShadow = true;
+    urdf.add(mesh);
+  }, undefined, () => console.warn(`${file}.stl not found: serve the repository root (see the header comment)`));
+});
+
+// LD19 from primitives, as in the URDF (axis 127.64 mm ahead of base_link, standing on the plate tab).
+const lidarBody = new THREE.Mesh(new THREE.BoxGeometry(0.0386, 0.0386, 0.0146), materials.navy);
+lidarBody.position.set(0.12764, 0, 0.02089);
+const lidarHead = new THREE.Mesh(new THREE.CylinderGeometry(0.0187, 0.0187, 0.0202, 32), materials.black);
+lidarHead.rotation.x = Math.PI / 2;                      // cylinder axis y -> URDF z
+lidarHead.position.set(0.12764, 0, 0.03829);
+// imu_link: a 20 x 20 x 5 mm silver box 58.6 mm above base_link (URDF imu_joint).
+const imuBox = new THREE.Mesh(new THREE.BoxGeometry(0.02, 0.02, 0.005), materials.silver);
+imuBox.position.set(0, 0, 0.0586);
+[lidarBody, lidarHead, imuBox].forEach(part => { part.castShadow = true; urdf.add(part); });
+
+// Wheels: tyre (lilac) and hub (olive) as in the URDF. The knuckle is the steering pivot (about z) of
+// the front wheels; each wheel spins about y. A dark bar on the hub makes the rotation visible.
+function makeWheel(x, y, steered) {
+  const pivot = new THREE.Group();
+  pivot.position.set(x, y, WHEEL_RADIUS);
+  const wheel = new THREE.Group();                       // spins about +y (top moves forward for +spin)
+  const tyre = new THREE.Mesh(new THREE.CylinderGeometry(WHEEL_RADIUS, WHEEL_RADIUS, WHEEL_WIDTH, 40), materials.lilac);
+  const hub = new THREE.Mesh(new THREE.CylinderGeometry(WHEEL_RADIUS - 0.0045, WHEEL_RADIUS - 0.0045, WHEEL_WIDTH + 0.0006, 40), materials.olive);
+  const mark = new THREE.Mesh(new THREE.BoxGeometry(0.004, WHEEL_WIDTH + 0.0012, 0.018), materials.black);
+  mark.position.z = 0.012;
+  [tyre, hub, mark].forEach(part => { part.castShadow = true; wheel.add(part); });   // cylinder axis y = URDF y
+  pivot.add(wheel);
+  if (steered) {
+    const knuckle = new THREE.Mesh(new THREE.CylinderGeometry(0.006, 0.006, WHEEL_RADIUS * 2, 16), materials.silver);
+    knuckle.rotation.x = Math.PI / 2;
+    pivot.add(knuckle);
+  }
+  urdf.add(pivot);
+  return { pivot, wheel };
+}
+const frontX = REAR_AXLE_X + WHEELBASE;
+const wheels = {
+  fl: makeWheel(frontX,  FRONT_TRACK / 2, true), fr: makeWheel(frontX, -FRONT_TRACK / 2, true),
+  rl: makeWheel(REAR_AXLE_X,  REAR_TRACK / 2, false), rr: makeWheel(REAR_AXLE_X, -REAR_TRACK / 2, false),
+};
+
+// ---- The car's own camera (camera_link in the URDF with real_car:=true) ----
+// 640 x 480, horizontal FOV 1.164 rad, 6 fps in Gazebo (drawn every frame here). camera_joint:
+// xyz (0.05579, 0, 0.14219), rpy (0, 0.17, 0.077): pitched 0.17 rad down, 0.077 rad left of the LiDAR.
+const CAMERA_ASPECT = 4 / 3, CAMERA_HFOV = 1.164, CAMERA_PITCH = 0.17, CAMERA_YAW = 0.077;
+const carCamera = new THREE.PerspectiveCamera(
+  THREE.MathUtils.radToDeg(2 * Math.atan(Math.tan(CAMERA_HFOV / 2) / CAMERA_ASPECT)), CAMERA_ASPECT, 0.02, 20);
+const cameraRig = new THREE.Group();                     // camera_link in the URDF frame
+cameraRig.position.set(0.05579, 0, 0.14219);
+cameraRig.rotation.set(0, CAMERA_PITCH, CAMERA_YAW, 'ZYX');
+// A three.js camera looks along its -z with +y up; the URDF camera looks along +x with +z up.
+carCamera.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeBasis(
+  new THREE.Vector3(0, -1, 0), new THREE.Vector3(0, 0, 1), new THREE.Vector3(-1, 0, 0)));
+cameraRig.add(carCamera);
+urdf.add(cameraRig);
+// The car's own parts are on layer 1 so its camera, which sits inside the camera body, does not see them.
+const hideFromCarCamera = () => urdf.traverse(o => { if (!o.isCamera) o.layers.set(1); });
+const CAMERA_VIEW = { width: 320, height: 240, margin: 12 };
+
+// ---- Cameras ----
+const cam = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 0.01, 100);
+cam.layers.enable(1);
+let cameraMode = 0;                                      // 0 chase, 1 top
+addEventListener('resize', () => {
+  cam.aspect = innerWidth / innerHeight; cam.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight);
+});
+
+// ---- State and input ----
+let lastHit = { index: -1, at: 0 };
+const state = { x: START.x, y: START.y, yaw: START.yaw, v: 0, steer: 0, wheelSpin: 0, contacts: 0, time: 0, moved: false };
+let steerLimit = STEER_LIMITS.real;
+const keys = new Set();
+addEventListener('keydown', e => {
+  if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(e.key)) e.preventDefault();
+  if (e.repeat) return;
+  const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+  keys.add(k);
+  if (k === 'r') Object.assign(state, { x: START.x, y: START.y, yaw: START.yaw, v: 0, steer: 0, contacts: 0, time: 0, moved: false });
+  if (k === 'v') cameraMode = (cameraMode + 1) % 2;
+  if (k === 'l') lidarVisible = !lidarVisible;
+  if (k === 't') steerLimit = steerLimit === STEER_LIMITS.real ? STEER_LIMITS.rule : STEER_LIMITS.real;
+});
+addEventListener('keyup', e => keys.delete(e.key.length === 1 ? e.key.toLowerCase() : e.key));
+addEventListener('blur', () => keys.clear());
+const down = (...names) => names.some(n => keys.has(n));
+
+// ---- Collision: SAT between the car outline (oriented box) and the axis-aligned walls ----
+function carCorners(x, y, yaw) {
+  const c = Math.cos(yaw), s = Math.sin(yaw);
+  return [[OUTLINE_FRONT, OUTLINE_HALF_WIDTH], [OUTLINE_FRONT, -OUTLINE_HALF_WIDTH],
+          [-OUTLINE_REAR, -OUTLINE_HALF_WIDTH], [-OUTLINE_REAR, OUTLINE_HALF_WIDTH]]
+    .map(([lx, ly]) => [x + lx * c - ly * s, y + lx * s + ly * c]);
+}
+function hitsWall(corners, [cx, cy, sx, sy]) {
+  const rect = [[cx - sx / 2, cy - sy / 2], [cx + sx / 2, cy - sy / 2], [cx + sx / 2, cy + sy / 2], [cx - sx / 2, cy + sy / 2]];
+  const axes = [[1, 0], [0, 1]];
+  const e = [corners[1][0] - corners[0][0], corners[1][1] - corners[0][1]];
+  const f = [corners[2][0] - corners[1][0], corners[2][1] - corners[1][1]];
+  axes.push([-e[1], e[0]], [-f[1], f[0]]);
+  for (const [ax, ay] of axes) {
+    const proj = pts => pts.map(([px, py]) => px * ax + py * ay);
+    const a = proj(corners), b = proj(rect);
+    if (Math.max(...a) < Math.min(...b) || Math.max(...b) < Math.min(...a)) return false;
+  }
+  return true;
+}
+function touchingWall(x, y, yaw) {
+  const corners = carCorners(x, y, yaw);
+  return WALLS.findIndex(wall => hitsWall(corners, wall));
+}
+
+// ---- Fixed-step dynamics: kinematic bicycle referenced to the rear axle ----
+const hitFlash = document.getElementById('hit');
+function step(dt) {
+  const throttle = (down('w', 'ArrowUp') ? 1 : 0) - (down('s', 'ArrowDown') ? 1 : 0);
+  const target = (down('a', 'ArrowLeft') ? 1 : 0) - (down('d', 'ArrowRight') ? 1 : 0);
+  if (throttle || target) state.moved = true;
+
+  const wanted = target * steerLimit;
+  const maxDelta = STEER_RATE * dt;
+  state.steer += Math.max(-maxDelta, Math.min(maxDelta, wanted - state.steer));
+
+  if (down(' ')) {
+    state.v -= Math.sign(state.v) * Math.min(Math.abs(state.v), BRAKE * dt);
+  } else if (throttle) {
+    const braking = Math.sign(state.v) !== 0 && Math.sign(state.v) !== throttle;
+    state.v += throttle * (braking ? BRAKE : ACCEL) * dt;
+    state.v = Math.max(-MAX_SPEED * 0.5, Math.min(MAX_SPEED, state.v));
+  } else {
+    state.v -= Math.sign(state.v) * Math.min(Math.abs(state.v), DRAG * dt);
+  }
+
+  const hx = Math.cos(state.yaw), hy = Math.sin(state.yaw);
+  const rearX = state.x + REAR_AXLE_X * hx, rearY = state.y + REAR_AXLE_X * hy;
+  const yaw = state.yaw + (state.v / WHEELBASE) * Math.tan(state.steer) * dt;
+  const mx = Math.cos((state.yaw + yaw) / 2), my = Math.sin((state.yaw + yaw) / 2);
+  const nx = rearX + state.v * mx * dt - REAR_AXLE_X * Math.cos(yaw);
+  const ny = rearY + state.v * my * dt - REAR_AXLE_X * Math.sin(yaw);
+
+  const wallIndex = touchingWall(nx, ny, yaw);
+  if (wallIndex >= 0) {
+    const now = performance.now();
+    const isNew = now - lastHit.at > 500;                // pushing against a wall is one touch, not many
+    lastHit = { index: wallIndex, at: now };
+    if (isNew) {
+      state.contacts++;
+      hitFlash.style.opacity = 0.35;
+      setTimeout(() => (hitFlash.style.opacity = 0), 120);
+    }
+    state.v = 0;                                         // blocked: the car stays where it was
+    return;
+  }
+  state.x = nx; state.y = ny; state.yaw = yaw;
+  state.wheelSpin += state.v * dt / WHEEL_RADIUS;
+  if (state.moved) state.time += dt;
+}
+
+// ---- Render ----
+function updateVisuals() {
+  car.position.set(state.x, 0, -state.y);
+  car.rotation.y = state.yaw;
+  // A left turn (positive steer, +y) is a rotation about three's +y: pivots follow the same sign.
+  wheels.fl.pivot.rotation.z = state.steer;              // URDF frame: positive yaw about z = left
+  wheels.fr.pivot.rotation.z = state.steer;
+  for (const w of Object.values(wheels)) w.wheel.rotation.y = state.wheelSpin;
+  wallMeshes.forEach(m => m.material.color.set(0x15151a));
+  if (lastHit.index >= 0 && performance.now() - lastHit.at < 400) wallMeshes[lastHit.index].material.color.set(0xc0392b);
+
+  const pos = new THREE.Vector3(state.x, 0.05, -state.y);
+  if (cameraMode === 0) {
+    const back = new THREE.Vector3(-Math.cos(state.yaw), 0, Math.sin(state.yaw)).multiplyScalar(0.45);
+    const wanted = pos.clone().add(back).add(new THREE.Vector3(0, 0.28, 0));
+    cam.position.lerp(wanted, 0.12);
+    cam.lookAt(pos.clone().add(new THREE.Vector3(Math.cos(state.yaw), 0, -Math.sin(state.yaw)).multiplyScalar(0.25)));
+  } else {
+    cam.position.lerp(new THREE.Vector3(0, 3.4, 0.001), 0.12);
+    cam.lookAt(0, 0, 0);
+  }
+}
+const hud = document.getElementById('hud');
+function updateHud() {
+  const deg = r => (r * 180 / Math.PI).toFixed(1);
+  hud.textContent =
+    `v        ${state.v.toFixed(2)} m/s\n` +
+    `volante  ${deg(state.steer)}° (límite ±${deg(steerLimit)}°)\n` +
+    `x, y     ${state.x.toFixed(2)}, ${state.y.toFixed(2)} m\n` +
+    `rumbo    ${deg(((state.yaw + Math.PI) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI) - Math.PI)}°\n` +
+    `LiDAR    ${frontRange.toFixed(2)} m al frente\n` +
+    `tiempo   ${state.time.toFixed(1)} s\n` +
+    `choques  ${state.contacts}`;
+}
+
+// ---- LiDAR (LD19 as simulated with real_car:=true): 306 samples over +-110 deg, 0.03 to 12 m,
+// scan plane 0.030 m high and 0.128 m ahead of base_link (lidar_joint). Rays hit the field walls. ----
+const LIDAR = { x: 0.128, z: 0.030, samples: 306, halfAngle: 1.91986, min: 0.03, max: 12.0 };
+let lidarVisible = true;
+let frontRange = Infinity;
+const rayPositions = new Float32Array(LIDAR.samples * 2 * 3);
+const hitPositions = new Float32Array(LIDAR.samples * 3);
+const rayGeometry = new THREE.BufferGeometry();
+rayGeometry.setAttribute('position', new THREE.BufferAttribute(rayPositions, 3));
+const hitGeometry = new THREE.BufferGeometry();
+hitGeometry.setAttribute('position', new THREE.BufferAttribute(hitPositions, 3));
+const lidarRays = new THREE.LineSegments(rayGeometry, new THREE.LineBasicMaterial({ color: 0xff3b30, transparent: true, opacity: 0.22 }));
+const lidarHits = new THREE.Points(hitGeometry, new THREE.PointsMaterial({ color: 0xff3b30, size: 0.012 }));
+[lidarRays, lidarHits].forEach(object => { object.frustumCulled = false; object.layers.set(1); scene.add(object); });   // layer 1: not in the car camera
+
+// Distance along the ray (ox, oy, dx, dy) to the axis-aligned wall, or Infinity (slab method).
+function rayWall(ox, oy, dx, dy, [cx, cy, sx, sy]) {
+  let tmin = 0, tmax = Infinity;
+  for (const [o, d, lo, hi] of [[ox, dx, cx - sx / 2, cx + sx / 2], [oy, dy, cy - sy / 2, cy + sy / 2]]) {
+    if (Math.abs(d) < 1e-9) { if (o < lo || o > hi) return Infinity; continue; }
+    let t1 = (lo - o) / d, t2 = (hi - o) / d;
+    if (t1 > t2) [t1, t2] = [t2, t1];
+    tmin = Math.max(tmin, t1); tmax = Math.min(tmax, t2);
+    if (tmin > tmax) return Infinity;
+  }
+  return tmin;
+}
+function updateLidar() {
+  lidarRays.visible = lidarHits.visible = lidarVisible;
+  const ox = state.x + LIDAR.x * Math.cos(state.yaw), oy = state.y + LIDAR.x * Math.sin(state.yaw);
+  const step = 2 * LIDAR.halfAngle / (LIDAR.samples - 1);
+  let best = Infinity, bestAngle = Infinity;
+  for (let i = 0; i < LIDAR.samples; i++) {
+    const angle = -LIDAR.halfAngle + i * step, a = state.yaw + angle;
+    const dx = Math.cos(a), dy = Math.sin(a);
+    let range = LIDAR.max;
+    for (const wall of WALLS) range = Math.min(range, rayWall(ox, oy, dx, dy, wall));
+    if (range < LIDAR.min) range = LIDAR.min;
+    if (Math.abs(angle) < bestAngle) { bestAngle = Math.abs(angle); best = range; }
+    const hx = ox + range * dx, hy = oy + range * dy;       // sim -> three: (x, z, -y)
+    rayPositions.set([ox, LIDAR.z, -oy, hx, LIDAR.z, -hy], i * 6);
+    hitPositions.set([hx, LIDAR.z, -hy], i * 3);
+  }
+  frontRange = best;
+  rayGeometry.attributes.position.needsUpdate = true;
+  hitGeometry.attributes.position.needsUpdate = true;
+}
+
+let last = performance.now(), accumulator = 0;
+const DT = 1 / 240;
+function frame(now) {
+  accumulator += Math.min(0.1, (now - last) / 1000);
+  last = now;
+  while (accumulator >= DT) { if (!window.robotek?.freeze) step(DT); accumulator -= DT; }
+  if (!window.robotek?.freeze) updateVisuals(); else { car.position.set(state.x, 0, -state.y); car.rotation.y = state.yaw; }
+  updateHud();
+  hideFromCarCamera();
+  updateLidar();
+  renderer.render(scene, cam);
+  // Picture in picture: the car camera in the top-right corner (y of the viewport counts from the bottom).
+  const { width, height, margin } = CAMERA_VIEW;
+  const x = innerWidth - width - margin, y = innerHeight - height - margin;
+  renderer.setScissorTest(true);
+  renderer.setScissor(x, y, width, height);
+  renderer.setViewport(x, y, width, height);
+  renderer.clearDepth();
+  renderer.render(scene, carCamera);
+  renderer.setScissorTest(false);
+  renderer.setViewport(0, 0, innerWidth, innerHeight);
+  requestAnimationFrame(frame);
+}
+window.robotek = { state, cam, car, THREE, freeze: false };   // inspection hook (browser console / tests)
+cam.position.set(START.x - 0.45, 0.33, -START.y);
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>

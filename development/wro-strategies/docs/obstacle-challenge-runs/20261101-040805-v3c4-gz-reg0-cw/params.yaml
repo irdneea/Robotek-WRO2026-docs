@@ -1,0 +1,29 @@
+obstacle_strategy:
+  ros__parameters:
+    corner_replan: 1.0
+    cruise_speed: 0.35
+    direction: auto
+    finish_speed: 0.15
+    front_distance: 0.55
+    front_speed: 0.2
+    guard_gap: 0.0
+    imu_max_age: 0.2
+    known_speed_gain: 1.0
+    lane_offset: 0.0
+    park: 1.0
+    park_after: 24.0
+    park_margin: 0.015
+    park_speed: 0.06
+    pillar_clearance: 0.18
+    pillar_lookahead: 1.8
+    pillar_speed: 0.3
+    preview_time: 0.0
+    scan_max_age: 0.35
+    steer_kd: 0.2
+    steer_kp: 1.5
+    steer_limit: 0.307
+    stop_progress: 24.7
+    telemetry_path: /home/user/Projects/WRO-Strategies/docs/obstacle-challenge-runs/20261101-040805-v3c4-gz-reg0-cw/telemetry.csv
+    tight_gap: 0.07
+    tight_speed: 0.15
+    tracked_corners: 1.0

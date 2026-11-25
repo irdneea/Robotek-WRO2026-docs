@@ -1,0 +1,50 @@
+{
+  "run_dir": "/home/user/robotek-runs/20261008T022604Z-actuator-steer",
+  "wheelbase_m": 0.13,
+  "steps": [
+    {
+      "kind": "giro",
+      "servo_deg": 10.0,
+      "motor_pct": 50.0,
+      "delay_yaw_s": 0.078,
+      "yaw_rate_max_rad_s": 0.254,
+      "velocidad_al_girar_mps": 0.027,
+      "angulo_efectivo_deg": null,
+      "nota": "el coche no rodo lo suficiente (v > 0.1 m/s) despues del giro",
+      "step": "giro +10"
+    },
+    {
+      "kind": "giro",
+      "servo_deg": -10.0,
+      "motor_pct": 50.0,
+      "delay_yaw_s": null,
+      "yaw_rate_max_rad_s": -0.042,
+      "velocidad_al_girar_mps": 0.031,
+      "angulo_efectivo_deg": null,
+      "nota": "el coche no rodo lo suficiente (v > 0.1 m/s) despues del giro",
+      "step": "giro -10"
+    },
+    {
+      "kind": "giro",
+      "servo_deg": 25.0,
+      "motor_pct": 50.0,
+      "delay_yaw_s": 0.088,
+      "yaw_rate_max_rad_s": 0.241,
+      "velocidad_al_girar_mps": 0.054,
+      "angulo_efectivo_deg": null,
+      "nota": "el coche no rodo lo suficiente (v > 0.1 m/s) despues del giro",
+      "step": "giro +25"
+    },
+    {
+      "kind": "giro",
+      "servo_deg": -25.0,
+      "motor_pct": 50.0,
+      "delay_yaw_s": 0.052,
+      "yaw_rate_max_rad_s": -0.148,
+      "velocidad_al_girar_mps": 0.002,
+      "angulo_efectivo_deg": null,
+      "nota": "el coche no rodo lo suficiente (v > 0.1 m/s) despues del giro",
+      "step": "giro -25"
+    }
+  ]
+}

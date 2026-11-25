@@ -1,0 +1,105 @@
+[INFO] [launch]: All log files can be found below /home/user/.ros/log/2026-11-08-15-19-09-190436-user-desktop-2815
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [rrc_driver-1]: process started with pid [2835]
+[INFO] [ldlidar_stl_ros2_node-2]: process started with pid [2836]
+[INFO] [static_transform_publisher-3]: process started with pid [2837]
+[INFO] [pi_camera_publisher-4]: process started with pid [2838]
+[INFO] [scan_adapter-5]: process started with pid [2839]
+[INFO] [imu_adapter-6]: process started with pid [2840]
+[INFO] [motor_driver-7]: process started with pid [2841]
+[INFO] [base_adapter-8]: process started with pid [2842]
+[INFO] [start_button-9]: process started with pid [2843]
+[INFO] [battery_guard-10]: process started with pid [2844]
+[INFO] [status_leds-11]: process started with pid [2845]
+[INFO] [robot_state_publisher-12]: process started with pid [2846]
+[INFO] [round_reporter-13]: process started with pid [2847]
+[INFO] [open_v5-14]: process started with pid [2848]
+[static_transform_publisher-3] [WARN] [1794169149.877839818] []: Old-style arguments are deprecated; see --help for new-style arguments
+[ldlidar_stl_ros2_node-2] [INFO] [1794169149.957881466] [LD19]: LDLiDAR SDK Pack Version is: v3.0.3
+[ldlidar_stl_ros2_node-2] [INFO] [1794169149.958137911] [LD19]: <product_name>: LDLiDAR_LD19
+[ldlidar_stl_ros2_node-2] [INFO] [1794169149.958187115] [LD19]: <topic_name>: scan
+[ldlidar_stl_ros2_node-2] [INFO] [1794169149.958224078] [LD19]: <frame_id>: base_laser
+[ldlidar_stl_ros2_node-2] [INFO] [1794169149.958249929] [LD19]: <port_name>: /dev/ldlidar
+[ldlidar_stl_ros2_node-2] [INFO] [1794169149.958283466] [LD19]: <port_baudrate>: 230400
+[ldlidar_stl_ros2_node-2] [INFO] [1794169149.958313170] [LD19]: <laser_scan_dir>: Counterclockwise
+[ldlidar_stl_ros2_node-2] [INFO] [1794169149.958342670] [LD19]: <enable_angle_crop_func>: false
+[ldlidar_stl_ros2_node-2] [INFO] [1794169149.958368763] [LD19]: <angle_crop_min>: 135.000000
+[ldlidar_stl_ros2_node-2] [INFO] [1794169149.962611226] [LD19]: <angle_crop_max>: 225.000000
+[static_transform_publisher-3] [INFO] [1794169149.985912818] [base_link_to_base_laser_ld19]: Spinning until stopped - publishing transform
+[static_transform_publisher-3] translation: ('0.000000', '0.000000', '0.180000')
+[static_transform_publisher-3] rotation: ('0.000000', '0.000000', '0.000000', '1.000000')
+[static_transform_publisher-3] from 'base_link' to 'base_laser'
+[ldlidar_stl_ros2_node-2] [INFO] [1794169149.993765392] [LD19]: ldlidar node start is success
+[ldlidar_stl_ros2_node-2] [INFO] [1794169150.001579929] [LD19]: ldlidar communication is normal.
+[ldlidar_stl_ros2_node-2] [INFO] [1794169150.027500133] [LD19]: Publish topic message:ldlidar scan data.
+[robot_state_publisher-12] [INFO] [1794169150.172520540] [robot_state_publisher]: Robot initialized
+[start_button-9] [WARN] [1794169152.499090520] [start_button]: No button: the car starts by itself in 12 s; press the button to stop.
+[start_button-9] [INFO] [1794169152.580287669] [start_button]: Press the button to start; press it again to stop.
+[status_leds-11] [INFO] [1794169152.986331002] [status_leds]: Status RGBs at level 2/255: green = ready, blue = running.
+[imu_adapter-6] [INFO] [1794169153.018009742] [imu_adapter]: IMU axes forward=-x left=+z up=+y
+[battery_guard-10] [INFO] [1794169153.474146872] [battery_guard]: Battery guard: red blinking below 6.80 V (5 consecutive readings); it does not stop the car.
+[motor_driver-7] [INFO] [1794169153.532152761] [tb6612fng_motor]: TB6612FNG ready (forward and reverse).
+[rrc_driver-1] [INFO] [1794169153.604445038] [rrc_driver]: RRC Lite board on /dev/rrc_lite
+[base_adapter-8] [INFO] [1794169154.081776297] [base_adapter]: Drive motor: RRC Lite port M2, 4.40 rps per m/s.
+[base_adapter-8] [INFO] [1794169154.097521242] [base_adapter]: Wall guard: slows down from 0.30 m, 0 at 0.10 m (+-15 deg).
+[rrc_driver-1] [INFO] [1794169154.111400445] [rrc_driver]: Settings servo 1 - Offset 0
+[rrc_driver-1] [INFO] [1794169154.115564631] [rrc_driver]: Settings servo 2 - Offset 0
+[rrc_driver-1] [INFO] [1794169154.118954186] [rrc_driver]: Settings servo 3 - Offset 0
+[rrc_driver-1] [INFO] [1794169154.129758297] [rrc_driver]: Settings servo 4 - Offset 0
+[rrc_driver-1] [INFO] [1794169154.175584260] [rrc_driver]: [1;32mstart[0m
+[ldlidar_stl_ros2_node-2] [LDS][INFO][1794169149.993453485][Actual BaudRate reported:230400]
+[round_reporter-13] [INFO] [1794169155.563268130] [round_reporter]: Round report on (debug): states, direction, corners, laps and lines.
+[pi_camera_publisher-4] [INFO] [1794169156.100169685] [pi_camera_publisher]: Pi camera: rpicam-vid -t 0 -n --codec yuv420 -o - --width 1280 --height 720 --framerate 10.0 --mode 2304:1296:10:P --rotation 180
+[open_v5-14] [INFO] [1794169156.394073000] [strategy]: Open v5 | direction=auto cruise=1.28 m/s | telemetry /home/user/runs/20261108-151916-open-v5/telemetry.csv
+[open_v5-14] [WARN] [1794169156.550988055] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[round_reporter-13] [INFO] [1794169156.554793259] [round_reporter]: [   0.0 s] Estado: WAIT_START
+[open_v5-14] [WARN] [1794169158.528574554] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1794169162.613002514] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[start_button-9] [INFO] [1794169164.461740495] [start_button]: Start (no button).
+[round_reporter-13] [INFO] [1794169164.463996902] [round_reporter]: [   0.0 s] Start
+[round_reporter-13] [INFO] [1794169164.475506624] [round_reporter]: [   0.0 s] Estado: CALIBRATE
+[round_reporter-13] [INFO] [1794169164.780048680] [round_reporter]: [   0.3 s] Estado: DETECT_DIRECTION
+[pi_camera_publisher-4] [INFO] [1794169165.858451494] [pi_camera_publisher]: Pi camera off (state FOLLOW).
+[round_reporter-13] [INFO] [1794169165.858829179] [round_reporter]: [   1.4 s] Estado: FOLLOW
+[round_reporter-13] [INFO] [1794169167.851881622] [round_reporter]: [   3.4 s] Estado: TURN
+[round_reporter-13] [INFO] [1794169168.811535029] [round_reporter]: [   4.3 s] Sentido: horario (derecha) (-84 grados en la 1.a esquina)
+[round_reporter-13] [INFO] [1794169168.812187640] [round_reporter]: [   4.3 s] Esquina 1/12 (vuelta 1, -84 grados)
+[round_reporter-13] [INFO] [1794169168.812802733] [round_reporter]: [   4.3 s] Estado: FOLLOW
+[round_reporter-13] [INFO] [1794169170.263924232] [round_reporter]: [   5.8 s] Estado: TURN
+[round_reporter-13] [INFO] [1794169171.111100472] [round_reporter]: [   6.6 s] Esquina 2/12 (vuelta 1, -77 grados)
+[round_reporter-13] [INFO] [1794169171.112032213] [round_reporter]: [   6.6 s] Estado: FOLLOW
+[round_reporter-13] [INFO] [1794169172.458012472] [round_reporter]: [   8.0 s] Estado: TURN
+[round_reporter-13] [INFO] [1794169173.311750897] [round_reporter]: [   8.8 s] Esquina 3/12 (vuelta 1, -78 grados)
+[round_reporter-13] [INFO] [1794169173.312531452] [round_reporter]: [   8.8 s] Estado: FOLLOW
+[round_reporter-13] [INFO] [1794169174.656355804] [round_reporter]: [  10.2 s] Estado: TURN
+[round_reporter-13] [INFO] [1794169175.512423673] [round_reporter]: [  11.0 s] Esquina 4/12 (vuelta 1, -81 grados)
+[round_reporter-13] [INFO] [1794169175.515677136] [round_reporter]: [  11.0 s] Vuelta 1 completa en 11.0 s
+[round_reporter-13] [INFO] [1794169175.516511025] [round_reporter]: [  11.1 s] Estado: FOLLOW
+[round_reporter-13] [INFO] [1794169176.754070839] [round_reporter]: [  12.3 s] Estado: TURN
+[round_reporter-13] [INFO] [1794169177.612312098] [round_reporter]: [  13.1 s] Esquina 5/12 (vuelta 2, -82 grados)
+[round_reporter-13] [INFO] [1794169177.613213654] [round_reporter]: [  13.1 s] Estado: FOLLOW
+[round_reporter-13] [INFO] [1794169178.853489616] [round_reporter]: [  14.4 s] Estado: TURN
+[round_reporter-13] [INFO] [1794169179.691386541] [round_reporter]: [  15.2 s] Esquina 6/12 (vuelta 2, -79 grados)
+[round_reporter-13] [INFO] [1794169179.692211763] [round_reporter]: [  15.2 s] Estado: FOLLOW
+[round_reporter-13] [INFO] [1794169180.954396207] [round_reporter]: [  16.5 s] Estado: TURN
+[round_reporter-13] [INFO] [1794169181.812266669] [round_reporter]: [  17.3 s] Esquina 7/12 (vuelta 2, -79 grados)
+[round_reporter-13] [INFO] [1794169181.813156560] [round_reporter]: [  17.3 s] Estado: FOLLOW
+[round_reporter-13] [INFO] [1794169183.254323526] [round_reporter]: [  18.8 s] Estado: TURN
+[round_reporter-13] [INFO] [1794169184.112821136] [round_reporter]: [  19.6 s] Esquina 8/12 (vuelta 2, -79 grados)
+[round_reporter-13] [INFO] [1794169184.113679078] [round_reporter]: [  19.7 s] Vuelta 2 completa en 8.6 s
+[round_reporter-13] [INFO] [1794169184.114411802] [round_reporter]: [  19.7 s] Estado: FOLLOW
+[round_reporter-13] [INFO] [1794169185.457866289] [round_reporter]: [  21.0 s] Estado: TURN
+[round_reporter-13] [INFO] [1794169186.370858688] [round_reporter]: [  21.9 s] Esquina 9/12 (vuelta 3, -84 grados)
+[round_reporter-13] [INFO] [1794169186.371710858] [round_reporter]: [  21.9 s] Estado: FOLLOW
+[round_reporter-13] [INFO] [1794169187.755815620] [round_reporter]: [  23.3 s] Estado: TURN
+[round_reporter-13] [INFO] [1794169188.612871607] [round_reporter]: [  24.1 s] Esquina 10/12 (vuelta 3, -77 grados)
+[round_reporter-13] [INFO] [1794169188.614349467] [round_reporter]: [  24.2 s] Estado: FOLLOW
+[round_reporter-13] [INFO] [1794169189.955752633] [round_reporter]: [  25.5 s] Estado: TURN
+[round_reporter-13] [INFO] [1794169190.810873271] [round_reporter]: [  26.3 s] Esquina 11/12 (vuelta 3, -82 grados)
+[round_reporter-13] [INFO] [1794169190.812496812] [round_reporter]: [  26.3 s] Estado: FOLLOW
+[round_reporter-13] [INFO] [1794169192.154090843] [round_reporter]: [  27.7 s] Estado: TURN
+[round_reporter-13] [INFO] [1794169193.151144375] [round_reporter]: [  28.7 s] Esquina 12/12 (vuelta 3, -61 grados)
+[round_reporter-13] [INFO] [1794169193.152051780] [round_reporter]: [  28.7 s] Vuelta 3 completa en 9.0 s
+[round_reporter-13] [INFO] [1794169193.152726504] [round_reporter]: [  28.7 s] Estado: FINISH
+[round_reporter-13] [INFO] [1794169195.031719536] [round_reporter]: [  30.6 s] Estado: DONE
+[round_reporter-13] [INFO] [1794169195.032687085] [round_reporter]: [  30.6 s] Ronda terminada: 12 esquinas, líneas azul/naranja 0/0, 30.6 s desde Start

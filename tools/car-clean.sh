@@ -14,7 +14,7 @@ set -uo pipefail
 
 REPO=$(cd "$(dirname "$0")/.." && pwd)
 # Bracketed first letters: the grep does not match its own command line.
-PATTERN="[$(echo "${REPO:0:1}")]${REPO:1}/install/[^ ]*/lib/|[o]pt/ros/jazzy/lib/robot_state_publisher/|[o]pt/ros/jazzy/lib/tf2_ros/static_transform_publisher|[u]sb_cam_node|[r]os2 launch robotek_course|[r]os2 bag record|[t]op -b -d 1 -o %CPU|[r]os2 topic echo --once /start|[j]ournalctl -k -f -n 0|[r]picam-vid -t 0 -n --codec yuv420"
+PATTERN="[$(echo "${REPO:0:1}")]${REPO:1}/install/[^ ]*/lib/|[o]pt/ros/jazzy/lib/robot_state_publisher/|[o]pt/ros/jazzy/lib/tf2_ros/static_transform_publisher|[u]sb_cam_node|[r]os2 launch robotek_course|[r]os2 bag record|[o]pen-debug-run.sh|[t]op -b -d 1 -o %CPU|[r]os2 topic echo --once /start|[j]ournalctl -k -f -n 0|[r]picam-vid -t 0 -n --codec yuv420"
 
 # Never this script nor any of its callers: a caller whose own command line matches the pattern would kill itself (it happened on 8 Nov 2026).
 ANCESTORS=" "

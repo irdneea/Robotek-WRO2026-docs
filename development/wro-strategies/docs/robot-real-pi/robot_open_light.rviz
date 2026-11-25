@@ -1,0 +1,65 @@
+# RViz ligero para el Open en el coche real: LiDAR, modelo del coche, indicadores del Open (/open/steer, /open/turn) y la camara comprimida.
+# bash tools/macos_rviz_real.sh docs/robot-real-pi/robot_open_light.rviz
+Panels:
+- Class: rviz_common/Displays
+  Name: Displays
+Visualization Manager:
+  Class: ''
+  Displays:
+  - Class: rviz_default_plugins/Grid
+    Name: Grid
+    Enabled: true
+    Cell Size: 0.5
+    Plane Cell Count: 10
+  - Class: rviz_default_plugins/LaserScan
+    Name: LiDAR (0 rad adelante)
+    Enabled: true
+    Topic:
+      Value: /robotek/scan
+      Reliability Policy: Best Effort
+      Depth: 5
+    Size (m): 0.03
+    Style: Flat Squares
+    Color Transformer: FlatColor
+    Color: 255; 255; 255
+  - Class: rviz_default_plugins/RobotModel
+    Name: Coche
+    Enabled: true
+    Description Source: Topic
+    Description Topic:
+      Value: /robot_description
+      Durability Policy: Transient Local
+    Alpha: 0.8
+  - Class: rviz_default_plugins/Marker
+    Name: Direccion mandada
+    Enabled: true
+    Topic:
+      Value: /open/steer
+      Reliability Policy: Reliable
+      Depth: 2
+  - Class: rviz_default_plugins/MarkerArray
+    Name: Giro (delante, isla, armado)
+    Enabled: true
+    Topic:
+      Value: /open/turn
+      Reliability Policy: Reliable
+      Depth: 2
+  - Class: rviz_default_plugins/Image
+    Name: Camara (comprimida)
+    Enabled: true
+    Topic:
+      Value: /picam/image_raw/compressed
+      Reliability Policy: Best Effort
+      Depth: 1
+  Global Options:
+    Fixed Frame: base_link
+    Frame Rate: 30
+  Views:
+    Current:
+      Class: rviz_default_plugins/TopDownOrtho
+      Scale: 1600.0
+Window Geometry:
+  Width: 1500
+  Height: 950
+  X: 6
+  Y: 40

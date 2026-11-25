@@ -1,0 +1,117 @@
+{
+  "reference": "be3800d",
+  "tolerance": 1e-09,
+  "runs": [
+    {
+      "run": "20261007-103534-ref-sync-reg0-ccw",
+      "cycles": 5130,
+      "states": [
+        "CALIBRATE",
+        "DETECT_DIRECTION",
+        "DONE",
+        "FINISH",
+        "PLAN",
+        "PLAN_BLOCKED",
+        "PLAN_INIT"
+      ],
+      "reference_reproduces_recording": true,
+      "reference_first_difference": null,
+      "refactored_equals_reference": true,
+      "refactored_first_difference": null,
+      "max_command_difference": 5.329070518200751e-15
+    },
+    {
+      "run": "20261007-103719-ref-sync-reg0-cw",
+      "cycles": 5079,
+      "states": [
+        "CALIBRATE",
+        "DETECT_DIRECTION",
+        "DONE",
+        "FINISH",
+        "PLAN",
+        "PLAN_BLOCKED",
+        "PLAN_INIT",
+        "PLAN_RECOVER"
+      ],
+      "reference_reproduces_recording": true,
+      "reference_first_difference": null,
+      "refactored_equals_reference": true,
+      "refactored_first_difference": null,
+      "max_command_difference": 9.547918011776346e-15
+    },
+    {
+      "run": "20261007-103905-ref-sync-reg1-ccw",
+      "cycles": 4351,
+      "states": [
+        "CALIBRATE",
+        "DETECT_DIRECTION",
+        "DONE",
+        "FINISH",
+        "PLAN",
+        "PLAN_INIT"
+      ],
+      "reference_reproduces_recording": true,
+      "reference_first_difference": null,
+      "refactored_equals_reference": true,
+      "refactored_first_difference": null,
+      "max_command_difference": 2.886579864025407e-15
+    },
+    {
+      "run": "20261007-104037-ref-sync-reg1-cw",
+      "cycles": 4834,
+      "states": [
+        "CALIBRATE",
+        "DETECT_DIRECTION",
+        "DONE",
+        "FINISH",
+        "PLAN",
+        "PLAN_BLOCKED",
+        "PLAN_INIT",
+        "PLAN_RECOVER"
+      ],
+      "reference_reproduces_recording": true,
+      "reference_first_difference": null,
+      "refactored_equals_reference": true,
+      "refactored_first_difference": null,
+      "max_command_difference": 5.388051116383963e-15
+    },
+    {
+      "run": "20261007-104217-ref-sync-reg2-ccw",
+      "cycles": 4862,
+      "states": [
+        "CALIBRATE",
+        "DETECT_DIRECTION",
+        "DONE",
+        "FINISH",
+        "PLAN",
+        "PLAN_BLOCKED",
+        "PLAN_INIT",
+        "PLAN_RECOVER"
+      ],
+      "reference_reproduces_recording": true,
+      "reference_first_difference": null,
+      "refactored_equals_reference": true,
+      "refactored_first_difference": null,
+      "max_command_difference": 4.218847493575595e-15
+    },
+    {
+      "run": "20261007-104359-ref-sync-reg2-cw",
+      "cycles": 5048,
+      "states": [
+        "CALIBRATE",
+        "DETECT_DIRECTION",
+        "DONE",
+        "FINISH",
+        "PLAN",
+        "PLAN_BLOCKED",
+        "PLAN_INIT",
+        "PLAN_RECOVER"
+      ],
+      "reference_reproduces_recording": true,
+      "reference_first_difference": null,
+      "refactored_equals_reference": true,
+      "refactored_first_difference": null,
+      "max_command_difference": 4.676814491233472e-15
+    }
+  ]
+}

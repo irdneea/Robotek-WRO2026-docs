@@ -1,0 +1,49 @@
+{
+  "run": "20261008T175654Z-realcar-hw-v4-floormask-80pct-r4",
+  "status": "failed",
+  "platform": "real_car_hardware",
+  "start_source": "button_unconfirmed",
+  "end_source": "stalled_state",
+  "time_from_start_wall_seconds": 7.97,
+  "time_from_start_sim_seconds": null,
+  "motion_wall_seconds": 0.0,
+  "motion_sim_seconds": null,
+  "lap_splits": [],
+  "points_estimated": 0,
+  "points_official": null,
+  "score_status": "real_car_operator_observation",
+  "points_breakdown": {
+    "1.1_sections": 0,
+    "1.2_laps": 0,
+    "1.3_stop_in_finish": 0
+  },
+  "profile": "open_realcar_v4.yaml",
+  "motor_cap_pct": 80,
+  "battery_mV_before": 6554,
+  "code": "e6aea27 + uncommitted: floor mask, real HSV, stall stop (params/code-changes-vs-e6aea27.diff)",
+  "failure": {
+    "cause": "car did not move: front 1.51-1.54 m during FOLLOW/RECOVER; STALLED after the second stall",
+    "likely_reason": "motor cable disconnected (operator, 8 oct 2026); the strategy and the stall stop worked as designed"
+  },
+  "start_pose": {
+    "x": null,
+    "y": null,
+    "yaw": null,
+    "lidar_at_start_m": {
+      "left": 0.56,
+      "right": 0.46,
+      "front": 1.53
+    }
+  },
+  "limitations": [
+    "Real car: no ground-truth pose, no judge.",
+    "Start pose x, y, yaw not measured.",
+    "Motor output not measured."
+  ],
+  "evidence": [
+    "telemetry.csv",
+    "events.jsonl",
+    "launch.log",
+    "params/"
+  ]
+}

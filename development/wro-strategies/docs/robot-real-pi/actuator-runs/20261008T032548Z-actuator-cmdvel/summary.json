@@ -1,0 +1,38 @@
+{
+  "run_dir": "/home/user/robotek-runs/20261008T032548Z-actuator-cmdvel",
+  "wheelbase_m": 0.13,
+  "steps": [
+    {
+      "kind": "motor",
+      "motor_pct": 0.15,
+      "pulso_s": 1.0,
+      "delay_aceleracion_s": 0.092,
+      "delay_movimiento_lidar_s": 0.463,
+      "velocidad_max_imu_mps": 0.163,
+      "velocidad_max_lidar_mps": 0.238,
+      "velocidad_estable_mps": 0.178,
+      "se_mueve": true,
+      "tiempo_hasta_parar_s": 0.563,
+      "distancia_total_m": 0.19,
+      "cabeceo_max_rad_s": 0.275,
+      "az_min_m_s2": 8.4,
+      "step": "cmd_vel 0.15 m/s"
+    },
+    {
+      "kind": "motor",
+      "motor_pct": 0.3,
+      "pulso_s": 1.0,
+      "delay_aceleracion_s": 0.147,
+      "delay_movimiento_lidar_s": 0.543,
+      "velocidad_max_imu_mps": 0.286,
+      "velocidad_max_lidar_mps": 0.336,
+      "velocidad_estable_mps": 0.266,
+      "se_mueve": true,
+      "tiempo_hasta_parar_s": 0.743,
+      "distancia_total_m": 0.32,
+      "cabeceo_max_rad_s": 0.334,
+      "az_min_m_s2": 9.0,
+      "step": "cmd_vel 0.30 m/s"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+# Experimental v6: front entry advanced 5 cm; validation pending.
+# Observer uses simulation clock and unchanged actuator acceleration2.
+open_strategy:
+  ros__parameters:
+    approach_distance: 0.45
+    corner_lookahead: 0.25
+    corner_speed: 0.95
+    cruise_speed: 1.5
+    finish_speed: 0.3
+    follow_gyro_gain: 1.0
+    heading_kd: 0.2
+    turn_exit_angle: 0.6
+    turn_heading_gain: 0.8
+    turn_max_time: 8.0
+    turn_rate_damping: 0.4
+    turn_steer: 0.4363323129985824
+    direction: auto
+    done_hold: 35.0
+    turn_front_axis: true
+    turn_front_distance: 0.35
+    turn_front_latency: 1.0
+    brake_decel: 1.5
+    brake_margin: 0.15
+    outer_lane_distance: 0.35
+    turn_front_yaw_accel: 2.0
+    turn_front_command_model: true

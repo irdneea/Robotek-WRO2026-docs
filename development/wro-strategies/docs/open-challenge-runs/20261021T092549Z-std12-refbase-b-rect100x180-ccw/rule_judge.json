@@ -1,0 +1,102 @@
+{
+  "rule_judge": {
+    "version": 2,
+    "challenge": "open",
+    "max_points": 30,
+    "points": 30,
+    "breakdown": {
+      "1.1_sections": 24,
+      "1.2_laps": 3,
+      "1.3_stop_in_finish": 3
+    },
+    "faults": [],
+    "notes": [
+      "Wall movement cannot occur in simulation (walls are static)."
+    ],
+    "round_end": {
+      "reason": "stopped_after_three_laps",
+      "sim_time": 40.2,
+      "wall_time": 1792574772.845956
+    },
+    "time_from_start_sim_seconds": 40.197,
+    "time_from_start_wall_seconds": 20.398300170898438,
+    "lap_splits": [
+      {
+        "lap": 1,
+        "sim_seconds": 13.017000000000001,
+        "cumulative_sim_seconds": 13.017000000000001
+      },
+      {
+        "lap": 2,
+        "sim_seconds": 12.62,
+        "cumulative_sim_seconds": 25.637
+      },
+      {
+        "lap": 3,
+        "sim_seconds": 13.340000000000003,
+        "cumulative_sim_seconds": 38.977000000000004
+      }
+    ],
+    "contact_evaluated": true,
+    "stop_hold_sim_seconds": 35.16,
+    "stop_drift_m": 0.00014810594417226012,
+    "stop_inside_finish_section": true,
+    "contacts_first_sim_time": {},
+    "pose_source": "audit_pose.csv",
+    "pose_sample_count": 3793
+  },
+  "validation": {
+    "version": 1,
+    "passed": true,
+    "checks": {
+      "rule_maximum": {
+        "value": 30,
+        "threshold": 30,
+        "passed": true
+      },
+      "no_rule_faults": {
+        "value": 0,
+        "threshold": 0,
+        "passed": true
+      },
+      "stop_observed": {
+        "value": 35.16,
+        "threshold": 30.0,
+        "passed": true
+      },
+      "no_contacts": {
+        "value": false,
+        "threshold": false,
+        "passed": true,
+        "note": "Gazebo contact sensors"
+      },
+      "min_outer_wall_clearance_m": {
+        "value": 0.11076909535386519,
+        "threshold": 0.01,
+        "passed": true,
+        "note": "sampled at telemetry rate"
+      },
+      "min_inner_wall_clearance_m": {
+        "value": 0.1220626258842399,
+        "threshold": 0.01,
+        "passed": true,
+        "note": "sampled at telemetry rate"
+      },
+      "steering_limit": {
+        "value": 18.891725118630983,
+        "threshold": 25.5,
+        "passed": true
+      }
+    },
+    "failed": [],
+    "min_clearance_m": 0.11076909535386519,
+    "margin_class": "comfortable",
+    "thresholds": {
+      "min_clearance_m": 0.01,
+      "comfortable_m": 0.05,
+      "tight_m": 0.02,
+      "stop_observed_s": 30.0,
+      "steer_limit_deg": 25.5
+    }
+  }
+}

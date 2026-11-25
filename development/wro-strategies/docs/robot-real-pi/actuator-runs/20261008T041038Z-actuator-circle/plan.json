@@ -1,0 +1,601 @@
+{
+  "params": {
+    "test": "circle",
+    "steer_angles": [
+      10.0,
+      25.0
+    ],
+    "motor_pcts": [
+      15.0,
+      20.0,
+      30.0
+    ],
+    "motor_time": 1.0,
+    "max_motor_time": 1.0,
+    "return_back": true,
+    "free_back": 0.6,
+    "ramp_pct": 30.0,
+    "ramp_time": 0.5,
+    "ramp_hold": 0.7,
+    "ramp_free": 1.5,
+    "cmd_speeds": [
+      0.15,
+      0.3
+    ],
+    "circle_angles": [
+      25.0,
+      10.0
+    ],
+    "circle_pulses": 4,
+    "cmd_accel": 1.0,
+    "cmd_decel": 0.6,
+    "cmd_hold": 0.6,
+    "steer_pct": 20.0,
+    "coast_time": 1.5,
+    "hold_time": 1.0,
+    "free_distance": 1.0,
+    "stop_distance": 0.35,
+    "wait_button": false,
+    "run_dir": "~/robotek-runs",
+    "servo_topic": "/ros_robot_controller/acker_servo/set_state",
+    "servo_duration": 0.02,
+    "servo_center_us": 1500.0,
+    "servo_gain_pos": 18.96551724137931,
+    "servo_gain_neg": 17.24137931034483,
+    "servo_sign": -1.0,
+    "servo_min_us": 1000.0,
+    "servo_max_us": 2050.0
+  },
+  "plan": [
+    {
+      "step": "inicio",
+      "phase": "idle",
+      "servo": 0.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "ruedas a +25",
+      "phase": "circle_pre",
+      "servo": 25.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "circulo +25 pulso 1",
+      "phase": "circle",
+      "servo": 25.0,
+      "motor": 20.0,
+      "time": 1.0,
+      "needs_free": 0.6
+    },
+    {
+      "step": "circulo +25 pausa",
+      "phase": "circle",
+      "servo": 25.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "circulo +25 pulso 2",
+      "phase": "circle",
+      "servo": 25.0,
+      "motor": 20.0,
+      "time": 1.0,
+      "needs_free": 0.6
+    },
+    {
+      "step": "circulo +25 pausa",
+      "phase": "circle",
+      "servo": 25.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "circulo +25 pulso 3",
+      "phase": "circle",
+      "servo": 25.0,
+      "motor": 20.0,
+      "time": 1.0,
+      "needs_free": 0.6
+    },
+    {
+      "step": "circulo +25 pausa",
+      "phase": "circle",
+      "servo": 25.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "circulo +25 pulso 4",
+      "phase": "circle",
+      "servo": 25.0,
+      "motor": 20.0,
+      "time": 1.0,
+      "needs_free": 0.6
+    },
+    {
+      "step": "circulo +25 pausa",
+      "phase": "circle",
+      "servo": 25.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "volver +25 pulso 1",
+      "phase": "return",
+      "servo": 25.0,
+      "motor": -20.0,
+      "time": 1.0,
+      "needs_back": 0.6
+    },
+    {
+      "step": "parar",
+      "phase": "return",
+      "servo": 25.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "volver +25 pulso 2",
+      "phase": "return",
+      "servo": 25.0,
+      "motor": -20.0,
+      "time": 1.0,
+      "needs_back": 0.6
+    },
+    {
+      "step": "parar",
+      "phase": "return",
+      "servo": 25.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "volver +25 pulso 3",
+      "phase": "return",
+      "servo": 25.0,
+      "motor": -20.0,
+      "time": 1.0,
+      "needs_back": 0.6
+    },
+    {
+      "step": "parar",
+      "phase": "return",
+      "servo": 25.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "volver +25 pulso 4",
+      "phase": "return",
+      "servo": 25.0,
+      "motor": -20.0,
+      "time": 1.0,
+      "needs_back": 0.6
+    },
+    {
+      "step": "parar",
+      "phase": "return",
+      "servo": 25.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "centrar",
+      "phase": "circle_post",
+      "servo": 0.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "ruedas a -25",
+      "phase": "circle_pre",
+      "servo": -25.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "circulo -25 pulso 1",
+      "phase": "circle",
+      "servo": -25.0,
+      "motor": 20.0,
+      "time": 1.0,
+      "needs_free": 0.6
+    },
+    {
+      "step": "circulo -25 pausa",
+      "phase": "circle",
+      "servo": -25.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "circulo -25 pulso 2",
+      "phase": "circle",
+      "servo": -25.0,
+      "motor": 20.0,
+      "time": 1.0,
+      "needs_free": 0.6
+    },
+    {
+      "step": "circulo -25 pausa",
+      "phase": "circle",
+      "servo": -25.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "circulo -25 pulso 3",
+      "phase": "circle",
+      "servo": -25.0,
+      "motor": 20.0,
+      "time": 1.0,
+      "needs_free": 0.6
+    },
+    {
+      "step": "circulo -25 pausa",
+      "phase": "circle",
+      "servo": -25.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "circulo -25 pulso 4",
+      "phase": "circle",
+      "servo": -25.0,
+      "motor": 20.0,
+      "time": 1.0,
+      "needs_free": 0.6
+    },
+    {
+      "step": "circulo -25 pausa",
+      "phase": "circle",
+      "servo": -25.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "volver -25 pulso 1",
+      "phase": "return",
+      "servo": -25.0,
+      "motor": -20.0,
+      "time": 1.0,
+      "needs_back": 0.6
+    },
+    {
+      "step": "parar",
+      "phase": "return",
+      "servo": -25.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "volver -25 pulso 2",
+      "phase": "return",
+      "servo": -25.0,
+      "motor": -20.0,
+      "time": 1.0,
+      "needs_back": 0.6
+    },
+    {
+      "step": "parar",
+      "phase": "return",
+      "servo": -25.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "volver -25 pulso 3",
+      "phase": "return",
+      "servo": -25.0,
+      "motor": -20.0,
+      "time": 1.0,
+      "needs_back": 0.6
+    },
+    {
+      "step": "parar",
+      "phase": "return",
+      "servo": -25.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "volver -25 pulso 4",
+      "phase": "return",
+      "servo": -25.0,
+      "motor": -20.0,
+      "time": 1.0,
+      "needs_back": 0.6
+    },
+    {
+      "step": "parar",
+      "phase": "return",
+      "servo": -25.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "centrar",
+      "phase": "circle_post",
+      "servo": 0.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "ruedas a +10",
+      "phase": "circle_pre",
+      "servo": 10.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "circulo +10 pulso 1",
+      "phase": "circle",
+      "servo": 10.0,
+      "motor": 20.0,
+      "time": 1.0,
+      "needs_free": 0.6
+    },
+    {
+      "step": "circulo +10 pausa",
+      "phase": "circle",
+      "servo": 10.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "circulo +10 pulso 2",
+      "phase": "circle",
+      "servo": 10.0,
+      "motor": 20.0,
+      "time": 1.0,
+      "needs_free": 0.6
+    },
+    {
+      "step": "circulo +10 pausa",
+      "phase": "circle",
+      "servo": 10.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "circulo +10 pulso 3",
+      "phase": "circle",
+      "servo": 10.0,
+      "motor": 20.0,
+      "time": 1.0,
+      "needs_free": 0.6
+    },
+    {
+      "step": "circulo +10 pausa",
+      "phase": "circle",
+      "servo": 10.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "circulo +10 pulso 4",
+      "phase": "circle",
+      "servo": 10.0,
+      "motor": 20.0,
+      "time": 1.0,
+      "needs_free": 0.6
+    },
+    {
+      "step": "circulo +10 pausa",
+      "phase": "circle",
+      "servo": 10.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "volver +10 pulso 1",
+      "phase": "return",
+      "servo": 10.0,
+      "motor": -20.0,
+      "time": 1.0,
+      "needs_back": 0.6
+    },
+    {
+      "step": "parar",
+      "phase": "return",
+      "servo": 10.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "volver +10 pulso 2",
+      "phase": "return",
+      "servo": 10.0,
+      "motor": -20.0,
+      "time": 1.0,
+      "needs_back": 0.6
+    },
+    {
+      "step": "parar",
+      "phase": "return",
+      "servo": 10.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "volver +10 pulso 3",
+      "phase": "return",
+      "servo": 10.0,
+      "motor": -20.0,
+      "time": 1.0,
+      "needs_back": 0.6
+    },
+    {
+      "step": "parar",
+      "phase": "return",
+      "servo": 10.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "volver +10 pulso 4",
+      "phase": "return",
+      "servo": 10.0,
+      "motor": -20.0,
+      "time": 1.0,
+      "needs_back": 0.6
+    },
+    {
+      "step": "parar",
+      "phase": "return",
+      "servo": 10.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "centrar",
+      "phase": "circle_post",
+      "servo": 0.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "ruedas a -10",
+      "phase": "circle_pre",
+      "servo": -10.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "circulo -10 pulso 1",
+      "phase": "circle",
+      "servo": -10.0,
+      "motor": 20.0,
+      "time": 1.0,
+      "needs_free": 0.6
+    },
+    {
+      "step": "circulo -10 pausa",
+      "phase": "circle",
+      "servo": -10.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "circulo -10 pulso 2",
+      "phase": "circle",
+      "servo": -10.0,
+      "motor": 20.0,
+      "time": 1.0,
+      "needs_free": 0.6
+    },
+    {
+      "step": "circulo -10 pausa",
+      "phase": "circle",
+      "servo": -10.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "circulo -10 pulso 3",
+      "phase": "circle",
+      "servo": -10.0,
+      "motor": 20.0,
+      "time": 1.0,
+      "needs_free": 0.6
+    },
+    {
+      "step": "circulo -10 pausa",
+      "phase": "circle",
+      "servo": -10.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "circulo -10 pulso 4",
+      "phase": "circle",
+      "servo": -10.0,
+      "motor": 20.0,
+      "time": 1.0,
+      "needs_free": 0.6
+    },
+    {
+      "step": "circulo -10 pausa",
+      "phase": "circle",
+      "servo": -10.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "volver -10 pulso 1",
+      "phase": "return",
+      "servo": -10.0,
+      "motor": -20.0,
+      "time": 1.0,
+      "needs_back": 0.6
+    },
+    {
+      "step": "parar",
+      "phase": "return",
+      "servo": -10.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "volver -10 pulso 2",
+      "phase": "return",
+      "servo": -10.0,
+      "motor": -20.0,
+      "time": 1.0,
+      "needs_back": 0.6
+    },
+    {
+      "step": "parar",
+      "phase": "return",
+      "servo": -10.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "volver -10 pulso 3",
+      "phase": "return",
+      "servo": -10.0,
+      "motor": -20.0,
+      "time": 1.0,
+      "needs_back": 0.6
+    },
+    {
+      "step": "parar",
+      "phase": "return",
+      "servo": -10.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "volver -10 pulso 4",
+      "phase": "return",
+      "servo": -10.0,
+      "motor": -20.0,
+      "time": 1.0,
+      "needs_back": 0.6
+    },
+    {
+      "step": "parar",
+      "phase": "return",
+      "servo": -10.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "centrar",
+      "phase": "circle_post",
+      "servo": 0.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "fin",
+      "phase": "idle",
+      "servo": 0.0,
+      "motor": 0.0,
+      "time": 0.5
+    }
+  ]
+}

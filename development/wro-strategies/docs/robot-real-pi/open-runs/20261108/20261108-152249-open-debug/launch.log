@@ -1,0 +1,143 @@
+[INFO] [launch]: All log files can be found below /home/user/.ros/log/2026-11-08-15-22-52-830120-user-desktop-7154
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [rrc_driver-1]: process started with pid [7218]
+[INFO] [ldlidar_stl_ros2_node-2]: process started with pid [7219]
+[INFO] [static_transform_publisher-3]: process started with pid [7220]
+[INFO] [pi_camera_publisher-4]: process started with pid [7221]
+[INFO] [scan_adapter-5]: process started with pid [7222]
+[INFO] [imu_adapter-6]: process started with pid [7223]
+[INFO] [motor_driver-7]: process started with pid [7224]
+[INFO] [base_adapter-8]: process started with pid [7225]
+[INFO] [start_button-9]: process started with pid [7226]
+[INFO] [battery_guard-10]: process started with pid [7227]
+[INFO] [status_leds-11]: process started with pid [7228]
+[INFO] [robot_state_publisher-12]: process started with pid [7232]
+[INFO] [round_reporter-13]: process started with pid [7233]
+[INFO] [open_v5-14]: process started with pid [7234]
+[static_transform_publisher-3] [WARN] [1794169373.394964928] []: Old-style arguments are deprecated; see --help for new-style arguments
+[ldlidar_stl_ros2_node-2] [INFO] [1794169373.487652723] [LD19]: LDLiDAR SDK Pack Version is: v3.0.3
+[ldlidar_stl_ros2_node-2] [INFO] [1794169373.487850408] [LD19]: <product_name>: LDLiDAR_LD19
+[ldlidar_stl_ros2_node-2] [INFO] [1794169373.487901834] [LD19]: <topic_name>: scan
+[ldlidar_stl_ros2_node-2] [INFO] [1794169373.487937612] [LD19]: <frame_id>: base_laser
+[ldlidar_stl_ros2_node-2] [INFO] [1794169373.487967871] [LD19]: <port_name>: /dev/ldlidar
+[ldlidar_stl_ros2_node-2] [INFO] [1794169373.487997371] [LD19]: <port_baudrate>: 230400
+[ldlidar_stl_ros2_node-2] [INFO] [1794169373.488022241] [LD19]: <laser_scan_dir>: Counterclockwise
+[ldlidar_stl_ros2_node-2] [INFO] [1794169373.488051630] [LD19]: <enable_angle_crop_func>: false
+[ldlidar_stl_ros2_node-2] [INFO] [1794169373.488077593] [LD19]: <angle_crop_min>: 135.000000
+[ldlidar_stl_ros2_node-2] [INFO] [1794169373.488116963] [LD19]: <angle_crop_max>: 225.000000
+[ldlidar_stl_ros2_node-2] [INFO] [1794169373.516115042] [LD19]: ldlidar node start is success
+[ldlidar_stl_ros2_node-2] [INFO] [1794169373.518447279] [LD19]: ldlidar communication is normal.
+[ldlidar_stl_ros2_node-2] [INFO] [1794169373.526532653] [LD19]: Publish topic message:ldlidar scan data.
+[static_transform_publisher-3] [INFO] [1794169373.599794780] [base_link_to_base_laser_ld19]: Spinning until stopped - publishing transform
+[static_transform_publisher-3] translation: ('0.000000', '0.000000', '0.180000')
+[static_transform_publisher-3] rotation: ('0.000000', '0.000000', '0.000000', '1.000000')
+[static_transform_publisher-3] from 'base_link' to 'base_laser'
+[robot_state_publisher-12] [INFO] [1794169373.730518099] [robot_state_publisher]: Robot initialized
+[battery_guard-10] [INFO] [1794169376.426131701] [battery_guard]: Battery guard: red blinking below 6.80 V (5 consecutive readings); it does not stop the car.
+[start_button-9] [WARN] [1794169376.989912434] [start_button]: No button: the car starts by itself in 12 s; press the button to stop.
+[start_button-9] [INFO] [1794169377.003202781] [start_button]: Press the button to start; press it again to stop.
+[imu_adapter-6] [INFO] [1794169377.054117986] [imu_adapter]: IMU axes forward=-x left=+z up=+y
+[motor_driver-7] [INFO] [1794169377.610822051] [tb6612fng_motor]: TB6612FNG ready (forward and reverse).
+[rrc_driver-1] [INFO] [1794169377.774941999] [rrc_driver]: RRC Lite board on /dev/rrc_lite
+[status_leds-11] [INFO] [1794169377.834881207] [status_leds]: Status RGBs at level 2/255: green = ready, blue = running.
+[base_adapter-8] [INFO] [1794169377.964324514] [base_adapter]: Drive motor: RRC Lite port M2, 4.40 rps per m/s.
+[base_adapter-8] [INFO] [1794169378.019430249] [base_adapter]: Wall guard: slows down from 0.30 m, 0 at 0.10 m (+-15 deg).
+[rrc_driver-1] [INFO] [1794169378.072089489] [rrc_driver]: Settings servo 1 - Offset 0
+[rrc_driver-1] [INFO] [1794169378.075182039] [rrc_driver]: Settings servo 2 - Offset 0
+[rrc_driver-1] [INFO] [1794169378.078358219] [rrc_driver]: Settings servo 3 - Offset 0
+[rrc_driver-1] [INFO] [1794169378.082408656] [rrc_driver]: Settings servo 4 - Offset 0
+[rrc_driver-1] [INFO] [1794169378.096668353] [rrc_driver]: [1;32mstart[0m
+[ldlidar_stl_ros2_node-2] [LDS][INFO][1794169373.515963320][Actual BaudRate reported:230400]
+[pi_camera_publisher-4] [INFO] [1794169378.437846210] [pi_camera_publisher]: Pi camera: rpicam-vid -t 0 -n --codec yuv420 -o - --width 1280 --height 720 --framerate 10.0 --mode 2304:1296:10:P --rotation 180
+[round_reporter-13] [INFO] [1794169378.614271990] [round_reporter]: Round report on (debug): states, direction, corners, laps and lines.
+[open_v5-14] [INFO] [1794169379.187322419] [strategy]: Open v5 | direction=auto cruise=1.28 m/s | telemetry /home/user/runs/20261108-152259-open-v5/telemetry.csv
+[open_v5-14] [WARN] [1794169379.245656926] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[round_reporter-13] [INFO] [1794169379.250044400] [round_reporter]: [   0.0 s] Estado: WAIT_START
+[open_v5-14] [WARN] [1794169381.086561344] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1794169385.422406859] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[pi_camera_publisher-4] [INFO] [1794169388.407433122] [pi_camera_publisher]: Pi camera: 8.7 frames/s at 1280x720.
+[start_button-9] [INFO] [1794169388.893461965] [start_button]: Start (no button).
+[round_reporter-13] [INFO] [1794169388.896166510] [round_reporter]: [   0.0 s] Start
+[open_v5-14] [WARN] [1794169388.932272671] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[round_reporter-13] [INFO] [1794169388.961939653] [round_reporter]: [   0.1 s] Estado: CALIBRATE
+[round_reporter-13] [INFO] [1794169389.314988312] [round_reporter]: [   0.4 s] Estado: DETECT_DIRECTION
+[pi_camera_publisher-4] [INFO] [1794169389.345301286] [pi_camera_publisher]: Pi camera off (state FOLLOW).
+[round_reporter-13] [INFO] [1794169389.346227527] [round_reporter]: [   0.5 s] Estado: FOLLOW
+[round_reporter-13] [INFO] [1794169391.052618384] [round_reporter]: [   2.2 s] Estado: TURN
+[round_reporter-13] [INFO] [1794169391.959568740] [round_reporter]: [   3.1 s] Sentido: horario (derecha) (-76 grados en la 1.a esquina)
+[round_reporter-13] [INFO] [1794169391.960253412] [round_reporter]: [   3.1 s] Esquina 1/12 (vuelta 1, -76 grados)
+[round_reporter-13] [INFO] [1794169391.960844215] [round_reporter]: [   3.1 s] Estado: FOLLOW
+[round_reporter-13] [INFO] [1794169393.451863960] [round_reporter]: [   4.6 s] Estado: TURN
+[round_reporter-13] [INFO] [1794169394.287191952] [round_reporter]: [   5.4 s] Esquina 2/12 (vuelta 1, -81 grados)
+[round_reporter-13] [INFO] [1794169394.288172433] [round_reporter]: [   5.4 s] Estado: FOLLOW
+[round_reporter-13] [INFO] [1794169395.455707950] [round_reporter]: [   6.6 s] Estado: TURN
+[round_reporter-13] [INFO] [1794169396.307836808] [round_reporter]: [   7.4 s] Esquina 3/12 (vuelta 1, -81 grados)
+[round_reporter-13] [INFO] [1794169396.308644812] [round_reporter]: [   7.4 s] Estado: FOLLOW
+[round_reporter-13] [INFO] [1794169397.652667750] [round_reporter]: [   8.8 s] Estado: TURN
+[round_reporter-13] [INFO] [1794169398.508361273] [round_reporter]: [   9.6 s] Esquina 4/12 (vuelta 1, -81 grados)
+[round_reporter-13] [INFO] [1794169398.509198443] [round_reporter]: [   9.6 s] Vuelta 1 completa en 9.6 s
+[round_reporter-13] [INFO] [1794169398.509988318] [round_reporter]: [   9.6 s] Estado: FOLLOW
+[round_reporter-13] [INFO] [1794169399.753459619] [round_reporter]: [  10.9 s] Estado: TURN
+[round_reporter-13] [INFO] [1794169400.607040612] [round_reporter]: [  11.7 s] Esquina 5/12 (vuelta 2, -80 grados)
+[round_reporter-13] [INFO] [1794169400.607890672] [round_reporter]: [  11.7 s] Estado: FOLLOW
+[round_reporter-13] [INFO] [1794169401.952668251] [round_reporter]: [  13.1 s] Estado: TURN
+[round_reporter-13] [INFO] [1794169402.789592520] [round_reporter]: [  13.9 s] Esquina 6/12 (vuelta 2, -88 grados)
+[round_reporter-13] [INFO] [1794169402.790444969] [round_reporter]: [  13.9 s] Estado: FOLLOW
+[round_reporter-13] [INFO] [1794169404.052901099] [round_reporter]: [  15.2 s] Estado: TURN
+[round_reporter-13] [INFO] [1794169404.888665352] [round_reporter]: [  16.0 s] Esquina 7/12 (vuelta 2, -78 grados)
+[round_reporter-13] [INFO] [1794169404.889480598] [round_reporter]: [  16.0 s] Estado: FOLLOW
+[round_reporter-13] [INFO] [1794169406.152435918] [round_reporter]: [  17.3 s] Estado: TURN
+[round_reporter-13] [INFO] [1794169407.006946925] [round_reporter]: [  18.1 s] Esquina 8/12 (vuelta 2, -81 grados)
+[round_reporter-13] [INFO] [1794169407.007735654] [round_reporter]: [  18.1 s] Vuelta 2 completa en 8.5 s
+[round_reporter-13] [INFO] [1794169407.008846321] [round_reporter]: [  18.1 s] Estado: FOLLOW
+[round_reporter-13] [INFO] [1794169408.352504862] [round_reporter]: [  19.5 s] Estado: TURN
+[round_reporter-13] [INFO] [1794169409.206845238] [round_reporter]: [  20.3 s] Esquina 9/12 (vuelta 3, -81 grados)
+[round_reporter-13] [INFO] [1794169409.207652911] [round_reporter]: [  20.3 s] Estado: FOLLOW
+[round_reporter-13] [INFO] [1794169410.466234737] [round_reporter]: [  21.6 s] Estado: TURN
+[round_reporter-13] [INFO] [1794169411.308450115] [round_reporter]: [  22.4 s] Esquina 10/12 (vuelta 3, -79 grados)
+[round_reporter-13] [INFO] [1794169411.310867190] [round_reporter]: [  22.4 s] Estado: FOLLOW
+[round_reporter-13] [INFO] [1794169412.655222049] [round_reporter]: [  23.8 s] Estado: TURN
+[round_reporter-13] [INFO] [1794169413.487822367] [round_reporter]: [  24.6 s] Esquina 11/12 (vuelta 3, -79 grados)
+[round_reporter-13] [INFO] [1794169413.488840760] [round_reporter]: [  24.6 s] Estado: FOLLOW
+[round_reporter-13] [INFO] [1794169414.755753510] [round_reporter]: [  25.9 s] Estado: TURN
+[round_reporter-13] [INFO] [1794169415.749800573] [round_reporter]: [  26.9 s] Esquina 12/12 (vuelta 3, -65 grados)
+[round_reporter-13] [INFO] [1794169415.750439527] [round_reporter]: [  26.9 s] Vuelta 3 completa en 8.7 s
+[round_reporter-13] [INFO] [1794169415.751012259] [round_reporter]: [  26.9 s] Estado: FINISH
+[round_reporter-13] [INFO] [1794169418.151940023] [round_reporter]: [  29.3 s] Estado: DONE
+[round_reporter-13] [INFO] [1794169418.152784103] [round_reporter]: [  29.3 s] Ronda terminada: 12 esquinas, líneas azul/naranja 0/0, 29.3 s desde Start
+[open_v5-14] [WARN] [1794169429.185456349] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+[ldlidar_stl_ros2_node-2] [INFO] [1794169474.702708676] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[static_transform_publisher-3] [INFO] [1794169474.702774120] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[robot_state_publisher-12] [INFO] [1794169474.703252616] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[rrc_driver-1] Exception in thread Thread-2 (pub_callback):
+[rrc_driver-1] Traceback (most recent call last):
+[rrc_driver-1]   File "/usr/lib/python3.12/threading.py", line 1073, in _bootstrap_inner
+[rrc_driver-1]     self.run()
+[rrc_driver-1]   File "/usr/lib/python3.12/threading.py", line 1010, in run
+[rrc_driver-1]     self._target(*self._args, **self._kwargs)
+[rrc_driver-1]   File "/home/user/robotek-learn/build/rrc_lite_driver/rrc_lite_driver/rrc_driver.py", line 243, in pub_callback
+[rrc_driver-1]     rclpy.shutdown()
+[rrc_driver-1]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/__init__.py", line 134, in shutdown
+[rrc_driver-1]     _shutdown(context=context)
+[rrc_driver-1]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/utilities.py", line 82, in shutdown
+[rrc_driver-1]     context.shutdown()
+[rrc_driver-1]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/context.py", line 129, in shutdown
+[rrc_driver-1]     self.__context.shutdown()
+[rrc_driver-1] rclpy._rclpy_pybind11.RCLError: failed to shutdown: rcl_shutdown already called on the given context, at ./src/rcl/init.c:333
+[ldlidar_stl_ros2_node-2] [INFO] [1794169474.721615176] [LD19]: ldlidar_published is end
+[rrc_driver-1] shutdown finish: motors at 0
+[INFO] [robot_state_publisher-12]: process has finished cleanly [pid 7232]
+[INFO] [ldlidar_stl_ros2_node-2]: process has finished cleanly [pid 7219]
+[INFO] [static_transform_publisher-3]: process has finished cleanly [pid 7220]
+[INFO] [round_reporter-13]: process has finished cleanly [pid 7233]
+[INFO] [start_button-9]: process has finished cleanly [pid 7226]
+[INFO] [status_leds-11]: process has finished cleanly [pid 7228]
+[INFO] [imu_adapter-6]: process has finished cleanly [pid 7223]
+[INFO] [pi_camera_publisher-4]: process has finished cleanly [pid 7221]
+[INFO] [rrc_driver-1]: process has finished cleanly [pid 7218]
+[INFO] [scan_adapter-5]: process has finished cleanly [pid 7222]
+[INFO] [battery_guard-10]: process has finished cleanly [pid 7227]
+[INFO] [motor_driver-7]: process has finished cleanly [pid 7224]
+[INFO] [base_adapter-8]: process has finished cleanly [pid 7225]
+[INFO] [open_v5-14]: process has finished cleanly [pid 7234]

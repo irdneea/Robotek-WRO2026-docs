@@ -1,0 +1,144 @@
+{
+  "run": "20261006T193850Z-std12-honest-fsv4-r1-square100-ccw",
+  "status": "completed",
+  "start_source": "auto_first_scan",
+  "end_source": "done_event",
+  "time_from_start_wall_seconds": 13.708150148391724,
+  "time_from_start_sim_seconds": 23.637999999999998,
+  "motion_wall_seconds": 12.394656658172607,
+  "motion_sim_seconds": 21.381,
+  "lap_splits": [
+    {
+      "lap": 1,
+      "wall_seconds": 3.8809516429901123,
+      "cumulative_wall_seconds": 3.8809516429901123
+    },
+    {
+      "lap": 2,
+      "wall_seconds": 3.9398410320281982,
+      "cumulative_wall_seconds": 7.8207926750183105
+    },
+    {
+      "lap": 3,
+      "wall_seconds": 3.952662467956543,
+      "cumulative_wall_seconds": 11.773455142974854
+    }
+  ],
+  "points_estimated": 30,
+  "points_official": null,
+  "score_status": "simulation_rule_judge_v1",
+  "points_breakdown": {
+    "1.1_sections": 24,
+    "1.2_laps": 3,
+    "1.3_stop_in_finish": 3
+  },
+  "limitations": [
+    "Sections and laps estimated from ground-truth winding, not judged section exits.",
+    "Contacts, wall movement, start legality and human repairs are not adjudicated.",
+    "Finish bonus is provisional; DONE does not prove 30 seconds stationary."
+  ],
+  "points_estimated_legacy": 30,
+  "points_breakdown_legacy": {
+    "sections_estimated": 24,
+    "laps_estimated": 3,
+    "finish_provisional": 3
+  },
+  "rule_judge": {
+    "version": 1,
+    "challenge": "open",
+    "max_points": 30,
+    "points": 30,
+    "breakdown": {
+      "1.1_sections": 24,
+      "1.2_laps": 3,
+      "1.3_stop_in_finish": 3
+    },
+    "faults": [],
+    "notes": [
+      "Wall movement cannot occur in simulation (walls are static)."
+    ],
+    "round_end": {
+      "reason": "stopped_after_three_laps",
+      "sim_time": 23.641,
+      "wall_time": 1791315548.1646008
+    },
+    "time_from_start_sim_seconds": 23.637999999999998,
+    "time_from_start_wall_seconds": 13.708150148391724,
+    "lap_splits": [
+      {
+        "lap": 1,
+        "sim_seconds": 9.137,
+        "cumulative_sim_seconds": 9.137
+      },
+      {
+        "lap": 2,
+        "sim_seconds": 6.919999999999998,
+        "cumulative_sim_seconds": 16.057
+      },
+      {
+        "lap": 3,
+        "sim_seconds": 6.84,
+        "cumulative_sim_seconds": 22.897
+      }
+    ],
+    "contact_evaluated": true,
+    "stop_hold_sim_seconds": 34.400999999999996,
+    "stop_drift_m": 0.0,
+    "stop_inside_finish_section": true,
+    "contacts_first_sim_time": {}
+  },
+  "validation": {
+    "version": 1,
+    "passed": true,
+    "checks": {
+      "rule_maximum": {
+        "value": 30,
+        "threshold": 30,
+        "passed": true
+      },
+      "no_rule_faults": {
+        "value": 0,
+        "threshold": 0,
+        "passed": true
+      },
+      "stop_observed": {
+        "value": 34.400999999999996,
+        "threshold": 30.0,
+        "passed": true
+      },
+      "no_contacts": {
+        "value": false,
+        "threshold": false,
+        "passed": true,
+        "note": "Gazebo contact sensors"
+      },
+      "min_outer_wall_clearance_m": {
+        "value": 0.12706629477015824,
+        "threshold": 0.01,
+        "passed": true,
+        "note": "sampled at telemetry rate"
+      },
+      "min_inner_wall_clearance_m": {
+        "value": 0.3695219028261638,
+        "threshold": 0.01,
+        "passed": true,
+        "note": "sampled at telemetry rate"
+      },
+      "steering_limit": {
+        "value": 24.986034784696805,
+        "threshold": 25.5,
+        "passed": true
+      }
+    },
+    "failed": [],
+    "min_clearance_m": 0.12706629477015824,
+    "margin_class": "comfortable",
+    "thresholds": {
+      "min_clearance_m": 0.01,
+      "comfortable_m": 0.05,
+      "tight_m": 0.02,
+      "stop_observed_s": 30.0,
+      "steer_limit_deg": 25.5
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "run_dir": "/home/user/robotek-runs/20261008T024253Z-actuator-steer",
+  "wheelbase_m": 0.13,
+  "steps": [
+    {
+      "kind": "giro",
+      "servo_deg": 10.0,
+      "motor_pct": 30.0,
+      "delay_yaw_s": 0.098,
+      "yaw_rate_max_rad_s": -0.449,
+      "velocidad_al_girar_mps": 0.125,
+      "angulo_efectivo_deg": -2.5,
+      "angulo_muestras": 4,
+      "signo_ok": false,
+      "step": "giro +10"
+    },
+    {
+      "kind": "giro",
+      "servo_deg": -10.0,
+      "motor_pct": 30.0,
+      "delay_yaw_s": null,
+      "yaw_rate_max_rad_s": -0.171,
+      "velocidad_al_girar_mps": 0.202,
+      "angulo_efectivo_deg": -2.0,
+      "angulo_muestras": 12,
+      "signo_ok": true,
+      "step": "giro -10"
+    },
+    {
+      "kind": "giro",
+      "servo_deg": 25.0,
+      "motor_pct": 30.0,
+      "delay_yaw_s": 0.105,
+      "yaw_rate_max_rad_s": 0.424,
+      "velocidad_al_girar_mps": 0.215,
+      "angulo_efectivo_deg": 1.6,
+      "angulo_muestras": 8,
+      "signo_ok": true,
+      "step": "giro +25"
+    }
+  ]
+}

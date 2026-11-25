@@ -1,0 +1,54 @@
+{
+  "run_dir": "/home/user/robotek-runs/20261008T030121Z-actuator-steer",
+  "wheelbase_m": 0.13,
+  "steps": [
+    {
+      "kind": "giro",
+      "servo_deg": 10.0,
+      "motor_pct": 40.0,
+      "giro_total_deg": -0.3,
+      "distancia_m": 0.051,
+      "angulo_por_rumbo_deg": -0.8,
+      "velocidad_max_mps": 0.221,
+      "angulo_instantaneo_deg": 3.7,
+      "signo_ok": false,
+      "step": "giro +10"
+    },
+    {
+      "kind": "giro",
+      "servo_deg": -10.0,
+      "motor_pct": 40.0,
+      "giro_total_deg": 0.6,
+      "distancia_m": 0.054,
+      "angulo_por_rumbo_deg": 1.5,
+      "velocidad_max_mps": 0.222,
+      "angulo_instantaneo_deg": 3.7,
+      "signo_ok": false,
+      "step": "giro -10"
+    },
+    {
+      "kind": "giro",
+      "servo_deg": 25.0,
+      "motor_pct": 40.0,
+      "giro_total_deg": 5.6,
+      "distancia_m": 0.048,
+      "angulo_por_rumbo_deg": 14.9,
+      "velocidad_max_mps": 0.184,
+      "angulo_instantaneo_deg": 27.3,
+      "signo_ok": true,
+      "step": "giro +25"
+    },
+    {
+      "kind": "giro",
+      "servo_deg": -25.0,
+      "motor_pct": 40.0,
+      "giro_total_deg": -4.7,
+      "distancia_m": 0.044,
+      "angulo_por_rumbo_deg": -13.6,
+      "velocidad_max_mps": 0.238,
+      "angulo_instantaneo_deg": -23.2,
+      "signo_ok": true,
+      "step": "giro -25"
+    }
+  ]
+}

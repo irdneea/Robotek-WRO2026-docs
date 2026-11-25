@@ -1,0 +1,26 @@
+{
+ "open_fastservo_v2": {
+  "challenge": "open",
+  "sha256": "ec423d1ecbcea4e958a5fb0b102d9a07fb31c4fd7d41a2ae4e7279da654bc374",
+  "body_sha256": "a18684e14e153d56a83a1ade88b66930f5ab9a2549260547ec0e7c657000364e",
+  "header": "open_fastservo_v2 (was open_strategy_actmodel_v2) = open_fastservo_v1 with turn_front_latency 0.5 (less inner contact) and finish_distance 0.6 (0.7 overshot the start section in CW). For the sim_actuator_model servo."
+ },
+ "open_fastservo_v4": {
+  "challenge": "open",
+  "sha256": "d9b53a88625ff7a566a9c67a7520b9e729ca98a60268108da49ff4b8e20c894d",
+  "body_sha256": "3017daf35d7dad8ba77a6c77b84d07a0e7d78401206439f0760951df298473e5",
+  "header": "open_fastservo_v4 = open_fastservo_v2 + turn_front_heading_axis: true (front wall measured along the track heading, not the car heading; extra-turn fix found in honest runs)."
+ },
+ "open_strategy_race_entry_v6": {
+  "challenge": "open",
+  "sha256": "b33589d9f8140f55f33ee90bf678d7f61fa6a618eb0babe75916b03d1e42c5e3",
+  "body_sha256": "efaca631ff8028f1bf24dbc75d04e234f7119bffceb2c9d418ca565fdb44c40e",
+  "header": "Experimental v6: front entry advanced 5 cm; validation pending. Observer uses simulation clock and unchanged actuator acceleration2."
+ },
+ "obstacle_planner_v8": {
+  "challenge": "obstacle",
+  "sha256": "9eb486d3eff6ce1821e1e7ab0631af368304b53883a9442983cfb5a00d6c53cf",
+  "body_sha256": "d4a7c11c6c156e10fd6e9c59eee2247bf94865eb26ca903ac45aea192f37ef54",
+  "header": "planner_v8 = planner_v5 + speed cap 0.50 m/s on straights, 0.35 m/s^2 lateral (about 0.33 m/s in tight turns). No parking."
+ }
+}

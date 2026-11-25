@@ -1,0 +1,34 @@
+open_strategy:
+  ros__parameters:
+    calibrate_seconds: 0.3
+    corner_endpoint_confirmations: 2
+    corner_inner_clearance: 0.08
+    corner_lookahead: 0.35
+    corner_speed: 1.28
+    cruise_speed: 1.28
+    direction_confirmations: 3
+    finish_brake_speed: 0.002
+    finish_distance: 0.0
+    finish_front_lead: 0.08
+    finish_initial_front_lead: 0.35
+    finish_return_to_start: true
+    finish_settle_seconds: 1.0
+    finish_speed: 0.15
+    finish_stop_wait: 0.9
+    finish_turn_tolerance: 0.4
+    first_corner_speed: 1.28
+    heading_kd: 0.1
+    imu_max_age: 0.2
+    inner_lane_margin: 0.25
+    last_corner_speed: 0.6
+    last_corner_speed_scale: 0.7
+    outer_lane_distance: 0.8
+    scan_max_age: 0.35
+    telemetry_path: /home/user/Projects/Robotek/docs/open-challenge-runs/20261008T071552Z-std12-realcar-starts-v4-r1-rect100x180-ccw/telemetry.csv
+    turn_exit_angle: 0.25
+    turn_front_distance: 1.04
+    turn_front_latency: 0.12
+    turn_inner_guard: true
+    turn_rate_damping: 0.1
+    turn_speed_scale: 0.46875
+    turn_steer: 0.30718

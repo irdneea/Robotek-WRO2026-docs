@@ -1,0 +1,181 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1060" viewBox="0 0 1400 1060" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555"/>
+    </marker>
+    <style>
+      .t { font-size: 15px; fill: #222; }
+      .s { font-size: 12.5px; fill: #333; }
+      .h { font-size: 18px; font-weight: bold; fill: #111; }
+      .c { font-size: 11px; fill: #777; font-family: Menlo, monospace; }
+      .box { stroke-width: 1.6; rx: 10; }
+    </style>
+  </defs>
+  <rect width="1400" height="1060" fill="#fbfbfa"/>
+  <text x="30" y="40" font-size="24" font-weight="bold" fill="#111">Cambios del 9 nov 2026 en el coche real (robotek-learn, ya en el Pi)</text>
+  <text x="30" y="64" class="s">Obstacle v3 con salida del aparcamiento al empezar, recuperación frontal, sensor de distancia trasero, luces y botón nuevos.</text>
+
+  <!-- ========== flow of a round ========== -->
+  <text x="30" y="105" class="h">Una ronda con start_lot:=true</text>
+
+  <!-- 1 wait -->
+  <rect x="30" y="120" width="250" height="120" class="box" fill="#e8f5e9" stroke="#43a047"/>
+  <circle cx="58" cy="148" r="11" fill="#43a047"><animate attributeName="opacity" values="1;0.15;1" dur="1s" repeatCount="indefinite"/></circle>
+  <text x="78" y="153" class="t" font-weight="bold">1. Espera</text>
+  <text x="44" y="180" class="s">LED verde parpadeando</text>
+  <text x="44" y="198" class="s">(antes: verde fijo)</text>
+  <text x="44" y="222" class="s">Coche en el aparcamiento, pegado</text>
+  <text x="44" y="236" class="s">al muro y a ~1 cm del tope trasero</text>
+
+  <line x1="280" y1="180" x2="318" y2="180" stroke="#555" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- 2 start -->
+  <rect x="320" y="120" width="250" height="120" class="box" fill="#e3f2fd" stroke="#1e88e5"/>
+  <circle cx="348" cy="148" r="11" fill="#1e88e5"/>
+  <text x="368" y="153" class="t" font-weight="bold">2. Start</text>
+  <text x="334" y="180" class="s">Pulsador nuevo GPIO 16</text>
+  <text x="334" y="198" class="s">(o el botón de la placa)</text>
+  <text x="334" y="222" class="s">LED azul: la ronda corre</text>
+
+  <line x1="570" y1="180" x2="608" y2="180" stroke="#555" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- 3 direction -->
+  <rect x="610" y="120" width="300" height="120" class="box" fill="#fff8e1" stroke="#f9a825"/>
+  <text x="624" y="148" class="t" font-weight="bold">3. Dirección con el LiDAR</text>
+  <text x="624" y="174" class="s">El lado con el muro cerca (o sin nada:</text>
+  <text x="624" y="190" class="s">el LiDAR no ve a menos de 12 cm)</text>
+  <text x="624" y="214" class="s">Muro a la derecha → antihorario</text>
+  <text x="624" y="231" class="s">Muro a la izquierda → horario (espejo)</text>
+
+  <line x1="910" y1="180" x2="948" y2="180" stroke="#555" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- 4 laps -->
+  <rect x="950" y="120" width="420" height="120" class="box" fill="#f3e5f5" stroke="#8e24aa"/>
+  <text x="964" y="148" class="t" font-weight="bold">5. Vueltas del Obstacle v3</text>
+  <text x="964" y="174" class="s">Sin aparcar al final y sin retroceder al empezar</text>
+  <text x="964" y="194" class="s">motor_min_rps 1,5 (el motor no arranca por debajo)</text>
+  <text x="964" y="214" class="s">+ recuperación frontal (abajo a la derecha)</text>
+
+  <!-- ========== lot exit ========== -->
+  <rect x="30" y="270" width="660" height="430" class="box" fill="#ffffff" stroke="#f9a825"/>
+  <text x="48" y="300" class="h">4. Salida del aparcamiento (lot_exit.py)</text>
+  <text x="48" y="324" class="s">Pulsos con todo el giro en lot_exit_steps: &lt;L|R|C&gt;&lt;+|-&gt;&lt;segundos&gt;  (L lejos del muro, C ruedas al centro)</text>
+
+  <!-- lot drawing -->
+  <rect x="60" y="350" width="600" height="14" fill="#555"/>
+  <text x="66" y="346" class="c">muro exterior</text>
+  <rect x="150" y="364" width="10" height="90" fill="#d81b60"/>
+  <rect x="440" y="364" width="10" height="90" fill="#d81b60"/>
+  <text x="138" y="472" class="c">tope</text>
+  <text x="428" y="472" class="c">tope</text>
+  <text x="250" y="472" class="c">hueco 367,5 mm</text>
+  <!-- car start -->
+  <g transform="translate(162,368)">
+    <rect width="230" height="60" rx="8" fill="#90caf9" stroke="#1565c0"/>
+    <text x="70" y="36" class="s">coche 24,5 cm</text>
+    <polygon points="230,30 216,22 216,38" fill="#1565c0"/>
+  </g>
+  <!-- exit path sketch -->
+  <path d="M 330 432 C 430 440, 530 465, 650 500" fill="none" stroke="#f9a825" stroke-width="3" stroke-dasharray="7 5" marker-end="url(#arr)"/>
+  <text x="500" y="420" class="s" fill="#b07800">sale hacia el carril</text>
+
+  <!-- steps -->
+  <text x="48" y="520" class="t" font-weight="bold">Por defecto (tus valores):</text>
+  <g font-family="Menlo, monospace" font-size="13">
+    <rect x="48" y="532" width="62" height="26" rx="5" fill="#fff3c4" stroke="#f9a825"/><text x="56" y="550">L+0.5</text>
+    <rect x="116" y="532" width="62" height="26" rx="5" fill="#ffe0b2" stroke="#ef6c00"/><text x="124" y="550">R-0.5</text>
+    <rect x="184" y="532" width="62" height="26" rx="5" fill="#fff3c4" stroke="#f9a825"/><text x="192" y="550">L+2.0</text>
+    <rect x="252" y="532" width="62" height="26" rx="5" fill="#fff3c4" stroke="#f9a825"/><text x="260" y="550">R+0.5</text>
+    <rect x="320" y="532" width="62" height="26" rx="5" fill="#ffe0b2" stroke="#ef6c00"/><text x="328" y="550">R-1.0</text>
+    <rect x="388" y="532" width="62" height="26" rx="5" fill="#fff3c4" stroke="#f9a825"/><text x="396" y="550">L+0.5</text>
+  </g>
+  <text x="48" y="580" class="s">a lot_exit_speed 0,70 m/s · tu prueba: 0,9 m/s con "L+0.45 R-0.55 L+0.45 R-0.55 L+0.45 R-0.55 L+0.78 C-0.6"</text>
+  <text x="48" y="604" class="s">• Antes de cada pulso gira las ruedas parado (0,5 s); después, 0,4 s quieto</text>
+  <text x="48" y="624" class="s">• Sin rampas del base_adapter: el pulso arranca de golpe y frena a 0 en seco (no_ramp_states)</text>
+  <text x="48" y="644" class="s">• Por debajo de 1,8 rps el motor va con golpe de arranque y pulsos (solo en LOT_EXIT)</text>
+  <text x="48" y="664" class="s">• Pasos hacia atrás: freno en seco si el sensor trasero ve &lt; 20 mm</text>
+  <text x="48" y="684" class="s">• Al terminar: ruedas al centro, el LiDAR ubica el coche y empiezan las vueltas</text>
+
+  <!-- ========== recover ========== -->
+  <rect x="710" y="270" width="660" height="430" class="box" fill="#ffffff" stroke="#8e24aa"/>
+  <text x="728" y="300" class="h">Recuperación frontal (en las vueltas)</text>
+
+  <rect x="730" y="320" width="620" height="14" fill="#555"/>
+  <text x="736" y="316" class="c">muro (exterior, interior o un pilar)</text>
+  <!-- corridor -->
+  <g transform="translate(860,440) rotate(-35) scale(0.75)">
+    <rect x="-20" y="-150" width="58" height="150" fill="#d1c4e9" opacity="0.55"/>
+    <rect x="-20" y="0" width="58" height="105" rx="7" fill="#90caf9" stroke="#1565c0"/>
+    <polygon points="9,0 1,12 17,12" fill="#1565c0"/>
+  </g>
+  <text x="980" y="388" class="s" fill="#5e35b1">pasillo del coche (ancho + 1 cm)</text>
+  <text x="980" y="404" class="s" fill="#5e35b1">a ≤ 11 cm del morro → dispara</text>
+  <circle cx="818" cy="358" r="7" fill="#e53935"/>
+  <text x="730" y="384" class="s" fill="#e53935">algo en</text><text x="730" y="400" class="s" fill="#e53935">el camino</text>
+  <circle cx="1000" cy="460" r="9" fill="#2e7d32"/>
+  <text x="1016" y="465" class="s" fill="#2e7d32">pilar al lado: ya no dispara</text>
+
+  <g>
+    <rect x="728" y="520" width="196" height="64" rx="8" fill="#ffebee" stroke="#e53935"/>
+    <text x="740" y="545" class="t" font-weight="bold">1. Freno en seco</text>
+    <text x="740" y="568" class="s">/robotek/estop, 0,2 s</text>
+    <line x1="924" y1="552" x2="946" y2="552" stroke="#555" stroke-width="2" marker-end="url(#arr)"/>
+    <rect x="948" y="520" width="220" height="64" rx="8" fill="#fff3e0" stroke="#ef6c00"/>
+    <text x="960" y="545" class="t" font-weight="bold">2. Marcha atrás</text>
+    <text x="960" y="568" class="s">todo el giro hacia el lado que endereza</text>
+    <line x1="1168" y1="552" x2="1190" y2="552" stroke="#555" stroke-width="2" marker-end="url(#arr)"/>
+    <rect x="1192" y="520" width="160" height="64" rx="8" fill="#e8f5e9" stroke="#43a047"/>
+    <text x="1204" y="545" class="t" font-weight="bold">3. Sigue</text>
+    <text x="1204" y="568" class="s">el Obstacle normal</text>
+  </g>
+  <text x="728" y="612" class="s">• Paralelo a la pared EXTERIOR más cercana (no al carril): sirve también en las curvas</text>
+  <text x="728" y="632" class="s">• Para al quedar paralelo (±4°) o a los 1,5 s, lo que llegue antes (con 1,5 s fijos se pasaba: 35° → −11°)</text>
+  <text x="728" y="652" class="s">• Antes: retroceso recto de 0,8 s a 16 cm, con rampa de frenado (se golpeaba)</text>
+  <text x="728" y="672" class="s">• Cada disparo queda en el log: recover: {ahead, side, heading, target}</text>
+  <text x="728" y="692" class="c">dibujo del movimiento: plans/recover-propuesta.png</text>
+
+  <!-- ========== bottom row ========== -->
+  <rect x="30" y="725" width="440" height="300" class="box" fill="#ffffff" stroke="#00897b"/>
+  <text x="48" y="755" class="h">Sensor de distancia trasero (VL53L0X)</text>
+  <text x="48" y="780" class="s">Nodo rear_range → /robotek/rear_range_mm (mm, −1 sin nada)</text>
+  <text x="48" y="802" class="s">• Arranque completo (ajustes de ST + calibración, como Pololu)</text>
+  <text x="48" y="822" class="s">• Corrección con tabla medida contra la pared:</text>
+  <g font-family="Menlo, monospace" font-size="12">
+    <text x="66" y="844">real  10  20  30  40  50  85  170  420 mm</text>
+    <text x="66" y="862">crudo 70  75  77  83  96 138  231  476</text>
+  </g>
+  <text x="48" y="886" class="s">  ±5 mm desde 5 cm; ±1 cm entre 1 y 4 cm (límite del sensor)</text>
+  <text x="48" y="908" class="s">• Página de registros 0 al abrir (se quedaba en otra al apagar el Pi)</text>
+  <text x="48" y="928" class="s">• Se reinicia solo si deja de responder (cable flojo: errores I2C)</text>
+  <text x="48" y="950" class="s">• En el launch del coche (rear_range:=false lo quita)</text>
+  <text x="48" y="976" class="s" fill="#c62828">Pendiente: en la última prueba no midió nada (8191, estado 4)</text>
+  <text x="48" y="1000" class="c">correct:=false publica el crudo</text>
+
+  <rect x="490" y="725" width="420" height="300" class="box" fill="#ffffff" stroke="#546e7a"/>
+  <text x="508" y="755" class="h">base_adapter y car.launch</text>
+  <text x="508" y="782" class="s">car.launch.py start_lot:=true añade:</text>
+  <text x="520" y="804" class="s">• lot_exit_speed, lot_exit_steps</text>
+  <text x="520" y="824" class="s">• low_speed_states = LOT_EXIT (golpe + pulsos 1,8 rps)</text>
+  <text x="520" y="844" class="s">• no_ramp_states = LOT_EXIT (sin rampas)</text>
+  <text x="508" y="872" class="s">Estrategia (drive.py):</text>
+  <text x="520" y="894" class="s">• arranca también con /robotek/gpio_button</text>
+  <text x="520" y="914" class="s">• lee /robotek/rear_range_mm</text>
+  <text x="520" y="934" class="s">• /robotek/estop en los frenos en seco</text>
+  <text x="520" y="954" class="s">• log de la salida y de cada recover</text>
+  <text x="508" y="984" class="s">Grabar desde el Mac:</text>
+  <text x="508" y="1004" class="c">tools/car_bag_mac.sh &lt;nombre&gt;  → ~/rondas-coche/bags</text>
+
+  <rect x="930" y="725" width="440" height="300" class="box" fill="#ffffff" stroke="#9e9e9e"/>
+  <text x="948" y="755" class="h">Probado en el coche (9 nov)</text>
+  <text x="948" y="782" class="s">✓ Sale del aparcamiento y sigue con las vueltas</text>
+  <text x="948" y="802" class="s">   (batería cargada; con 6,7 V casi no se movía)</text>
+  <text x="948" y="822" class="s">✓ Recuperación frontal: funcionó, pero se golpeó</text>
+  <text x="948" y="842" class="s">   un poco y se activaba al pasar pilares de cerca</text>
+  <text x="948" y="862" class="s">   → freno en seco y pasillo (sin probar aún)</text>
+  <text x="948" y="890" class="s">Problemas vistos:</text>
+  <text x="948" y="910" class="s">• El motor se bloquea tras chocar y empujar,</text>
+  <text x="948" y="928" class="s">  hasta reiniciar el driver de la placa</text>
+  <text x="948" y="948" class="s">• Pausas en WAIT_SENSOR (cámara 0,35 s tarde)</text>
+  <text x="948" y="968" class="s">• Sensor trasero: cortes de I2C</text>
+  <text x="948" y="998" class="c">commits: 85995d5 … 66413f0 (robotek-learn)</text>
+</svg>

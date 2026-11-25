@@ -1,0 +1,15 @@
+[Unit]
+Description=WRO Open Challenge autonomous controller
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/bin/bash -lc "/home/user/scripts/ros_autostart.sh"
+Restart=on-failure
+RestartSec=3
+WorkingDirectory=/home/user/Documents/Testv1/open
+Environment=RCUTILS_COLORIZED_OUTPUT=1
+
+[Install]
+WantedBy=default.target

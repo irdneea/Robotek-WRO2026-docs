@@ -1,0 +1,14 @@
+# Open v5 (robotek_open.v5): the v4 profile's values for what the v5 keeps. Plan: docs/open-reimpl-v5.md
+open_strategy:
+  ros__parameters:
+    direction: auto
+    direction_confirmations: 3
+    cruise_speed: 1.28
+    corner_speed: 1.0   # every corner (12 nov 2026: one speed; was cruise in corners and 0.6 in the last)
+    inner_gap: 0.25
+    turn_front_distance: 1.19
+    corner_lookahead: 0.35
+    finish_speed: 0.15
+    finish_lead: 0.08
+    scan_max_age: 0.35
+    imu_max_age: 0.2

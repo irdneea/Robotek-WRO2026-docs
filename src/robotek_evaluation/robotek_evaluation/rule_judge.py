@@ -26,7 +26,7 @@ MARGIN_COMFORT_M = 0.05
 MARGIN_TIGHT_M = 0.02
 STEER_LIMIT_DEG = 25.5       # 25 deg plus measurement tolerance
 STOP_RULE_S = 15.0           # 9.24.2 note 2
-STOP_OBSERVED_S = 30.0       # Appendix A 2 / AGENTS.md
+STOP_OBSERVED_S = 30.0       # Appendix A 2
 STATIONARY_M = 0.002
 ROUND_LIMIT_S = 180.0
 

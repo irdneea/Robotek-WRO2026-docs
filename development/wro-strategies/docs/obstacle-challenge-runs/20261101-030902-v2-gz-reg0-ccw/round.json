@@ -1,0 +1,712 @@
+{
+  "test_scope": "three_laps_and_parking",
+  "completed": true,
+  "full_round_validated": false,
+  "official_points": null,
+  "points_estimated": 55,
+  "points_driving_estimated": 30,
+  "points_signs_provisional": 10,
+  "bonus_provisional": 10,
+  "parking_evaluated": true,
+  "laps_completed": 3,
+  "lap_splits": [
+    {
+      "lap": 1,
+      "sim_seconds": 32.456,
+      "wall_seconds": 32.835050106048584,
+      "cumulative_sim_seconds": 32.456
+    },
+    {
+      "lap": 2,
+      "sim_seconds": 31.70000000000001,
+      "wall_seconds": 31.920892238616943,
+      "cumulative_sim_seconds": 64.156
+    },
+    {
+      "lap": 3,
+      "sim_seconds": 32.0,
+      "wall_seconds": 32.230618953704834,
+      "cumulative_sim_seconds": 96.156
+    }
+  ],
+  "timings": {
+    "sim_time_seconds": 131.316,
+    "wall_time_seconds": 132.41883516311646
+  },
+  "section_visits": [
+    {
+      "section": 1,
+      "sim_time": 5.0600000000000005,
+      "wall_time": 1793520551.5890696
+    },
+    {
+      "section": 2,
+      "sim_time": 9.06,
+      "wall_time": 1793520555.6290145
+    },
+    {
+      "section": 3,
+      "sim_time": 15.360000000000001,
+      "wall_time": 1793520562.0120807
+    },
+    {
+      "section": 4,
+      "sim_time": 20.16,
+      "wall_time": 1793520566.9498854
+    },
+    {
+      "section": 5,
+      "sim_time": 24.26,
+      "wall_time": 1793520571.0578907
+    },
+    {
+      "section": 6,
+      "sim_time": 25.860000000000003,
+      "wall_time": 1793520572.676619
+    },
+    {
+      "section": 7,
+      "sim_time": 29.82,
+      "wall_time": 1793520576.6707118
+    },
+    {
+      "section": 0,
+      "sim_time": 33.32,
+      "wall_time": 1793520580.1916125
+    },
+    {
+      "section": 1,
+      "sim_time": 37.620000000000005,
+      "wall_time": 1793520584.5348952
+    },
+    {
+      "section": 2,
+      "sim_time": 42.220000000000006,
+      "wall_time": 1793520589.166778
+    },
+    {
+      "section": 3,
+      "sim_time": 46.92,
+      "wall_time": 1793520593.8967752
+    },
+    {
+      "section": 4,
+      "sim_time": 51.720000000000006,
+      "wall_time": 1793520598.742565
+    },
+    {
+      "section": 5,
+      "sim_time": 55.92,
+      "wall_time": 1793520602.9552944
+    },
+    {
+      "section": 6,
+      "sim_time": 57.42,
+      "wall_time": 1793520604.4666948
+    },
+    {
+      "section": 7,
+      "sim_time": 61.42,
+      "wall_time": 1793520608.5152168
+    },
+    {
+      "section": 0,
+      "sim_time": 64.92,
+      "wall_time": 1793520612.019496
+    },
+    {
+      "section": 1,
+      "sim_time": 69.22,
+      "wall_time": 1793520616.3703845
+    },
+    {
+      "section": 2,
+      "sim_time": 73.92,
+      "wall_time": 1793520621.083959
+    },
+    {
+      "section": 3,
+      "sim_time": 78.52000000000001,
+      "wall_time": 1793520625.7320697
+    },
+    {
+      "section": 4,
+      "sim_time": 83.42,
+      "wall_time": 1793520630.6470475
+    },
+    {
+      "section": 5,
+      "sim_time": 87.52000000000001,
+      "wall_time": 1793520634.7928255
+    },
+    {
+      "section": 6,
+      "sim_time": 89.12,
+      "wall_time": 1793520636.3925457
+    },
+    {
+      "section": 7,
+      "sim_time": 93.02000000000001,
+      "wall_time": 1793520640.340178
+    },
+    {
+      "section": 0,
+      "sim_time": 96.92,
+      "wall_time": 1793520644.2539806
+    },
+    {
+      "section": 1,
+      "sim_time": 105.32000000000001,
+      "wall_time": 1793520652.7111733
+    }
+  ],
+  "rule_fault": null,
+  "radius_crossings": [
+    {
+      "pillar": "sign_red_1",
+      "color": "red",
+      "lap": 1,
+      "sim_time": 12.06,
+      "wall_time": 1793520558.7045236,
+      "correct_side": true,
+      "side_clearance_m": 0.1557651748562645,
+      "line_cut_lateral_m": [
+        -0.3079956604567891,
+        -0.1807651748562645
+      ]
+    },
+    {
+      "pillar": "sign_red_3",
+      "color": "red",
+      "lap": 1,
+      "sim_time": 20.46,
+      "wall_time": 1793520567.2503436,
+      "correct_side": true,
+      "side_clearance_m": 0.1370643694708098,
+      "line_cut_lateral_m": [
+        -0.28390737158882806,
+        -0.1620643694708098
+      ]
+    },
+    {
+      "pillar": "sign_green_2",
+      "color": "green",
+      "lap": 1,
+      "sim_time": 24.76,
+      "wall_time": 1793520571.5657158,
+      "correct_side": true,
+      "side_clearance_m": 0.18776250953798362,
+      "line_cut_lateral_m": [
+        0.21276250953798362,
+        0.3515164198673102
+      ]
+    },
+    {
+      "pillar": "sign_green_1",
+      "color": "green",
+      "lap": 1,
+      "sim_time": 30.220000000000002,
+      "wall_time": 1793520577.071098,
+      "correct_side": true,
+      "side_clearance_m": 0.1366658387984638,
+      "line_cut_lateral_m": [
+        0.1616658387984638,
+        0.2747011617750105
+      ]
+    },
+    {
+      "pillar": "sign_red_2",
+      "color": "red",
+      "lap": 2,
+      "sim_time": 33.82,
+      "wall_time": 1793520580.703078,
+      "correct_side": true,
+      "side_clearance_m": 0.1391410886469626,
+      "line_cut_lateral_m": [
+        -0.29379008014308106,
+        -0.16414108864696259
+      ]
+    },
+    {
+      "pillar": "sign_red_1",
+      "color": "red",
+      "lap": 2,
+      "sim_time": 45.220000000000006,
+      "wall_time": 1793520592.1960921,
+      "correct_side": true,
+      "side_clearance_m": 0.15408369367525948,
+      "line_cut_lateral_m": [
+        -0.30840118216638496,
+        -0.17908369367525948
+      ]
+    },
+    {
+      "pillar": "sign_red_3",
+      "color": "red",
+      "lap": 2,
+      "sim_time": 52.120000000000005,
+      "wall_time": 1793520599.1493113,
+      "correct_side": true,
+      "side_clearance_m": 0.13693791970596034,
+      "line_cut_lateral_m": [
+        -0.2845853255830325,
+        -0.16193791970596033
+      ]
+    },
+    {
+      "pillar": "sign_green_2",
+      "color": "green",
+      "lap": 2,
+      "sim_time": 56.32,
+      "wall_time": 1793520603.3578036,
+      "correct_side": true,
+      "side_clearance_m": 0.18759996539782992,
+      "line_cut_lateral_m": [
+        0.2125999653978299,
+        0.3505821668925758
+      ]
+    },
+    {
+      "pillar": "sign_green_1",
+      "color": "green",
+      "lap": 2,
+      "sim_time": 61.82000000000001,
+      "wall_time": 1793520608.9144633,
+      "correct_side": true,
+      "side_clearance_m": 0.13701537446478873,
+      "line_cut_lateral_m": [
+        0.16201537446478873,
+        0.27477808480768406
+      ]
+    },
+    {
+      "pillar": "sign_red_2",
+      "color": "red",
+      "lap": 3,
+      "sim_time": 65.52000000000001,
+      "wall_time": 1793520612.6239703,
+      "correct_side": true,
+      "side_clearance_m": 0.13935759338669973,
+      "line_cut_lateral_m": [
+        -0.2945301838636339,
+        -0.16435759338669972
+      ]
+    },
+    {
+      "pillar": "sign_red_1",
+      "color": "red",
+      "lap": 3,
+      "sim_time": 76.92,
+      "wall_time": 1793520624.1252263,
+      "correct_side": true,
+      "side_clearance_m": 0.15815497859198197,
+      "line_cut_lateral_m": [
+        -0.3117941635349122,
+        -0.18315497859198196
+      ]
+    },
+    {
+      "pillar": "sign_red_3",
+      "color": "red",
+      "lap": 3,
+      "sim_time": 83.72,
+      "wall_time": 1793520630.9598064,
+      "correct_side": true,
+      "side_clearance_m": 0.13753410532649776,
+      "line_cut_lateral_m": [
+        -0.28567595100568394,
+        -0.16253410532649776
+      ]
+    },
+    {
+      "pillar": "sign_green_2",
+      "color": "green",
+      "lap": 3,
+      "sim_time": 88.02000000000001,
+      "wall_time": 1793520635.2924173,
+      "correct_side": true,
+      "side_clearance_m": 0.18774606976082156,
+      "line_cut_lateral_m": [
+        0.21274606976082155,
+        0.35059550877443124
+      ]
+    },
+    {
+      "pillar": "sign_green_1",
+      "color": "green",
+      "lap": 3,
+      "sim_time": 93.42,
+      "wall_time": 1793520640.746803,
+      "correct_side": true,
+      "side_clearance_m": 0.13693055809477303,
+      "line_cut_lateral_m": [
+        0.16193055809477302,
+        0.2747249200473346
+      ]
+    }
+  ],
+  "crossings_by_lap": {
+    "1": [
+      {
+        "pillar": "sign_red_1",
+        "color": "red",
+        "correct_side": true,
+        "side_clearance_m": 0.1557651748562645,
+        "sim_time": 12.06
+      },
+      {
+        "pillar": "sign_red_3",
+        "color": "red",
+        "correct_side": true,
+        "side_clearance_m": 0.1370643694708098,
+        "sim_time": 20.46
+      },
+      {
+        "pillar": "sign_green_2",
+        "color": "green",
+        "correct_side": true,
+        "side_clearance_m": 0.18776250953798362,
+        "sim_time": 24.76
+      },
+      {
+        "pillar": "sign_green_1",
+        "color": "green",
+        "correct_side": true,
+        "side_clearance_m": 0.1366658387984638,
+        "sim_time": 30.220000000000002
+      }
+    ],
+    "2": [
+      {
+        "pillar": "sign_red_2",
+        "color": "red",
+        "correct_side": true,
+        "side_clearance_m": 0.1391410886469626,
+        "sim_time": 33.82
+      },
+      {
+        "pillar": "sign_red_1",
+        "color": "red",
+        "correct_side": true,
+        "side_clearance_m": 0.15408369367525948,
+        "sim_time": 45.220000000000006
+      },
+      {
+        "pillar": "sign_red_3",
+        "color": "red",
+        "correct_side": true,
+        "side_clearance_m": 0.13693791970596034,
+        "sim_time": 52.120000000000005
+      },
+      {
+        "pillar": "sign_green_2",
+        "color": "green",
+        "correct_side": true,
+        "side_clearance_m": 0.18759996539782992,
+        "sim_time": 56.32
+      },
+      {
+        "pillar": "sign_green_1",
+        "color": "green",
+        "correct_side": true,
+        "side_clearance_m": 0.13701537446478873,
+        "sim_time": 61.82000000000001
+      }
+    ],
+    "3": [
+      {
+        "pillar": "sign_red_2",
+        "color": "red",
+        "correct_side": true,
+        "side_clearance_m": 0.13935759338669973,
+        "sim_time": 65.52000000000001
+      },
+      {
+        "pillar": "sign_red_1",
+        "color": "red",
+        "correct_side": true,
+        "side_clearance_m": 0.15815497859198197,
+        "sim_time": 76.92
+      },
+      {
+        "pillar": "sign_red_3",
+        "color": "red",
+        "correct_side": true,
+        "side_clearance_m": 0.13753410532649776,
+        "sim_time": 83.72
+      },
+      {
+        "pillar": "sign_green_2",
+        "color": "green",
+        "correct_side": true,
+        "side_clearance_m": 0.18774606976082156,
+        "sim_time": 88.02000000000001
+      },
+      {
+        "pillar": "sign_green_1",
+        "color": "green",
+        "correct_side": true,
+        "side_clearance_m": 0.13693055809477303,
+        "sim_time": 93.42
+      }
+    ]
+  },
+  "correct_crossings_per_pillar": {
+    "sign_red_1": 3,
+    "sign_red_2": 2,
+    "sign_green_1": 3,
+    "sign_red_3": 3,
+    "sign_green_2": 3
+  },
+  "all_pillars_passed_three_times": false,
+  "verdict": "three_laps_signs_not_moved_bonus_10",
+  "points_breakdown_estimated": {
+    "1.1_sections": 24,
+    "1.2_laps": 3,
+    "1.3_stop_in_finish": 3,
+    "1.4-1.7_traffic_signs": 10,
+    "1.8_parking": 15
+  },
+  "pillar_status": {
+    "sign_red_1": "untouched",
+    "sign_red_2": "untouched",
+    "sign_green_1": "untouched",
+    "sign_red_3": "untouched",
+    "sign_green_2": "untouched"
+  },
+  "any_sign_moved": false,
+  "pillar_movements": [
+    {
+      "pillar": "sign_red_1",
+      "color": "red",
+      "samples": 3297,
+      "contact_messages": 0,
+      "first_contact_sim_time": null,
+      "max_horizontal_motion_m": 3.079908544027355e-19,
+      "max_tilt_deg": 0.0,
+      "max_projection_radius_m": 0.03535533905932731,
+      "status": "untouched"
+    },
+    {
+      "pillar": "sign_red_2",
+      "color": "red",
+      "samples": 3297,
+      "contact_messages": 0,
+      "first_contact_sim_time": null,
+      "max_horizontal_motion_m": 0.0,
+      "max_tilt_deg": 0.0,
+      "max_projection_radius_m": 0.03535533905932741,
+      "status": "untouched"
+    },
+    {
+      "pillar": "sign_green_1",
+      "color": "green",
+      "samples": 3297,
+      "contact_messages": 0,
+      "first_contact_sim_time": null,
+      "max_horizontal_motion_m": 0.0,
+      "max_tilt_deg": 0.0,
+      "max_projection_radius_m": 0.03535533905932733,
+      "status": "untouched"
+    },
+    {
+      "pillar": "sign_red_3",
+      "color": "red",
+      "samples": 3297,
+      "contact_messages": 0,
+      "first_contact_sim_time": null,
+      "max_horizontal_motion_m": 0.0,
+      "max_tilt_deg": 0.0,
+      "max_projection_radius_m": 0.03535533905932741,
+      "status": "untouched"
+    },
+    {
+      "pillar": "sign_green_2",
+      "color": "green",
+      "samples": 3297,
+      "contact_messages": 0,
+      "first_contact_sim_time": null,
+      "max_horizontal_motion_m": 0.0,
+      "max_tilt_deg": 0.0,
+      "max_projection_radius_m": 0.03535533905932733,
+      "status": "untouched"
+    }
+  ],
+  "pillars_outside_circle": [],
+  "ground_truth_pillars_complete": true,
+  "contact_evaluated": true,
+  "tilt_evaluated": true,
+  "internal_thresholds": {
+    "moved_m": 0.005,
+    "tilted_deg": 10.0,
+    "knocked_deg": 45.0,
+    "pillar_margin_m": 0.03
+  },
+  "internal_pillar_margin_ok": true,
+  "min_sampled_wall_clearance_m": 0.05873640305196126,
+  "min_sampled_pillar_clearance_m": 0.11732863804792246,
+  "stop_in_start_section": true,
+  "stop_hold_sim_seconds": 31.939999999999998,
+  "stop_max_displacement_m": 0.0,
+  "stop_validated": true,
+  "max_steer_degrees": 17.673611969110926,
+  "selected_direction": "ccw",
+  "samples": 1633,
+  "limitations": [
+    "Offline sampled audit: clearances at telemetry rate; contacts from Gazebo sensors only when contact_evaluated.",
+    "Moved/tilted thresholds are internal: the rules do not define a millimetre threshold for \"moved\".",
+    "No parking or initial parking bonus; simplified start; not a complete 62-point event.",
+    "Points estimated from ordered section visits, not official scoring; pillar bonuses provisional."
+  ],
+  "rule_judge": {
+    "version": 2,
+    "challenge": "obstacle_with_parking",
+    "max_points": 55,
+    "points": 55,
+    "breakdown": {
+      "1.1_sections": 24,
+      "1.2_laps": 3,
+      "1.3_stop_in_finish": 3,
+      "1.4-1.7_traffic_signs": 10,
+      "1.8_parking": 15
+    },
+    "faults": [],
+    "round_end": {
+      "reason": "stopped_after_three_laps",
+      "sim_time": 132.68
+    },
+    "time_from_start_sim_seconds": 131.316,
+    "time_from_start_wall_seconds": 132.41883516311646,
+    "lap_splits": [
+      {
+        "lap": 1,
+        "sim_seconds": 32.456,
+        "wall_seconds": 32.835050106048584,
+        "cumulative_sim_seconds": 32.456
+      },
+      {
+        "lap": 2,
+        "sim_seconds": 31.70000000000001,
+        "wall_seconds": 31.920892238616943,
+        "cumulative_sim_seconds": 64.156
+      },
+      {
+        "lap": 3,
+        "sim_seconds": 32.0,
+        "wall_seconds": 32.230618953704834,
+        "cumulative_sim_seconds": 96.156
+      }
+    ],
+    "contact_evaluated": true,
+    "wall_contact_evaluated": true,
+    "notes": [
+      "Max 62: the start-in-the-lot bonus (1.8.1, 7 points) is out of scope, so 55 here.",
+      "Touching walls is allowed in Obstacle if they do not move (static in simulation).",
+      "After the three laps the signs may be passed on either side (parking phase)."
+    ]
+  },
+  "parking": {
+    "test_scope": "parking_only",
+    "name": "v2-gz-reg0-ccw",
+    "direction": "ccw",
+    "official_points": null,
+    "parking_lot": {
+      "x0": 0.13065,
+      "x1": 0.48,
+      "y0": -1.5,
+      "y1": -1.3
+    },
+    "completed": true,
+    "parking_plans": 1,
+    "limit_touched": false,
+    "wall_contacts": 0,
+    "min_limit_clearance_m": 0.0016024447424682897,
+    "max_steer_degrees": 17.673611969110926,
+    "timings": {
+      "sim_time_seconds": 131.316,
+      "wall_time_seconds": 132.41883516311646
+    },
+    "points_estimated": 15,
+    "verdict": "parked_fully_parallel",
+    "final_pose": {
+      "x": 0.26869049326982697,
+      "y": -1.3878224873782299,
+      "yaw_deg": -0.48242472896083893
+    },
+    "fully_inside": true,
+    "partly_inside": false,
+    "parallel": true,
+    "wall_side_wheel_to_wall_m": {
+      "front": 0.05537961662513635,
+      "rear": 0.0564741906769608
+    },
+    "wheel_distance_difference_m": 0.0010945740518244484,
+    "margins_m": {
+      "x0": 0.04257235192501588,
+      "x1": 0.11584136538604489,
+      "wall": 0.05537961662513635,
+      "lot_line": 0.031024591378037147
+    }
+  },
+  "validation": {
+    "version": 1,
+    "passed": true,
+    "checks": {
+      "rule_maximum": {
+        "value": 55,
+        "threshold": 55,
+        "passed": true
+      },
+      "no_rule_faults": {
+        "value": 0,
+        "threshold": 0,
+        "passed": true
+      },
+      "stop_observed": {
+        "value": 31.939999999999998,
+        "threshold": 30.0,
+        "passed": true
+      },
+      "no_contacts": {
+        "value": false,
+        "threshold": false,
+        "passed": true,
+        "note": "Gazebo contact sensors"
+      },
+      "min_wall_clearance_m": {
+        "value": 0.05873640305196126,
+        "threshold": 0.01,
+        "passed": true,
+        "note": "sampled at telemetry rate"
+      },
+      "min_pillar_clearance_m": {
+        "value": 0.11732863804792246,
+        "threshold": 0.01,
+        "passed": true,
+        "note": "sampled at telemetry rate"
+      },
+      "steering_limit": {
+        "value": 17.673611969110926,
+        "threshold": 25.5,
+        "passed": true
+      }
+    },
+    "failed": [],
+    "min_clearance_m": 0.05873640305196126,
+    "margin_class": "comfortable",
+    "thresholds": {
+      "min_clearance_m": 0.01,
+      "comfortable_m": 0.05,
+      "tight_m": 0.02,
+      "stop_observed_s": 30.0,
+      "steer_limit_deg": 25.5
+    }
+  },
+  "launch_wall_seconds": 175.262677192688,
+  "name": "v2-gz-reg0-ccw",
+  "directory": "/home/user/Projects/WRO-Strategies/docs/obstacle-challenge-runs/20261101-030902-v2-gz-reg0-ccw",
+  "direction": "ccw",
+  "launch_exit_code": 0,
+  "stopped_on_pillar_fault": null,
+  "wall_timeout_reached": false
+}

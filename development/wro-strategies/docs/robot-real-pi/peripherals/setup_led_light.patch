@@ -1,0 +1,10 @@
+--- setup.py.bak-antes-leds	2026-10-07 18:18:10.020456391 -0400
++++ setup.py	2026-10-07 18:18:10.025456332 -0400
+@@ -35,6 +35,7 @@
+             'pose_estimator_rpi = peripherals.pose_estimator_rpi:main',
+             'camera_streamer = peripherals.camera_streamer:main',
+             'stream = peripherals.stream:main',
++            'led_light = peripherals.led_light:main',
+         ],
+     },
+ )

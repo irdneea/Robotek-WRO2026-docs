@@ -1,0 +1,45 @@
+{
+  "run_dir": "/home/user/robotek-runs/20261008T025449Z-actuator-motor",
+  "wheelbase_m": 0.13,
+  "steps": [
+    {
+      "kind": "motor",
+      "motor_pct": 50.0,
+      "pulso_s": 0.24,
+      "delay_aceleracion_s": 0.041,
+      "delay_movimiento_lidar_s": 0.263,
+      "velocidad_max_imu_mps": 0.505,
+      "velocidad_max_lidar_mps": 0.365,
+      "se_mueve": true,
+      "tiempo_hasta_parar_s": 0.321,
+      "distancia_total_m": 0.092,
+      "step": "motor 50%"
+    },
+    {
+      "kind": "motor",
+      "motor_pct": 100.0,
+      "pulso_s": 0.24,
+      "delay_aceleracion_s": 0.041,
+      "delay_movimiento_lidar_s": 0.201,
+      "velocidad_max_imu_mps": 1.026,
+      "velocidad_max_lidar_mps": 0.596,
+      "se_mueve": true,
+      "tiempo_hasta_parar_s": 0.161,
+      "distancia_total_m": -0.023,
+      "step": "motor 100%"
+    },
+    {
+      "kind": "motor",
+      "motor_pct": 100.0,
+      "pulso_s": 0.24,
+      "delay_aceleracion_s": 0.061,
+      "delay_movimiento_lidar_s": 0.222,
+      "velocidad_max_imu_mps": 1.022,
+      "velocidad_max_lidar_mps": 0.711,
+      "se_mueve": true,
+      "tiempo_hasta_parar_s": 0.181,
+      "distancia_total_m": -0.261,
+      "step": "motor 100%"
+    }
+  ]
+}

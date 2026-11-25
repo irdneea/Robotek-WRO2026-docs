@@ -1,0 +1,28 @@
+{
+  "run_dir": "/home/user/robotek-runs/20261008T041310Z-actuator-circle",
+  "wheelbase_m": 0.13,
+  "steps": [
+    {
+      "kind": "circulo",
+      "servo_deg": 25.0,
+      "arco_m": 0.863,
+      "giro_deg": 135.2,
+      "scans_alineados": "80/80",
+      "radio_m": 0.366,
+      "angulo_ruedas_deg": 19.9,
+      "signo_ok": true,
+      "step": "circulo +25"
+    },
+    {
+      "kind": "circulo",
+      "servo_deg": -25.0,
+      "arco_m": 0.131,
+      "giro_deg": -18.4,
+      "scans_alineados": "10/10",
+      "radio_m": 0.41,
+      "angulo_ruedas_deg": -17.8,
+      "signo_ok": true,
+      "step": "circulo -25"
+    }
+  ]
+}

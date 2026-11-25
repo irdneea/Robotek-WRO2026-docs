@@ -1,0 +1,113 @@
+{
+  "run": "20261008T175029Z-realcar-hw-v4-floormask-r2",
+  "status": "completed",
+  "platform": "real_car_hardware",
+  "start_source": "button",
+  "end_source": "done_event",
+  "time_from_start_wall_seconds": 47.132,
+  "time_from_start_sim_seconds": null,
+  "calibration_and_detection_wall_seconds": 0.868,
+  "motion_wall_seconds": 46.265,
+  "motion_sim_seconds": null,
+  "lap_splits": [
+    {
+      "lap": 1,
+      "wall_seconds": 14.408,
+      "cumulative_wall_seconds": 14.408,
+      "boundary": "end of turn 4"
+    },
+    {
+      "lap": 2,
+      "wall_seconds": 14.126,
+      "cumulative_wall_seconds": 28.533,
+      "boundary": "end of turn 8"
+    },
+    {
+      "lap": 3,
+      "wall_seconds": 14.114,
+      "cumulative_wall_seconds": 42.647,
+      "boundary": "end of turn 12"
+    }
+  ],
+  "points_estimated": 27,
+  "points_official": null,
+  "score_status": "estimated_operator_report_finish_pending",
+  "points_breakdown": {
+    "1.1_sections": 24,
+    "1.2_laps": 3,
+    "1.3_stop_in_finish": null
+  },
+  "mission_observed": {
+    "turns": 12,
+    "direction": "ccw",
+    "direction_reason": "camera_confirmed",
+    "state_at_end": "DONE",
+    "operator_report": "funcionó",
+    "min_side_lidar_gap_m": 0.162,
+    "recoveries": 0
+  },
+  "profile": "open_realcar_v4.yaml",
+  "motor_cap_pct": 40,
+  "battery_mV_before": 6664,
+  "code": "e6aea27 + uncommitted: floor mask, real HSV, stall stop (params/code-changes-vs-e6aea27.diff)",
+  "hardware_overrides": "robot.launch.py: REAL_OPEN_CAMERA, stall_max_recoveries=1; robot.yaml motor_max_pct=40",
+  "start_pose": {
+    "x": null,
+    "y": null,
+    "yaw": null,
+    "lidar_at_start_m": {
+      "left": 0.474,
+      "right": 0.543,
+      "front": 1.179
+    }
+  },
+  "limitations": [
+    "Real car: no ground-truth pose, no rule judge, no contact log.",
+    "Points not estimated: wall contacts, section exits and the finish position were not observed by a judge; DONE and 12 turns are not a score.",
+    "Lap splits approximated by the end of turns 4/8/12, not by crossing the start section.",
+    "Start pose x, y, yaw and field geometry not measured; LiDAR distances at Start only.",
+    "Wall-clock time only; the battery was very low (6.66 V)."
+  ],
+  "evidence": [
+    "telemetry.csv",
+    "telemetry.csv.scans.jsonl.gz",
+    "events.jsonl",
+    "camera-evidence.csv",
+    "camera/",
+    "launch.log",
+    "params/"
+  ],
+  "provisional_bonus": {
+    "1.3_stop_in_finish": 3,
+    "status": "pending: stop looks inside the start section (front 1.172 m at DONE vs 1.179 m at Start, side 6 cm inward) but nobody checked it"
+  },
+  "pending_validations": [
+    "no wall contact (min inner LiDAR gap 0.162 m, ~10 cm of chassis; not observed by a judge)",
+    "island not moved (assumed; 0 points if it moved)",
+    "final stop inside the start section",
+    "30 s stationary after DONE not checked (gyro noisy after DONE: car probably picked up)"
+  ],
+  "analysis_2026_10_09": {
+    "laps_wall_s": [
+      14.408,
+      14.126,
+      14.114
+    ],
+    "time_split_wall_s": {
+      "follow": 22.5,
+      "turn": 19.3,
+      "finish": 4.5
+    },
+    "mean_speed_mps": 0.4,
+    "lidar_odometry_aligned": "462/467 control ticks",
+    "turn_angle_gyro_rad": "1.45-1.69, mean 1.57",
+    "heading_drift": "wall_yaw +0.03 -> -0.14 rad over ~35 s: residual gyro bias ~0.005 rad/s; bias calibrated over only 0.3 s",
+    "min_gaps_lidar_m": {
+      "inner": 0.162,
+      "outer": 0.544,
+      "front": 0.706
+    },
+    "control_gaps_in_motion": "none (stale-sensor warnings only before Start)",
+    "post_done_yaw": "+2.6 rad in ~60 s after DONE with gyro sd 0.27 rad/s: handling, not driving"
+  }
+}

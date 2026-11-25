@@ -1,0 +1,201 @@
+{
+  "params": {
+    "test": "motor",
+    "steer_angles": [
+      10.0,
+      25.0
+    ],
+    "motor_pcts": [
+      10.0,
+      15.0,
+      20.0,
+      25.0,
+      30.0
+    ],
+    "motor_time": 1.0,
+    "max_motor_time": 1.0,
+    "return_back": true,
+    "free_back": 0.6,
+    "steer_pct": 30.0,
+    "coast_time": 1.5,
+    "hold_time": 1.0,
+    "free_distance": 1.0,
+    "stop_distance": 0.35,
+    "wait_button": false,
+    "run_dir": "~/robotek-runs",
+    "servo_topic": "/ros_robot_controller/acker_servo/set_state",
+    "servo_duration": 0.02,
+    "servo_center_us": 1500.0,
+    "servo_gain_pos": 18.96551724137931,
+    "servo_gain_neg": 17.24137931034483,
+    "servo_sign": -1.0,
+    "servo_min_us": 1000.0,
+    "servo_max_us": 2050.0
+  },
+  "plan": [
+    {
+      "step": "inicio",
+      "phase": "idle",
+      "servo": 0.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "motor 10%",
+      "phase": "motor",
+      "servo": 0.0,
+      "motor": 10.0,
+      "time": 1.0,
+      "needs_free": 1.0
+    },
+    {
+      "step": "motor 0",
+      "phase": "motor",
+      "servo": 0.0,
+      "motor": 0.0,
+      "time": 2.0
+    },
+    {
+      "step": "volver +0",
+      "phase": "return",
+      "servo": 0.0,
+      "motor": -10.0,
+      "time": 1.0,
+      "needs_back": 0.6
+    },
+    {
+      "step": "parar",
+      "phase": "return",
+      "servo": 0.0,
+      "motor": 0.0,
+      "time": 1.5
+    },
+    {
+      "step": "motor 15%",
+      "phase": "motor",
+      "servo": 0.0,
+      "motor": 15.0,
+      "time": 1.0,
+      "needs_free": 1.0
+    },
+    {
+      "step": "motor 0",
+      "phase": "motor",
+      "servo": 0.0,
+      "motor": 0.0,
+      "time": 2.0
+    },
+    {
+      "step": "volver +0",
+      "phase": "return",
+      "servo": 0.0,
+      "motor": -15.0,
+      "time": 1.0,
+      "needs_back": 0.6
+    },
+    {
+      "step": "parar",
+      "phase": "return",
+      "servo": 0.0,
+      "motor": 0.0,
+      "time": 1.5
+    },
+    {
+      "step": "motor 20%",
+      "phase": "motor",
+      "servo": 0.0,
+      "motor": 20.0,
+      "time": 1.0,
+      "needs_free": 1.0
+    },
+    {
+      "step": "motor 0",
+      "phase": "motor",
+      "servo": 0.0,
+      "motor": 0.0,
+      "time": 2.0
+    },
+    {
+      "step": "volver +0",
+      "phase": "return",
+      "servo": 0.0,
+      "motor": -20.0,
+      "time": 1.0,
+      "needs_back": 0.6
+    },
+    {
+      "step": "parar",
+      "phase": "return",
+      "servo": 0.0,
+      "motor": 0.0,
+      "time": 1.5
+    },
+    {
+      "step": "motor 25%",
+      "phase": "motor",
+      "servo": 0.0,
+      "motor": 25.0,
+      "time": 1.0,
+      "needs_free": 1.0
+    },
+    {
+      "step": "motor 0",
+      "phase": "motor",
+      "servo": 0.0,
+      "motor": 0.0,
+      "time": 2.0
+    },
+    {
+      "step": "volver +0",
+      "phase": "return",
+      "servo": 0.0,
+      "motor": -25.0,
+      "time": 1.0,
+      "needs_back": 0.6
+    },
+    {
+      "step": "parar",
+      "phase": "return",
+      "servo": 0.0,
+      "motor": 0.0,
+      "time": 1.5
+    },
+    {
+      "step": "motor 30%",
+      "phase": "motor",
+      "servo": 0.0,
+      "motor": 30.0,
+      "time": 1.0,
+      "needs_free": 1.0
+    },
+    {
+      "step": "motor 0",
+      "phase": "motor",
+      "servo": 0.0,
+      "motor": 0.0,
+      "time": 2.0
+    },
+    {
+      "step": "volver +0",
+      "phase": "return",
+      "servo": 0.0,
+      "motor": -30.0,
+      "time": 1.0,
+      "needs_back": 0.6
+    },
+    {
+      "step": "parar",
+      "phase": "return",
+      "servo": 0.0,
+      "motor": 0.0,
+      "time": 1.5
+    },
+    {
+      "step": "fin",
+      "phase": "idle",
+      "servo": 0.0,
+      "motor": 0.0,
+      "time": 0.5
+    }
+  ]
+}

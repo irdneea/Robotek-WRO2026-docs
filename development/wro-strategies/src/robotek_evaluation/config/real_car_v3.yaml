@@ -1,0 +1,96 @@
+# The real Robotek car since 8 nov 2026 (open_lab --car real_v3 and obstacle_lab --car real_v3 only; Gazebo
+# real_car:=true keeps real_car_v1.yaml). real_car_v2.yaml stays as the car of 1-4 nov (runaway motor_type 2, brake by
+# board reset) to reproduce those rounds.
+# Evidence: docs/robot-real-pi/obstacle-runs/20261108/ (motor tests), docs/robot-real-pi/open-runs/20261108/ (three
+# complete Open rounds in ~27 s), robotek-learn src/robotek_hardware/config/robot.yaml (f9c668b): drive motor on M2
+# with no motor type sent (the board's speed loop works), 54:30 gears, motor_rps_per_mps 4.4, a plain 0 stops it.
+# Fit and checks: docs/obstacle-estado.md, section "Coche real".
+sim_actuator_model:
+  ros__parameters:
+    wheelbase: 0.11883
+    # Servo: the strategy angle is clamped where base_adapter's wheel table reaches its last servo command, 1793 us
+    # (17.6 deg nominal = 0.307 rad: the v3's steer_limit, and the Open's 25 deg also end there; 8 nov Open round 3
+    # bag). Dynamics fitted (grid, docs/robot-real-pi/obstacle-runs/20261108/lab-fit/fit_servo.py) to tests 11/13 of 4 nov (servo command against the gyro:
+    # 10/50/90 % of the full-lock yaw rate at +0.12-0.15 / +0.19-0.21 / +0.29-0.30 s, back to 50 % +0.15-0.18 s after a
+    # release) and to Obstacle round 2 of 4 nov (bag: the command crosses zero at t ~1.44 s, the gyro minus its bias at
+    # 1.66 s): this model 0.132 / 0.182 / 0.296, 0.178 and 1.658 s (rms 10 ms). real_v2's 0.10 / 1.8 / 0.05 at this
+    # servo range give 0.118 / 0.194 / 0.286, 0.188 and 1.682 s (rms 17 ms): the servo moves faster over a full flip.
+    steer_delay: 0.12
+    steer_rate: 2.5
+    steer_tau: 0.07
+    steer_limit: 0.307
+    # Effective wheel = 1.114 x servo angle (19.6 deg at full lock): the car turns tighter than the kinematic model of
+    # its servo angle (tests 11/13: omega / (v tan 17.6 deg) = 9.5 and 8.9 1/m against 1/0.119 = 8.4). With the lab's
+    # understeer 0.10 (lab: section) this gives a 0.335 m radius at 0.2 m/s (1 nov floor calibration with the gyro:
+    # 19.3 deg = 0.335 m), 1.65 rad/s at 0.57 m/s (test 11: 1.71), 2.00 at 0.70 (test 13: 1.98) and 2.28 rad/s at
+    # 0.80 m/s (the peak of the 8 nov Open rounds at ~0.87 m/s mean). real_v2 had 19.1 deg at every speed and the v3's
+    # 0.307 rad gave only 17.6 deg there. The evidence spreads: the 1 nov gyro calibration read 17.9 deg at 1800 us
+    # (0.34-0.37 m) and 8 nov Obstacle round 2 (54:30, runaway motor) read 2.0-2.2 rad/s at full lock with ~0.57 m/s
+    # from the v3's LiDAR pose (0.26-0.29 m). Sensitivity: --car-param steer_gain=1.0 (17.6 deg, 0.375 m).
+    steer_deadband: 0.0
+    steer_gain: 1.114
+    # base_adapter ramps the m/s command (accel_limit 1.0, decel_limit 0.6, also down to a plain 0) and sends
+    # rps = 4.4 * m/s to the board, capped at motor_max_rps: 6.7 in the car's autostart (1.52 m/s; robot.yaml 3.4).
+    # The board's own response (8 nov SDK pulses straight to the board, no adapter ramp: 1/2/3 rps for 1 s, and
+    # 0.1-1.0 rps steps; lab-fit/fit_motor.py) fits accel ~1.0 m/s^2, dead time 0.10 s and lag 0.30 s (rms 3.5 cm over 16 pulses on
+    # distance moved and rolled after the 0): the adapter's 1.0 m/s^2 and the board's in series are one 1.0 limit.
+    accel_max: 1.0
+    decel_max: 0.6
+    drive_delay: 0.10
+    drive_tau: 0.30
+    drive_command_limit: 1.52
+    drive_deadband: 0.005
+    # Asked m/s (4.4 rps per m/s) -> real m/s. Low end: 0.1-1.0 rps steps, forward and backward averaged (forward
+    # 0.014-0.215 m/s, backward ~10 % faster; the car crawls from 0.1 rps, within +-20 % of 4.4). Middle: through
+    # the adapter with 4.0 rps per m/s, 0.15 / 0.30 / 0.50 asked -> 0.160 / 0.277 / 0.449 (= 0.165 / 0.33 / 0.55 asked
+    # at 4.4). High end (lab-fit/open_speed.py): the 8 nov Open rounds (cruise 1.28 asked, cap 6.7 rps) give FINISH
+    # 26.7 s with laps 9.6 / 8.5 / 8.9 s and 0.87 m/s mean by LiDAR odometry. In the lab's classic field (square100) the
+    # v5 with the car's settings drives ~18.5 m (real: 0.87 x 26.7 = 23 m), so no table matches both: 1.28 -> 1.05
+    # gives 0.92 m/s mean but 20.8 s; 1.28 -> 0.74 gives 27.0 s but 0.65 m/s. These points (1.28 -> 0.87, saturating
+    # as the runaway motor of 4 nov, which did the same ~27 s at full PWM) give 23.5 s, laps 7.9 / 7.0 / 7.3, 0.79 m/s.
+    # The Obstacle never asks more than 0.35 m/s: the high end does not matter there.
+    speed_table_cmd: [0.05, 0.10, 0.165, 0.33, 0.55, 1.0, 1.52]
+    speed_table_real: [0.045, 0.09, 0.16, 0.28, 0.45, 0.80, 0.95]
+lab:
+  # Control timer of the strategy node on the Pi (the v5 at 38.8 Hz in test 11 of 4 nov); measured_dt: the strategies
+  # integrate the real time between their ticks.
+  control_hz: 38.8
+  measured_dt: true
+  scan_copies: 1
+  # Curvature divided by (1 + understeer * v^2) (s^2/m^2): the tyres slip more at speed (see steer_gain above).
+  understeer: 0.10
+  # No board resets any more: a plain 0 stops the car (no brake_reset, no IMU gap).
+  brake_delay: 0.0
+  brake_decel: 0.0
+  brake_imu_gap: 0.0
+  stall_steer: 0.0
+  # Optional fault (off): the no_turn_lock-th time the wheels reach full lock, the car does not turn for no_turn_s s
+  # whatever is commanded (servo at 1793 us and the gyro at ~0: tests 19/27 of 4 nov, Open round 3 of 8 nov at corner
+  # 7, 2 s into the wall). --car-param no_turn_lock=N measures its effect.
+  no_turn_lock: 0
+  no_turn_s: 2.0
+  # Optional speed floor (off): base_adapter's motor_min_rps raises every non-zero command to at least this m/s asked
+  # (motor_min_rps 1.1 at 4.4 rps per m/s = 0.25), also while it ramps down to 0. The 8 nov parking tests ran with
+  # 1.1-1.3 (the car moved at ~0.25-0.3 m/s and rolled 3-12 cm after each 0). --car-param drive_min_speed=0.25.
+  drive_min_speed: 0.0
+  # 1: the floor also holds while base_adapter ramps a stop down to 0 (the adapter today); 0: a 0 command cuts it.
+  drive_min_on_stop: 1
+  # Optional fit to the 8 nov floor brake test (off = 0; lab-fit/brake_test.py, SDK straight to the board, 1.2 rps for
+  # 1.2 s): drive_gain 1.4 (real speed / table speed: 0.23-0.26 m driven, 0.13-0.14 m rolled after a plain 0; lab
+  # 0.232 / 0.130) and lock_speed_factor 0.6 (at full lock the car covers 0.6 of the straight distance: 0.18-0.22 rad
+  # rolled, lab 0.233). With them a 0.25 m/s floor drives at ~0.31 m/s, as the car with motor_min_rps 1.1.
+  drive_gain: 0
+  lock_speed_factor: 0
+  # Optional counter-pulse brake (off): on each stop the opposite speed (m/s asked) for counter_s s, then 0. The 8 nov
+  # test (2 rps = 0.45 m/s for 0.15 s) rolled 0.10 m straight and 0.045-0.135 rad at full lock; the lab gives 0.05 m and
+  # 0.09 rad: it overrates the pulse in straight.
+  counter_speed: 0
+  counter_s: 0.15
+  # Optional start kick (off): from a standstill of at least kick_after s, at least kick_speed (m/s asked) for kick_s s
+  # (robotek-learn base_adapter motor_kick_rps 2 = 0.45, motor_kick_s 0.2, after 0.5 s stopped).
+  kick_speed: 0
+  kick_s: 0.2
+  kick_after: 0.5
+  # Optional breakaway at full lock (off): standing with the wheels at full lock, a command under this (m/s asked)
+  # does not move the car (8 nov night: 1.1 rps = 0.25 alone sometimes did not, the 2 rps kick did).
+  lock_breakaway: 0

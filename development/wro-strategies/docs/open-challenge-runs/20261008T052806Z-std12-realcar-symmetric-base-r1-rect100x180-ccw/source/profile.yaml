@@ -1,0 +1,5 @@
+# Sensor-only Open: same control values as open_fastservo_v4.
+# Tuning defaults: robotek_open/open_config.py; override here only when needed.
+open_strategy:
+  ros__parameters:
+    direction: auto

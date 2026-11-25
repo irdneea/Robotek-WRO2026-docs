@@ -1,0 +1,171 @@
+{
+  "command": [
+    "ros2",
+    "launch",
+    "robotek_bringup",
+    "open_challenge.launch.py",
+    "gui:=false",
+    "direction:=auto",
+    "world:=/home/user/Projects/WRO-Strategies/docs/open-challenge-runs/20261021T190640Z-std12-v5-e-east140x100-cw/source/world.sdf",
+    "params_file:=/home/user/Projects/WRO-Strategies/docs/open-challenge-runs/20261021T190640Z-std12-v5-e-east140x100-cw/params.yaml",
+    "audit_dir:=/home/user/Projects/WRO-Strategies/docs/open-challenge-runs/20261021T190640Z-std12-v5-e-east140x100-cw",
+    "spawn_x:=0.0",
+    "spawn_y:=-1.15",
+    "rviz:=false",
+    "ackermann_velocity_limit:=4.0",
+    "ackermann_steer_p_gain:=20.0",
+    "strategy:=v5",
+    "spawn_yaw:=3.141592653589793",
+    "real_car:=true"
+  ],
+  "direction": "cw",
+  "parameters": {
+    "direction_confirmations": 3,
+    "cruise_speed": 1.28,
+    "last_corner_speed": 0.6,
+    "inner_gap": 0.25,
+    "turn_front_distance": 1.19,
+    "corner_lookahead": 0.35,
+    "finish_speed": 0.15,
+    "finish_lead": 0.08,
+    "finish_stop_wait": 0.9,
+    "calibrate_seconds": 0.3,
+    "scan_max_age": 0.35,
+    "imu_max_age": 0.2,
+    "telemetry_path": "/home/user/Projects/WRO-Strategies/docs/open-challenge-runs/20261021T190640Z-std12-v5-e-east140x100-cw/telemetry.csv"
+  },
+  "field_geometry": {
+    "inner": {
+      "xmin": -0.5,
+      "xmax": 0.9,
+      "ymin": -0.5,
+      "ymax": 0.5
+    },
+    "outer": {
+      "xmin": -1.5,
+      "xmax": 1.5,
+      "ymin": -1.5,
+      "ymax": 1.5
+    },
+    "corridors": {
+      "west": 1.0,
+      "east": 0.6,
+      "south": 1.0,
+      "north": 1.0
+    },
+    "island": {
+      "width": 1.4,
+      "height": 1.0,
+      "center_x": 0.2,
+      "center_y": 0.0
+    }
+  },
+  "world_source": "/home/user/Projects/WRO-Strategies/docs/open-challenge-runs/field-size-driver/worlds/east140x100.sdf",
+  "started_utc": "20261021T190640Z",
+  "strategy": "v5",
+  "resolved_config": {
+    "cruise_speed": 1.28,
+    "last_corner_speed": 0.6,
+    "inner_gap": 0.25,
+    "turn_front_distance": 1.19,
+    "corner_lookahead": 0.35,
+    "finish_speed": 0.15,
+    "finish_lead": 0.08,
+    "finish_stop_wait": 0.9,
+    "calibrate_seconds": 0.3,
+    "direction": "auto",
+    "telemetry_path": "/home/user/Projects/WRO-Strategies/docs/open-challenge-runs/20261021T190640Z-std12-v5-e-east140x100-cw/telemetry.csv",
+    "auto_start": true,
+    "shutdown_on_done": true,
+    "done_hold": 35.0,
+    "scan_max_age": 0.35,
+    "imu_max_age": 0.2,
+    "telemetry_sync_seconds": 0.0,
+    "direction_confirmations": 3,
+    "vision_blue_h_min": 90,
+    "vision_blue_h_max": 135,
+    "vision_blue_s_min": 60,
+    "vision_blue_v_min": 60,
+    "vision_orange_h_min": 5,
+    "vision_orange_h_max": 28,
+    "vision_orange_s_min": 60,
+    "vision_orange_v_min": 60,
+    "vision_floor_mask": false,
+    "vision_wall_v_max": 40,
+    "vision_wall_min_rows": 8,
+    "REAL_STEER_LIMIT": 0.30718,
+    "WHEELBASE": 0.1174,
+    "LAPS": 3,
+    "CORNERS": 12,
+    "REAL_SPEED": [
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.15,
+        0.18
+      ],
+      [
+        0.3,
+        0.27
+      ],
+      [
+        0.4,
+        0.3
+      ],
+      [
+        0.6,
+        0.42
+      ],
+      [
+        1.28,
+        0.6
+      ]
+    ],
+    "STEER": 0.30718,
+    "KP": 0.8,
+    "DAMPING": 0.1,
+    "EXIT_ANGLE": 0.25,
+    "TURN_TOLERANCE": 0.12,
+    "LAST_TOLERANCE": 0.4,
+    "CONFIRMATIONS": 2,
+    "ARM_DISTANCE": 0.25,
+    "ISLAND_OPEN": 1.0,
+    "END_CLEARANCE": 0.08,
+    "LATERAL_GAIN": 0.3,
+    "LATERAL_MAX": 0.4,
+    "BRAKE_GAIN": 2.0,
+    "BRAKE_MARGIN": 0.15,
+    "DIRECTION_TIMEOUT": 15.0,
+    "wheelbase": 0.1174,
+    "steer_limit": 0.4363323129985824,
+    "lidar_offset_x": 0.128,
+    "gyro_sign": 1.0,
+    "vision_min_length": 40.0,
+    "vision_min_confidence": 0.25,
+    "vision_confirmations": 5,
+    "side_center": 1.5708,
+    "side_half_width": 0.44,
+    "front_half_width": 0.35,
+    "wall_angle_max": 0.45,
+    "laps": 3,
+    "control_rate": 50.0,
+    "distance_model_accel": 2.0
+  },
+  "ackermann_velocity_limit": 4.0,
+  "ackermann_steer_p_gain": 20.0,
+  "launch_args": [
+    "real_car:=true"
+  ],
+  "gui": false,
+  "honest": true,
+  "real_time_factor": 2.0,
+  "spawn": {
+    "x": 0.0,
+    "y": -1.15,
+    "yaw": 3.141592653589793
+  },
+  "sampling": "CSV 10 Hz simulation-clock control timer; raw lidar scans with timestamps",
+  "measurement": "Lap milestones use turn counts; ground-truth winding checks progress. Geometric body clearance approximates the wall bounds read from the saved SDF."
+}

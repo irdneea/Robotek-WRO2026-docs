@@ -1,0 +1,7 @@
+# Obstacle sensor-only planner (refactor of obstacle_planner_v8, same control values).
+# Every control value is a default in robotek_obstacle/obstacle_config.py; set only what
+# an experiment changes. Inputs: LiDAR, gyro and camera only (honest simulation).
+# Archived profiles (config/archive/obstacle_*.yaml) need the code of commit be3800d.
+obstacle_strategy:
+  ros__parameters:
+    direction: auto

@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Robotek: vistas de montaje (estilo instrucciones de bloques)</title>
+<style>
+  body { margin: 0; font: 14px system-ui, sans-serif; background: #d7ebf6; }
+  #log { position: fixed; left: 8px; bottom: 8px; white-space: pre; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<div id="log">cargando…</div>
+<script type="importmap">
+{ "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+               "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/" } }
+</script>
+<script type="module">
+// Renders the assembly views of the car for the guide: one PNG per step (what is already built,
+// plus the new parts pulled out along the way they go in, with red arrows) and one thumbnail per
+// part. Geometry: the STL meshes of robotek_description placed exactly as in the URDF
+// (xyz = (mesh_x, 0, mesh_z), rpy = (pi/2, 0, pi), scale 0.001); parts of Assembly3.stp the URDF
+// leaves out (the real LD19, the RRC Lite board, every screw and nut) exported from SolidCraft into
+// meshes/ (see meshes/README.md; SolidCraft frame: turned 180 deg about z, same offset); and
+// primitives for what the STEP does not have (wheels from the URDF; motor, rear axle and Ackermann
+// links where the team README describes them, approximately).
+// Frame: base_link, x forward, y left, z up (metres). Served by tools/assembly/save_server.py.
+import * as THREE from 'three';
+import { STLLoader } from 'three/addons/loaders/STLLoader.js';
+
+const MESHES = '../../src/robotek_description/meshes/';
+const MESH_X = 0.0242354, MESH_Z = 0.0354947;
+const WB = 0.11883, TRACK_F = 0.13305, TRACK_R = 0.1235, WHEEL_R = 0.0305, WHEEL_W = 0.0145;
+const COLORS = {                      // URDF materials
+  purple: 0x662bb3, black: 0x1a1a1a, pcb: 0x0a5233, lilac: 0xb8a6ed, olive: 0x4d5933,
+  navy: 0x121233, silver: 0xb3b3b3, steel: 0x8c8c99, board: 0x2a2a2e,
+};
+const log = (t) => (document.getElementById('log').textContent = t);
+const loader = new STLLoader();
+
+function material(color) {
+  return new THREE.MeshLambertMaterial({ color, flatShading: false });
+}
+function outlined(geometry, color, threshold = 28) {
+  const group = new THREE.Group();
+  group.add(new THREE.Mesh(geometry, material(color)));
+  const lines = new THREE.LineSegments(new THREE.EdgesGeometry(geometry, threshold),
+    new THREE.LineBasicMaterial({ color: 0x111111, transparent: true, opacity: 0.55 }));
+  group.add(lines);
+  return group;
+}
+async function stl(file, color) {
+  const geometry = await loader.loadAsync(MESHES + file);
+  geometry.computeVertexNormals();
+  const object = outlined(geometry, color, 35);
+  object.scale.setScalar(0.001);
+  const holder = new THREE.Group();
+  object.rotation.set(Math.PI / 2, 0, Math.PI, 'ZYX');
+  holder.add(object);
+  holder.position.set(MESH_X, 0, MESH_Z);
+  return holder;
+}
+async function scstl(file, color) {             // SolidCraft export of Assembly3.stp (mm)
+  const geometry = await loader.loadAsync('meshes/' + file);
+  geometry.computeVertexNormals();
+  const object = outlined(geometry, color, 35);
+  object.scale.setScalar(0.001);
+  object.rotation.set(0, 0, Math.PI);
+  const holder = new THREE.Group();
+  holder.add(object);
+  holder.position.set(MESH_X, 0, MESH_Z);
+  return holder;
+}
+async function group(...items) {
+  const g = new THREE.Group();
+  for (const item of await Promise.all(items)) g.add(item);
+  return g;
+}
+function cylinderY(radius, length, color) {       // axis along y
+  const g = new THREE.CylinderGeometry(radius, radius, length, 40);
+  return outlined(g, color, 40);
+}
+function box(sx, sy, sz, color) {
+  return outlined(new THREE.BoxGeometry(sx, sy, sz), color);
+}
+function at(object, x, y, z) { object.position.set(x, y, z); return object; }
+
+function wheel(x, y) {
+  const g = new THREE.Group();
+  g.add(cylinderY(WHEEL_R, WHEEL_W, COLORS.lilac));
+  const hub = cylinderY(WHEEL_R * 0.72, WHEEL_W * 1.08, COLORS.olive);
+  g.add(hub);
+  return at(g, x, y, WHEEL_R);
+}
+function motor() {                                  // 25 mm gear motor, coaxial with the rear axle
+  const g = new THREE.Group();
+  g.add(at(cylinderY(0.0125, 0.060, COLORS.silver), 0, -0.012, 0));
+  g.add(at(cylinderY(0.0125, 0.012, COLORS.steel), 0, 0.024, 0));
+  return at(g, -WB / 2, 0, WHEEL_R);
+}
+function axle() {
+  return at(cylinderY(0.002, TRACK_R, COLORS.steel), -WB / 2, 0, WHEEL_R);
+}
+function ackermann() {                              // knuckles, tie rod and the servo link
+  const g = new THREE.Group();
+  for (const side of [1, -1]) {
+    g.add(at(box(0.016, 0.010, 0.022, COLORS.black), WB / 2, side * (TRACK_F / 2 - 0.016), WHEEL_R));
+    g.add(at(box(0.012, 0.004, 0.003, COLORS.steel), WB / 2 + 0.010, side * (TRACK_F / 2 - 0.022), WHEEL_R + 0.008));
+  }
+  g.add(at(box(0.003, TRACK_F - 0.040, 0.003, COLORS.steel), WB / 2 + 0.016, 0, WHEEL_R + 0.008));
+  g.add(at(box(0.026, 0.003, 0.003, COLORS.steel), WB / 2 + 0.006, 0.012, WHEEL_R + 0.014));
+  return g;
+}
+
+const PARTS = {
+  plate:   { name: 'Placa base (chasis)', make: () => stl('base_plate.stl', COLORS.purple) },
+  servo:   { name: 'Servo de dirección', make: () => stl('servo.stl', COLORS.black) },
+  ackermann: { name: 'Dirección Ackermann', make: async () => ackermann() },
+  motor:   { name: 'Motor de 25 mm', make: async () => motor() },
+  axle:    { name: 'Eje trasero', make: async () => axle() },
+  wheelFL: { name: 'Rueda', make: async () => wheel(WB / 2, TRACK_F / 2) },
+  wheelFR: { name: 'Rueda', make: async () => wheel(WB / 2, -TRACK_F / 2) },
+  wheelRL: { name: 'Rueda', make: async () => wheel(-WB / 2, TRACK_R / 2) },
+  wheelRR: { name: 'Rueda', make: async () => wheel(-WB / 2, -TRACK_R / 2) },
+  driver:  { name: 'Driver del motor TB6612', make: () => stl('driver_board.stl', COLORS.pcb) },
+  case:    { name: 'Caja impresa', make: () => stl('case.stl', COLORS.purple) },
+  pi:      { name: 'Raspberry Pi 5', make: () => stl('raspberry_pi.stl', COLORS.pcb) },
+  screwsPi: { name: 'tornillos M2', make: () => scstl('screws_pi.stl', COLORS.steel) },
+  nutsPi:  { name: 'tuercas M2', make: () => scstl('nuts_pi.stl', COLORS.steel) },
+  rrc:     { name: 'Placa RRC Lite', make: () => scstl('rrc_lite.stl', COLORS.board) },
+  screwsRrc: { name: 'tornillos M2', make: () => scstl('screws_rrc.stl', COLORS.steel) },
+  nutsRrc: { name: 'tuercas M2', make: () => scstl('nuts_rrc.stl', COLORS.steel) },
+  lidar:   { name: 'LiDAR LD19', make: () => group(scstl('ld19_body.stl', COLORS.navy), scstl('ld19_head.stl', COLORS.black)) },
+  screwsLidar: { name: 'tornillos PA2×6', make: () => scstl('screws_lidar.stl', COLORS.steel) },
+  camSupport: { name: 'Soporte de la cámara', make: () => stl('camera_support.stl', COLORS.purple) },
+  camera:  { name: 'Cámara', make: () => stl('camera.stl', COLORS.black) },
+  screwsCam: { name: 'tornillos M1.6', make: () => scstl('screws_cam.stl', COLORS.steel) },
+  nutsCam: { name: 'tuercas M1.6', make: () => scstl('nuts_cam.stl', COLORS.steel) },
+  // single pieces, for the thumbnails only
+  m2x10:   { name: 'tornillo M2×10', make: () => scstl('one_m2x10.stl', COLORS.steel) },
+  m2x14:   { name: 'tornillo M2×14', make: () => scstl('one_m2x14.stl', COLORS.steel) },
+  nutM2:   { name: 'tuerca M2', make: () => scstl('one_nut_m2.stl', COLORS.steel) },
+  pa2x6:   { name: 'tornillo PA2×6', make: () => scstl('one_pa2x6.stl', COLORS.steel) },
+  m16x16:  { name: 'tornillo M1.6×16', make: () => scstl('one_m16x16.stl', COLORS.steel) },
+  nutM16:  { name: 'tuerca M1.6', make: () => scstl('one_nut_m16.stl', COLORS.steel) },
+};
+
+// Steps: the new parts and where each one comes from (offset from its place, metres).
+const STEPS = [
+  { id: 1, add: { plate: [0, 0, 0.05] } },
+  { id: 2, add: { servo: [0, 0, 0.09], ackermann: [0.07, 0, -0.03] } },
+  { id: 3, add: { axle: [0, 0.10, 0], motor: [-0.07, 0, 0] } },
+  { id: 4, add: { wheelFL: [0, 0.07, 0], wheelFR: [0, -0.07, 0], wheelRL: [0, 0.07, 0], wheelRR: [0, -0.07, 0] } },
+  { id: 5, add: { driver: [0, 0, 0.07] } },
+  { id: 6, add: { case: [0, 0, 0.09] } },
+  { id: 7, add: { pi: [0, 0.07, 0.03], screwsPi: [0, 0.13, 0.03], nutsPi: [0, -0.02, 0.06] } },
+  { id: 8, add: { rrc: [0, -0.07, 0.03], screwsRrc: [0, -0.13, 0.03], nutsRrc: [0, 0.02, 0.06] }, view: [1.15, -0.95, 0.85] },
+  { id: 9, add: { lidar: [0, 0, 0.06], screwsLidar: [0, 0, -0.05] } },
+  { id: 10, add: { camSupport: [0, 0, 0.08], camera: [0.05, 0, 0.11], screwsCam: [0, 0.07, 0.11], nutsCam: [0, -0.07, 0.11] } },
+];
+const ORDER = STEPS.flatMap((s) => Object.keys(s.add));
+
+const W = 1600, H = 1100;
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(1);
+renderer.setSize(W, H);
+renderer.setClearColor(0x000000, 0);
+document.body.appendChild(renderer.domElement);
+
+function lights(scene) {
+  scene.add(new THREE.AmbientLight(0xffffff, 1.6));
+  const key = new THREE.DirectionalLight(0xffffff, 2.2);
+  key.position.set(1.2, 1.4, 2.0);
+  scene.add(key);
+  const fill = new THREE.DirectionalLight(0xffffff, 0.8);
+  fill.position.set(-1.5, -0.5, 1.0);
+  scene.add(fill);
+}
+function arrow(from, to) {
+  const g = new THREE.Group();
+  const dir = new THREE.Vector3().subVectors(to, from);
+  const length = dir.length();
+  dir.normalize();
+  const red = new THREE.MeshBasicMaterial({ color: 0xd8392b });
+  const shaft = new THREE.Mesh(new THREE.CylinderGeometry(0.0012, 0.0012, Math.max(length - 0.012, 0.001), 12), red);
+  const head = new THREE.Mesh(new THREE.ConeGeometry(0.0045, 0.012, 16), red);
+  const up = new THREE.Vector3(0, 1, 0);
+  const q = new THREE.Quaternion().setFromUnitVectors(up, dir);
+  shaft.quaternion.copy(q);
+  head.quaternion.copy(q);
+  shaft.position.copy(from).addScaledVector(dir, (length - 0.012) / 2);
+  head.position.copy(to).addScaledVector(dir, -0.006);
+  g.add(shaft, head);
+  return g;
+}
+function camera(target, distance, direction = [1.15, 0.95, 0.85]) {
+  const cam = new THREE.PerspectiveCamera(26, W / H, 0.01, 10);
+  cam.up.set(0, 0, 1);
+  const d = new THREE.Vector3(...direction).normalize();
+  cam.position.copy(target).addScaledVector(d, distance);
+  cam.lookAt(target);
+  return cam;
+}
+async function save(name, pad = 24) {
+  // Trim the transparent margin (keep `pad` px) so the guide can size the images freely.
+  const src = renderer.domElement;
+  const w = src.width, h = src.height;
+  const probe = document.createElement('canvas');
+  probe.width = w; probe.height = h;
+  const ctx = probe.getContext('2d');
+  ctx.drawImage(src, 0, 0);
+  const alpha = ctx.getImageData(0, 0, w, h).data;
+  let x0 = w, y0 = h, x1 = 0, y1 = 0;
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+    if (alpha[(y * w + x) * 4 + 3] > 8) { x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); }
+  }
+  x0 = Math.max(0, x0 - pad); y0 = Math.max(0, y0 - pad); x1 = Math.min(w - 1, x1 + pad); y1 = Math.min(h - 1, y1 + pad);
+  const out = document.createElement('canvas');
+  out.width = x1 - x0 + 1; out.height = y1 - y0 + 1;
+  out.getContext('2d').drawImage(probe, x0, y0, out.width, out.height, 0, 0, out.width, out.height);
+  const blob = await new Promise((r) => out.toBlob(r, 'image/png'));
+  await fetch('/save?name=' + name, { method: 'POST', body: blob });
+}
+function centreOf(object) {
+  const b = new THREE.Box3().setFromObject(object);
+  return { centre: b.getCenter(new THREE.Vector3()), size: b.getSize(new THREE.Vector3()).length() };
+}
+
+const cache = {};
+async function part(id) {
+  if (!cache[id]) cache[id] = await PARTS[id].make();
+  return cache[id].clone(true);
+}
+
+async function renderStep(step) {
+  const scene = new THREE.Scene();
+  lights(scene);
+  const done = ORDER.slice(0, ORDER.indexOf(Object.keys(step.add)[0]));
+  for (const id of done) scene.add(await part(id));
+  const whole = new THREE.Group();
+  for (const id of [...done, ...Object.keys(step.add)]) whole.add(await part(id));
+  for (const [id, offset] of Object.entries(step.add)) {
+    const object = await part(id);
+    const home = centreOf(object).centre;
+    object.position.add(new THREE.Vector3(...offset));
+    scene.add(object);
+    const from = home.clone().add(new THREE.Vector3(...offset).multiplyScalar(0.8));
+    const to = home.clone().add(new THREE.Vector3(...offset).multiplyScalar(0.12));
+    scene.add(arrow(from, to));
+  }
+  const { centre } = centreOf(whole);
+  centre.z += 0.01;
+  renderer.render(scene, camera(centre, 0.62, step.view));
+  await save(`step-${step.id}.png`);
+}
+async function renderFinal() {
+  const scene = new THREE.Scene();
+  lights(scene);
+  for (const id of ORDER) scene.add(await part(id));
+  const { centre } = centreOf(scene);
+  renderer.render(scene, camera(centre, 0.62));
+  await save('final.png');
+  renderer.render(scene, camera(centre, 0.62, [-1.1, -0.9, 0.7]));
+  await save('final-back.png');
+}
+async function renderThumb(id) {
+  renderer.setSize(360, 300);
+  const scene = new THREE.Scene();
+  lights(scene);
+  const object = await part(id);
+  scene.add(object);
+  const { centre, size } = centreOf(object);
+  const cam = new THREE.PerspectiveCamera(26, 360 / 300, 0.001, 10);
+  cam.up.set(0, 0, 1);
+  const d = new THREE.Vector3(1.15, 0.95, 0.85).normalize();
+  cam.position.copy(centre).addScaledVector(d, Math.max(size, 0.03) * 2.6);
+  cam.lookAt(centre);
+  renderer.render(scene, cam);
+  await save(`part-${id}.png`);
+  renderer.setSize(W, H);
+}
+
+(async () => {
+  for (const step of STEPS) { log('paso ' + step.id); await renderStep(step); }
+  await renderFinal();
+  for (const id of ['plate', 'servo', 'ackermann', 'motor', 'axle', 'wheelFL', 'driver', 'case', 'pi', 'rrc', 'lidar',
+                    'camSupport', 'camera', 'm2x10', 'm2x14', 'nutM2', 'pa2x6', 'm16x16', 'nutM16']) {
+    log('pieza ' + id); await renderThumb(id);
+  }
+  log('listo');
+  document.title = 'listo';
+})().catch((e) => { log('error: ' + e.message); console.error(e); });
+</script>
+</body>
+</html>

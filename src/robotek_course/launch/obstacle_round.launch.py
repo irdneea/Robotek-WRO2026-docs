@@ -2,7 +2,7 @@
 
     ros2 launch robotek_course obstacle_round.launch.py strategy:=robotek_obstacle_v3 seed:=0 direction:=ccw
     ros2 launch robotek_course obstacle_round.launch.py strategy:=robotek_obstacle_v3 seed:=3 direction:=cw parking:=false
-    ros2 launch robotek_course obstacle_round.launch.py strategy:=robotek_obstacle_v3 gui:=false set:=my_obstacle.mission.CRUISE_SPEED=0.3
+    ros2 launch robotek_course obstacle_round.launch.py strategy:=robotek_obstacle_v3 gui:=false set:=robotek_obstacle_v3.mission.CRUISE_SPEED=0.3
 
 ``seed`` chooses the layout of the signs with the procedure of the rules (the same seed is the same field);
 ``parking`` adds the parking lot (and moves the signs of the start section inward, as the rules say). The field is

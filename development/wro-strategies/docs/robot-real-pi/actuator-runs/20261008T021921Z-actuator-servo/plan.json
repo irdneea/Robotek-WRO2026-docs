@@ -1,0 +1,103 @@
+{
+  "params": {
+    "test": "servo",
+    "steer_angles": [
+      10.0,
+      25.0
+    ],
+    "motor_pcts": [
+      15.0,
+      20.0,
+      30.0
+    ],
+    "motor_time": 0.25,
+    "steer_pct": 30.0,
+    "steer_lead": 0.12,
+    "coast_time": 1.5,
+    "hold_time": 1.0,
+    "free_distance": 1.0,
+    "stop_distance": 0.35,
+    "wait_button": false,
+    "run_dir": "~/robotek-runs",
+    "servo_topic": "/ros_robot_controller/acker_servo/set_state",
+    "servo_duration": 0.02,
+    "servo_center_us": 1500.0,
+    "servo_gain_pos": 18.96551724137931,
+    "servo_gain_neg": 17.24137931034483,
+    "servo_sign": -1.0,
+    "servo_min_us": 1000.0,
+    "servo_max_us": 2050.0
+  },
+  "plan": [
+    {
+      "step": "inicio",
+      "phase": "idle",
+      "servo": 0.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "servo +10",
+      "phase": "servo",
+      "servo": 10.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "servo +0",
+      "phase": "servo",
+      "servo": 0.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "servo -10",
+      "phase": "servo",
+      "servo": -10.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "servo +0",
+      "phase": "servo",
+      "servo": 0.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "servo +25",
+      "phase": "servo",
+      "servo": 25.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "servo +0",
+      "phase": "servo",
+      "servo": 0.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "servo -25",
+      "phase": "servo",
+      "servo": -25.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "servo +0",
+      "phase": "servo",
+      "servo": 0.0,
+      "motor": 0.0,
+      "time": 1.0
+    },
+    {
+      "step": "fin",
+      "phase": "idle",
+      "servo": 0.0,
+      "motor": 0.0,
+      "time": 0.5
+    }
+  ]
+}

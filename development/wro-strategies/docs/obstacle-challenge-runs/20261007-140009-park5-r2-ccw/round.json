@@ -1,0 +1,48 @@
+{
+  "test_scope": "parking_only",
+  "name": "park5-r2-ccw",
+  "direction": "ccw",
+  "official_points": null,
+  "parking_lot": {
+    "x0": 0.19499999999999995,
+    "x1": 0.48,
+    "y0": -1.5,
+    "y1": -1.3
+  },
+  "completed": true,
+  "parking_plans": 9,
+  "limit_touched": false,
+  "wall_contacts": 0,
+  "min_limit_clearance_m": 0.009479322678132673,
+  "max_steer_degrees": 25.000000000107555,
+  "timings": {
+    "sim_time_seconds": 65.82300000000001,
+    "wall_time_seconds": 38.757938623428345
+  },
+  "points_estimated": 15,
+  "verdict": "parked_fully_parallel",
+  "final_pose": {
+    "x": 0.34862737820106815,
+    "y": -1.3810991140756503,
+    "yaw_deg": -0.15051971117974372
+  },
+  "fully_inside": true,
+  "partly_inside": false,
+  "parallel": true,
+  "wall_side_wheel_to_wall_m": {
+    "front": 0.0626515083241348,
+    "rear": 0.06299302631880832
+  },
+  "wheel_distance_difference_m": 0.0003415179946735236,
+  "margins_m": {
+    "x0": 0.05848059057507815,
+    "x1": 0.03622583417371156,
+    "wall": 0.0626515083241348,
+    "lot_line": 0.024849736471537653
+  },
+  "launch_wall_seconds": 67.03039193153381,
+  "directory": "/home/user/Projects/Robotek/docs/obstacle-challenge-runs/20261007-140009-park5-r2-ccw",
+  "launch_exit_code": 0,
+  "stopped_on_pillar_fault": null,
+  "wall_timeout_reached": false
+}

@@ -1,0 +1,408 @@
+{
+  "completed": true,
+  "samples": 681,
+  "selected_direction": "cw",
+  "direction_reason": "",
+  "direction_matches_test_orientation": true,
+  "wall_time_seconds": 32.980045795440674,
+  "sim_time_seconds": 32.7,
+  "state_wall_seconds": {
+    "FOLLOW": 16.274500131607056,
+    "TURN": 14.68855357170105,
+    "FINISH": 2.0169920921325684
+  },
+  "turn_timeouts": 0,
+  "recovery_entries": 0,
+  "turns": 12,
+  "lap_markers": [
+    {
+      "lap": 1,
+      "wall_seconds": 10.501731872558594,
+      "cumulative_wall_seconds": 10.501731872558594
+    },
+    {
+      "lap": 2,
+      "wall_seconds": 10.072903156280518,
+      "cumulative_wall_seconds": 20.57463502883911
+    },
+    {
+      "lap": 3,
+      "wall_seconds": 10.388418674468994,
+      "cumulative_wall_seconds": 30.963053703308105
+    }
+  ],
+  "gt_path_m": 18.186697699371365,
+  "gt_winding_laps": 2.997451835290228,
+  "final_gt_pose": [
+    0.014220522629486962,
+    -0.8881188370627882,
+    -3.116921660561554
+  ],
+  "min_outer_body_clearance_m": 0.2998048899121127,
+  "min_inner_body_clearance_m": 0.10532557572414518,
+  "straight_heading_error_mean_rad": 0.032337064082368534,
+  "max_actual_steer_deg": 19.864929511301426,
+  "max_command_steer_deg": 17.600117550828628,
+  "command_saturation_fraction": 0.0,
+  "min_front_range_m": 0.6038111448287964,
+  "finish_body_in_start_section": true,
+  "validated_completed": true,
+  "turn_events": [
+    {
+      "turn": 1,
+      "wall_seconds": 1.1974248886108398,
+      "sim_seconds": 1.1980000000000002,
+      "entry_gt": [
+        -0.312965758030479,
+        -1.1208128610068937,
+        3.035829738744787
+      ],
+      "exit_gt": [
+        -0.7071607310005358,
+        -0.6281863459892075,
+        1.6114074472024367
+      ],
+      "exit_heading_error_rad": -0.04638319234465205,
+      "exit_actual_steer_deg": -6.750531404222962
+    },
+    {
+      "turn": 2,
+      "wall_seconds": 1.207226276397705,
+      "sim_seconds": 1.2000000000000002,
+      "entry_gt": [
+        -0.7177985446079063,
+        0.5135755290729006,
+        1.5793791681227827
+      ],
+      "exit_gt": [
+        -0.26915712250686136,
+        0.9701058351142988,
+        0.09878250691955424
+      ],
+      "exit_heading_error_rad": -0.18553120344815932,
+      "exit_actual_steer_deg": -10.785973610994418
+    },
+    {
+      "turn": 3,
+      "wall_seconds": 1.210040807723999,
+      "sim_seconds": 1.2000000000000002,
+      "entry_gt": [
+        0.32856541494842895,
+        0.9437653128265878,
+        -0.06105962184824606
+      ],
+      "exit_gt": [
+        0.7555439779757539,
+        0.46280460601902496,
+        -1.520613596699937
+      ],
+      "exit_heading_error_rad": -0.06642691831555814,
+      "exit_actual_steer_deg": -8.503404212403609
+    },
+    {
+      "turn": 4,
+      "wall_seconds": 1.222123146057129,
+      "sim_seconds": 1.2010000000000005,
+      "entry_gt": [
+        0.7523984314100081,
+        -0.4969299512231319,
+        -1.5744984297265683
+      ],
+      "exit_gt": [
+        0.298804193222329,
+        -0.9479837493333186,
+        -3.0533483694213506
+      ],
+      "exit_heading_error_rad": -0.14574962703761102,
+      "exit_actual_steer_deg": -10.734038616507837
+    },
+    {
+      "turn": 5,
+      "wall_seconds": 1.2013468742370605,
+      "sim_seconds": 1.1999999999999993,
+      "entry_gt": [
+        -0.3007482771796346,
+        -0.9217084517395903,
+        3.0850202393947903
+      ],
+      "exit_gt": [
+        -0.7232500129515353,
+        -0.43977427317637274,
+        1.617665497279139
+      ],
+      "exit_heading_error_rad": -0.05457727332936324,
+      "exit_actual_steer_deg": -8.487790489865098
+    },
+    {
+      "turn": 6,
+      "wall_seconds": 1.2098782062530518,
+      "sim_seconds": 1.200000000000001,
+      "entry_gt": [
+        -0.7260147192956531,
+        0.5222886295523003,
+        1.5739307531612774
+      ],
+      "exit_gt": [
+        -0.2752069994514866,
+        0.9760203003968747,
+        0.0932744207791792
+      ],
+      "exit_heading_error_rad": -0.18027672130950378,
+      "exit_actual_steer_deg": -10.81261348847636
+    },
+    {
+      "turn": 7,
+      "wall_seconds": 1.2092149257659912,
+      "sim_seconds": 1.1999999999999993,
+      "entry_gt": [
+        0.32644539824798563,
+        0.9468602386398854,
+        -0.06373194892675742
+      ],
+      "exit_gt": [
+        0.7520348689422738,
+        0.4642087330400086,
+        -1.5236080128293152
+      ],
+      "exit_heading_error_rad": -0.06112252939716778,
+      "exit_actual_steer_deg": -8.431714410340986
+    },
+    {
+      "turn": 8,
+      "wall_seconds": 1.2018852233886719,
+      "sim_seconds": 1.1999999999999993,
+      "entry_gt": [
+        0.7512977663119919,
+        -0.49699421504095354,
+        -1.571162603186744
+      ],
+      "exit_gt": [
+        0.29504557041666246,
+        -0.9434114750220329,
+        -3.061575081008777
+      ],
+      "exit_heading_error_rad": -0.15438692997053058,
+      "exit_actual_steer_deg": -10.763213781489092
+    },
+    {
+      "turn": 9,
+      "wall_seconds": 1.209761142730713,
+      "sim_seconds": 1.2000000000000028,
+      "entry_gt": [
+        -0.36387730096423393,
+        -0.9143919239026994,
+        3.088726608895069
+      ],
+      "exit_gt": [
+        -0.7891078056339491,
+        -0.43501892380035495,
+        1.624011271714939
+      ],
+      "exit_heading_error_rad": -0.0767991144377278,
+      "exit_actual_steer_deg": -8.586206360444546
+    },
+    {
+      "turn": 10,
+      "wall_seconds": 1.2117440700531006,
+      "sim_seconds": 1.1999999999999993,
+      "entry_gt": [
+        -0.7821022700619126,
+        0.46541237823944914,
+        1.561593273979284
+      ],
+      "exit_gt": [
+        -0.32980708449327106,
+        0.9150644256262966,
+        0.09046845442959767
+      ],
+      "exit_heading_error_rad": -0.1547870492727057,
+      "exit_actual_steer_deg": -10.749221240382814
+    },
+    {
+      "turn": 11,
+      "wall_seconds": 1.1960570812225342,
+      "sim_seconds": 1.1950000000000003,
+      "entry_gt": [
+        0.3297861388355218,
+        0.8932392866181054,
+        -0.04233582798769461
+      ],
+      "exit_gt": [
+        0.7579253984383533,
+        0.4157348122955694,
+        -1.5269304005577742
+      ],
+      "exit_heading_error_rad": -0.05743148847544077,
+      "exit_actual_steer_deg": -9.694028248703816
+    },
+    {
+      "turn": 12,
+      "wall_seconds": 1.411850929260254,
+      "sim_seconds": 1.4000000000000021,
+      "entry_gt": [
+        0.7542933691530532,
+        -0.45322010890451314,
+        -1.5702416328575681
+      ],
+      "exit_gt": [
+        0.40094718279738745,
+        -0.8684770228371468,
+        -2.8434534134791893
+      ],
+      "exit_heading_error_rad": -0.34790295472158583,
+      "exit_actual_steer_deg": -15.786981526260302
+    }
+  ],
+  "honest": true,
+  "audit_pose_merged": true,
+  "launch_wall_seconds": 74.2053945420048,
+  "exit_code": 0,
+  "timeout": false,
+  "abort_reason": null,
+  "round": {
+    "run": "20261009T103136Z-macos-robostack-lagtest-A3-v4-sq100-cw",
+    "status": "completed",
+    "start_source": "auto_first_scan",
+    "end_source": "done_event",
+    "time_from_start_wall_seconds": 33.352518796920776,
+    "time_from_start_sim_seconds": 33.096000000000004,
+    "motion_wall_seconds": 32.980045795440674,
+    "motion_sim_seconds": 32.7,
+    "lap_splits": [
+      {
+        "lap": 1,
+        "wall_seconds": 10.501731872558594,
+        "cumulative_wall_seconds": 10.501731872558594
+      },
+      {
+        "lap": 2,
+        "wall_seconds": 10.072903156280518,
+        "cumulative_wall_seconds": 20.57463502883911
+      },
+      {
+        "lap": 3,
+        "wall_seconds": 10.388418674468994,
+        "cumulative_wall_seconds": 30.963053703308105
+      }
+    ],
+    "points_estimated": 30,
+    "points_official": null,
+    "score_status": "simulation_rule_judge_v2",
+    "points_breakdown": {
+      "1.1_sections": 24,
+      "1.2_laps": 3,
+      "1.3_stop_in_finish": 3
+    },
+    "limitations": [
+      "Sections and laps estimated from ground-truth winding, not judged section exits.",
+      "Contacts, wall movement, start legality and human repairs are not adjudicated.",
+      "Finish bonus is provisional; DONE does not prove 30 seconds stationary."
+    ],
+    "points_estimated_legacy": 30,
+    "points_breakdown_legacy": {
+      "sections_estimated": 24,
+      "laps_estimated": 3,
+      "finish_provisional": 3
+    },
+    "rule_judge": {
+      "version": 2,
+      "challenge": "open",
+      "max_points": 30,
+      "points": 30,
+      "breakdown": {
+        "1.1_sections": 24,
+        "1.2_laps": 3,
+        "1.3_stop_in_finish": 3
+      },
+      "faults": [],
+      "notes": [
+        "Wall movement cannot occur in simulation (walls are static)."
+      ],
+      "round_end": {
+        "reason": "stopped_after_three_laps",
+        "sim_time": 33.1,
+        "wall_time": 1791541932.633885
+      },
+      "time_from_start_sim_seconds": 33.096000000000004,
+      "time_from_start_wall_seconds": 33.352518796920776,
+      "lap_splits": [
+        {
+          "lap": 1,
+          "sim_seconds": 10.656,
+          "cumulative_sim_seconds": 10.656
+        },
+        {
+          "lap": 2,
+          "sim_seconds": 9.98,
+          "cumulative_sim_seconds": 20.636
+        },
+        {
+          "lap": 3,
+          "sim_seconds": 10.48,
+          "cumulative_sim_seconds": 31.116
+        }
+      ],
+      "contact_evaluated": true,
+      "stop_hold_sim_seconds": 34.96,
+      "stop_drift_m": 7.080823831148821e-06,
+      "stop_inside_finish_section": true,
+      "contacts_first_sim_time": {},
+      "pose_source": "audit_pose.csv",
+      "pose_sample_count": 3428
+    },
+    "validation": {
+      "version": 1,
+      "passed": true,
+      "checks": {
+        "rule_maximum": {
+          "value": 30,
+          "threshold": 30,
+          "passed": true
+        },
+        "no_rule_faults": {
+          "value": 0,
+          "threshold": 0,
+          "passed": true
+        },
+        "stop_observed": {
+          "value": 34.96,
+          "threshold": 30.0,
+          "passed": true
+        },
+        "no_contacts": {
+          "value": false,
+          "threshold": false,
+          "passed": true,
+          "note": "Gazebo contact sensors"
+        },
+        "min_outer_wall_clearance_m": {
+          "value": 0.2998048899121127,
+          "threshold": 0.01,
+          "passed": true,
+          "note": "sampled at telemetry rate"
+        },
+        "min_inner_wall_clearance_m": {
+          "value": 0.10532557572414518,
+          "threshold": 0.01,
+          "passed": true,
+          "note": "sampled at telemetry rate"
+        },
+        "steering_limit": {
+          "value": 19.864929511301426,
+          "threshold": 25.5,
+          "passed": true
+        }
+      },
+      "failed": [],
+      "min_clearance_m": 0.10532557572414518,
+      "margin_class": "comfortable",
+      "thresholds": {
+        "min_clearance_m": 0.01,
+        "comfortable_m": 0.05,
+        "tight_m": 0.02,
+        "stop_observed_s": 30.0,
+        "steer_limit_deg": 25.5
+      }
+    }
+  }
+}

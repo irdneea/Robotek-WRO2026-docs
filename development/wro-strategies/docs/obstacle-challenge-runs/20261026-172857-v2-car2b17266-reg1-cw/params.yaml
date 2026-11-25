@@ -1,0 +1,19 @@
+obstacle_strategy:
+  ros__parameters:
+    cruise_speed: 0.35
+    direction: auto
+    finish_speed: 0.15
+    imu_max_age: 0.2
+    park: 0.0
+    park_after: 24.0
+    park_margin: 0.015
+    park_speed: 0.06
+    pillar_clearance: 0.18
+    pillar_lookahead: 1.8
+    pillar_speed: 0.3
+    scan_max_age: 0.35
+    steer_kd: 0.2
+    steer_kp: 1.5
+    steer_limit: 0.307
+    stop_progress: 24.7
+    telemetry_path: /home/user/Projects/WRO-Strategies/docs/obstacle-challenge-runs/20261026-172857-v2-car2b17266-reg1-cw/telemetry.csv

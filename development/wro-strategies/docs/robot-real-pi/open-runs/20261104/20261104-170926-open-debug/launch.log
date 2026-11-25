@@ -1,0 +1,95 @@
+[INFO] [launch]: All log files can be found below /home/user/.ros/log/2026-11-04-17-09-28-052455-user-desktop-3899
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [rrc_driver-1]: process started with pid [3937]
+[INFO] [ldlidar_stl_ros2_node-2]: process started with pid [3938]
+[INFO] [static_transform_publisher-3]: process started with pid [3939]
+[INFO] [camera_publisher-4]: process started with pid [3940]
+[INFO] [scan_adapter-5]: process started with pid [3941]
+[INFO] [imu_adapter-6]: process started with pid [3942]
+[INFO] [motor_driver-7]: process started with pid [3944]
+[INFO] [base_adapter-8]: process started with pid [3946]
+[INFO] [start_button-9]: process started with pid [3947]
+[INFO] [battery_guard-10]: process started with pid [3949]
+[INFO] [status_leds-11]: process started with pid [3951]
+[INFO] [robot_state_publisher-12]: process started with pid [3953]
+[INFO] [round_reporter-13]: process started with pid [3957]
+[INFO] [open_v5-14]: process started with pid [3963]
+[static_transform_publisher-3] [WARN] [1793830168.686108726] []: Old-style arguments are deprecated; see --help for new-style arguments
+[ldlidar_stl_ros2_node-2] [INFO] [1793830168.802575149] [LD19]: LDLiDAR SDK Pack Version is: v3.0.3
+[ldlidar_stl_ros2_node-2] [INFO] [1793830168.802780000] [LD19]: <product_name>: LDLiDAR_LD19
+[ldlidar_stl_ros2_node-2] [INFO] [1793830168.802824703] [LD19]: <topic_name>: scan
+[ldlidar_stl_ros2_node-2] [INFO] [1793830168.802872369] [LD19]: <frame_id>: base_laser
+[ldlidar_stl_ros2_node-2] [INFO] [1793830168.802903906] [LD19]: <port_name>: /dev/ttyUSB0
+[ldlidar_stl_ros2_node-2] [INFO] [1793830168.802932591] [LD19]: <port_baudrate>: 230400
+[ldlidar_stl_ros2_node-2] [INFO] [1793830168.802955257] [LD19]: <laser_scan_dir>: Counterclockwise
+[ldlidar_stl_ros2_node-2] [INFO] [1793830168.802978739] [LD19]: <enable_angle_crop_func>: false
+[ldlidar_stl_ros2_node-2] [INFO] [1793830168.803002275] [LD19]: <angle_crop_min>: 135.000000
+[ldlidar_stl_ros2_node-2] [INFO] [1793830168.803037090] [LD19]: <angle_crop_max>: 225.000000
+[ldlidar_stl_ros2_node-2] [INFO] [1793830168.842497960] [LD19]: ldlidar node start is success
+[ldlidar_stl_ros2_node-2] [INFO] [1793830168.848165635] [LD19]: ldlidar communication is normal.
+[ldlidar_stl_ros2_node-2] [INFO] [1793830168.925837553] [LD19]: Publish topic message:ldlidar scan data.
+[static_transform_publisher-3] [INFO] [1793830168.927023339] [base_link_to_base_laser_ld19]: Spinning until stopped - publishing transform
+[static_transform_publisher-3] translation: ('0.000000', '0.000000', '0.180000')
+[static_transform_publisher-3] rotation: ('0.000000', '0.000000', '0.000000', '1.000000')
+[static_transform_publisher-3] from 'base_link' to 'base_laser'
+[robot_state_publisher-12] [INFO] [1793830169.038713416] [robot_state_publisher]: Robot initialized
+[imu_adapter-6] [INFO] [1793830171.936621013] [imu_adapter]: IMU axes forward=-x left=+z up=+y
+[motor_driver-7] [INFO] [1793830172.714257041] [tb6612fng_motor]: TB6612FNG ready (forward and reverse).
+[battery_guard-10] [INFO] [1793830172.815901026] [battery_guard]: Battery guard: red blinking below 6.80 V (5 consecutive readings); it does not stop the car.
+[start_button-9] [WARN] [1793830172.942041147] [start_button]: No button: the car starts by itself in 12 s; press the button to stop.
+[start_button-9] [INFO] [1793830173.000993281] [start_button]: Press the button to start; press it again to stop.
+[ldlidar_stl_ros2_node-2] [LDS][INFO][1793830168.842289833][Actual BaudRate reported:230400]
+[base_adapter-8] [INFO] [1793830173.692973586] [base_adapter]: Drive motor: RRC Lite port M1, 4.80 rps per m/s.
+[base_adapter-8] [INFO] [1793830173.701746514] [base_adapter]: Wall guard: slows down from 0.30 m, 0 at 0.10 m (+-15 deg).
+[status_leds-11] [INFO] [1793830173.722393443] [status_leds]: Status RGBs at level 2/255.
+[rrc_driver-1] [INFO] [1793830174.115792007] [rrc_driver]: RRC Lite board on /dev/rrc_lite
+[rrc_driver-1] [INFO] [1793830174.119626633] [rrc_driver]: Motor type 2 sent to the board.
+[rrc_driver-1] [INFO] [1793830174.242112967] [rrc_driver]: Settings servo 1 - Offset 0
+[rrc_driver-1] [INFO] [1793830174.243086684] [rrc_driver]: Settings servo 2 - Offset 0
+[rrc_driver-1] [INFO] [1793830174.244015605] [rrc_driver]: Settings servo 3 - Offset 0
+[rrc_driver-1] [INFO] [1793830174.245020358] [rrc_driver]: Settings servo 4 - Offset 0
+[rrc_driver-1] [INFO] [1793830174.291466907] [rrc_driver]: [1;32mstart[0m
+[round_reporter-13] [INFO] [1793830177.996368923] [round_reporter]: Round report on (debug): states, direction, corners, laps and lines.
+[open_v5-14] [INFO] [1793830178.170734057] [strategy]: Open v5 | direction=auto cruise=1.28 m/s | telemetry /home/user/runs/20261104-170938-open-v5/telemetry.csv
+[open_v5-14] [WARN] [1793830178.269693322] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[round_reporter-13] [INFO] [1793830178.273659805] [round_reporter]: [   0.0 s] Estado: WAIT_START
+[camera_publisher-4] [INFO] [1793830178.282500006] [camera_publisher]: Controles -> white_balance_automatic: 1 | brightness: 0 | auto_exposure: 3 (Aperture Priority Mode)
+[camera_publisher-4] [INFO] [1793830178.283261133] [camera_publisher]: Camara /dev/v4l/by-id/usb-icSpring_icspring_camera-video-index0 640x480 @ 15 fps, modo=auto
+[open_v5-14] [WARN] [1793830179.478066843] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793830180.981311243] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793830181.997675121] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[start_button-9] [INFO] [1793830184.797067585] [start_button]: Start (no button).
+[round_reporter-13] [INFO] [1793830184.801206591] [round_reporter]: [   0.0 s] Start
+[round_reporter-13] [INFO] [1793830184.814087404] [round_reporter]: [   0.0 s] Estado: CALIBRATE
+[round_reporter-13] [INFO] [1793830184.939870600] [round_reporter]: [   0.1 s] Cámara: azul 99 px, naranja 639 px
+[round_reporter-13] [INFO] [1793830185.351163188] [round_reporter]: [   0.6 s] Estado: DETECT_DIRECTION
+[round_reporter-13] [INFO] [1793830185.353014942] [round_reporter]: [   0.6 s] Estado: FOLLOW
+[round_reporter-13] [INFO] [1793830187.352899859] [round_reporter]: [   2.6 s] Estado: TURN
+[round_reporter-13] [INFO] [1793830187.902662311] [round_reporter]: [   3.1 s] Línea naranja cruzada (azul 0, naranja 1)
+[round_reporter-13] [INFO] [1793830188.202836006] [round_reporter]: [   3.4 s] Línea azul cruzada (azul 1, naranja 1)
+[round_reporter-13] [INFO] [1793830188.512953507] [round_reporter]: [   3.7 s] Sentido: horario (derecha) (-108 grados en la 1.a esquina)
+[round_reporter-13] [INFO] [1793830188.513539562] [round_reporter]: [   3.7 s] Esquina 1/12 (vuelta 1, -108 grados)
+[round_reporter-13] [INFO] [1793830188.514010912] [round_reporter]: [   3.7 s] Estado: FOLLOW
+[round_reporter-13] [INFO] [1793830190.204988371] [round_reporter]: [   5.4 s] Línea azul cruzada (azul 2, naranja 1)
+[round_reporter-13] [INFO] [1793830196.504268173] [round_reporter]: [  11.7 s] Línea azul cruzada (azul 3, naranja 1)
+[round_reporter-13] [INFO] [1793830197.713082021] [round_reporter]: [  12.9 s] Estado: TURN
+[round_reporter-13] [INFO] [1793830197.831874923] [round_reporter]: [  13.0 s] Línea naranja cruzada (azul 3, naranja 2)
+[round_reporter-13] [INFO] [1793830199.046643561] [round_reporter]: [  14.2 s] Línea azul cruzada (azul 4, naranja 2)
+[round_reporter-13] [INFO] [1793830203.219572094] [round_reporter]: [  18.4 s] Línea azul cruzada (azul 5, naranja 2)
+[round_reporter-13] [INFO] [1793830205.209659637] [round_reporter]: [  20.4 s] Línea azul cruzada (azul 6, naranja 3)
+[round_reporter-13] [INFO] [1793830211.442693801] [round_reporter]: [  26.6 s] Esquina 2/12 (vuelta 1, -17 grados)
+[round_reporter-13] [INFO] [1793830211.444735004] [round_reporter]: [  26.6 s] Estado: FOLLOW
+[round_reporter-13] [INFO] [1793830211.835979501] [round_reporter]: [  27.0 s] Línea azul cruzada (azul 7, naranja 3)
+[round_reporter-13] [INFO] [1793830214.276826670] [round_reporter]: [  29.5 s] Línea naranja cruzada (azul 7, naranja 4)
+[round_reporter-13] [INFO] [1793830214.407962743] [round_reporter]: [  29.6 s] Línea azul cruzada (azul 8, naranja 4)
+[open_v5-14] [WARN] [1793830216.099544763] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793830217.111983045] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793830218.149714788] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[round_reporter-13] [INFO] [1793830220.389705515] [round_reporter]: [  35.6 s] Línea azul cruzada (azul 9, naranja 4)
+[round_reporter-13] [INFO] [1793830222.768598035] [round_reporter]: [  38.0 s] Línea azul cruzada (azul 10, naranja 4)
+[round_reporter-13] [INFO] [1793830233.423516616] [round_reporter]: [  48.6 s] Línea azul cruzada (azul 11, naranja 4)
+[motor_driver-7] [WARN] [1793830236.507583751] [tb6612fng_motor]: Operator stop: ignoring motor commands.
+[base_adapter-8] [WARN] [1793830236.507623975] [base_adapter]: Operator stop: motor held at 0.
+[round_reporter-13] [INFO] [1793830236.539208653] [round_reporter]: [  51.7 s] Estado: OPERATOR_STOP
+[round_reporter-13] [INFO] [1793830239.581267158] [round_reporter]: [  54.8 s] Línea azul cruzada (azul 12, naranja 4)
+[round_reporter-13] [INFO] [1793830241.401185094] [round_reporter]: [  56.6 s] Línea naranja cruzada (azul 12, naranja 5)

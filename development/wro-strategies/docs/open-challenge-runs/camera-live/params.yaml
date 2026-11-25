@@ -1,0 +1,20 @@
+open_strategy:
+  ros__parameters:
+    auto_start: false
+    corner_lookahead: 0.25
+    corner_speed: 0.3
+    cruise_speed: 0.4
+    direction: auto
+    direction_probe_speed: 0.1
+    direction_timeout: 15.0
+    finish_speed: 0.12
+    shutdown_on_done: false
+    telemetry_path: ''
+    turn_exit_angle: 0.0
+    turn_heading_gain: 0.35
+    turn_max_time: 8.0
+    turn_rate_damping: 0.1
+    turn_steer: 0.3
+    vision_confirmations: 5
+    vision_min_confidence: 0.25
+    vision_min_length: 40.0

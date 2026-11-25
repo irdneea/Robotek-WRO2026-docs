@@ -1,0 +1,141 @@
+[INFO] [launch]: All log files can be found below /home/user/.ros/log/2026-11-04-17-28-29-650682-user-desktop-4213
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [rrc_driver-1]: process started with pid [4251]
+[INFO] [ldlidar_stl_ros2_node-2]: process started with pid [4252]
+[INFO] [static_transform_publisher-3]: process started with pid [4254]
+[INFO] [camera_publisher-4]: process started with pid [4255]
+[INFO] [scan_adapter-5]: process started with pid [4256]
+[INFO] [imu_adapter-6]: process started with pid [4257]
+[INFO] [motor_driver-7]: process started with pid [4259]
+[INFO] [base_adapter-8]: process started with pid [4260]
+[INFO] [start_button-9]: process started with pid [4261]
+[INFO] [battery_guard-10]: process started with pid [4264]
+[INFO] [status_leds-11]: process started with pid [4268]
+[INFO] [robot_state_publisher-12]: process started with pid [4272]
+[INFO] [round_reporter-13]: process started with pid [4282]
+[INFO] [open_v5-14]: process started with pid [4290]
+[static_transform_publisher-3] [WARN] [1793831310.140041658] []: Old-style arguments are deprecated; see --help for new-style arguments
+[ldlidar_stl_ros2_node-2] [INFO] [1793831310.197444837] [LD19]: LDLiDAR SDK Pack Version is: v3.0.3
+[ldlidar_stl_ros2_node-2] [INFO] [1793831310.197625593] [LD19]: <product_name>: LDLiDAR_LD19
+[ldlidar_stl_ros2_node-2] [INFO] [1793831310.197668130] [LD19]: <topic_name>: scan
+[ldlidar_stl_ros2_node-2] [INFO] [1793831310.197695963] [LD19]: <frame_id>: base_laser
+[ldlidar_stl_ros2_node-2] [INFO] [1793831310.197731388] [LD19]: <port_name>: /dev/ttyUSB0
+[ldlidar_stl_ros2_node-2] [INFO] [1793831310.197758184] [LD19]: <port_baudrate>: 230400
+[ldlidar_stl_ros2_node-2] [INFO] [1793831310.197788535] [LD19]: <laser_scan_dir>: Counterclockwise
+[ldlidar_stl_ros2_node-2] [INFO] [1793831310.197812590] [LD19]: <enable_angle_crop_func>: false
+[ldlidar_stl_ros2_node-2] [INFO] [1793831310.197839367] [LD19]: <angle_crop_min>: 135.000000
+[ldlidar_stl_ros2_node-2] [INFO] [1793831310.197893052] [LD19]: <angle_crop_max>: 225.000000
+[ldlidar_stl_ros2_node-2] [INFO] [1793831310.219644200] [LD19]: ldlidar node start is success
+[ldlidar_stl_ros2_node-2] [INFO] [1793831310.223643759] [LD19]: ldlidar communication is normal.
+[ldlidar_stl_ros2_node-2] [INFO] [1793831310.233594044] [LD19]: Publish topic message:ldlidar scan data.
+[static_transform_publisher-3] [INFO] [1793831310.284853944] [base_link_to_base_laser_ld19]: Spinning until stopped - publishing transform
+[static_transform_publisher-3] translation: ('0.000000', '0.000000', '0.180000')
+[static_transform_publisher-3] rotation: ('0.000000', '0.000000', '0.000000', '1.000000')
+[static_transform_publisher-3] from 'base_link' to 'base_laser'
+[robot_state_publisher-12] [INFO] [1793831310.631638088] [robot_state_publisher]: Robot initialized
+[motor_driver-7] [INFO] [1793831314.341491488] [tb6612fng_motor]: TB6612FNG ready (forward and reverse).
+[status_leds-11] [INFO] [1793831314.812989394] [status_leds]: Status RGBs at level 2/255.
+[battery_guard-10] [INFO] [1793831314.927355799] [battery_guard]: Battery guard: red blinking below 6.80 V (5 consecutive readings); it does not stop the car.
+[ldlidar_stl_ros2_node-2] [LDS][INFO][1793831310.219382853][Actual BaudRate reported:230400]
+[base_adapter-8] [INFO] [1793831315.305526403] [base_adapter]: Drive motor: RRC Lite port M1, 4.80 rps per m/s.
+[base_adapter-8] [INFO] [1793831315.375073856] [base_adapter]: Wall guard: slows down from 0.30 m, 0 at 0.10 m (+-15 deg).
+[start_button-9] [WARN] [1793831315.375494480] [start_button]: No button: the car starts by itself in 12 s; press the button to stop.
+[start_button-9] [INFO] [1793831315.416084492] [start_button]: Press the button to start; press it again to stop.
+[imu_adapter-6] [INFO] [1793831315.453448046] [imu_adapter]: IMU axes forward=-x left=+z up=+y
+[camera_publisher-4] [INFO] [1793831315.798348070] [camera_publisher]: Controles -> white_balance_automatic: 1 | brightness: 0 | auto_exposure: 3 (Aperture Priority Mode)
+[camera_publisher-4] [INFO] [1793831315.800230916] [camera_publisher]: Camara /dev/v4l/by-id/usb-icSpring_icspring_camera-video-index0 640x480 @ 15 fps, modo=auto
+[rrc_driver-1] [INFO] [1793831316.262453171] [rrc_driver]: RRC Lite board on /dev/rrc_lite
+[rrc_driver-1] [INFO] [1793831316.268993351] [rrc_driver]: Motor type 2 sent to the board.
+[rrc_driver-1] [INFO] [1793831316.601511951] [rrc_driver]: Settings servo 1 - Offset 0
+[rrc_driver-1] [INFO] [1793831316.605599124] [rrc_driver]: Settings servo 2 - Offset 0
+[rrc_driver-1] [INFO] [1793831316.609137525] [rrc_driver]: Settings servo 3 - Offset 0
+[rrc_driver-1] [INFO] [1793831316.610980169] [rrc_driver]: Settings servo 4 - Offset 0
+[rrc_driver-1] [INFO] [1793831316.623166151] [rrc_driver]: [1;32mstart[0m
+[open_v5-14] [INFO] [1793831317.337666877] [strategy]: Open v5 | direction=auto cruise=1.28 m/s | telemetry /home/user/runs/20261104-172837-open-v5/telemetry.csv
+[round_reporter-13] [INFO] [1793831317.357007047] [round_reporter]: Round report on (debug): states, direction, corners, laps and lines.
+[open_v5-14] [WARN] [1793831317.457089632] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[round_reporter-13] [INFO] [1793831317.463685316] [round_reporter]: [   0.0 s] Estado: WAIT_START
+[start_button-9] [INFO] [1793831327.278336149] [start_button]: Start (no button).
+[round_reporter-13] [INFO] [1793831327.314545007] [round_reporter]: [   0.0 s] Start
+[round_reporter-13] [INFO] [1793831327.360866712] [round_reporter]: [   0.0 s] Estado: CALIBRATE
+[round_reporter-13] [INFO] [1793831327.667525483] [round_reporter]: [   0.4 s] Estado: DETECT_DIRECTION
+[round_reporter-13] [INFO] [1793831327.673075388] [round_reporter]: [   0.4 s] Estado: FOLLOW
+[round_reporter-13] [INFO] [1793831329.062256742] [round_reporter]: [   1.7 s] Estado: TURN
+[round_reporter-13] [INFO] [1793831330.022798142] [round_reporter]: [   2.7 s] Línea azul cruzada (azul 1, naranja 1)
+[round_reporter-13] [INFO] [1793831330.128913366] [round_reporter]: [   2.8 s] Sentido: horario (derecha) (-79 grados en la 1.a esquina)
+[round_reporter-13] [INFO] [1793831330.129686335] [round_reporter]: [   2.8 s] Esquina 1/12 (vuelta 1, -79 grados)
+[round_reporter-13] [INFO] [1793831330.130268651] [round_reporter]: [   2.8 s] Estado: FOLLOW
+[round_reporter-13] [INFO] [1793831331.564423719] [round_reporter]: [   4.2 s] Estado: TURN
+[round_reporter-13] [INFO] [1793831331.997835835] [round_reporter]: [   4.7 s] Línea naranja cruzada (azul 1, naranja 2)
+[round_reporter-13] [INFO] [1793831332.360064572] [round_reporter]: [   5.0 s] Línea azul cruzada (azul 2, naranja 2)
+[round_reporter-13] [INFO] [1793831332.457954187] [round_reporter]: [   5.1 s] Esquina 2/12 (vuelta 1, -86 grados)
+[round_reporter-13] [INFO] [1793831332.458763600] [round_reporter]: [   5.1 s] Estado: FOLLOW
+[round_reporter-13] [INFO] [1793831333.658926985] [round_reporter]: [   6.3 s] Estado: TURN
+[round_reporter-13] [INFO] [1793831334.354629282] [round_reporter]: [   7.0 s] Línea azul cruzada (azul 3, naranja 2)
+[round_reporter-13] [INFO] [1793831334.549152461] [round_reporter]: [   7.2 s] Esquina 3/12 (vuelta 1, -87 grados)
+[round_reporter-13] [INFO] [1793831334.550169906] [round_reporter]: [   7.2 s] Estado: FOLLOW
+[round_reporter-13] [INFO] [1793831335.708173630] [round_reporter]: [   8.4 s] Estado: TURN
+[round_reporter-13] [INFO] [1793831336.474908324] [round_reporter]: [   9.2 s] Línea azul cruzada (azul 4, naranja 3)
+[round_reporter-13] [INFO] [1793831336.609395368] [round_reporter]: [   9.3 s] Esquina 4/12 (vuelta 1, -86 grados)
+[round_reporter-13] [INFO] [1793831336.610450662] [round_reporter]: [   9.3 s] Vuelta 1 completa en 9.3 s
+[round_reporter-13] [INFO] [1793831336.611241127] [round_reporter]: [   9.3 s] Estado: FOLLOW
+[round_reporter-13] [INFO] [1793831337.661574756] [round_reporter]: [  10.3 s] Estado: TURN
+[round_reporter-13] [INFO] [1793831338.070819574] [round_reporter]: [  10.8 s] Línea naranja cruzada (azul 4, naranja 4)
+[round_reporter-13] [INFO] [1793831338.490017318] [round_reporter]: [  11.2 s] Línea azul cruzada (azul 5, naranja 4)
+[round_reporter-13] [INFO] [1793831338.570865089] [round_reporter]: [  11.3 s] Esquina 5/12 (vuelta 2, -85 grados)
+[round_reporter-13] [INFO] [1793831338.572955671] [round_reporter]: [  11.3 s] Estado: FOLLOW
+[round_reporter-13] [INFO] [1793831339.754290015] [round_reporter]: [  12.4 s] Estado: TURN
+[round_reporter-13] [INFO] [1793831339.884426947] [round_reporter]: [  12.6 s] Línea naranja cruzada (azul 5, naranja 5)
+[round_reporter-13] [INFO] [1793831339.931025251] [round_reporter]: [  12.6 s] Línea azul cruzada (azul 6, naranja 5)
+[round_reporter-13] [INFO] [1793831340.656799650] [round_reporter]: [  13.3 s] Esquina 6/12 (vuelta 2, -82 grados)
+[round_reporter-13] [INFO] [1793831340.657441334] [round_reporter]: [  13.3 s] Estado: FOLLOW
+[round_reporter-13] [INFO] [1793831341.935730608] [round_reporter]: [  14.6 s] Línea azul cruzada (azul 7, naranja 5)
+[round_reporter-13] [INFO] [1793831341.958449761] [round_reporter]: [  14.6 s] Estado: TURN
+[round_reporter-13] [INFO] [1793831342.779184955] [round_reporter]: [  15.5 s] Esquina 7/12 (vuelta 2, -75 grados)
+[round_reporter-13] [INFO] [1793831342.780045503] [round_reporter]: [  15.5 s] Estado: FOLLOW
+[round_reporter-13] [INFO] [1793831343.864736862] [round_reporter]: [  16.5 s] Estado: TURN
+[round_reporter-13] [INFO] [1793831344.122168984] [round_reporter]: [  16.8 s] Línea azul cruzada (azul 8, naranja 6)
+[round_reporter-13] [INFO] [1793831344.725916810] [round_reporter]: [  17.4 s] Esquina 8/12 (vuelta 2, -84 grados)
+[round_reporter-13] [INFO] [1793831344.727538320] [round_reporter]: [  17.4 s] Vuelta 2 completa en 8.1 s
+[round_reporter-13] [INFO] [1793831344.728220537] [round_reporter]: [  17.4 s] Estado: FOLLOW
+[round_reporter-13] [INFO] [1793831345.449450243] [round_reporter]: [  18.1 s] Línea naranja cruzada (azul 8, naranja 7)
+[round_reporter-13] [INFO] [1793831345.532097202] [round_reporter]: [  18.2 s] Línea azul cruzada (azul 9, naranja 7)
+[round_reporter-13] [INFO] [1793831346.204516054] [round_reporter]: [  18.9 s] Estado: TURN
+[round_reporter-13] [INFO] [1793831347.062891042] [round_reporter]: [  19.7 s] Esquina 9/12 (vuelta 3, -78 grados)
+[round_reporter-13] [INFO] [1793831347.063397448] [round_reporter]: [  19.7 s] Estado: FOLLOW
+[round_reporter-13] [INFO] [1793831347.761581090] [round_reporter]: [  20.4 s] Línea naranja cruzada (azul 9, naranja 8)
+[round_reporter-13] [INFO] [1793831347.844925690] [round_reporter]: [  20.5 s] Línea azul cruzada (azul 10, naranja 8)
+[round_reporter-13] [INFO] [1793831348.409791629] [round_reporter]: [  21.1 s] Estado: TURN
+[round_reporter-13] [INFO] [1793831349.227737832] [round_reporter]: [  21.9 s] Esquina 10/12 (vuelta 3, -80 grados)
+[round_reporter-13] [INFO] [1793831349.228335284] [round_reporter]: [  21.9 s] Estado: FOLLOW
+[round_reporter-13] [INFO] [1793831350.122417144] [round_reporter]: [  22.8 s] Línea naranja cruzada (azul 10, naranja 9)
+[round_reporter-13] [INFO] [1793831350.800109670] [round_reporter]: [  23.5 s] Estado: TURN
+[round_reporter-13] [INFO] [1793831351.609041532] [round_reporter]: [  24.3 s] Esquina 11/12 (vuelta 3, -72 grados)
+[round_reporter-13] [INFO] [1793831351.609789981] [round_reporter]: [  24.3 s] Estado: FOLLOW
+[round_reporter-13] [INFO] [1793831352.830688081] [round_reporter]: [  25.5 s] Línea naranja cruzada (azul 10, naranja 10)
+[round_reporter-13] [INFO] [1793831352.973038962] [round_reporter]: [  25.7 s] Estado: TURN
+[round_reporter-13] [INFO] [1793831354.260641294] [round_reporter]: [  26.9 s] Esquina 12/12 (vuelta 3, -54 grados)
+[round_reporter-13] [INFO] [1793831354.261283261] [round_reporter]: [  26.9 s] Vuelta 3 completa en 9.5 s
+[round_reporter-13] [INFO] [1793831354.261809214] [round_reporter]: [  26.9 s] Estado: FINISH
+[round_reporter-13] [INFO] [1793831354.918807464] [round_reporter]: [  27.6 s] Línea naranja cruzada (azul 10, naranja 11)
+[round_reporter-13] [INFO] [1793831355.258737302] [round_reporter]: [  27.9 s] Estado: DONE
+[round_reporter-13] [INFO] [1793831355.259441812] [round_reporter]: [  27.9 s] Ronda terminada: 12 esquinas, líneas azul/naranja 10/11, 27.9 s desde Start
+[round_reporter-13] [INFO] [1793831355.476536593] [round_reporter]: [  28.2 s] Línea azul cruzada (azul 11, naranja 11)
+[round_reporter-13] [INFO] [1793831357.493746245] [round_reporter]: [  30.2 s] Línea azul cruzada (azul 12, naranja 11)
+[round_reporter-13] [INFO] [1793831359.278759621] [round_reporter]: [  32.0 s] Línea naranja cruzada (azul 12, naranja 12)
+[round_reporter-13] [INFO] [1793831359.862684068] [round_reporter]: [  32.5 s] Línea azul cruzada (azul 13, naranja 12)
+[round_reporter-13] [INFO] [1793831362.304850457] [round_reporter]: [  35.0 s] Línea azul cruzada (azul 14, naranja 12)
+[round_reporter-13] [INFO] [1793831363.428615190] [round_reporter]: [  36.1 s] Línea azul cruzada (azul 15, naranja 12)
+[round_reporter-13] [INFO] [1793831365.816930288] [round_reporter]: [  38.5 s] Línea naranja cruzada (azul 15, naranja 13)
+[start_button-9] [WARN] [1793831366.669806702] [start_button]: Stop (button pressed again).
+[motor_driver-7] [WARN] [1793831366.669858855] [tb6612fng_motor]: Operator stop: ignoring motor commands.
+[base_adapter-8] [WARN] [1793831366.671095711] [base_adapter]: Operator stop: motor held at 0.
+[round_reporter-13] [INFO] [1793831366.687546874] [round_reporter]: [  39.4 s] Estado: OPERATOR_STOP
+[open_v5-14] [WARN] [1793831367.807040407] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-14] [WARN] [1793831368.828107660] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[round_reporter-13] [INFO] [1793831369.296703539] [round_reporter]: [  42.0 s] Línea azul cruzada (azul 16, naranja 13)
+[open_v5-14] [WARN] [1793831369.846172490] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[round_reporter-13] [INFO] [1793831370.181851879] [round_reporter]: [  42.9 s] Línea naranja cruzada (azul 16, naranja 14)
+[round_reporter-13] [INFO] [1793831370.859844336] [round_reporter]: [  43.5 s] Línea naranja cruzada (azul 16, naranja 15)
+[round_reporter-13] [INFO] [1793831371.466190450] [round_reporter]: [  44.2 s] Línea naranja cruzada (azul 16, naranja 16)
+[round_reporter-13] [INFO] [1793831391.444717537] [round_reporter]: [  64.1 s] Línea naranja cruzada (azul 16, naranja 17)

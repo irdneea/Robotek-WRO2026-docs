@@ -1,0 +1,112 @@
+{
+  "run": "20261008T190810Z-realcar-hw-v4-floormask-50pct-r8",
+  "status": "completed",
+  "platform": "real_car_hardware",
+  "start_source": "button",
+  "end_source": "done_event",
+  "time_from_start_wall_seconds": 40.392,
+  "time_from_start_sim_seconds": null,
+  "calibration_and_detection_wall_seconds": 1.107,
+  "motion_wall_seconds": 39.284,
+  "motion_sim_seconds": null,
+  "lap_splits": [
+    {
+      "lap": 1,
+      "wall_seconds": 11.431,
+      "cumulative_wall_seconds": 11.431,
+      "boundary": "end of turn 4"
+    },
+    {
+      "lap": 2,
+      "wall_seconds": 12.6,
+      "cumulative_wall_seconds": 24.031,
+      "boundary": "end of turn 8"
+    },
+    {
+      "lap": 3,
+      "wall_seconds": 15.531,
+      "cumulative_wall_seconds": 39.562,
+      "boundary": "end of turn 12"
+    }
+  ],
+  "points_estimated": 27,
+  "points_official": null,
+  "score_status": "estimated_operator_report_finish_pending",
+  "points_breakdown": {
+    "1.1_sections": 24,
+    "1.2_laps": 3,
+    "1.3_stop_in_finish": null
+  },
+  "mission_observed": {
+    "turns": 12,
+    "direction": "cw",
+    "direction_reason": "camera_confirmed",
+    "state_at_end": "DONE",
+    "recoveries": 0,
+    "min_side_lidar_gap_m": 0.124,
+    "finish_note": "FINISH lasted 0.9 s: the front range after the last turn (1.47 m) was already below the Start range (1.61 m) + lead, so it braked at once; at DONE L=0.41 R=0.72 F=0.95, both sides open, so it may have stopped before the start section (not verified)",
+    "operator_report": "hit the inner island twice (choco 2 veces, contra la isla interior); wall movement not reported",
+    "contact_candidates_from_lidar": [
+      {
+        "t": 12.45,
+        "state": "FOLLOW after turn 4",
+        "front": 0.21,
+        "right_inner": 0.15,
+        "note": "island end just after the turn"
+      },
+      {
+        "t": 33.55,
+        "state": "FOLLOW after turn 11",
+        "front": 0.15,
+        "right_inner": "inf",
+        "note": "island end just after the turn"
+      },
+      {
+        "t": 39.35,
+        "state": "last TURN",
+        "front": 0.12,
+        "left_outer": 0.13,
+        "note": "outer wall: not allowed in Open (9.18)"
+      }
+    ]
+  },
+  "profile": "open_realcar_v4.yaml",
+  "motor_cap_pct": 50,
+  "battery_mV_before": 7396,
+  "code": "e6aea27 + uncommitted: floor mask, real HSV, stall stop (measured distance), fsync telemetry",
+  "start_pose": {
+    "x": null,
+    "y": null,
+    "yaw": null,
+    "lidar_at_start_m": {
+      "left": 0.505,
+      "right": 0.511,
+      "front": 1.611
+    }
+  },
+  "limitations": [
+    "Real car: no ground-truth pose, no judge, no contact log.",
+    "Points not estimated: contacts and the final stop position were not observed by a judge; DONE and 12 turns are not a score.",
+    "Lap splits approximated by the end of turns 4/8/12.",
+    "Start pose x, y, yaw and field geometry not measured.",
+    "Two inner-island contacts (operator); allowed without penalty if the island did not move (9.18)."
+  ],
+  "evidence": [
+    "telemetry.csv",
+    "telemetry.csv.scans.jsonl.gz",
+    "events.jsonl",
+    "camera-evidence.csv",
+    "camera/",
+    "launch.log",
+    "params/"
+  ],
+  "provisional_bonus": {
+    "1.3_stop_in_finish": 3,
+    "status": "pending: final position may be before the start section (both sides open at DONE)"
+  },
+  "pending_validations": [
+    "island not moved (assumed; 0 points if it moved)",
+    "final stop inside the start section",
+    "30 s stationary after DONE not checked"
+  ]
+}

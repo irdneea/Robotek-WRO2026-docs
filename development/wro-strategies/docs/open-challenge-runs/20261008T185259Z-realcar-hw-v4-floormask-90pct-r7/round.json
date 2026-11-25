@@ -1,0 +1,49 @@
+{
+  "run": "20261008T185259Z-realcar-hw-v4-floormask-90pct-r7",
+  "status": "failed",
+  "platform": "real_car_hardware",
+  "start_source": "button",
+  "end_source": "operator_stop_power_cut",
+  "time_from_start_wall_seconds": null,
+  "time_from_start_sim_seconds": null,
+  "motion_wall_seconds": null,
+  "motion_sim_seconds": null,
+  "lap_splits": [],
+  "points_estimated": 0,
+  "points_official": null,
+  "score_status": "real_car_operator_observation",
+  "points_breakdown": {
+    "1.1_sections": 0,
+    "1.2_laps": 0,
+    "1.3_stop_in_finish": 0
+  },
+  "profile": "open_realcar_v4.yaml",
+  "motor_cap_pct": 90,
+  "battery_mV_before": 7594,
+  "code": "e6aea27 + uncommitted: floor mask, real HSV, stall stop",
+  "failure": {
+    "cause": "operator: much faster than before and hit a wall; stopped by hand (Pi lost power)",
+    "data_lost": "telemetry after WAIT_START, events, launch log (/tmp) and the scans/camera of the motion were in buffers and lost when the Pi lost power",
+    "likely_reason": "v4 corner timing was tuned in simulation for <=0.60 m/s at full PWM with a low battery; with a charged 7.6 V battery and 90 % PWM the car is faster than the model, so turns start too late (not measured)"
+  },
+  "start_pose": {
+    "x": null,
+    "y": null,
+    "yaw": null,
+    "lidar_at_start_m": {
+      "left": 0.5,
+      "right": 0.5,
+      "front": 1.63
+    }
+  },
+  "limitations": [
+    "No telemetry of the motion survived; only the waiting period.",
+    "Speed not measured.",
+    "Start pose not measured."
+  ],
+  "evidence": [
+    "telemetry-wait-start-only.csv",
+    "camera-evidence.csv",
+    "params/"
+  ]
+}

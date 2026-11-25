@@ -1,0 +1,51 @@
+{
+  "run": "20261008T175907Z-realcar-hw-v4-floormask-80pct-r5",
+  "status": "interrupted",
+  "platform": "real_car_hardware",
+  "start_source": "button",
+  "end_source": "pi_reboot",
+  "time_from_start_wall_seconds": 73.04,
+  "time_from_start_sim_seconds": null,
+  "motion_wall_seconds": null,
+  "motion_sim_seconds": null,
+  "lap_splits": [],
+  "points_estimated": null,
+  "points_official": null,
+  "score_status": "incomplete_no_estimate",
+  "points_breakdown": null,
+  "profile": "open_realcar_v4.yaml",
+  "motor_cap_pct": 80,
+  "battery_mV_before": 6554,
+  "code": "e6aea27 + uncommitted: floor mask, real HSV, stall stop",
+  "mission_observed": {
+    "direction": "cw",
+    "direction_reason": "camera_confirmed (O=488 px real floor line, B=0; floor mask OK)",
+    "sequence": "no motion for ~4 s (motor cable was being reconnected), RECOVER once; then FOLLOW for 48 s without turning while front fell to 0.16-0.39 m; turn 1 at 52.9 s; Pi rebooted at ~73 s during turn 2",
+    "turns_completed": 1
+  },
+  "findings": [
+    "Stall stop did not fire during the 48 s FOLLOW: LiDAR odometry kept reporting distance (travelled 5.5 -> 9.9 m) while the car was near a wall; cause not isolated (operator handling vs odometry error).",
+    "Pi rebooted at 80 % motor cap with a 6.5 V battery; telemetry tail corrupted (NUL bytes removed)."
+  ],
+  "start_pose": {
+    "x": null,
+    "y": null,
+    "yaw": null,
+    "lidar_at_start_m": {
+      "left": 0.541,
+      "right": 0.455,
+      "front": 1.532
+    }
+  },
+  "limitations": [
+    "Real car: no ground-truth pose, no judge.",
+    "Operator handling during the round unknown.",
+    "Start pose not measured."
+  ],
+  "evidence": [
+    "telemetry.csv",
+    "events.jsonl",
+    "camera/",
+    "params/"
+  ]
+}

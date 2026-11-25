@@ -1,0 +1,28 @@
+{"event": "state", "wall_time": 1794463529.8836842, "t": null, "state": "WAIT_START"}
+{"event": "start", "wall_time": 1794463573.9398034, "t": 0.0}
+{"event": "state", "wall_time": 1794463573.9528425, "t": 0.013062477111816406, "state": "SETUP"}
+{"event": "lot_exit", "wall_time": 1794463574.2794967, "t": 0.33969616889953613, "detail": "{'event': 'lot_exit_start', 'pose': [0.05, -1.416, 0.0], 'rear_mm': None, 'steps': 'L+0.25 R-0.3 L+0.25 R-0.3 L+0.25 R-0.3 C-0.2'}"}
+{"event": "state", "wall_time": 1794463574.280676, "t": 0.3408925533294678, "state": "LOT_EXIT"}
+{"event": "lot_exit", "wall_time": 1794463575.0343382, "t": 1.0943934917449951, "detail": "{'event': 'lot_exit_pulse', 'pulse': '1_LFWD', 'heading': 1.3, 'rear_mm': None, 'braked': False, 'pose': [0.061, -1.415, 0.023]}"}
+{"event": "lot_exit", "wall_time": 1794463576.2525945, "t": 2.312788248062134, "detail": "{'event': 'lot_exit_pulse', 'pulse': '2_RBACK', 'heading': 14.6, 'rear_mm': None, 'braked': False, 'pose': [0.079, -1.405, 0.255]}"}
+{"event": "lot_exit", "wall_time": 1794463577.4348755, "t": 3.495046615600586, "detail": "{'event': 'lot_exit_pulse', 'pulse': '3_LFWD', 'heading': 25.8, 'rear_mm': None, 'braked': False, 'pose': [0.019, -1.412, 0.45]}"}
+{"event": "lot_exit", "wall_time": 1794463578.6524036, "t": 4.712599039077759, "detail": "{'event': 'lot_exit_pulse', 'pulse': '4_RBACK', 'heading': 43.4, 'rear_mm': None, 'braked': False, 'pose': [0.027, -1.397, 0.757]}"}
+{"event": "lot_exit", "wall_time": 1794463579.8121994, "t": 5.872399806976318, "detail": "{'event': 'lot_exit_pulse', 'pulse': '5_LFWD', 'heading': 52.8, 'rear_mm': None, 'braked': False, 'pose': [-0.02, -1.433, 0.921]}"}
+{"event": "lot_exit", "wall_time": 1794463581.0340889, "t": 7.09426212310791, "detail": "{'event': 'lot_exit_pulse', 'pulse': '6_RBACK', 'heading': 69.0, 'rear_mm': None, 'braked': False, 'pose': [-0.015, -1.408, 1.205]}"}
+{"event": "lot_exit", "wall_time": 1794463582.1725016, "t": 8.232695817947388, "detail": "{'event': 'lot_exit_pulse', 'pulse': '7_CBACK', 'heading': 79.5, 'rear_mm': None, 'braked': False, 'pose': [-0.056, -1.529, 1.385]}"}
+{"event": "lot_exit", "wall_time": 1794463583.0921326, "t": 9.152310609817505, "detail": "{'event': 'lot_exit_done_pulses', 'heading': 79.7, 'pose': [-0.056, -1.529, 1.385]}"}
+{"event": "lot_exit", "wall_time": 1794463583.0935128, "t": 9.153676271438599, "detail": "{'event': 'lot_exit_done', 'estimate': [-0.056, -1.529, 1.385], 'localized': [0.231, -1.403, 1.398]}"}
+{"event": "state", "wall_time": 1794463583.0953503, "t": 9.155450582504272, "state": "RUN"}
+{"event": "sign_seen", "wall_time": 1794463583.169178, "t": 9.228067874908447, "seat": 2, "lateral": 0.1, "colour": "red", "votes": {"red": 2}, "progress": 0.7312347921809594}
+{"event": "sign_seen", "wall_time": 1794463583.2798157, "t": 9.339240550994873, "seat": 5, "lateral": 0.1, "colour": null, "votes": {}, "progress": 0.7309514444699359}
+{"event": "sign_colour", "wall_time": 1794463585.081423, "t": 11.140713930130005, "seat": 5, "lateral": 0.1, "colour": "green", "votes": {"green": 1}, "progress": 0.9936224373588962}
+{"event": "section", "wall_time": 1794463585.1149638, "t": 11.17426586151123, "section": 1, "section_name": "corner 1", "previous": "straight 1", "previous_s": 2.0203990936279297, "progress": 1.0226568098018427}
+{"event": "corner", "wall_time": 1794463585.115069, "t": 11.17426586151123, "corner": 1, "progress": 1.0226568098018427}
+{"event": "sign_passed", "wall_time": 1794463585.1160505, "t": 11.17426586151123, "seat": 2, "lap": 1, "colour": "red", "lateral": 0.1, "car_lateral": -0.089, "side": "outer", "ok": true}
+{"event": "sign_seen", "wall_time": 1794463585.7048943, "t": 11.764261245727539, "seat": 8, "lateral": -0.1, "colour": null, "votes": {}, "progress": 1.2043230037680497}
+{"event": "sign_colour", "wall_time": 1794463586.0032833, "t": 12.06261157989502, "seat": 8, "lateral": -0.1, "colour": "red", "votes": {"red": 1}, "progress": 1.307253598743989}
+{"event": "section", "wall_time": 1794463587.5211778, "t": 13.580427885055542, "section": 2, "section_name": "straight 2", "previous": "corner 1", "previous_s": 2.4061620235443115, "progress": 2.0276964402475537}
+{"event": "sign_passed", "wall_time": 1794463589.2336414, "t": 15.291648387908936, "seat": 5, "lap": 1, "colour": "green", "lateral": 0.1, "car_lateral": 0.355, "side": "inner", "ok": true}
+{"event": "wait_sensor", "wall_time": 1794463589.2728987, "t": 15.333108186721802, "stale": {"camera": 0.8078608512878418}}
+{"event": "round", "wall_time": 1794463607.2389507, "t": 33.29615807533264, "end": "STOPPED", "laps": [], "sections": [[0, "straight 1", 2.0203990936279297], [1, "corner 1", 2.4061620235443115]]}
+{"event": "stop", "wall_time": 1794463607.2391903, "t": 33.299391746520996}

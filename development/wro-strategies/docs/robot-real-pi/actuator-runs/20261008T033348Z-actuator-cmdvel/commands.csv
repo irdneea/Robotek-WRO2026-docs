@@ -1,0 +1,12 @@
+t,step,phase,servo_deg,servo_us,motor_pct
+1791430430.5182,inicio,idle,0.0,1500,0.0
+1791430431.5382,acelerar a 0.40 m/s,ramp,0.0,1500,0.4
+1791430431.9382,cmd_vel 0.40 m/s,motor,0.0,1500,0.4
+1791430432.5382,cmd_vel 0,motor,0.0,1500,0.0
+1791430434.7183,volver a 0.40 m/s,return,0.0,1500,-0.4
+1791430435.7382,parar,return,0.0,1500,0.0
+1791430437.9182,acelerar a 0.60 m/s,ramp,0.0,1500,0.6
+1791430438.5182,cmd_vel 0.60 m/s,motor,0.0,1500,0.6
+1791430439.1381,cmd_vel 0,motor,0.0,1500,0.0
+1791430441.6383,volver a 0.60 m/s,return,0.0,1500,-0.6
+1791430442.8585,parar,return,0.0,1500,0.0

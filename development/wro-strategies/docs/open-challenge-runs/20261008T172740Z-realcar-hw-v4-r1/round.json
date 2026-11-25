@@ -1,0 +1,64 @@
+{
+  "run": "20261008T172740Z-realcar-hw-v4-r1",
+  "status": "failed",
+  "platform": "real_car_hardware",
+  "start_source": "button",
+  "end_source": "operator_stop",
+  "time_from_start_wall_seconds": 30.76,
+  "time_from_start_sim_seconds": null,
+  "motion_wall_seconds": 30.46,
+  "motion_sim_seconds": null,
+  "first_wall_contact_wall_seconds": 2.921,
+  "lap_splits": [],
+  "points_estimated": 0,
+  "points_official": null,
+  "score_status": "real_car_operator_observation",
+  "points_breakdown": {
+    "1.1_sections": 0,
+    "1.2_laps": 0,
+    "1.3_stop_in_finish": 0
+  },
+  "profile": "open_realcar_v4.yaml",
+  "code": "robotek_open at e6aea27 (synced to the Pi 2026-10-08), robotek_hardware as on the Pi (same as e6aea27)",
+  "hardware": {
+    "battery_mV_before": 7370,
+    "motor_cap_pct": 100,
+    "steer_limit_deg": 17.6,
+    "drivers": "peripherals sensors.launch.py detector:=false + robot.launch.py controller:=false camera:=false",
+    "xacro": "temporary shim on the Pi (/tmp/xacro-shim), URDF generated on the Mac"
+  },
+  "start_pose": {
+    "x": null,
+    "y": null,
+    "yaw": null,
+    "lidar_at_start_m": {
+      "left": 0.616,
+      "right": 0.399,
+      "front": 1.438
+    }
+  },
+  "failure": {
+    "cause": "wrong direction from the camera: the beige room wall above the black field wall matched the orange HSV range (O=434 px, B=0) -> cw camera_confirmed at Start",
+    "sequence": "full speed straight; at ~1.85 s the left opened (L 0.62 -> 2.58 m, a CCW corner) but CW never turned there; front fell 0.99 -> 0.12 m and the car hit the wall at ~2.92 s still commanding v=1.28",
+    "secondary": [
+      "No stall detection: v=1.28 (100 % PWM) kept commanded against the wall until the strategy was stopped by hand (~31 s after Start).",
+      "Commanded right (w<0) for ~1 s at full speed while yaw rose to +0.5 rad: steering may lose grip at full power (front wheels light); not confirmed."
+    ]
+  },
+  "limitations": [
+    "Real car: no ground-truth pose, no judge, no contacts log. Points from operator report (hit the wall before the first corner) and telemetry.",
+    "Start position x, y, yaw on the field not measured; only the LiDAR distances at Start.",
+    "Field geometry not measured (wall distances suggest a ~1 m corridor).",
+    "Wall-clock time only; there is no simulation time on the car."
+  ],
+  "evidence": [
+    "telemetry.csv",
+    "telemetry.csv.scans.jsonl.gz",
+    "events.jsonl",
+    "camera-evidence.csv",
+    "camera/1791480486.995.png",
+    "camera/1791480486.995-mask.png",
+    "launch.log",
+    "params/"
+  ]
+}

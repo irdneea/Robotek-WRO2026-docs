@@ -1,0 +1,71 @@
+robotek-car: ros2 launch robotek_course car.launch.py strategy:=robotek_open executable:=open_v5 motor_max_rps:=2.5 strategy_params:=/home/user/.config/robotek/open_v5_car.yaml (recording to /home/user/runs/20261104-194323-autostart)
+[INFO] [launch]: All log files can be found below /home/user/.ros/log/2026-11-04-19-43-23-917314-user-desktop-13733
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [rrc_driver-1]: process started with pid [13822]
+[INFO] [ldlidar_stl_ros2_node-2]: process started with pid [13823]
+[INFO] [static_transform_publisher-3]: process started with pid [13824]
+[INFO] [camera_publisher-4]: process started with pid [13825]
+[INFO] [scan_adapter-5]: process started with pid [13826]
+[INFO] [imu_adapter-6]: process started with pid [13827]
+[INFO] [motor_driver-7]: process started with pid [13828]
+[INFO] [base_adapter-8]: process started with pid [13831]
+[INFO] [start_button-9]: process started with pid [13832]
+[INFO] [battery_guard-10]: process started with pid [13833]
+[INFO] [status_leds-11]: process started with pid [13834]
+[INFO] [robot_state_publisher-12]: process started with pid [13839]
+[INFO] [open_v5-13]: process started with pid [13840]
+[static_transform_publisher-3] [WARN] [1793839404.418337205] []: Old-style arguments are deprecated; see --help for new-style arguments
+[ldlidar_stl_ros2_node-2] [INFO] [1793839404.427525735] [LD19]: LDLiDAR SDK Pack Version is: v3.0.3
+[ldlidar_stl_ros2_node-2] [INFO] [1793839404.427638178] [LD19]: <product_name>: LDLiDAR_LD19
+[ldlidar_stl_ros2_node-2] [INFO] [1793839404.427654603] [LD19]: <topic_name>: scan
+[ldlidar_stl_ros2_node-2] [INFO] [1793839404.427664436] [LD19]: <frame_id>: base_laser
+[ldlidar_stl_ros2_node-2] [INFO] [1793839404.427675158] [LD19]: <port_name>: /dev/ttyUSB0
+[ldlidar_stl_ros2_node-2] [INFO] [1793839404.427685325] [LD19]: <port_baudrate>: 230400
+[ldlidar_stl_ros2_node-2] [INFO] [1793839404.427695269] [LD19]: <laser_scan_dir>: Counterclockwise
+[ldlidar_stl_ros2_node-2] [INFO] [1793839404.427705473] [LD19]: <enable_angle_crop_func>: false
+[ldlidar_stl_ros2_node-2] [INFO] [1793839404.427716195] [LD19]: <angle_crop_min>: 135.000000
+[ldlidar_stl_ros2_node-2] [INFO] [1793839404.427734639] [LD19]: <angle_crop_max>: 225.000000
+[ldlidar_stl_ros2_node-2] [INFO] [1793839404.447073163] [LD19]: ldlidar node start is success
+[ldlidar_stl_ros2_node-2] [INFO] [1793839404.454734889] [LD19]: ldlidar communication is normal.
+[ldlidar_stl_ros2_node-2] [INFO] [1793839404.464055917] [LD19]: Publish topic message:ldlidar scan data.
+[static_transform_publisher-3] [INFO] [1793839404.539523160] [base_link_to_base_laser_ld19]: Spinning until stopped - publishing transform
+[static_transform_publisher-3] translation: ('0.000000', '0.000000', '0.180000')
+[static_transform_publisher-3] rotation: ('0.000000', '0.000000', '0.000000', '1.000000')
+[static_transform_publisher-3] from 'base_link' to 'base_laser'
+[robot_state_publisher-12] [INFO] [1793839404.733643241] [robot_state_publisher]: Robot initialized
+[status_leds-11] [INFO] [1793839406.980259367] [status_leds]: Status RGBs at level 2/255: green = ready, blue = running.
+[motor_driver-7] [INFO] [1793839407.312229608] [tb6612fng_motor]: TB6612FNG ready (forward and reverse).
+[start_button-9] [INFO] [1793839407.330823894] [start_button]: Press the button to start; press it again to stop.
+[battery_guard-10] [INFO] [1793839408.178329832] [battery_guard]: Battery guard: red blinking below 6.80 V (5 consecutive readings); it does not stop the car.
+[base_adapter-8] [INFO] [1793839408.279316870] [base_adapter]: Drive motor: RRC Lite port M1, 4.80 rps per m/s.
+[base_adapter-8] [INFO] [1793839408.292757105] [base_adapter]: Wall guard: slows down from 0.30 m, 0 at 0.10 m (+-15 deg).
+[base_adapter-8] [INFO] [1793839408.305072880] [base_adapter]: Brake: board reset (/rrc/reset) when stopping after moving.
+[imu_adapter-6] [INFO] [1793839408.328334324] [imu_adapter]: IMU axes forward=-x left=+z up=+y
+[rrc_driver-1] [INFO] [1793839408.518503506] [rrc_driver]: RRC Lite board on /dev/rrc_lite
+[rrc_driver-1] [INFO] [1793839408.536565952] [rrc_driver]: Motor type 2 sent to the board.
+[rrc_driver-1] [INFO] [1793839408.705949404] [rrc_driver]: Settings servo 1 - Offset 0
+[rrc_driver-1] [INFO] [1793839408.707812370] [rrc_driver]: Settings servo 2 - Offset 0
+[rrc_driver-1] [INFO] [1793839408.708916276] [rrc_driver]: Settings servo 3 - Offset 0
+[rrc_driver-1] [INFO] [1793839408.710685243] [rrc_driver]: Settings servo 4 - Offset 0
+[rrc_driver-1] [INFO] [1793839408.718077608] [rrc_driver]: [1;32mstart[0m
+[camera_publisher-4] [INFO] [1793839408.847372516] [camera_publisher]: Controles -> white_balance_automatic: 1 | brightness: 0 | auto_exposure: 3 (Aperture Priority Mode)
+[camera_publisher-4] [INFO] [1793839408.848087466] [camera_publisher]: Camara /dev/v4l/by-id/usb-icSpring_icspring_camera-video-index0 640x480 @ 15 fps, modo=auto
+[open_v5-13] [INFO] [1793839408.990452135] [strategy]: Open v5 | direction=auto cruise=1.28 m/s | telemetry /home/user/runs/20261104-194328-open-v5/telemetry.csv
+[open_v5-13] [WARN] [1793839409.039231765] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[ldlidar_stl_ros2_node-2] [LDS][INFO][1793839404.446896055][Actual BaudRate reported:230400]
+[open_v5-13] [WARN] [1793839410.041033895] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[rrc_driver-1] [INFO] [1793839411.537985570] [rrc_driver]: Motor type 2 sent again.
+[rrc_driver-1] [INFO] [1793839471.538936840] [rrc_driver]: Motor type 2 sent again.
+[rrc_driver-1] [INFO] [1793839534.538110743] [rrc_driver]: Motor type 2 sent again.
+[start_button-9] [INFO] [1793839551.572291549] [start_button]: Start.
+[base_adapter-8] [WARN] [1793839579.506391037] [base_adapter]: Stopping after moving: board reset.
+[rrc_driver-1] [WARN] [1793839579.609754473] [rrc_driver]: Board reset (RTS): drive motor stopped; setting the board up again in 2.5 s.
+[open_v5-13] [WARN] [1793839579.709783743] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-13] [WARN] [1793839580.719269411] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[open_v5-13] [WARN] [1793839581.770229387] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+[rrc_driver-1] [INFO] [1793839582.112819358] [rrc_driver]: Settings servo 1 - Offset 0
+[rrc_driver-1] [INFO] [1793839582.113958759] [rrc_driver]: Settings servo 2 - Offset 0
+[rrc_driver-1] [INFO] [1793839582.115915062] [rrc_driver]: Settings servo 3 - Offset 0
+[rrc_driver-1] [INFO] [1793839582.117288332] [rrc_driver]: Settings servo 4 - Offset 0
+[rrc_driver-1] [INFO] [1793839582.118927174] [rrc_driver]: Board set up again after the reset.
+[rrc_driver-1] [INFO] [1793839594.538876900] [rrc_driver]: Motor type 2 sent again.

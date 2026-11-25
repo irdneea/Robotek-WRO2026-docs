@@ -1,0 +1,118 @@
+{"event": "state", "wall_time": 1794464556.674687, "t": null, "state": "WAIT_START"}
+{"event": "start", "wall_time": 1794464562.6268396, "t": 0.0}
+{"event": "state", "wall_time": 1794464562.6394737, "t": 0.01264500617980957, "state": "SETUP"}
+{"event": "lot_exit", "wall_time": 1794464562.9584663, "t": 0.331632137298584, "detail": "{'event': 'lot_exit_start', 'pose': [0.05, -1.416, 0.0], 'rear_mm': None, 'steps': 'L+0.25 R-0.3 L+0.25 R-0.3 L+0.25 R-0.3 C-0.2'}"}
+{"event": "state", "wall_time": 1794464562.9598045, "t": 0.3329892158508301, "state": "LOT_EXIT"}
+{"event": "lot_exit", "wall_time": 1794464563.720769, "t": 1.093937635421753, "detail": "{'event': 'lot_exit_pulse', 'pulse': '1_LFWD', 'heading': 0.3, 'rear_mm': None, 'braked': False, 'pose': [0.053, -1.416, 0.006]}"}
+{"event": "lot_exit", "wall_time": 1794464564.9383073, "t": 2.3114259243011475, "detail": "{'event': 'lot_exit_pulse', 'pulse': '2_RBACK', 'heading': 14.1, 'rear_mm': None, 'braked': False, 'pose': [0.06, -1.407, 0.245]}"}
+{"event": "lot_exit", "wall_time": 1794464566.127487, "t": 3.500654458999634, "detail": "{'event': 'lot_exit_pulse', 'pulse': '3_LFWD', 'heading': 24.2, 'rear_mm': None, 'braked': False, 'pose': [-0.003, -1.417, 0.422]}"}
+{"event": "lot_exit", "wall_time": 1794464567.3429601, "t": 4.7161102294921875, "detail": "{'event': 'lot_exit_pulse', 'pulse': '4_RBACK', 'heading': 38.7, 'rear_mm': None, 'braked': False, 'pose': [0.033, -1.384, 0.676]}"}
+{"event": "lot_exit", "wall_time": 1794464568.5197284, "t": 5.89288854598999, "detail": "{'event': 'lot_exit_pulse', 'pulse': '5_LFWD', 'heading': 52.0, 'rear_mm': None, 'braked': False, 'pose': [-0.032, -1.426, 0.908]}"}
+{"event": "lot_exit", "wall_time": 1794464569.7400196, "t": 7.11311674118042, "detail": "{'event': 'lot_exit_pulse', 'pulse': '6_RBACK', 'heading': 68.2, 'rear_mm': None, 'braked': False, 'pose': [-0.027, -1.401, 1.19]}"}
+{"event": "lot_exit", "wall_time": 1794464570.8386748, "t": 8.211824893951416, "detail": "{'event': 'lot_exit_pulse', 'pulse': '7_CBACK', 'heading': 77.2, 'rear_mm': None, 'braked': False, 'pose': [-0.065, -1.501, 1.343]}"}
+{"event": "lot_exit", "wall_time": 1794464571.8037767, "t": 9.17692518234253, "detail": "{'event': 'lot_exit_done_pulses', 'heading': 77.1, 'pose': [-0.065, -1.501, 1.343]}"}
+{"event": "lot_exit", "wall_time": 1794464571.8053398, "t": 9.178452014923096, "detail": "{'event': 'lot_exit_done', 'estimate': [-0.065, -1.501, 1.343], 'localized': [0.226, -1.386, 1.419]}"}
+{"event": "state", "wall_time": 1794464571.8071284, "t": 9.180309295654297, "state": "RUN"}
+{"event": "sign_seen", "wall_time": 1794464571.8195918, "t": 9.191936492919922, "seat": 2, "lateral": 0.1, "colour": "red", "votes": {"red": 2}, "progress": 0.7260557025216213}
+{"event": "sign_seen", "wall_time": 1794464571.8815365, "t": 9.253763675689697, "seat": 5, "lateral": 0.1, "colour": "green", "votes": {"green": 2}, "progress": 0.7260936922720299}
+{"event": "section", "wall_time": 1794464573.7075279, "t": 11.079153299331665, "section": 1, "section_name": "corner 1", "previous": "straight 1", "previous_s": 1.9004368782043457, "progress": 1.026932053579928}
+{"event": "corner", "wall_time": 1794464573.707649, "t": 11.079153299331665, "corner": 1, "progress": 1.026932053579928}
+{"event": "sign_passed", "wall_time": 1794464573.708669, "t": 11.079153299331665, "seat": 2, "lap": 1, "colour": "red", "lateral": 0.1, "car_lateral": -0.105, "side": "outer", "ok": true}
+{"event": "sign_seen", "wall_time": 1794464574.3142488, "t": 11.686651706695557, "seat": 8, "lateral": -0.1, "colour": null, "votes": {}, "progress": 1.200916011327334}
+{"event": "sign_colour", "wall_time": 1794464574.6080933, "t": 11.980392932891846, "seat": 8, "lateral": -0.1, "colour": "red", "votes": {"red": 1}, "progress": 1.3062887460657548}
+{"event": "section", "wall_time": 1794464576.1298547, "t": 13.502184391021729, "section": 2, "section_name": "straight 2", "previous": "corner 1", "previous_s": 2.4230310916900635, "progress": 2.019957702720172}
+{"event": "sign_passed", "wall_time": 1794464577.842445, "t": 15.214459657669067, "seat": 5, "lap": 1, "colour": "green", "lateral": 0.1, "car_lateral": 0.356, "side": "inner", "ok": true}
+{"event": "sign_seen", "wall_time": 1794464578.9476619, "t": 16.32007884979248, "seat": 10, "lateral": 0.1, "colour": null, "votes": {}, "progress": 2.8013486209501335}
+{"event": "section", "wall_time": 1794464579.7505429, "t": 17.122902631759644, "section": 3, "section_name": "corner 2", "previous": "straight 2", "previous_s": 3.620718240737915, "progress": 3.052992672234246}
+{"event": "corner", "wall_time": 1794464579.7506418, "t": 17.122902631759644, "corner": 2, "progress": 3.052992672234246}
+{"event": "section", "wall_time": 1794464582.951855, "t": 20.324186086654663, "section": 4, "section_name": "straight 3", "previous": "corner 2", "previous_s": 3.2012834548950195, "progress": 4.006932592392571}
+{"event": "sign_passed", "wall_time": 1794464582.9528496, "t": 20.324186086654663, "seat": 8, "lap": 1, "colour": "red", "lateral": -0.1, "car_lateral": -0.347, "side": "outer", "ok": true}
+{"event": "recover", "wall_time": 1794464583.4842052, "t": 20.857358932495117, "detail": "{'event': 'front_recover', 'along': 0.1, 'side': -0.069, 'steer': 17.5, 'heading': 156.2, 'pose': [0.436, 1.402, 2.726], 'repeat': 0}"}
+{"event": "sign_seen", "wall_time": 1794464583.584198, "t": 20.956552028656006, "seat": 12, "lateral": -0.1, "colour": null, "votes": {}, "progress": 4.063563473603104}
+{"event": "recover", "wall_time": 1794464584.0193434, "t": 21.392497539520264, "detail": "{'event': 'front_recover', 'along': 0.1, 'side': -0.078, 'steer': 17.5, 'heading': 160.8, 'pose': [0.364, 1.406, 2.806], 'repeat': 1}"}
+{"event": "sign_colour", "wall_time": 1794464584.1815186, "t": 21.553784370422363, "seat": 10, "lateral": 0.1, "colour": "green", "votes": {"green": 1}, "progress": 4.123180786518538}
+{"event": "sign_colour", "wall_time": 1794464585.3066506, "t": 22.678802490234375, "seat": 12, "lateral": -0.1, "colour": "green", "votes": {"green": 1}, "progress": 3.9575529006562338}
+{"event": "sign_seen", "wall_time": 1794464589.5478354, "t": 26.92015242576599, "seat": 14, "lateral": 0.1, "colour": null, "votes": {}, "progress": 4.807834801503962}
+{"event": "sign_colour", "wall_time": 1794464589.636575, "t": 27.008769750595093, "seat": 14, "lateral": 0.1, "colour": "green", "votes": {"green": 1}, "progress": 4.834580471079862}
+{"event": "section", "wall_time": 1794464590.2563674, "t": 27.628694534301758, "section": 5, "section_name": "corner 3", "previous": "straight 3", "previous_s": 7.304508447647095, "progress": 5.055473374032014}
+{"event": "corner", "wall_time": 1794464590.2564564, "t": 27.628694534301758, "corner": 3, "progress": 5.055473374032014}
+{"event": "sign_passed", "wall_time": 1794464590.2579021, "t": 27.628694534301758, "seat": 10, "lap": 1, "colour": "green", "lateral": 0.1, "car_lateral": 0.337, "side": "inner", "ok": true}
+{"event": "section", "wall_time": 1794464591.772514, "t": 29.143935441970825, "section": 6, "section_name": "straight 4", "previous": "corner 3", "previous_s": 1.5152409076690674, "progress": 6.018765870852148}
+{"event": "sign_passed", "wall_time": 1794464591.7735703, "t": 29.143935441970825, "seat": 12, "lap": 1, "colour": "green", "lateral": -0.1, "car_lateral": 0.115, "side": "inner", "ok": true}
+{"event": "section", "wall_time": 1794464595.2011855, "t": 32.57339811325073, "section": 7, "section_name": "corner 4", "previous": "straight 4", "previous_s": 3.4294626712799072, "progress": 7.0304960287145875}
+{"event": "corner", "wall_time": 1794464595.201313, "t": 32.57339811325073, "corner": 4, "progress": 7.0304960287145875}
+{"event": "sign_passed", "wall_time": 1794464595.2023945, "t": 32.57339811325073, "seat": 14, "lap": 1, "colour": "green", "lateral": 0.1, "car_lateral": 0.287, "side": "inner", "ok": true}
+{"event": "section", "wall_time": 1794464596.9194536, "t": 34.291632890701294, "section": 8, "section_name": "straight 1", "previous": "corner 4", "previous_s": 1.7182347774505615, "progress": 8.02224025752211}
+{"event": "lap", "wall_time": 1794464596.920437, "t": 34.291632890701294, "lap": 1, "lap_time": 34.291632890701294, "progress": 8.02224025752211}
+{"event": "section", "wall_time": 1794464600.455193, "t": 37.82756853103638, "section": 9, "section_name": "corner 5", "previous": "straight 1", "previous_s": 3.535935640335083, "progress": 9.025123527666366}
+{"event": "corner", "wall_time": 1794464600.4553134, "t": 37.82756853103638, "corner": 5, "progress": 9.025123527666366}
+{"event": "sign_passed", "wall_time": 1794464600.4562852, "t": 37.82756853103638, "seat": 2, "lap": 2, "colour": "red", "lateral": 0.1, "car_lateral": -0.105, "side": "outer", "ok": true}
+{"event": "section", "wall_time": 1794464602.8719366, "t": 40.24432063102722, "section": 10, "section_name": "straight 2", "previous": "corner 5", "previous_s": 2.4167520999908447, "progress": 10.020463293207275}
+{"event": "sign_passed", "wall_time": 1794464604.6642222, "t": 42.036269187927246, "seat": 5, "lap": 2, "colour": "green", "lateral": 0.1, "car_lateral": 0.354, "side": "inner", "ok": true}
+{"event": "section", "wall_time": 1794464606.5026846, "t": 43.87483239173889, "section": 11, "section_name": "corner 6", "previous": "straight 2", "previous_s": 3.63051176071167, "progress": 11.031295282823136}
+{"event": "corner", "wall_time": 1794464606.5028372, "t": 43.87483239173889, "corner": 6, "progress": 11.031295282823136}
+{"event": "recover", "wall_time": 1794464609.40502, "t": 46.7781708240509, "detail": "{'event': 'front_recover', 'along': 0.12, 'side': -0.083, 'steer': 17.5, 'heading': 134.1, 'pose': [0.569, 1.306, 2.341], 'repeat': 0}"}
+{"event": "recover", "wall_time": 1794464609.939598, "t": 47.31275248527527, "detail": "{'event': 'front_recover', 'along': 0.1, 'side': -0.074, 'steer': 17.5, 'heading': 145.3, 'pose': [0.544, 1.333, 2.536], 'repeat': 1}"}
+{"event": "section", "wall_time": 1794464613.0088007, "t": 50.3811092376709, "section": 12, "section_name": "straight 3", "previous": "corner 6", "previous_s": 6.506276845932007, "progress": 12.009861490115565}
+{"event": "sign_passed", "wall_time": 1794464613.0099761, "t": 50.3811092376709, "seat": 8, "lap": 2, "colour": "red", "lateral": -0.1, "car_lateral": -0.324, "side": "outer", "ok": true}
+{"event": "section", "wall_time": 1794464617.1918583, "t": 54.56394076347351, "section": 13, "section_name": "corner 7", "previous": "straight 3", "previous_s": 4.182831525802612, "progress": 13.098865163313334}
+{"event": "corner", "wall_time": 1794464617.1919842, "t": 54.56394076347351, "corner": 7, "progress": 13.098865163313334}
+{"event": "sign_passed", "wall_time": 1794464617.1930404, "t": 54.56394076347351, "seat": 10, "lap": 2, "colour": "green", "lateral": 0.1, "car_lateral": 0.325, "side": "inner", "ok": true}
+{"event": "section", "wall_time": 1794464618.704198, "t": 56.07656264305115, "section": 14, "section_name": "straight 4", "previous": "corner 7", "previous_s": 1.5126218795776367, "progress": 14.024124333896456}
+{"event": "sign_passed", "wall_time": 1794464618.7051933, "t": 56.07656264305115, "seat": 12, "lap": 2, "colour": "green", "lateral": -0.1, "car_lateral": 0.118, "side": "inner", "ok": true}
+{"event": "section", "wall_time": 1794464622.048817, "t": 59.420695543289185, "section": 15, "section_name": "corner 8", "previous": "straight 4", "previous_s": 3.344132900238037, "progress": 15.001079490858285}
+{"event": "corner", "wall_time": 1794464622.0489495, "t": 59.420695543289185, "corner": 8, "progress": 15.001079490858285}
+{"event": "sign_passed", "wall_time": 1794464622.050359, "t": 59.420695543289185, "seat": 14, "lap": 2, "colour": "green", "lateral": 0.1, "car_lateral": 0.302, "side": "inner", "ok": true}
+{"event": "section", "wall_time": 1794464623.763214, "t": 61.13537406921387, "section": 16, "section_name": "straight 1", "previous": "corner 8", "previous_s": 1.7146785259246826, "progress": 16.022670268580104}
+{"event": "lap", "wall_time": 1794464623.765684, "t": 61.13537406921387, "lap": 2, "lap_time": 26.843741178512573, "progress": 16.022670268580104}
+{"event": "section", "wall_time": 1794464627.2920172, "t": 64.6642963886261, "section": 17, "section_name": "corner 9", "previous": "straight 1", "previous_s": 3.5289223194122314, "progress": 17.031952414098456}
+{"event": "corner", "wall_time": 1794464627.2921607, "t": 64.6642963886261, "corner": 9, "progress": 17.031952414098456}
+{"event": "sign_passed", "wall_time": 1794464627.2932913, "t": 64.6642963886261, "seat": 2, "lap": 3, "colour": "red", "lateral": 0.1, "car_lateral": -0.101, "side": "outer", "ok": true}
+{"event": "section", "wall_time": 1794464629.7177725, "t": 67.0898106098175, "section": 18, "section_name": "straight 2", "previous": "corner 9", "previous_s": 2.4255142211914062, "progress": 18.020357821778845}
+{"event": "sign_passed", "wall_time": 1794464631.5097058, "t": 68.88184380531311, "seat": 5, "lap": 3, "colour": "green", "lateral": 0.1, "car_lateral": 0.353, "side": "inner", "ok": true}
+{"event": "section", "wall_time": 1794464633.3358178, "t": 70.70804190635681, "section": 19, "section_name": "corner 10", "previous": "straight 2", "previous_s": 3.6182312965393066, "progress": 19.01131579420405}
+{"event": "corner", "wall_time": 1794464633.3359134, "t": 70.70804190635681, "corner": 10, "progress": 19.01131579420405}
+{"event": "section", "wall_time": 1794464636.611573, "t": 73.98374962806702, "section": 20, "section_name": "straight 3", "previous": "corner 10", "previous_s": 3.275707721710205, "progress": 20.01307711718051}
+{"event": "sign_passed", "wall_time": 1794464636.6126165, "t": 73.98374962806702, "seat": 8, "lap": 3, "colour": "red", "lateral": -0.1, "car_lateral": -0.354, "side": "outer", "ok": true}
+{"event": "recover", "wall_time": 1794464636.743913, "t": 74.11706280708313, "detail": "{'event': 'front_recover', 'along': 0.1, 'side': -0.083, 'steer': 17.5, 'heading': 154.0, 'pose': [0.419, 1.391, 2.688], 'repeat': 0}"}
+{"event": "section", "wall_time": 1794464642.0108178, "t": 79.38316178321838, "section": 21, "section_name": "corner 11", "previous": "straight 3", "previous_s": 5.399412155151367, "progress": 21.01547520531971}
+{"event": "corner", "wall_time": 1794464642.010917, "t": 79.38316178321838, "corner": 11, "progress": 21.01547520531971}
+{"event": "sign_passed", "wall_time": 1794464642.0119245, "t": 79.38316178321838, "seat": 10, "lap": 3, "colour": "green", "lateral": 0.1, "car_lateral": 0.367, "side": "inner", "ok": true}
+{"event": "section", "wall_time": 1794464643.5169191, "t": 80.88878750801086, "section": 22, "section_name": "straight 4", "previous": "corner 11", "previous_s": 1.5056257247924805, "progress": 22.009317576400882}
+{"event": "sign_passed", "wall_time": 1794464643.518086, "t": 80.88878750801086, "seat": 12, "lap": 3, "colour": "green", "lateral": -0.1, "car_lateral": 0.111, "side": "inner", "ok": true}
+{"event": "section", "wall_time": 1794464647.1619382, "t": 84.53401398658752, "section": 23, "section_name": "corner 12", "previous": "straight 4", "previous_s": 3.64522647857666, "progress": 23.082134749059506}
+{"event": "corner", "wall_time": 1794464647.1620364, "t": 84.53401398658752, "corner": 12, "progress": 23.082134749059506}
+{"event": "sign_passed", "wall_time": 1794464647.163147, "t": 84.53401398658752, "seat": 14, "lap": 3, "colour": "green", "lateral": 0.1, "car_lateral": 0.291, "side": "inner", "ok": true}
+{"event": "park_state", "wall_time": 1794464648.8954208, "t": 86.26859259605408, "state": "PARK_APPROACH", "pose": [-0.4763271990650102, -0.9743206161249849, -0.7623298982340714]}
+{"event": "section", "wall_time": 1794464648.8971107, "t": 86.26874566078186, "section": 24, "section_name": "straight 1", "previous": "corner 12", "previous_s": 1.734731674194336, "progress": 24.02367280093499}
+{"event": "lap", "wall_time": 1794464648.8980832, "t": 86.26874566078186, "lap": 3, "lap_time": 25.133371591567993, "progress": 24.02367280093499}
+{"event": "state", "wall_time": 1794464648.8993943, "t": 86.27257180213928, "state": "PARK"}
+{"event": "sign_passed", "wall_time": 1794464652.402768, "t": 89.77496147155762, "seat": 2, "lap": 4, "colour": "red", "lateral": 0.1, "car_lateral": -0.175, "side": "outer", "ok": true}
+{"event": "park_state", "wall_time": 1794464653.6654973, "t": 91.03867363929749, "state": "PARK_BACK", "pose": [0.8617799005092921, -1.1785988621527959, -0.03380633399808]}
+{"event": "park_state", "wall_time": 1794464655.6336126, "t": 93.00678634643555, "state": "PARK_PLAN", "pose": [0.5071367774279694, -1.1953999227233072, -0.047450430193150456]}
+{"event": "park_state", "wall_time": 1794464655.9445393, "t": 93.31770610809326, "state": "PARK_BACK", "pose": [0.4480770246227791, -1.1945008664137857, -0.07392092170300198]}
+{"event": "park", "wall_time": 1794464655.945861, "t": 93.31900715827942, "detail": {"event": "park_reapproach", "pose": [0.4480770246227791, -1.1945008664137857, -0.07392092170300198]}}
+{"event": "park_state", "wall_time": 1794464657.8512046, "t": 95.2243800163269, "state": "PARK_APPROACH", "pose": [-0.052612159557547694, -1.1815634981462066, 0.0155734651453499]}
+{"event": "park_state", "wall_time": 1794464661.98989, "t": 99.36306571960449, "state": "PARK_BACK", "pose": [0.9290519630289932, -1.1750697595806154, -0.03760015207790116]}
+{"event": "park_state", "wall_time": 1794464664.2080402, "t": 101.58119606971741, "state": "PARK_PLAN", "pose": [0.5093189702888186, -1.19209239401184, -0.03926389897140455]}
+{"event": "park_state", "wall_time": 1794464664.5217965, "t": 101.89496779441833, "state": "PARK_STEER", "pose": [0.45170941375915774, -1.1929781228012484, -0.04730643752361512]}
+{"event": "park", "wall_time": 1794464664.5227454, "t": 101.89592051506042, "detail": {"event": "park_fixed", "pose": [0.45170941375915774, -1.1929781228012484, -0.04730643752361512], "entry": 0.76, "ahead": 0.2, "fix": [0.0, 0.0, 0.0], "seen": [0, 0]}}
+{"event": "park_state", "wall_time": 1794464664.7385497, "t": 102.11170840263367, "state": "PARK_MOVE", "pose": [0.4284858100262521, -1.1901431969376017, -0.04820925182501734]}
+{"event": "park_state", "wall_time": 1794464664.757875, "t": 102.13104772567749, "state": "PARK_SETTLE", "pose": [0.4284858100262521, -1.1901431969376017, -0.04834098683611962]}
+{"event": "park_state", "wall_time": 1794464665.058039, "t": 102.43121457099915, "state": "PARK_MOVE", "pose": [0.42268144040533284, -1.1893619752784943, -0.0509853736619952]}
+{"event": "park_state", "wall_time": 1794464665.424347, "t": 102.79752206802368, "state": "PARK_SETTLE", "pose": [0.4717899366661663, -1.1904749620029123, -0.05666232358365575]}
+{"event": "park_state", "wall_time": 1794464665.7268841, "t": 103.10005688667297, "state": "PARK_STEER", "pose": [0.5462212002380861, -1.1944966079432118, -0.04068883695063387]}
+{"event": "park_state", "wall_time": 1794464666.197977, "t": 103.57115077972412, "state": "PARK_MOVE", "pose": [0.5887798660399977, -1.1968514898344138, -0.029372114094630752]}
+{"event": "park_state", "wall_time": 1794464666.8436046, "t": 104.2167649269104, "state": "PARK_SETTLE", "pose": [0.46843287525819965, -1.2200816408107218, 0.34467119953756087]}
+{"event": "park_state", "wall_time": 1794464667.1579905, "t": 104.53116583824158, "state": "PARK_STEER", "pose": [0.4121683093658718, -1.224266023529762, 0.5095675505837172]}
+{"event": "park_state", "wall_time": 1794464667.6436288, "t": 105.01679587364197, "state": "PARK_MOVE", "pose": [0.4020475722675384, -1.2114842126166014, 0.5051742391645023]}
+{"event": "park_state", "wall_time": 1794464667.6579115, "t": 105.03108716011047, "state": "PARK_SETTLE", "pose": [0.4020475722675384, -1.2114842126166014, 0.5051397524495183]}
+{"event": "park_state", "wall_time": 1794464667.985661, "t": 105.3588376045227, "state": "PARK_STEER", "pose": [0.40159318033775826, -1.210845694820904, 0.5047459295091157]}
+{"event": "park_state", "wall_time": 1794464668.197907, "t": 105.5710837841034, "state": "PARK_MOVE", "pose": [0.4018186292898823, -1.2106017410431802, 0.5055868073333731]}
+{"event": "park_state", "wall_time": 1794464668.219144, "t": 105.59231877326965, "state": "PARK_SETTLE", "pose": [0.4018186292898823, -1.2106017410431802, 0.505620137233699]}
+{"event": "park_state", "wall_time": 1794464668.5191152, "t": 105.8922917842865, "state": "PARK_FAIL", "pose": [0.4029749553251524, -1.2113145176054807, 0.5077057115458017]}
+{"event": "park_verdict", "wall_time": 1794464668.5208418, "t": 105.89402055740356, "parked": "partial", "why": "partial park: entry and straight into the lot done (no straightening)", "moves": 4, "pose": [0.4029749553251524, -1.2113145176054807, 0.5077057115458017]}
+{"event": "state", "wall_time": 1794464668.5222743, "t": 105.89545512199402, "state": "DONE"}
+{"event": "done", "wall_time": 1794464668.5235803, "t": 105.89676451683044, "progress": 24.902974955325153}
+{"event": "round", "wall_time": 1794464668.524313, "t": 105.8968517780304, "end": "DONE", "laps": [34.291632890701294, 26.843741178512573, 25.133371591567993], "sections": [[0, "straight 1", 1.9004368782043457], [1, "corner 1", 2.4230310916900635], [2, "straight 2", 3.620718240737915], [3, "corner 2", 3.2012834548950195], [4, "straight 3", 7.304508447647095], [5, "corner 3", 1.5152409076690674], [6, "straight 4", 3.4294626712799072], [7, "corner 4", 1.7182347774505615], [8, "straight 1", 3.535935640335083], [9, "corner 5", 2.4167520999908447], [10, "straight 2", 3.63051176071167], [11, "corner 6", 6.506276845932007], [12, "straight 3", 4.182831525802612], [13, "corner 7", 1.5126218795776367], [14, "straight 4", 3.344132900238037], [15, "corner 8", 1.7146785259246826], [16, "straight 1", 3.5289223194122314], [17, "corner 9", 2.4255142211914062], [18, "straight 2", 3.6182312965393066], [19, "corner 10", 3.275707721710205], [20, "straight 3", 5.399412155151367], [21, "corner 11", 1.5056257247924805], [22, "straight 4", 3.64522647857666], [23, "corner 12", 1.734731674194336]]}
+{"event": "stop", "wall_time": 1794465143.6507576, "t": 581.0213305950165}

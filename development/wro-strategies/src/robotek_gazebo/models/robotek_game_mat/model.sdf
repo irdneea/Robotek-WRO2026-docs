@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--
+  WRO 2026 Future Engineers game mat.
+  Static 3.2 x 3.2 m floor plate whose top face is textured with the official
+  playfield artwork (rendered from docs/WRO-2026_FutureEngineers_Playfield.pdf
+  at the PDF TrimBox = 3200 x 3200 mm).
+
+  Top surface is at z = 0.01 m (box 0.02 m thick centred on the origin), so the
+  walls / signs / parking lot in the world sit on it.
+-->
+<sdf version="1.10">
+  <model name="robotek_game_mat">
+    <static>true</static>
+    <link name="link">
+      <collision name="collision">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <box><size>3.2 3.2 0.02</size></box>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <box><size>3.2 3.2 0.02</size></box>
+        </geometry>
+        <material>
+          <ambient>1 1 1 1</ambient>
+          <diffuse>1 1 1 1</diffuse>
+          <specular>0.1 0.1 0.1 1</specular>
+          <pbr>
+            <metal>
+              <albedo_map>model://robotek_game_mat/materials/textures/playfield.png</albedo_map>
+              <roughness>1.0</roughness>
+              <metalness>0.0</metalness>
+            </metal>
+          </pbr>
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>

@@ -1,0 +1,177 @@
+{
+  "completed": false,
+  "samples": 302,
+  "selected_direction": "cw",
+  "direction_reason": "camera_confirmed",
+  "direction_matches_test_orientation": true,
+  "wall_time_seconds": 34.42216420173645,
+  "sim_time_seconds": 33.14,
+  "state_wall_seconds": {
+    "FOLLOW": 2.4733049869537354,
+    "TURN": 29.705201864242554,
+    "RECOVER": 2.243657350540161
+  },
+  "turn_timeouts": 3,
+  "recovery_entries": 3,
+  "turns": 1,
+  "lap_markers": [],
+  "gt_path_m": 3.5621812225834772,
+  "gt_winding_laps": 0.47143200075531666,
+  "final_gt_pose": [
+    -0.10796588764254897,
+    0.595014052553598,
+    -1.5707963385904957
+  ],
+  "min_outer_body_clearance_m": 0.29981403166941945,
+  "min_inner_body_clearance_m": -0.03175579871983393,
+  "straight_heading_error_mean_rad": 0.11849155023855557,
+  "max_actual_steer_deg": 19.86492951248375,
+  "max_command_steer_deg": 17.600117550828628,
+  "command_saturation_fraction": 0.0,
+  "min_front_range_m": 0.029999999329447746,
+  "finish_body_in_start_section": false,
+  "validated_completed": false,
+  "turn_events": [
+    {
+      "turn": 1,
+      "wall_seconds": 1.7272472381591797,
+      "sim_seconds": 1.5,
+      "entry_gt": [
+        -0.19180311847083634,
+        -1.130913012443793,
+        3.032161997925139
+      ],
+      "exit_gt": [
+        -0.7196219363564588,
+        -0.6329187967519865,
+        1.567823581638781
+      ],
+      "exit_heading_error_rad": 0.05253156042751451,
+      "exit_actual_steer_deg": -15.786981290349821
+    }
+  ],
+  "honest": true,
+  "audit_pose_merged": true,
+  "launch_wall_seconds": 39.975690666993614,
+  "exit_code": 0,
+  "timeout": false,
+  "abort_reason": "Repeated recovery; inspect ground truth/sensors",
+  "round": {
+    "run": "20261009T100659Z-macos-robostack-nogui-metal-cyclone-clockprobe-v4-sq100-cw",
+    "status": "incomplete",
+    "start_source": "auto_first_scan",
+    "end_source": "last_sample",
+    "time_from_start_wall_seconds": 34.902419090270996,
+    "time_from_start_sim_seconds": 33.537,
+    "motion_wall_seconds": 34.42216420173645,
+    "motion_sim_seconds": 33.14,
+    "lap_splits": [],
+    "points_estimated": 4,
+    "points_official": null,
+    "score_status": "simulation_rule_judge_v2",
+    "points_breakdown": {
+      "1.1_sections": 4,
+      "1.2_laps": 0,
+      "1.3_stop_in_finish": 0
+    },
+    "limitations": [
+      "Sections and laps estimated from ground-truth winding, not judged section exits.",
+      "Contacts, wall movement, start legality and human repairs are not adjudicated.",
+      "Finish bonus is provisional; DONE does not prove 30 seconds stationary."
+    ],
+    "points_estimated_legacy": 3,
+    "points_breakdown_legacy": {
+      "sections_estimated": 3,
+      "laps_estimated": 0,
+      "finish_provisional": 0
+    },
+    "rule_judge": {
+      "version": 2,
+      "challenge": "open",
+      "max_points": 30,
+      "points": 4,
+      "breakdown": {
+        "1.1_sections": 4,
+        "1.2_laps": 0,
+        "1.3_stop_in_finish": 0
+      },
+      "faults": [],
+      "notes": [
+        "Wall movement cannot occur in simulation (walls are static)."
+      ],
+      "round_end": {
+        "reason": "end_of_recording",
+        "sim_time": 33.56,
+        "wall_time": 1791540457.425529
+      },
+      "time_from_start_sim_seconds": 33.557,
+      "time_from_start_wall_seconds": 34.92425203323364,
+      "lap_splits": [],
+      "contact_evaluated": true,
+      "contacts_first_sim_time": {
+        "inner_wall": 2.994
+      },
+      "pose_source": "audit_pose.csv",
+      "pose_sample_count": 1461
+    },
+    "validation": {
+      "version": 1,
+      "passed": false,
+      "checks": {
+        "rule_maximum": {
+          "value": 4,
+          "threshold": 30,
+          "passed": false
+        },
+        "no_rule_faults": {
+          "value": 0,
+          "threshold": 0,
+          "passed": true
+        },
+        "stop_observed": {
+          "value": null,
+          "threshold": 30.0,
+          "passed": false
+        },
+        "no_contacts": {
+          "value": true,
+          "threshold": false,
+          "passed": false,
+          "note": "Gazebo contact sensors"
+        },
+        "min_outer_wall_clearance_m": {
+          "value": 0.29981403166941945,
+          "threshold": 0.01,
+          "passed": true,
+          "note": "sampled at telemetry rate"
+        },
+        "min_inner_wall_clearance_m": {
+          "value": -0.03175579871983393,
+          "threshold": 0.01,
+          "passed": false,
+          "note": "sampled at telemetry rate"
+        },
+        "steering_limit": {
+          "value": 19.86492951248375,
+          "threshold": 25.5,
+          "passed": true
+        }
+      },
+      "failed": [
+        "rule_maximum",
+        "stop_observed",
+        "no_contacts",
+        "min_inner_wall_clearance_m"
+      ],
+      "min_clearance_m": -0.03175579871983393,
+      "margin_class": "risky",
+      "thresholds": {
+        "min_clearance_m": 0.01,
+        "comfortable_m": 0.05,
+        "tight_m": 0.02,
+        "stop_observed_s": 30.0,
+        "steer_limit_deg": 25.5
+      }
+    }
+  }
+}

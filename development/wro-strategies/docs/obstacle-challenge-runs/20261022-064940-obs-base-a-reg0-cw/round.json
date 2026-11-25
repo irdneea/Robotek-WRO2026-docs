@@ -1,0 +1,183 @@
+{
+  "test_scope": "three_laps_no_parking",
+  "completed": false,
+  "full_round_validated": false,
+  "official_points": null,
+  "points_estimated": 0,
+  "points_driving_estimated": 0,
+  "points_signs_provisional": 0,
+  "bonus_provisional": 0,
+  "parking_evaluated": false,
+  "laps_completed": 0,
+  "lap_splits": [],
+  "timings": null,
+  "section_visits": [],
+  "rule_fault": null,
+  "radius_crossings": [],
+  "crossings_by_lap": {},
+  "correct_crossings_per_pillar": {
+    "sign_red_1": 0,
+    "sign_red_2": 0,
+    "sign_green_1": 0,
+    "sign_red_3": 0,
+    "sign_green_2": 0
+  },
+  "all_pillars_passed_three_times": false,
+  "verdict": "incomplete",
+  "points_breakdown_estimated": {
+    "1.1_sections": 0,
+    "1.2_laps": 0,
+    "1.3_stop_in_finish": 0,
+    "1.4-1.7_traffic_signs": 0,
+    "1.8_parking": null
+  },
+  "pillar_status": {
+    "sign_red_1": "no_ground_truth",
+    "sign_red_2": "no_ground_truth",
+    "sign_green_1": "no_ground_truth",
+    "sign_red_3": "no_ground_truth",
+    "sign_green_2": "no_ground_truth"
+  },
+  "any_sign_moved": false,
+  "pillar_movements": [
+    {
+      "pillar": "sign_red_1",
+      "color": "red",
+      "samples": 0,
+      "contact_messages": 0,
+      "first_contact_sim_time": null,
+      "status": "no_ground_truth"
+    },
+    {
+      "pillar": "sign_red_2",
+      "color": "red",
+      "samples": 0,
+      "contact_messages": 0,
+      "first_contact_sim_time": null,
+      "status": "no_ground_truth"
+    },
+    {
+      "pillar": "sign_green_1",
+      "color": "green",
+      "samples": 0,
+      "contact_messages": 0,
+      "first_contact_sim_time": null,
+      "status": "no_ground_truth"
+    },
+    {
+      "pillar": "sign_red_3",
+      "color": "red",
+      "samples": 0,
+      "contact_messages": 0,
+      "first_contact_sim_time": null,
+      "status": "no_ground_truth"
+    },
+    {
+      "pillar": "sign_green_2",
+      "color": "green",
+      "samples": 0,
+      "contact_messages": 0,
+      "first_contact_sim_time": null,
+      "status": "no_ground_truth"
+    }
+  ],
+  "pillars_outside_circle": [],
+  "ground_truth_pillars_complete": false,
+  "contact_evaluated": false,
+  "tilt_evaluated": false,
+  "internal_thresholds": {
+    "moved_m": 0.005,
+    "tilted_deg": 10.0,
+    "knocked_deg": 45.0,
+    "pillar_margin_m": 0.03
+  },
+  "internal_pillar_margin_ok": true,
+  "min_sampled_wall_clearance_m": null,
+  "min_sampled_pillar_clearance_m": null,
+  "stop_in_start_section": null,
+  "stop_hold_sim_seconds": null,
+  "stop_max_displacement_m": null,
+  "stop_validated": false,
+  "max_steer_degrees": null,
+  "selected_direction": null,
+  "samples": 0,
+  "limitations": [
+    "Offline sampled audit: clearances at telemetry rate; contacts from Gazebo sensors only when contact_evaluated.",
+    "Moved/tilted thresholds are internal: the rules do not define a millimetre threshold for \"moved\".",
+    "No parking or initial parking bonus; simplified start; not a complete 62-point event.",
+    "Points estimated from ordered section visits, not official scoring; pillar bonuses provisional."
+  ],
+  "rule_judge": {
+    "version": 2,
+    "challenge": "obstacle_no_parking",
+    "max_points": 40,
+    "points": 0,
+    "breakdown": {
+      "1.1_sections": 0,
+      "1.2_laps": 0,
+      "1.3_stop_in_finish": 0,
+      "1.4-1.7_traffic_signs": 0,
+      "1.8_parking": null
+    },
+    "faults": [],
+    "round_end": null,
+    "time_from_start_sim_seconds": null,
+    "time_from_start_wall_seconds": null,
+    "lap_splits": [],
+    "contact_evaluated": false,
+    "wall_contact_evaluated": true,
+    "notes": [
+      "Max 62 with parking; parking (1.8) not evaluated, so the scope maximum is 40.",
+      "Touching walls is allowed in Obstacle if they do not move (static in simulation)."
+    ]
+  },
+  "validation": {
+    "version": 1,
+    "passed": false,
+    "checks": {
+      "rule_maximum": {
+        "value": 0,
+        "threshold": 40,
+        "passed": false
+      },
+      "no_rule_faults": {
+        "value": 0,
+        "threshold": 0,
+        "passed": true
+      },
+      "stop_observed": {
+        "value": null,
+        "threshold": 30.0,
+        "passed": false
+      },
+      "steering_limit": {
+        "value": null,
+        "threshold": 25.5,
+        "passed": false
+      }
+    },
+    "failed": [
+      "rule_maximum",
+      "stop_observed",
+      "steering_limit"
+    ],
+    "min_clearance_m": null,
+    "margin_class": "unknown",
+    "thresholds": {
+      "min_clearance_m": 0.01,
+      "comfortable_m": 0.05,
+      "tight_m": 0.02,
+      "stop_observed_s": 30.0,
+      "steer_limit_deg": 25.5
+    }
+  },
+  "name": "obs-base-a-reg0-cw",
+  "directory": "/home/user/Projects/WRO-Strategies/docs/obstacle-challenge-runs/20261022-064940-obs-base-a-reg0-cw",
+  "direction": "cw",
+  "color": "regulation",
+  "launch_exit_code": 0,
+  "postprocessed_from_raw": true,
+  "launch_wall_seconds": 908.3211691379547,
+  "stopped_on_pillar_fault": null,
+  "wall_timeout_reached": true
+}

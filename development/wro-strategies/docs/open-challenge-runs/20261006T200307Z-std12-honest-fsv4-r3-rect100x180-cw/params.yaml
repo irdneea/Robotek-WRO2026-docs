@@ -1,0 +1,29 @@
+open_strategy:
+  ros__parameters:
+    approach_distance: 0.45
+    brake_decel: 1.5
+    brake_margin: 0.15
+    corner_arm_distance: 0.25
+    corner_lookahead: 0.25
+    corner_speed: 1.25
+    cruise_speed: 1.8
+    done_hold: 35.0
+    finish_distance: 0.6
+    finish_speed: 0.3
+    first_corner_speed: 0.95
+    follow_gyro_gain: 1.0
+    heading_kd: 0.2
+    outer_lane_distance: 0.15
+    telemetry_path: /home/user/Projects/Robotek/docs/open-challenge-runs/20261006T200307Z-std12-honest-fsv4-r3-rect100x180-cw/telemetry.csv
+    turn_exit_angle: 0.6
+    turn_front_axis: true
+    turn_front_carry_gain: 0.3
+    turn_front_command_model: true
+    turn_front_distance: 0.35
+    turn_front_heading_axis: true
+    turn_front_latency: 0.5
+    turn_front_yaw_accel: 20.0
+    turn_heading_gain: 0.8
+    turn_max_time: 8.0
+    turn_rate_damping: 0.4
+    turn_steer: 0.25

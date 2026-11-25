@@ -1,0 +1,60 @@
+--- camera_publisher.py.bak-antes-reopen	2026-10-09 19:06:56.380387780 -0400
++++ camera_publisher.py	2026-10-09 19:06:56.404387802 -0400
+@@ -27,6 +27,7 @@
+ import subprocess
+ 
+ import os
++import time
+ 
+ import cv2
+ import rclpy
+@@ -59,6 +60,12 @@
+         self.brightness = int(self.declare_parameter('brightness', 32).value)  # -64..64
+         self.jpeg_quality = int(self.declare_parameter('jpeg_quality', 50).value)  # 1..100
+ 
++        # Si la camara se desconecta el descriptor abierto queda muerto: tras reopen_after fallos
++        # seguidos se reabre sola, reintentando cada reopen_retry s (0 = desactivado).
++        self.reopen_after = int(self.declare_parameter('reopen_after', 30).value)
++        self.reopen_retry = float(self.declare_parameter('reopen_retry', 1.0).value)
++        self._ultimo_reintento = 0.0
++
+         self.cap = cv2.VideoCapture(self.device, cv2.CAP_V4L2)
+         if not self.cap.isOpened():
+             self.get_logger().error(f'No se pudo abrir la camara {self.device}')
+@@ -147,6 +154,27 @@
+         except Exception as e:                        # noqa: BLE001
+             self.get_logger().warn(f'No se pudo verificar los controles: {e}')
+ 
++    def _reabrir(self):
++        """Libera el descriptor muerto y reabre la camara por su ruta estable (by-id)."""
++        ahora = time.monotonic()
++        if ahora - self._ultimo_reintento < self.reopen_retry:
++            return
++        self._ultimo_reintento = ahora
++        self.cap.release()
++        if not os.path.exists(self.device):
++            self.get_logger().warn(
++                f'Reabrir: {self.device} aun no existe, reintento en {self.reopen_retry:g} s')
++            return
++        self.cap = cv2.VideoCapture(self.device, cv2.CAP_V4L2)
++        if not self.cap.isOpened():
++            self.get_logger().warn(
++                f'Reabrir: no se pudo abrir {self.device}, reintento en {self.reopen_retry:g} s')
++            return
++        self._configurar_captura()
++        self._configurar_imagen()
++        self.get_logger().info(
++            f'Camara {self.device} reabierta tras {self._fallos} fallos seguidos')
++
+     def _publicar(self):
+         ret, frame = self.cap.read()
+         if not ret:
+@@ -154,6 +182,8 @@
+             if self._fallos % 30 == 0:
+                 self.get_logger().warn(f'Fallo al capturar cuadro (x{self._fallos + 1})')
+             self._fallos += 1
++            if self.reopen_after > 0 and self._fallos >= self.reopen_after:
++                self._reabrir()
+             return
+         self._fallos = 0
+         msg = self.bridge.cv2_to_imgmsg(frame, encoding='bgr8')

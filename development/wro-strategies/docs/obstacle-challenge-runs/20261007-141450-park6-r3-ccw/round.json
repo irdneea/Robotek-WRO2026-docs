@@ -1,0 +1,45 @@
+{
+  "test_scope": "parking_only",
+  "name": "park6-r3-ccw",
+  "direction": "ccw",
+  "official_points": null,
+  "parking_lot": {
+    "x0": 0.19499999999999995,
+    "x1": 0.48,
+    "y0": -1.5,
+    "y1": -1.3
+  },
+  "completed": false,
+  "parking_plans": 19,
+  "limit_touched": false,
+  "wall_contacts": 0,
+  "min_limit_clearance_m": 0.06278837894038071,
+  "max_steer_degrees": 25.000000000000068,
+  "timings": null,
+  "points_estimated": 0,
+  "verdict": "not_parked",
+  "final_pose": {
+    "x": 0.3212155279913063,
+    "y": -1.1737507722360796,
+    "yaw_deg": -2.016503870243243
+  },
+  "fully_inside": false,
+  "partly_inside": false,
+  "parallel": true,
+  "wall_side_wheel_to_wall_m": {
+    "front": 0.2669411068949181,
+    "rear": 0.27151546455624875
+  },
+  "wheel_distance_difference_m": 0.00457435766133063,
+  "margins_m": {
+    "x0": 0.029303865836140808,
+    "x1": 0.061872809854170374,
+    "wall": 0.2669411068949181,
+    "lot_line": -0.18555734863679296
+  },
+  "launch_wall_seconds": 117.0520555973053,
+  "directory": "/home/user/Projects/Robotek/docs/obstacle-challenge-runs/20261007-141450-park6-r3-ccw",
+  "launch_exit_code": 0,
+  "stopped_on_pillar_fault": null,
+  "wall_timeout_reached": false
+}

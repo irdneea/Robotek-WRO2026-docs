@@ -1,0 +1,78 @@
+{
+  "run_dir": "/home/user/robotek-runs/20261008T021921Z-actuator-servo",
+  "wheelbase_m": 0.13,
+  "steps": [
+    {
+      "kind": "servo_banco",
+      "servo_deg": 10.0,
+      "servo_us": 1690.0,
+      "delay_vibracion_gyro_s": 0.056,
+      "delay_vibracion_acc_y_s": 0.076,
+      "nota": "aproximado: vibracion del chasis, no el angulo de las ruedas",
+      "step": "servo +10"
+    },
+    {
+      "kind": "servo_banco",
+      "servo_deg": 0.0,
+      "servo_us": 1500.0,
+      "delay_vibracion_gyro_s": 0.079,
+      "delay_vibracion_acc_y_s": 0.119,
+      "nota": "aproximado: vibracion del chasis, no el angulo de las ruedas",
+      "step": "servo +0"
+    },
+    {
+      "kind": "servo_banco",
+      "servo_deg": -10.0,
+      "servo_us": 1328.0,
+      "delay_vibracion_gyro_s": 0.062,
+      "delay_vibracion_acc_y_s": 0.164,
+      "nota": "aproximado: vibracion del chasis, no el angulo de las ruedas",
+      "step": "servo -10"
+    },
+    {
+      "kind": "servo_banco",
+      "servo_deg": 0.0,
+      "servo_us": 1500.0,
+      "delay_vibracion_gyro_s": 0.066,
+      "delay_vibracion_acc_y_s": null,
+      "nota": "aproximado: vibracion del chasis, no el angulo de las ruedas",
+      "step": "servo +0"
+    },
+    {
+      "kind": "servo_banco",
+      "servo_deg": 25.0,
+      "servo_us": 1974.0,
+      "delay_vibracion_gyro_s": 0.069,
+      "delay_vibracion_acc_y_s": 0.151,
+      "nota": "aproximado: vibracion del chasis, no el angulo de las ruedas",
+      "step": "servo +25"
+    },
+    {
+      "kind": "servo_banco",
+      "servo_deg": 0.0,
+      "servo_us": 1500.0,
+      "delay_vibracion_gyro_s": 0.052,
+      "delay_vibracion_acc_y_s": 0.093,
+      "nota": "aproximado: vibracion del chasis, no el angulo de las ruedas",
+      "step": "servo +0"
+    },
+    {
+      "kind": "servo_banco",
+      "servo_deg": -25.0,
+      "servo_us": 1069.0,
+      "delay_vibracion_gyro_s": 0.056,
+      "delay_vibracion_acc_y_s": 0.097,
+      "nota": "aproximado: vibracion del chasis, no el angulo de las ruedas",
+      "step": "servo -25"
+    },
+    {
+      "kind": "servo_banco",
+      "servo_deg": 0.0,
+      "servo_us": 1500.0,
+      "delay_vibracion_gyro_s": 0.059,
+      "delay_vibracion_acc_y_s": 0.1,
+      "nota": "aproximado: vibracion del chasis, no el angulo de las ruedas",
+      "step": "servo +0"
+    }
+  ]
+}

@@ -110,6 +110,7 @@ Everything is in this one README. The folders hold the material that a text cann
 | Folder | What is inside |
 | --- | --- |
 | [`src`](src) | **The code of the vehicle**, a ROS 2 workspace. [`src/README.md`](src/README.md) says what each package and each file does, in reading order |
+| [`development`](development/wro-strategies/README.md) | The development workspace: tools, car models, round records and notes |
 | [`tools`](tools) | Scripts to set up the Raspberry Pi, start a round, clean leftovers and calibrate the steering. [`tools/README.md`](tools/README.md) explains each one |
 | [`schemes`](schemes) | The diagrams: wiring, power, ROS nodes, the flow of each challenge and the outline of the car |
 | [`models`](models) | 3D-printed parts of the chassis and housings (STL and previews) |
@@ -510,6 +511,8 @@ The tyres are 61 mm in diameter, so one wheel turn moves the car 0.1916 m. The s
 | Wheels | [`models/vehicle_wheels`](models/vehicle_wheels) | Rims that take the silicone tyre |
 
 Each folder has an STL and a preview image. The kit parts (Ackermann linkage, hubs, motor, servo) are listed in the bill of materials in [chapter 4](#bill-of-materials). The assembly sequence is in the next section.
+
+**Two more printed parts, with editable sources.** The bracket of the rear distance sensor ([`models/rear_sensor_bracket`](models/rear_sensor_bracket)) and the holder of the push button ([`models/button_holder`](models/button_holder)) have STL and STEP files. A corner clip for the field walls is in [`models/field_wall_clip`](models/field_wall_clip). We have not checked these files against the parts fitted on version 12.
 
 **Photos of the parts.**
 
@@ -1184,9 +1187,9 @@ flowchart LR
 | 7 | **Corner lines scored by driving them in simulation** | Fixed geometry | The car's real minimum radius (about 0.38 m) and the signs at both ends change which line is feasible |
 | 8 | **Honest simulation** (LiDAR + gyro + camera only, with noise) | Simulation with exact odometry and sign poses | The real car does not use its encoder or know the pose of the signs; a strategy that used them would be validated on information the car does not have |
 | 9 | **Hard-coded pulses closed on sensors** for lot exit and parking | Fully automatic parking search | The automatic planned parking did not reproduce the real result in our lab; the coach's pulses left the car parallel in the lot on 12 Nov (parking-only test, CCW) |
-| 10 | **Steering watch** | Trust the commanded angle | 11 Nov 23:56 and 23:59: full lock with almost no turn caused two crashes in corner 6; replayed offline, the watch trips 3 s before the wall |
+| 10 | **Steering watch** | Trust the commanded angle | 11 Nov 23:56 and 23:59: full lock with almost no turn caused two crashes in corner 6; our development notes record that, replayed on the logged data, the watch trips 3 s before the wall (the replay script is not in this repository) |
 | 11 | **Rear distance sensor** | Reverse by time only | Reverses by time overshoot differently each time; the sensor stops them 20 mm from the lot limit |
-| 12 | **Keep the 12 Nov version for the final** | The later experimental branch (planned line from the car, new vision) | The later changes were not validated in complete rounds on the track; the 12 Nov version has complete validated rounds. The later work is kept in a separate branch for after the final |
+| 12 | **Keep the 12 Nov version for the final** | The later experimental branch (planned line from the car, new vision) | The later changes were not validated in complete rounds on the track; the 12 Nov version has complete validated rounds. The later work is kept outside this repository for after the final |
 
 ### Iteration cycles
 
@@ -1309,7 +1312,7 @@ The real speed is limited by `motor_max_rps` of the launch, not by the window. F
 
 * `debug:=true` in the launch: the same terminal reports the states, the direction, each corner and lap and the lines crossed.
 * `python3 tools/open_monitor.py` in a second terminal on the Pi: twice a second the state, what the camera sees, the LiDAR, the gyroscope and the steering and speed the strategy sends. It also saves the images of the direction decision.
-* RViz on your computer shows the scan, the signs and the planned line.
+* For RViz, while somebody is watching, the Obstacle publishes `/obstacle/debug_image/compressed` (the camera frame with the red and green blobs, the state and the steering) and `/obstacle/signs` (the paired signs as cylinders and the steering as an arrow). The layouts used during development are in [`development/wro-strategies`](development/wro-strategies) (`docs/robot-real-pi/*.rviz` and `src/robotek_description/rviz`).
 
 ### Try the simulation
 
@@ -1341,6 +1344,10 @@ python3 -m robotek_evaluation.obstacle_lab --strategy robotek_obstacle_v3.strate
 
 On our computer that command printed `obstacle-0-ccw  pts=40/40  t=111.3  VALID`, that is, a valid round of 111.3 simulated seconds. Use `--layouts 0-4 --parking` for a batch with the parking lot.
 
+### Development workspace and evidence
+
+[`development/wro-strategies`](development/wro-strategies/README.md) holds the tools used to develop and measure the car (batch labs, round summaries and comparisons, the corner-table generator, bench tests), the car models `real_v1` to `v4`, the simulator round records, the tests on the real car and the design notes. They are mostly in Spanish, and its README says what was removed and what we could repeat.
+
 ### Tests without the car
 
 ```bash
@@ -1367,7 +1374,7 @@ Every round on the car writes a folder `~/runs/<date>-obstacle-v3/` with `params
 | 12 Nov 01:22 | Lot exit, three laps and the partial park | **105.9 s** to DONE; laps 34.3 / 26.8 / 25.1 s; 19 of 19 signs passed on the right side; partial park at 29°; five front recovers on the north side | No official total |
 | 12 Nov 02:39 | Parking-only test, CCW | 20.3 s, parallel in the lot (the coach) | CW: one attempt ended about 20 cm past the lot, another started too early and hit the left limit |
 
-Simulation lab, 50 fields × 2 directions × 2 noise seeds, `real_v4` car: **195 of 200** valid rounds without parking (mean 123.5 s) and **127 of 200** with parking (mean 159.5 s).
+Simulation lab, 50 fields × 2 directions × 2 noise seeds, `real_v4` car: **195 of 200** valid rounds without parking (mean 123.5 s) and **127 of 200** with parking (mean 159.5 s). These figures come from the lab of the [development workspace](development/wro-strategies/README.md), not from the lab in `src`, which does not have the `real_v4` car model. Repeated there, we got 195/200 (123.5 s) without parking and 128/200 (159.3 s) with parking.
 
 ### Test plan before the final
 
@@ -1443,7 +1450,7 @@ The story of the engineering work, in order, with the reason for each change. Th
 | 9 Nov 2026 | Camera 0.35–0.43 s late 48 times in one round | Camera age limit 0.8 s |
 | 11 Nov 2026 | First rounds with 1:1 gears and recording; two crashes in corner 6 | Analysis of commanded steering against gyro: the servo did not follow; `steer_watch` added |
 | 12 Nov 2026 | Complete rounds: **107.1 s**, then **105.9 s** with lot exit and partial park; parking-only test parallel in the lot; the camera stalled once at 14.5 s | `CAMERA_LOST`, front recover only when full lock away still hits, rear sensor stops reverses; the coach's finishing pulses saved as the validated command |
-| 18 Nov 2026 | Steering faults again; the servo mounting was found wrong on the car | Re-mounted; faults reduced. A new set of vision and planning experiments was tried in a separate branch |
+| 18 Nov 2026 | Steering faults again; the servo mounting was found wrong on the car | Re-mounted; faults reduced. A new set of vision and planning experiments was tried outside this repository |
 | 23 Nov 2026 | Decision for the final | Keep the validated 12 Nov Obstacle; keep the experiments in a branch; update the documentation to the real car |
 | 24 Nov 2026 | Documentation and code reorganised for the international final | Single README, diagrams redrawn for version 12; see the commit history |
 

@@ -1,0 +1,17 @@
+t,step,phase,servo_deg,servo_us,motor_pct
+1791427373.8691,inicio,idle,0.0,1500,0.0
+1791427374.8890,recto antes de +10,turn_pre,0.0,1500,30.0
+1791427375.0090,giro +10,turn,10.0,1690,30.0
+1791427375.1290,corte 0.25 s,turn,10.0,1690,0.0
+1791427375.1490,giro +10 sin motor,turn_coast,10.0,1690,0.0
+1791427376.6490,centrar,turn_post,0.0,1500,0.0
+1791427377.6690,recto antes de -10,turn_pre,0.0,1500,30.0
+1791427377.8093,giro -10,turn,-10.0,1328,30.0
+1791427377.9091,corte 0.25 s,turn,-10.0,1328,0.0
+1791427377.9490,giro -10 sin motor,turn_coast,-10.0,1328,0.0
+1791427379.4490,centrar,turn_post,0.0,1500,0.0
+1791427380.4690,recto antes de +25,turn_pre,0.0,1500,30.0
+1791427380.5890,giro +25,turn,25.0,1974,30.0
+1791427380.7090,corte 0.25 s,turn,25.0,1974,0.0
+1791427380.7290,giro +25 sin motor,turn_coast,25.0,1974,0.0
+1791427382.2291,centrar,turn_post,0.0,1500,0.0

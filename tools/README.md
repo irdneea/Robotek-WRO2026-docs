@@ -18,6 +18,8 @@ Measuring and debugging:
 | --- | --- |
 | `steer_calibration.py` | Measures the real wheel angle for each servo pulse by driving circles on the floor and reading the gyroscope. The result goes into the wheel table of the car's configuration |
 | `open_monitor.py` | Twice a second prints what the Open strategy sees and commands (state, camera line votes, LiDAR distances, gyro, speed and steering). Run it in a second terminal while a round is going |
+| `open-debug-run.sh` | One Open test without the button that records everything: terminal log, rosbag, CPU use and the telemetry |
+| `plot-crash.py` | Plots the file written by the Open crash detector and prints a checklist of possible causes. Needs matplotlib for the figure (`--text` prints only the checklist) |
 | `lidar-raw-check.py` | Reads the LD19 directly from its serial port, without the driver, and tells where scans are lost (bad checksums, driver loop timing) |
 | `keyboard_racing.py`, `.sh`, `.ps1` | Drive the car from the keyboard of a laptop, to move it around or test the steering. The `.sh` is for macOS and the `.ps1` for Windows |
 
@@ -29,5 +31,7 @@ Simulation and setup helpers:
 | `macos_env.sh` | Prepares a macOS terminal (RoboStack) to build the workspace and use RViz against the car |
 | `make_mat_texture.py` | Draws the texture of the game mat that the simulation uses |
 | `99-robotek.rules` | udev rules: stable names `/dev/rrc_lite` and `/dev/ldlidar` for the board and the LiDAR, so a different USB order never swaps them. `setup-pi.sh` installs it |
+
+The batch labs, comparison tools and bench tests used during development are in [`../development/wro-strategies`](../development/wro-strategies).
 
 All the scripts can be run from the root of the repository (`bash tools/<name>`). Read the comment at the top of each file: it has the exact usage.

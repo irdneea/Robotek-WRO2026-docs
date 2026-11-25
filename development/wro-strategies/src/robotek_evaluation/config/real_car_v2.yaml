@@ -1,0 +1,70 @@
+# The real Robotek car as it ran the Open v5 on 4 nov 2026 (open_lab --car real_v2 only; Gazebo
+# real_car:=true keeps real_car_v1.yaml). Evidence: docs/robot-real-pi/open-runs/20261104/ (tests 5-11),
+# robotek-learn src/robotek_hardware/config/robot.yaml (base_adapter of that day).
+sim_actuator_model:
+  ros__parameters:
+    # Bicycle model with the real wheelbase (vehicle.WHEELBASE; the Gazebo model keeps 0.13 m).
+    wheelbase: 0.11883
+    # Servo -> yaw rate, system identification of tests 11 and 13 (servo /rrc/acker_servo/set_state against
+    # the gyro): 10/50/90 % of the full-lock yaw rate at +0.12-0.15 / +0.19-0.21 / +0.29-0.30 s after the
+    # command, back to 50 % +0.15-0.18 s after a release. These values give 0.115 / 0.195 / 0.285 and 0.185 s.
+    steer_delay: 0.10
+    steer_rate: 1.8
+    steer_tau: 0.05
+    # Full lock: the strategy asks 25 deg and base_adapter sends servo 1793 us (17.6 deg nominal), but the
+    # measured yaw rate is 1.71 rad/s at 0.57 m/s (test 11) and 1.98 at 0.70 (test 13): radius 0.33-0.35 m,
+    # omega / (v tan 17.6 deg) = 9.5 and 8.9 1/m (kinematic 1/0.119 = 8.4, Gazebo model 1/0.13 = 7.7).
+    # Modelled as an effective 19.1 deg of wheel with the real wheelbase (curvature 2.92 1/m, radius 0.34 m);
+    # robotek-learn's floor-radius method also gave 19-21 deg for this servo command.
+    steer_deadband: 0.0
+    steer_gain: 1.0
+    steer_limit: 0.3335
+    # base_adapter ramps the m/s command (accel_limit 1.0, decel_limit 0.6) and turns it into board rps
+    # with motor_rps_per_mps 4.8, capped by motor_max_rps (2.5 in tests 7-11): 2.5 / 4.8 = 0.521 m/s.
+    # Other caps: --car-param drive_command_limit=0.833 (4 rps) or 1.25 (6 rps).
+    accel_max: 1.0
+    decel_max: 0.6
+    drive_command_limit: 0.521
+    drive_deadband: 0.005
+    # Board rps -> floor speed with motor_type 2 (RRC Lite, JGB27 loop, 310 motor): 1 rps 0.209 m/s
+    # (1 nov), 2.5 rps ~0.45-0.5 m/s (tests 7-8) and 0.55-0.6 m/s (test 11, front wall 1.34 -> 0.94 m in
+    # 0.69 s), 4 rps 0.72-0.81 and 6 rps 0.65-0.72 m/s (tests 5-6): the motor saturates near 0.75 m/s.
+    # Points: the command in m/s before the cap (rps / 4.8) -> real speed.
+    # Low commands (Obstacle v3 on the car, 4 nov 2026, round 2 of docs/robot-real-pi/obstacle-runs/20261104/): at full
+    # lock the gyro read 1.0-1.2 rad/s with 0.15-0.30 m/s asked (0.7-1.4 rps), i.e. 0.35-0.40 m/s with the measured
+    # 0.34 m radius: the board's speed loop does not crawl, once the car moves it runs at ~0.35-0.4 m/s. (Round 1: at
+    # 0.30 m/s the car did not move for 19 s; the lab does not model that stall.) The Open never asked for less than
+    # ~0.4 m/s before its finish. With the old 0.208 -> 0.209 point the lab passed the start-straight lane change of
+    # round 2 with 12 cm to the island; with these points the margin is 4-8 cm and 0.2 s of servo delay touches it,
+    # as the car did.
+    speed_table_cmd: [0.1, 0.15, 0.2, 0.3, 0.521, 0.833, 1.25]
+    speed_table_real: [0.3, 0.33, 0.36, 0.38, 0.55, 0.76, 0.75]
+    # Start of test 11: motion command at 0.37 s, the front wall starts closing at ~0.8 s and the car is
+    # at ~0.55 m/s by ~2.0 s (board speed loop and 310 motor under load).
+    drive_delay: 0.3
+    drive_tau: 0.4
+# Lab-only behaviour of the car's computer and motor (not part of sim_actuator_model).
+lab:
+  # The v5 node integrated the gyro with a fixed dt = 1/50 s (until 9ce7d67); its timer ran at 38.8 Hz on the Pi
+  # in test 11 (38.6 Hz in test 9, 48.6 Hz in test 6, from /open/steer in the bags). The mission's yaw
+  # then reads ~78 % of the real turn: in test 11 the gyro samples add up to ~118 deg over corner 1,
+  # the LiDAR walls give ~121 deg, the mission's yaw 91 deg; the car left the corner pointing ~30 deg
+  # into the island (test 13, 37.9 Hz: ~33 deg). control_hz is the real timer rate.
+  control_hz: 38.8
+  # true: the strategy integrates the real time between its ticks, as the v5 node since 9ce7d67 (4 nov
+  # 2026). false: the fixed dt = 1/50 s of the node that ran tests 5-13 (reproduces their island hits).
+  measured_dt: true
+  # The real LD19 delivers each 10 Hz scan once (Gazebo: three copies of every stamp).
+  scan_copies: 1
+  # Optional motor stall: with |wheel angle| >= stall_steer (rad) the motor gives no speed (tests 5-10:
+  # at 2.5 rps the car sometimes did not move at full lock on the floor). 0 = off.
+  stall_steer: 0.0
+  # Brake (robotek-learn base_adapter brake_reset, 4 nov 2026): with the 310 motor the board did not hold 0, so the
+  # car resets the board when it stops after moving. Through the adapter at ~0.55 m/s the car stopped ~17 cm after
+  # the order: ~0.1 s until the reset, then ~1.4 m/s^2. 0 = off (the motor model's own slow stop).
+  brake_delay: 0.1
+  brake_decel: 1.4
+  # The reset also cuts the board's IMU: no gyro until the board is set up again (~2.5 s after the reset; the IMU came
+  # back 2.6 s after an RTS pulse on the bench). Only obstacle_lab uses it (the v3 stops mid-round; the Open only at
+  # the end).
+  brake_imu_gap: 2.5

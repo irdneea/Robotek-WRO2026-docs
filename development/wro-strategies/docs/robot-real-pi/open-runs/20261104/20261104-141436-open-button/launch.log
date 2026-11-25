@@ -1,0 +1,61 @@
+Nov 04 14:14:20 user-desktop systemd[1394]: Started robotek-car.service - robotek car launch at boot (robotek-learn: car.launch.py, waits for the board button).
+Nov 04 14:14:28 user-desktop bash[1455]: robotek-car: ros2 launch robotek_course car.launch.py strategy:=robotek_open executable:=open_v5 motor_max_rps:=6
+Nov 04 14:14:33 user-desktop bash[1455]: [INFO] [launch]: All log files can be found below /home/user/.ros/log/2026-11-04-14-14-33-241287-user-desktop-1455
+Nov 04 14:14:33 user-desktop bash[1455]: [INFO] [launch]: Default logging verbosity is set to INFO
+Nov 04 14:14:34 user-desktop bash[1455]: [INFO] [rrc_driver-1]: process started with pid [2069]
+Nov 04 14:14:34 user-desktop bash[1455]: [INFO] [ldlidar_stl_ros2_node-2]: process started with pid [2070]
+Nov 04 14:14:34 user-desktop bash[1455]: [INFO] [static_transform_publisher-3]: process started with pid [2071]
+Nov 04 14:14:34 user-desktop bash[1455]: [INFO] [camera_publisher-4]: process started with pid [2072]
+Nov 04 14:14:34 user-desktop bash[1455]: [INFO] [scan_adapter-5]: process started with pid [2073]
+Nov 04 14:14:34 user-desktop bash[1455]: [INFO] [imu_adapter-6]: process started with pid [2074]
+Nov 04 14:14:34 user-desktop bash[1455]: [INFO] [motor_driver-7]: process started with pid [2075]
+Nov 04 14:14:34 user-desktop bash[1455]: [INFO] [base_adapter-8]: process started with pid [2076]
+Nov 04 14:14:34 user-desktop bash[1455]: [INFO] [start_button-9]: process started with pid [2078]
+Nov 04 14:14:34 user-desktop bash[1455]: [INFO] [battery_guard-10]: process started with pid [2079]
+Nov 04 14:14:34 user-desktop bash[1455]: [INFO] [status_leds-11]: process started with pid [2080]
+Nov 04 14:14:34 user-desktop bash[1455]: [INFO] [robot_state_publisher-12]: process started with pid [2081]
+Nov 04 14:14:34 user-desktop bash[1455]: [INFO] [open_v5-13]: process started with pid [2082]
+Nov 04 14:14:34 user-desktop bash[1455]: [static_transform_publisher-3] [WARN] [1793819674.580466635] []: Old-style arguments are deprecated; see --help for new-style arguments
+Nov 04 14:14:34 user-desktop bash[1455]: [static_transform_publisher-3] [INFO] [1793819674.946290505] [base_link_to_base_laser_ld19]: Spinning until stopped - publishing transform
+Nov 04 14:14:34 user-desktop bash[1455]: [static_transform_publisher-3] translation: ('0.000000', '0.000000', '0.180000')
+Nov 04 14:14:34 user-desktop bash[1455]: [static_transform_publisher-3] rotation: ('0.000000', '0.000000', '0.000000', '1.000000')
+Nov 04 14:14:34 user-desktop bash[1455]: [static_transform_publisher-3] from 'base_link' to 'base_laser'
+Nov 04 14:14:34 user-desktop bash[1455]: [ldlidar_stl_ros2_node-2] [INFO] [1793819674.991503708] [LD19]: LDLiDAR SDK Pack Version is: v3.0.3
+Nov 04 14:14:34 user-desktop bash[1455]: [ldlidar_stl_ros2_node-2] [INFO] [1793819674.991696968] [LD19]: <product_name>: LDLiDAR_LD19
+Nov 04 14:14:34 user-desktop bash[1455]: [ldlidar_stl_ros2_node-2] [INFO] [1793819674.991729097] [LD19]: <topic_name>: scan
+Nov 04 14:14:34 user-desktop bash[1455]: [ldlidar_stl_ros2_node-2] [INFO] [1793819674.991750542] [LD19]: <frame_id>: base_laser
+Nov 04 14:14:34 user-desktop bash[1455]: [ldlidar_stl_ros2_node-2] [INFO] [1793819674.991765708] [LD19]: <port_name>: /dev/ttyUSB0
+Nov 04 14:14:34 user-desktop bash[1455]: [ldlidar_stl_ros2_node-2] [INFO] [1793819674.991775227] [LD19]: <port_baudrate>: 230400
+Nov 04 14:14:34 user-desktop bash[1455]: [ldlidar_stl_ros2_node-2] [INFO] [1793819674.991784301] [LD19]: <laser_scan_dir>: Counterclockwise
+Nov 04 14:14:34 user-desktop bash[1455]: [ldlidar_stl_ros2_node-2] [INFO] [1793819674.992105912] [LD19]: <enable_angle_crop_func>: false
+Nov 04 14:14:35 user-desktop bash[1455]: [ldlidar_stl_ros2_node-2] [INFO] [1793819674.992131949] [LD19]: <angle_crop_min>: 135.000000
+Nov 04 14:14:35 user-desktop bash[1455]: [ldlidar_stl_ros2_node-2] [INFO] [1793819674.992153097] [LD19]: <angle_crop_max>: 225.000000
+Nov 04 14:14:35 user-desktop bash[1455]: [ldlidar_stl_ros2_node-2] [INFO] [1793819675.024503394] [LD19]: ldlidar node start is success
+Nov 04 14:14:35 user-desktop bash[1455]: [ldlidar_stl_ros2_node-2] [INFO] [1793819675.039575375] [LD19]: ldlidar communication is normal.
+Nov 04 14:14:35 user-desktop bash[1455]: [ldlidar_stl_ros2_node-2] [INFO] [1793819675.062019190] [LD19]: Publish topic message:ldlidar scan data.
+Nov 04 14:14:35 user-desktop bash[1455]: [robot_state_publisher-12] [INFO] [1793819675.062853968] [robot_state_publisher]: Robot initialized
+Nov 04 14:14:38 user-desktop bash[1455]: [imu_adapter-6] [INFO] [1793819678.609736743] [imu_adapter]: IMU axes forward=-x left=+z up=+y
+Nov 04 14:14:39 user-desktop bash[1455]: [status_leds-11] [INFO] [1793819679.261624632] [status_leds]: Status RGBs at level 2/255.
+Nov 04 14:14:39 user-desktop bash[1455]: [ldlidar_stl_ros2_node-2] [LDS][INFO][1793819675.24354227][Actual BaudRate reported:230400]
+Nov 04 14:14:39 user-desktop bash[1455]: [motor_driver-7] [INFO] [1793819679.614231317] [tb6612fng_motor]: TB6612FNG ready (forward and reverse).
+Nov 04 14:14:39 user-desktop bash[1455]: [start_button-9] [INFO] [1793819679.979596076] [start_button]: Press the button to start; press it again to stop.
+Nov 04 14:14:40 user-desktop bash[1455]: [battery_guard-10] [INFO] [1793819680.368529224] [battery_guard]: Battery guard: red blinking below 6.80 V (5 consecutive readings); it does not stop the car.
+Nov 04 14:14:40 user-desktop bash[1455]: [base_adapter-8] [INFO] [1793819680.393838409] [base_adapter]: Drive motor: RRC Lite port M1, 4.80 rps per m/s.
+Nov 04 14:14:40 user-desktop bash[1455]: [base_adapter-8] [INFO] [1793819680.430706483] [base_adapter]: Wall guard: slows down from 0.30 m, 0 at 0.10 m (+-15 deg).
+Nov 04 14:14:41 user-desktop bash[1455]: [rrc_driver-1] [INFO] [1793819681.082479131] [rrc_driver]: RRC Lite board on /dev/rrc_lite
+Nov 04 14:14:41 user-desktop bash[1455]: [rrc_driver-1] [INFO] [1793819681.184626649] [rrc_driver]: Settings servo 1 - Offset 0
+Nov 04 14:14:41 user-desktop bash[1455]: [rrc_driver-1] [INFO] [1793819681.186629223] [rrc_driver]: Settings servo 2 - Offset 0
+Nov 04 14:14:41 user-desktop bash[1455]: [rrc_driver-1] [INFO] [1793819681.190171242] [rrc_driver]: Settings servo 3 - Offset 0
+Nov 04 14:14:41 user-desktop bash[1455]: [rrc_driver-1] [INFO] [1793819681.192453038] [rrc_driver]: Settings servo 4 - Offset 0
+Nov 04 14:14:41 user-desktop bash[1455]: [rrc_driver-1] [INFO] [1793819681.476314705] [rrc_driver]: start
+Nov 04 14:14:42 user-desktop bash[1455]: [camera_publisher-4] [INFO] [1793819682.673220482] [camera_publisher]: Controles -> white_balance_automatic: 1 | brightness: 0 | auto_exposure: 3 (Aperture Priority Mode)
+Nov 04 14:14:42 user-desktop bash[1455]: [camera_publisher-4] [INFO] [1793819682.674469871] [camera_publisher]: Camara /dev/v4l/by-id/usb-icSpring_icspring_camera-video-index0 640x480 @ 15 fps, modo=auto
+Nov 04 14:14:42 user-desktop bash[1455]: [open_v5-13] [INFO] [1793819682.749366445] [strategy]: Open v5 | direction=auto cruise=1.28 m/s | telemetry /home/user/runs/20261104-141442-open-v5/telemetry.csv
+Nov 04 14:14:42 user-desktop bash[1455]: [open_v5-13] [WARN] [1793819682.815916278] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+Nov 04 14:15:06 user-desktop bash[1455]: [open_v5-13] [WARN] [1793819706.252301319] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+Nov 04 14:15:19 user-desktop bash[1455]: [start_button-9] [INFO] [1793819719.334911756] [start_button]: Start.
+Nov 04 14:15:49 user-desktop bash[1455]: [start_button-9] [WARN] [1793819749.933887275] [start_button]: Stop (button pressed again).
+Nov 04 14:15:49 user-desktop bash[1455]: [base_adapter-8] [WARN] [1793819749.939275393] [base_adapter]: Operator stop: motor held at 0.
+Nov 04 14:15:49 user-desktop bash[1455]: [motor_driver-7] [WARN] [1793819749.940594972] [tb6612fng_motor]: Operator stop: ignoring motor commands.
+Nov 04 14:16:09 user-desktop bash[1455]: [open_v5-13] [WARN] [1793819769.958665504] [strategy]: Stale LiDAR/IMU: braking until sensors recover.
+Nov 04 14:16:11 user-desktop bash[1455]: [open_v5-13] [WARN] [1793819771.155420593] [strategy]: Stale LiDAR/IMU: braking until sensors recover.

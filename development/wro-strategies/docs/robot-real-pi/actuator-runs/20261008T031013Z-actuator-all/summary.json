@@ -1,0 +1,153 @@
+{
+  "run_dir": "/home/user/robotek-runs/20261008T031013Z-actuator-all",
+  "wheelbase_m": 0.13,
+  "steps": [
+    {
+      "kind": "servo_banco",
+      "servo_deg": 10.0,
+      "servo_us": 1690.0,
+      "delay_vibracion_gyro_s": 0.075,
+      "delay_vibracion_acc_y_s": null,
+      "nota": "aproximado: vibracion del chasis, no el angulo de las ruedas",
+      "step": "servo +10"
+    },
+    {
+      "kind": "servo_banco",
+      "servo_deg": 0.0,
+      "servo_us": 1500.0,
+      "delay_vibracion_gyro_s": 0.04,
+      "delay_vibracion_acc_y_s": 0.102,
+      "nota": "aproximado: vibracion del chasis, no el angulo de las ruedas",
+      "step": "servo +0"
+    },
+    {
+      "kind": "servo_banco",
+      "servo_deg": -10.0,
+      "servo_us": 1328.0,
+      "delay_vibracion_gyro_s": 0.047,
+      "delay_vibracion_acc_y_s": null,
+      "nota": "aproximado: vibracion del chasis, no el angulo de las ruedas",
+      "step": "servo -10"
+    },
+    {
+      "kind": "servo_banco",
+      "servo_deg": 0.0,
+      "servo_us": 1500.0,
+      "delay_vibracion_gyro_s": 0.053,
+      "delay_vibracion_acc_y_s": 0.094,
+      "nota": "aproximado: vibracion del chasis, no el angulo de las ruedas",
+      "step": "servo +0"
+    },
+    {
+      "kind": "servo_banco",
+      "servo_deg": 25.0,
+      "servo_us": 1974.0,
+      "delay_vibracion_gyro_s": 0.039,
+      "delay_vibracion_acc_y_s": 0.204,
+      "nota": "aproximado: vibracion del chasis, no el angulo de las ruedas",
+      "step": "servo +25"
+    },
+    {
+      "kind": "servo_banco",
+      "servo_deg": 0.0,
+      "servo_us": 1500.0,
+      "delay_vibracion_gyro_s": 0.046,
+      "delay_vibracion_acc_y_s": 0.066,
+      "nota": "aproximado: vibracion del chasis, no el angulo de las ruedas",
+      "step": "servo +0"
+    },
+    {
+      "kind": "servo_banco",
+      "servo_deg": -25.0,
+      "servo_us": 1069.0,
+      "delay_vibracion_gyro_s": 0.093,
+      "delay_vibracion_acc_y_s": null,
+      "nota": "aproximado: vibracion del chasis, no el angulo de las ruedas",
+      "step": "servo -25"
+    },
+    {
+      "kind": "servo_banco",
+      "servo_deg": 0.0,
+      "servo_us": 1500.0,
+      "delay_vibracion_gyro_s": 0.038,
+      "delay_vibracion_acc_y_s": 0.099,
+      "nota": "aproximado: vibracion del chasis, no el angulo de las ruedas",
+      "step": "servo +0"
+    },
+    {
+      "kind": "motor",
+      "motor_pct": 20.0,
+      "pulso_s": 1.0,
+      "delay_aceleracion_s": 0.085,
+      "delay_movimiento_lidar_s": 0.354,
+      "velocidad_max_imu_mps": 0.268,
+      "velocidad_max_lidar_mps": 0.22,
+      "velocidad_estable_mps": 0.201,
+      "se_mueve": true,
+      "tiempo_hasta_parar_s": 0.254,
+      "distancia_total_m": 0.166,
+      "cabeceo_max_rad_s": 0.578,
+      "az_min_m_s2": 8.4,
+      "step": "motor 20%"
+    },
+    {
+      "kind": "giro",
+      "servo_deg": 10.0,
+      "motor_pct": 20.0,
+      "yaw_rate_estable_rad_s": 0.107,
+      "velocidad_recta_mps": 0.201,
+      "angulo_con_vel_recta_deg": 3.9,
+      "giro_total_deg": 5.5,
+      "distancia_m": 0.135,
+      "angulo_por_rumbo_deg": 5.3,
+      "velocidad_max_mps": 0.169,
+      "angulo_instantaneo_deg": 5.5,
+      "signo_ok": true,
+      "step": "giro +10"
+    },
+    {
+      "kind": "giro",
+      "servo_deg": -10.0,
+      "motor_pct": 20.0,
+      "yaw_rate_estable_rad_s": -0.126,
+      "velocidad_recta_mps": 0.201,
+      "angulo_con_vel_recta_deg": -4.7,
+      "giro_total_deg": -7.5,
+      "distancia_m": 0.134,
+      "angulo_por_rumbo_deg": -7.2,
+      "velocidad_max_mps": 0.17,
+      "angulo_instantaneo_deg": -7.3,
+      "signo_ok": true,
+      "step": "giro -10"
+    },
+    {
+      "kind": "giro",
+      "servo_deg": 25.0,
+      "motor_pct": 20.0,
+      "yaw_rate_estable_rad_s": 0.531,
+      "velocidad_recta_mps": 0.201,
+      "angulo_con_vel_recta_deg": 18.9,
+      "giro_total_deg": 25.0,
+      "distancia_m": -0.033,
+      "velocidad_max_mps": 0.119,
+      "angulo_instantaneo_deg": 31.3,
+      "signo_ok": true,
+      "step": "giro +25"
+    },
+    {
+      "kind": "giro",
+      "servo_deg": -25.0,
+      "motor_pct": 20.0,
+      "yaw_rate_estable_rad_s": -0.436,
+      "velocidad_recta_mps": 0.201,
+      "angulo_con_vel_recta_deg": -15.7,
+      "giro_total_deg": -22.6,
+      "distancia_m": 0.043,
+      "angulo_por_rumbo_deg": -50.3,
+      "velocidad_max_mps": 0.155,
+      "angulo_instantaneo_deg": -22.3,
+      "signo_ok": true,
+      "step": "giro -25"
+    }
+  ]
+}

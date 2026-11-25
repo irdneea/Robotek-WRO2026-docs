@@ -1,0 +1,39 @@
+{"event": "state", "wall_time": 1794469157.0820012, "t": null, "state": "WAIT_START"}
+{"event": "start", "wall_time": 1794469163.447955, "t": 0.0}
+{"event": "state", "wall_time": 1794469163.4538376, "t": 0.006079435348510742, "state": "SETUP"}
+{"event": "park_state", "wall_time": 1794469166.9724693, "t": 3.5247321128845215, "state": "PARK_APPROACH", "pose": [-0.31919313352513157, -1.060024648947453, 0.09981720682196998]}
+{"event": "state", "wall_time": 1794469166.9737399, "t": 3.526010274887085, "state": "PARK"}
+{"event": "park_state", "wall_time": 1794469170.2657778, "t": 6.818039417266846, "state": "PARK_BACK", "pose": [0.5235664963095004, -1.1813632507844036, -0.025654137156064922]}
+{"event": "section", "wall_time": 1794469170.2665544, "t": 6.81817102432251, "section": 1, "section_name": "corner 1", "previous": "straight 1", "previous_s": 3.3069655895233154, "progress": 1.022010167464651}
+{"event": "corner", "wall_time": 1794469170.2666194, "t": 6.81817102432251, "corner": 1, "progress": 1.022010167464651}
+{"event": "park_state", "wall_time": 1794469171.0822923, "t": 7.634535551071167, "state": "PARK_PLAN", "pose": [0.497283802596306, -1.1917390691366179, -0.008272609548249942]}
+{"event": "park_state", "wall_time": 1794469171.3961804, "t": 7.948437213897705, "state": "PARK_STEER", "pose": [0.4261294097625079, -1.1969743547993765, -0.03500282444206626]}
+{"event": "park", "wall_time": 1794469171.397026, "t": 7.949295520782471, "detail": {"event": "park_fixed", "pose": [0.4261294097625079, -1.1969743547993765, -0.03500282444206626], "entry": 0.76, "ahead": 0.2, "fix": [0.0, 0.0, 0.0], "seen": [0, 0]}}
+{"event": "park_state", "wall_time": 1794469171.6117444, "t": 8.1639986038208, "state": "PARK_MOVE", "pose": [0.40464305290206426, -1.1955858568405882, -0.04271287504707208]}
+{"event": "park_state", "wall_time": 1794469171.6305492, "t": 8.182810306549072, "state": "PARK_SETTLE", "pose": [0.40464305290206426, -1.1955858568405882, -0.042704219558968]}
+{"event": "park_state", "wall_time": 1794469171.9333107, "t": 8.485566854476929, "state": "PARK_MOVE", "pose": [0.39965462784114625, -1.19403142461059, -0.046694375279479894]}
+{"event": "park_state", "wall_time": 1794469172.286852, "t": 8.839112997055054, "state": "PARK_SETTLE", "pose": [0.44331089482234964, -1.1943875671459274, -0.05733772505360142]}
+{"event": "park_state", "wall_time": 1794469172.5931652, "t": 9.145417213439941, "state": "PARK_STEER", "pose": [0.5224095547030161, -1.1996602839879866, -0.06672567747314104]}
+{"event": "park_state", "wall_time": 1794469173.0552852, "t": 9.607542514801025, "state": "PARK_MOVE", "pose": [0.5618908554880666, -1.2038172412081773, -0.06968651460673125]}
+{"event": "park_state", "wall_time": 1794469173.5711544, "t": 10.12340497970581, "state": "PARK_SETTLE", "pose": [0.46627566885932004, -1.2170477888216236, 0.18898097429779523]}
+{"event": "park_state", "wall_time": 1794469173.8974366, "t": 10.449692726135254, "state": "PARK_STEER", "pose": [0.39999177675188957, -1.2100717243090178, 0.3794591041332982]}
+{"event": "park_state", "wall_time": 1794469174.3711557, "t": 10.923400163650513, "state": "PARK_MOVE", "pose": [0.38941063229721606, -1.197465734214068, 0.38111783900631063]}
+{"event": "park_state", "wall_time": 1794469174.4066367, "t": 10.95889663696289, "state": "PARK_SETTLE", "pose": [0.38822326926590567, -1.1972632082462862, 0.3825165591319417]}
+{"event": "park_state", "wall_time": 1794469174.7113662, "t": 11.263619422912598, "state": "PARK_STEER", "pose": [0.3877231035027091, -1.1964052992258822, 0.3800268853456669]}
+{"event": "park_state", "wall_time": 1794469174.9115202, "t": 11.463777780532837, "state": "PARK_MOVE", "pose": [0.38777514522072265, -1.1969383243980034, 0.3816322261949343]}
+{"event": "park_state", "wall_time": 1794469174.9305556, "t": 11.48281455039978, "state": "PARK_SETTLE", "pose": [0.38777514522072265, -1.1969383243980034, 0.38164685085043376]}
+{"event": "park_state", "wall_time": 1794469175.254906, "t": 11.8071608543396, "state": "PARK_PULSES", "pose": [0.3879246444029305, -1.1961255588903326, 0.3811212824440459]}
+{"event": "park", "wall_time": 1794469175.256707, "t": 11.808967351913452, "detail": {"event": "park_finish_pulses", "pose": [0.3879246444029305, -1.1961255588903326, 0.3811212824440459], "steps": "C+0.20 R-0.40 L-0.50 R+0.05 L-0.15 R+0.1 L-0.1"}}
+{"event": "park", "wall_time": 1794469175.9723837, "t": 12.524633884429932, "detail": {"event": "park_pulse", "pulse": "1_CFWD", "heading": -0.0, "rear_mm": null, "braked": false, "pose": [0.389, -1.196, 0.38]}}
+{"event": "park", "wall_time": 1794469177.2916691, "t": 13.843924522399902, "detail": {"event": "park_pulse", "pulse": "2_RBACK", "heading": 12.9, "rear_mm": null, "braked": false, "pose": [0.498, -1.165, 0.607]}}
+{"event": "park", "wall_time": 1794469178.7447808, "t": 15.29703426361084, "detail": {"event": "park_pulse", "pulse": "3_LBACK", "heading": 20.0, "rear_mm": null, "braked": false, "pose": [0.349, -1.245, 0.73]}}
+{"event": "park", "wall_time": 1794469179.7126255, "t": 16.264873266220093, "detail": {"event": "park_pulse", "pulse": "4_RFWD", "heading": 5.8, "rear_mm": null, "braked": false, "pose": [0.265, -1.337, 0.482]}}
+{"event": "park", "wall_time": 1794469180.7914724, "t": 17.343733549118042, "detail": {"event": "park_pulse", "pulse": "5_LBACK", "heading": 2.4, "rear_mm": null, "braked": false, "pose": [0.288, -1.331, 0.423]}}
+{"event": "park", "wall_time": 1794469181.7951937, "t": 18.347442626953125, "detail": {"event": "park_pulse", "pulse": "6_RFWD", "heading": -4.5, "rear_mm": null, "braked": false, "pose": [0.231, -1.363, 0.302]}}
+{"event": "park", "wall_time": 1794469182.831817, "t": 19.384061098098755, "detail": {"event": "park_pulse", "pulse": "7_LBACK", "heading": -13.1, "rear_mm": null, "braked": false, "pose": [0.26, -1.36, 0.153]}}
+{"event": "park_state", "wall_time": 1794469183.752781, "t": 20.30503749847412, "state": "PARK_FAIL", "pose": [0.22106335687066772, -1.3765563553722866, 0.04440023929952873]}
+{"event": "park_verdict", "wall_time": 1794469183.7556546, "t": 20.307915210723877, "parked": "partial", "why": "partial park: entry and straight into the lot done (no straightening)", "moves": 4, "pose": [0.22106335687066772, -1.3765563553722866, 0.04440023929952873]}
+{"event": "state", "wall_time": 1794469183.756844, "t": 20.309117555618286, "state": "DONE"}
+{"event": "done", "wall_time": 1794469183.75797, "t": 20.310245037078857, "progress": 0.7210633568706677}
+{"event": "round", "wall_time": 1794469183.758588, "t": 20.310321807861328, "end": "DONE", "laps": [], "sections": [[0, "straight 1", 3.3069655895233154]]}
+{"event": "stop", "wall_time": 1794469314.3641107, "t": 150.91634583473206}

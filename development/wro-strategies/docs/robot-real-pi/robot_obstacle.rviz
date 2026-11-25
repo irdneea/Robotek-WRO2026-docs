@@ -1,0 +1,92 @@
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Class: rviz_default_plugins/Grid
+      Name: Grid
+      Enabled: true
+      Cell Size: 0.5
+      Plane Cell Count: 10
+    - Class: rviz_default_plugins/LaserScan
+      Name: LiDAR (0 rad adelante)
+      Enabled: true
+      Topic:
+        Value: /robotek/scan
+        Reliability Policy: Best Effort
+        Depth: 5
+      Size (m): 0.03
+      Style: Flat Squares
+      Color Transformer: FlatColor
+      Color: 255; 255; 255
+    - Class: rviz_default_plugins/RobotModel
+      Name: Coche
+      Enabled: true
+      Description Source: Topic
+      Description Topic:
+        Value: /robot_description
+        Durability Policy: Transient Local
+      Alpha: 0.8
+    - Class: rviz_default_plugins/Marker
+      Name: Direccion mandada
+      Enabled: false
+      Topic:
+        Value: /obstacle/steer_unused
+        Reliability Policy: Reliable
+        Depth: 2
+    - Class: rviz_default_plugins/MarkerArray
+      Name: Senales (LiDAR + camara) y direccion
+      Enabled: true
+      Topic:
+        Value: /obstacle/signs
+        Reliability Policy: Reliable
+        Depth: 2
+    - Class: rviz_default_plugins/Image
+      Name: Detecciones Obstacle (camara)
+      Enabled: true
+      Topic:
+        Value: /obstacle/debug_image/compressed
+        Reliability Policy: Best Effort
+        Depth: 1
+    - Class: rviz_default_plugins/Image
+      Name: Camara IMX708 (CSI, sensor completo)
+      Enabled: false
+      Topic:
+        Value: /picam/image_raw/compressed
+        Reliability Policy: Best Effort
+        Depth: 1
+    - Class: rviz_default_plugins/Image
+      Name: Camara
+      Enabled: false
+      Topic:
+        Value: /usb_cam/image_raw/compressed
+        Reliability Policy: Best Effort
+        Depth: 1
+    - Class: rviz_imu_plugin/Imu
+      Name: IMU
+      Enabled: true
+      Topic:
+        Value: /rrc/imu_raw
+        Reliability Policy: Best Effort
+        Depth: 5
+      Box properties:
+        Enable box: false
+      Axes properties:
+        Enable axes: false
+      Acceleration properties:
+        Enable acceleration: true
+        Acc. vector scale: 0.05
+        Derotate acceleration: false
+    - Class: rviz_default_plugins/Axes
+      Name: Ejes (x = frente del coche)
+      Enabled: true
+      Length: 0.2
+      Radius: 0.01
+  Global Options:
+    Fixed Frame: base_link
+    Frame Rate: 30
+  Views:
+    Current:
+      Class: rviz_default_plugins/TopDownOrtho
+      Scale: 150

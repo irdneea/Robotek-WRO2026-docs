@@ -1,0 +1,48 @@
+{
+  "test_scope": "parking_only",
+  "name": "park8-r2-cw",
+  "direction": "cw",
+  "official_points": null,
+  "parking_lot": {
+    "x0": 0.19499999999999995,
+    "x1": 0.48,
+    "y0": -1.5,
+    "y1": -1.3
+  },
+  "completed": true,
+  "parking_plans": 14,
+  "limit_touched": false,
+  "wall_contacts": 0,
+  "min_limit_clearance_m": 0.005297472817819754,
+  "max_steer_degrees": 25.00000000005737,
+  "timings": {
+    "sim_time_seconds": 60.821,
+    "wall_time_seconds": 36.49795842170715
+  },
+  "points_estimated": 15,
+  "verdict": "parked_fully_parallel",
+  "final_pose": {
+    "x": 0.3341212636433234,
+    "y": -1.3926373675842116,
+    "yaw_deg": -179.2390049991036
+  },
+  "fully_inside": true,
+  "partly_inside": false,
+  "parallel": true,
+  "wall_side_wheel_to_wall_m": {
+    "front": 0.05010583136776181,
+    "rear": 0.05183242349287953
+  },
+  "wheel_distance_difference_m": 0.0017265921251177208,
+  "margins_m": {
+    "x0": 0.0433858801407844,
+    "x1": 0.05014335285486571,
+    "wall": 0.05010583136776181,
+    "lot_line": 0.035380566540074154
+  },
+  "launch_wall_seconds": 64.52983355522156,
+  "directory": "/home/user/Projects/Robotek/docs/obstacle-challenge-runs/20261007-144556-park8-r2-cw",
+  "launch_exit_code": 0,
+  "stopped_on_pillar_fault": null,
+  "wall_timeout_reached": false
+}

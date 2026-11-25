@@ -1,0 +1,154 @@
+{
+  "run": "20261009T105150Z-macos-robostack-rtf2-r3-v4-sq100-ccw",
+  "status": "completed",
+  "start_source": "auto_first_scan",
+  "end_source": "done_event",
+  "time_from_start_wall_seconds": 16.64918804168701,
+  "time_from_start_sim_seconds": 32.797,
+  "motion_wall_seconds": 16.480721950531006,
+  "motion_sim_seconds": 32.400000000000006,
+  "lap_splits": [
+    {
+      "lap": 1,
+      "wall_seconds": 5.293571949005127,
+      "cumulative_wall_seconds": 5.293571949005127
+    },
+    {
+      "lap": 2,
+      "wall_seconds": 4.9876909255981445,
+      "cumulative_wall_seconds": 10.281262874603271
+    },
+    {
+      "lap": 3,
+      "wall_seconds": 5.081640243530273,
+      "cumulative_wall_seconds": 15.362903118133545
+    }
+  ],
+  "points_estimated": 30,
+  "points_official": null,
+  "score_status": "simulation_rule_judge_v2",
+  "points_breakdown": {
+    "1.1_sections": 24,
+    "1.2_laps": 3,
+    "1.3_stop_in_finish": 3
+  },
+  "limitations": [
+    "Sections and laps estimated from ground-truth winding, not judged section exits.",
+    "Contacts, wall movement, start legality and human repairs are not adjudicated.",
+    "Finish bonus is provisional; DONE does not prove 30 seconds stationary."
+  ],
+  "points_estimated_legacy": 30,
+  "points_breakdown_legacy": {
+    "sections_estimated": 24,
+    "laps_estimated": 3,
+    "finish_provisional": 3
+  },
+  "rule_judge": {
+    "version": 2,
+    "challenge": "open",
+    "max_points": 30,
+    "points": 30,
+    "breakdown": {
+      "1.1_sections": 24,
+      "1.2_laps": 3,
+      "1.3_stop_in_finish": 3
+    },
+    "faults": [],
+    "notes": [
+      "Wall movement cannot occur in simulation (walls are static)."
+    ],
+    "round_end": {
+      "reason": "stopped_after_three_laps",
+      "sim_time": 32.8,
+      "wall_time": 1791543130.474678
+    },
+    "time_from_start_sim_seconds": 32.797,
+    "time_from_start_wall_seconds": 16.64918804168701,
+    "lap_splits": [
+      {
+        "lap": 1,
+        "sim_seconds": 10.657,
+        "cumulative_sim_seconds": 10.657
+      },
+      {
+        "lap": 2,
+        "sim_seconds": 9.8,
+        "cumulative_sim_seconds": 20.457
+      },
+      {
+        "lap": 3,
+        "sim_seconds": 10.3,
+        "cumulative_sim_seconds": 30.757
+      }
+    ],
+    "contact_evaluated": true,
+    "stop_hold_sim_seconds": 35.4,
+    "stop_drift_m": 7.155309557666035e-06,
+    "stop_inside_finish_section": true,
+    "contacts_first_sim_time": {},
+    "pose_source": "audit_pose.csv",
+    "pose_sample_count": 3435
+  },
+  "validation": {
+    "version": 1,
+    "passed": true,
+    "checks": {
+      "rule_maximum": {
+        "value": 30,
+        "threshold": 30,
+        "passed": true
+      },
+      "no_rule_faults": {
+        "value": 0,
+        "threshold": 0,
+        "passed": true
+      },
+      "stop_observed": {
+        "value": 35.4,
+        "threshold": 30.0,
+        "passed": true
+      },
+      "no_contacts": {
+        "value": false,
+        "threshold": false,
+        "passed": true,
+        "note": "Gazebo contact sensors"
+      },
+      "min_outer_wall_clearance_m": {
+        "value": 0.29981749981763844,
+        "threshold": 0.01,
+        "passed": true,
+        "note": "sampled at telemetry rate"
+      },
+      "min_inner_wall_clearance_m": {
+        "value": 0.11501338001342863,
+        "threshold": 0.01,
+        "passed": true,
+        "note": "sampled at telemetry rate"
+      },
+      "steering_limit": {
+        "value": 19.86492950835198,
+        "threshold": 25.5,
+        "passed": true
+      }
+    },
+    "failed": [],
+    "min_clearance_m": 0.11501338001342863,
+    "margin_class": "comfortable",
+    "thresholds": {
+      "min_clearance_m": 0.01,
+      "comfortable_m": 0.05,
+      "tight_m": 0.02,
+      "stop_observed_s": 30.0,
+      "steer_limit_deg": 25.5
+    }
+  },
+  "platform_context": {
+    "platform": "macos_robostack",
+    "host": "Apple M4 Pro, macOS (Darwin 27), RoboStack Jazzy ~/Projects/WRO/.mamba/jazzy, gz-sim 8.10",
+    "platform_doc": "docs/simulacion-macos.md",
+    "rtf": 2,
+    "env_fixes": "OGRE2_RESOURCE_PATH, Cyclone DDS",
+    "note": "Recommended macOS speed: no lost control cycles, clock lag ~0.05 s."
+  }
+}

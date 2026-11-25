@@ -1,0 +1,57 @@
+=== 145317
+motivo de la parada: blind LiDAR 0.50 s (< 120 valid rays)
+impacto aprox. (empieza el LiDAR ciego): -0.50 s
+LiDAR: sin huecos de scans antes del impacto (todos llegaron)
+lazo de control: 34 ticks tardíos, máx. 0.37 s en -2.85
+movimiento: se movía hasta el impacto
+dirección: el coche giró hacia donde pedía el servo
+estrategia en el impacto: TURN (giros 0); último TURN empezó en -0.96 s con front_axis 0.63 m
+=== 152842
+motivo de la parada: blind LiDAR 0.40 s (< 120 valid rays)
+impacto aprox. (empieza el LiDAR ciego): -0.40 s
+LiDAR: sin huecos de scans antes del impacto (todos llegaron)
+lazo de control: 37 ticks tardíos, máx. 0.25 s en -4.87
+movimiento: se movía hasta el impacto
+dirección: el coche giró hacia donde pedía el servo
+estrategia en el impacto: TURN (giros 0); último TURN empezó en -0.96 s con front_axis 0.76 m
+=== 154243
+motivo de la parada: blind LiDAR 0.40 s (< 120 valid rays)
+impacto aprox. (empieza el LiDAR ciego): -0.40 s
+LiDAR: 1 huecos sin scan (> 0,2 s) antes del impacto; el mayor 0.20 s en -1.40; el último 0.20 s en -1.40  <-- en el último segundo
+lazo de control: 45 ticks tardíos, máx. 0.14 s en -4.91
+movimiento: se movía hasta el impacto
+dirección: el coche giró hacia donde pedía el servo
+estrategia en el impacto: TURN (giros 2); último TURN empezó en -0.93 s con front_axis 0.75 m
+=== 161840
+motivo de la parada: blind LiDAR 0.40 s (< 120 valid rays)
+impacto aprox. (empieza el LiDAR ciego): -0.40 s
+LiDAR: 2 huecos sin scan (> 0,2 s) antes del impacto; el mayor 0.40 s en -0.80; el último 0.40 s en -0.80  <-- en el último segundo
+lazo de control: 35 ticks tardíos, máx. 0.22 s en -2.57
+movimiento: se movía hasta el impacto
+dirección: el coche giró hacia donde pedía el servo
+estrategia en el impacto: TURN (giros 0); último TURN empezó en -0.73 s con front_axis 0.77 m
+=== 162917
+motivo de la parada: blind LiDAR 0.40 s (< 120 valid rays)
+impacto aprox. (empieza el LiDAR ciego): -0.40 s
+LiDAR: 2 huecos sin scan (> 0,2 s) antes del impacto; el mayor 0.20 s en -4.60; el último 0.20 s en -1.90
+LiDAR: 2 scans con < 120 rayos antes del impacto (primero en -4.60)
+lazo de control: 41 ticks tardíos, máx. 0.43 s en -2.39
+movimiento: se movía hasta el impacto
+dirección: el coche giró hacia donde pedía el servo
+estrategia en el impacto: TURN (giros 5); último TURN empezó en -1.26 s con front_axis 1.06 m
+=== 175921
+motivo de la parada: blind LiDAR 0.50 s (< 120 valid rays)
+impacto aprox. (empieza el LiDAR ciego): -0.50 s
+LiDAR: sin huecos de scans antes del impacto (todos llegaron)
+lazo de control: 45 ticks tardíos, máx. 0.10 s en -3.07
+movimiento: se movía hasta el impacto
+dirección: giro pedido sin giro del coche desde -1.37 s (¿servo congelado o patinando?)
+estrategia en el impacto: TURN (giros 1); último TURN empezó en -1.57 s con front_axis 0.94 m
+=== 180112
+motivo de la parada: blind LiDAR 0.50 s (< 120 valid rays)
+impacto aprox. (empieza el LiDAR ciego): -0.50 s
+LiDAR: sin huecos de scans antes del impacto (todos llegaron)
+lazo de control: 44 ticks tardíos, máx. 0.12 s en -0.98
+movimiento: se movía hasta el impacto
+dirección: giro pedido sin giro del coche desde -0.98 s (¿servo congelado o patinando?)
+estrategia en el impacto: FOLLOW (giros 8); último TURN empezó en -2.48 s con front_axis 1.07 m

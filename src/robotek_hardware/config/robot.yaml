@@ -102,7 +102,7 @@ tb6612fng_motor:
 
 # IMU of the RRC Lite -> car frame (x forward, y left, z up) before the strategies read it.
 # The Raspberry Pi and the RRC Lite stand on their long edge in the new build (21 oct 2026). Measured on
-# the team's car on 1 nov 2026, axis by axis (guide: "Medir a mano, eje por eje"): the RRC Lite stands
+# the team's car on 1 nov 2026, axis by axis (measured by hand, one axis at a time): the RRC Lite stands
 # on its edge on the left side with its components facing out. At rest board y = +9.70 m/s^2 (up);
 # nose lifted ~14 deg: board x -2.44 (x points back); left side lifted: board z +3.59 (z points left);
 # a hand turn to the left: board gyro y +0.36 rad/s, the other axes ~0. Gyro y bias at rest +0.043 rad/s
