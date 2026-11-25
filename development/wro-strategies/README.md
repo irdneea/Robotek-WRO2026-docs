@@ -4,19 +4,31 @@ A copy of the workspace where the strategies were developed and measured, with i
 
 **It is not the code of the car.** The code that runs on the car is [`../../src`](../../src). The Obstacle here (`src/robotek_obstacle/robotek_obstacle/v3/`) has the same origin but an earlier structure, and several files differ. The folder has a `COLCON_IGNORE` file, so `colcon build` at the root never sees it.
 
-Notes, comments and records in this folder are in Spanish, the working language during development. They are kept as they were written.
+## Start here
+
+| To know | Read (in English) |
+| --- | --- |
+| Where each challenge stood and what was missing | [`STATUS.md`](STATUS.md) |
+| What was decided, why, and the evidence | [`DECISIONS.md`](DECISIONS.md) |
+| What each note and test log is about | [`NOTES.md`](NOTES.md) |
+| How many simulator rounds are recorded and how they ended | [`ROUNDS.md`](ROUNDS.md) |
+| How to repeat the lab figures | [below](#reproduce-the-lab-figures) |
+
+**Language.** Spanish was the working language. The detailed notes, test logs, code comments and round records are kept in Spanish as they were written, because they are evidence. The pages above summarise them in English; if a summary and its source differ, the source counts.
+
+**What is worth what.** A round on the real car in the logs shows what happened that day, mostly judged by the coach or operator. Simulator and lab points are estimates of our own rule judge. Nothing here is an official score.
 
 ## What is inside
 
 | Folder | Content |
 | --- | --- |
-| `tools/` | Batch labs (`obstacle_lab_suite.py`, `open_suite_quiet.sh`), comparisons (`compare_*_suites.py`), round summary (`round_digest.py`), corner table generator (`build_corner_table.py`), steering identification (`open_lab/`), Pi and network helpers |
+| `tools/` | Batch labs (`obstacle_lab_suite.py`, `open_suite_quiet.py`), comparisons (`compare_*_suites.py`), round summary (`round_digest.py`), index of the round records (`index_rounds.py`), corner table generator (`build_corner_table.py`), steering identification (`open_lab/`), Pi and network helpers |
 | `src/robotek_evaluation/` | The judge, the labs, the car models `real_car_v1` to `v4`, Gazebo runners and reports |
 | `src/robotek_obstacle/`, `src/robotek_open/` | The strategies as developed here |
 | `src/robotek_hardware/` | Includes the bench tests of the actuators, the board and the power |
 | `docs/obstacle-challenge-runs/`, `docs/open-challenge-runs/` | Round records of the simulator |
 | `docs/robot-real-pi/` | Tests and rounds on the real car, camera frames, RViz layouts, CAD of two brackets |
-| `docs/*.md` | State pages, design notes and investigation notes, failed attempts included. Start with `docs/obstacle-estado.md` and `docs/open-estado.md` |
+| `docs/*.md` | State pages, design notes and investigation notes, failed attempts included ([index](NOTES.md)) |
 | `verification/` | Output of the runs below |
 
 ## Reproduce the lab figures

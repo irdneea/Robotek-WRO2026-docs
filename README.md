@@ -110,7 +110,7 @@ Everything is in this one README. The folders hold the material that a text cann
 | Folder | What is inside |
 | --- | --- |
 | [`src`](src) | **The code of the vehicle**, a ROS 2 workspace. [`src/README.md`](src/README.md) says what each package and each file does, in reading order |
-| [`development`](development/wro-strategies/README.md) | The development workspace: tools, car models, round records and notes |
+| [`development`](development/wro-strategies/README.md) | The development workspace: tools, car models, round records and notes, with an English guide |
 | [`tools`](tools) | Scripts to set up the Raspberry Pi, start a round, clean leftovers and calibrate the steering. [`tools/README.md`](tools/README.md) explains each one |
 | [`schemes`](schemes) | The diagrams: wiring, power, ROS nodes, the flow of each challenge and the outline of the car |
 | [`models`](models) | 3D-printed parts of the chassis and housings (STL and previews) |
@@ -1354,7 +1354,7 @@ On our computer that command printed `obstacle-0-ccw  pts=40/40  t=111.3  VALID`
 
 ### Development workspace and evidence
 
-[`development/wro-strategies`](development/wro-strategies/README.md) holds the tools used to develop and measure the car (batch labs, round summaries and comparisons, the corner-table generator, bench tests), the car models `real_v1` to `v4`, the simulator round records, the tests on the real car and the design notes. They are mostly in Spanish, and its README says what was removed and what we could repeat.
+[`development/wro-strategies`](development/wro-strategies/README.md) holds the tools used to develop and measure the car (batch labs, round summaries and comparisons, the corner-table generator, bench tests), the car models `real_v1` to `v4`, the simulator round records, the tests on the real car and the design notes. The detailed notes and logs are in Spanish. Its README is the way in: it links English pages with the [state of each challenge](development/wro-strategies/STATUS.md), the [main decisions](development/wro-strategies/DECISIONS.md), an [index of the notes](development/wro-strategies/NOTES.md) and an [index of the rounds](development/wro-strategies/ROUNDS.md), and says what was removed and what we could repeat. It is evidence: the code of the car does not need it to run.
 
 ### Tests without the car
 
