@@ -1,8 +1,8 @@
 """The strategy on the real car: the hardware nodes of robotek_hardware plus the strategy node. No Gazebo, no simulated
-actuators. In practice it is started through tools/car-run.sh, which also cleans up leftover nodes:
+actuators. In practice it is started through tools/car-run.py, which also cleans up leftover nodes:
 
-    bash tools/car-run.sh open        # = strategy:=robotek_open executable:=open_v5
-    bash tools/car-run.sh obstacle    # = strategy:=robotek_obstacle_v3
+    python3 tools/car-run.py open        # = strategy:=robotek_open executable:=open_v5
+    python3 tools/car-run.py obstacle    # = strategy:=robotek_obstacle_v3
     ros2 launch robotek_course car.launch.py strategy:=robotek_obstacle_v3 battery_guard:=false
 
 The strategy node (``strategy`` package, ``executable`` = drive) is the same one that runs in ``round.launch.py``. It reads /scan,

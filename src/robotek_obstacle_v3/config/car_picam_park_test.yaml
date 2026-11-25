@@ -1,6 +1,6 @@
 # Obstacle v3 parking-only test (12 nov 2026): the car placed as if entering the start straight; it parks at once
 # (park_after 0). Same parking as car_picam_park_round.yaml. Run:
-#   bash tools/car-run.sh obstacle strategy_params:=~/Robotek-WRO2026/install/robotek_obstacle_v3/share/robotek_obstacle_v3/config/car_picam_park_test.yaml \
+#   python3 tools/car-run.py obstacle strategy_params:=~/Robotek-WRO2026/install/robotek_obstacle_v3/share/robotek_obstacle_v3/config/car_picam_park_test.yaml \
 #     motor_rps_per_mps:=8.0 motor_min_rps:=2   [direction:=ccw|cw]
 strategy:
   ros__parameters:

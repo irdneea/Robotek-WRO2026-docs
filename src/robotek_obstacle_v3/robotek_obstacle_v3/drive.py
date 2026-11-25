@@ -315,7 +315,7 @@ class Drive(Node):
         return None if self.t_start is None else self.now() - self.t_start
 
     def _log_progress(self, mission):
-        """The terminal summary (tools/car-run.sh keeps it), as the Open v5: every section (straight or corner) with
+        """The terminal summary (tools/car-run.py keeps it), as the Open v5: every section (straight or corner) with
         its time, each lap, each sign when it is first seen and when its colour is known, each sign passed (side and
         whether it is the side its colour asks for). Progress units: 8 a lap, corner k = units 2k-1..2k."""
         if self.t_start is None or mission.state not in ('RUN', 'PARK', 'STOP'):

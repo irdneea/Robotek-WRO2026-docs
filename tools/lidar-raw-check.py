@@ -3,7 +3,7 @@
 
     python3 tools/lidar-raw-check.py [--port /dev/ldlidar] [--seconds 30] [--csv out.csv]
 
-Stop the car's stack first (the port is exclusive): bash tools/car-clean.sh.
+Stop the car's stack first (the port is exclusive): python3 tools/car-clean.py.
 
 The LD19 sends 47-byte packets of 12 points (0x54 0x2C header, CRC-8 poly 0x4D at the end), ~450 per second at 10 Hz.
 The ldlidar_stl_ros2 driver drops a packet with a bad CRC silently, and a turn whose 0 deg packet is lost is not closed

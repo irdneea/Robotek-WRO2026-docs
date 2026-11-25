@@ -40,18 +40,18 @@ The car's computer is a Raspberry Pi 5 with Ubuntu 24.04 and ROS 2 Jazzy. On a f
 ```bash
 git clone https://github.com/ilovmangos/Robotek-WRO2026.git
 cd Robotek-WRO2026
-bash tools/setup-pi.sh            # installs, configures and builds; asks for sudo when needed
-bash tools/setup-pi.sh --check    # afterwards: only checks (board, LiDAR, camera, groups); changes nothing
+python3 tools/setup-pi.py            # installs, configures and builds; asks for sudo when needed
+python3 tools/setup-pi.py --check    # afterwards: only checks (board, LiDAR, camera, groups); changes nothing
 ```
 
-`setup-pi.sh` can be run again (it skips what is done) and `--dry-run` shows the commands without running them. It, in order:
+`setup-pi.py` can be run again (it skips what is done) and `--dry-run` shows the commands without running them. It, in order:
 
 1. checks that the system is Ubuntu 24.04;
 2. installs ROS 2 Jazzy **base** (no Gazebo or RViz) and the apt packages of the car (`cv_bridge`, `robot_state_publisher`, `xacro`, `tf2_ros`, `python3-serial`, `python3-lgpio`, `python3-opencv`, `v4l-utils`, ...);
 3. installs the udev rules `tools/99-robotek.rules` (stable names `/dev/rrc_lite` and `/dev/ldlidar`, permissions) and adds you to the groups `dialout`, `video` and `gpio` (log out and in again);
 4. builds everything with `colcon build --symlink-install`.
 
-> **Safety: the first time, put the car on supports (wheels in the air).** Neither `setup-pi.sh` nor the launch moves the motor by itself: the motor only moves when a strategy publishes `/cmd_vel_raw`, and the strategy waits for Start (the board button). Even so, `base_adapter` limits acceleration (1 m/s²), never asks for more than `motor_max_rps`, a 0.3 s watchdog stops it if commands stop, the steering is limited to `wheel_limit_deg` (19°), and a second press of the button (`/robotek/stop`) holds it stopped until the next launch. `/robotek/estop` (a `Bool`, true) also stops it. If the motor keeps turning anyway, switch the board off.
+> **Safety: the first time, put the car on supports (wheels in the air).** Neither `setup-pi.py` nor the launch moves the motor by itself: the motor only moves when a strategy publishes `/cmd_vel_raw`, and the strategy waits for Start (the board button). Even so, `base_adapter` limits acceleration (1 m/s²), never asks for more than `motor_max_rps`, a 0.3 s watchdog stops it if commands stop, the steering is limited to `wheel_limit_deg` (19°), and a second press of the button (`/robotek/stop`) holds it stopped until the next launch. `/robotek/estop` (a `Bool`, true) also stops it. If the motor keeps turning anyway, switch the board off.
 
 ## Third-party code included in the repository
 
@@ -86,7 +86,7 @@ The udev rules only use USB identifiers that were confirmed: `1a86:55d4` for the
 
 ```bash
 source install/setup.bash
-ros2 launch robotek_course car.launch.py strategy:=robotek_obstacle_v3 start_lot:=true    # or use tools/obstacle-round.sh
+ros2 launch robotek_course car.launch.py strategy:=robotek_obstacle_v3 start_lot:=true    # or use tools/obstacle-round.py
 ```
 
 Wait until the board LEDs turn **green** (the strategy is waiting for the button), place the car at its start and press the button once: that is Start (`/start`) and the LEDs turn blue. Press again to stop: the motor stays at 0 until you launch again. `ros2 launch robotek_course car.launch.py --show-args` lists the options (`motor_max_rps:=`, `strategy_params:=<file.yaml>`, `camera_driver:=`, `rear_range:=`, `battery_guard:=false`, ...). If a device is missing the launch says so and carries on, so the stack can be tried on a laptop; each node warns clearly and retries without moving anything.

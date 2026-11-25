@@ -1,10 +1,10 @@
 # Obstacle parameters on the car
 
-What each parameter changes and its default. Launch arguments go at the end of the command as `name:=value`. The strategy parameters live in `robotek_obstacle_v3/settings.py` and in the profile `config/car_picam_park_round.yaml`, which `tools/obstacle-round.sh` passes with `strategy_params`.
+What each parameter changes and its default. Launch arguments go at the end of the command as `name:=value`. The strategy parameters live in `robotek_obstacle_v3/settings.py` and in the profile `config/car_picam_park_round.yaml`, which `tools/obstacle-round.py` passes with `strategy_params`.
 
 ```bash
-bash tools/obstacle-round.sh                              # the validated command
-bash tools/obstacle-round.sh recover_back:=0.4            # with a launch argument changed
+python3 tools/obstacle-round.py                              # the validated command
+python3 tools/obstacle-round.py recover_back:=0.4            # with a launch argument changed
 ```
 
 ## Launch arguments (`car.launch.py`)

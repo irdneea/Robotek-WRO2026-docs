@@ -33,7 +33,7 @@ The long explanations are in the main README. Start with these chapters:
 ## Running and testing
 
 ```bash
-bash tools/obstacle-round.sh                 # on the car, from the repository root
+python3 tools/obstacle-round.py                 # on the car, from the repository root
 cd src/robotek_obstacle_v3 && python3 -m pytest test -q
 python3 -m robotek_evaluation.obstacle_lab --strategy robotek_obstacle_v3.strategy:Strategy --parking --layouts 0-4 --seeds 0-2
 ```

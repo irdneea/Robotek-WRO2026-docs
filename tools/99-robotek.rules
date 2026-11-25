@@ -1,7 +1,7 @@
 # udev rules of the Robotek car: stable device names and permissions for the dialout group.
-# tools/setup-pi.sh installs them as /etc/udev/rules.d/99-robotek.rules. To do it by hand:
+# tools/setup-pi.py installs them as /etc/udev/rules.d/99-robotek.rules. To do it by hand:
 #   sudo cp tools/99-robotek.rules /etc/udev/rules.d/ && sudo udevadm control --reload-rules && sudo udevadm trigger
-# Your user has to be in the groups dialout, video and gpio (setup-pi.sh does it) and log in again.
+# Your user has to be in the groups dialout, video and gpio (setup-pi.py does it) and log in again.
 #
 # Where each identifier comes from:
 #  * 1a86:55d4  Hiwonder RRC Lite board (shows up as /dev/ttyACM0). It is the same identifier as Hiwonder MentorPi's

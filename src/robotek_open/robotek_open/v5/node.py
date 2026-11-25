@@ -183,7 +183,7 @@ class OpenV5Node(Node):
 
     def _log_progress(self, now, label):
         """One short line per state change, per lap and at the end, with the time since Start (the terminal summary
-        tools/car-run.sh keeps)."""
+        tools/car-run.py keeps)."""
         if label not in ('WAIT_START',) and self._round_start is None:
             self._round_start = now
         t = 0.0 if self._round_start is None else now - self._round_start

@@ -1,6 +1,6 @@
 # The code of the car
 
-This is a ROS 2 Jazzy workspace. Build it from the root of the repository with `colcon build`, or let `tools/setup-pi.sh` do everything on the Raspberry Pi.
+This is a ROS 2 Jazzy workspace. Build it from the root of the repository with `colcon build`, or let `tools/setup-pi.py` do everything on the Raspberry Pi.
 
 The best way in is to follow one command through the system. A strategy decides a **speed and a steering angle**; everything else in the workspace either brings it the data to decide, or turns its answer into signals for the motor and the servo.
 
@@ -95,16 +95,16 @@ The wiring and the calibration of each of these are in [`robotek_hardware/README
 
 | File | What it starts |
 | --- | --- |
-| `car.launch.py` | Everything on the car: the hardware nodes and the strategy. Normally started through `tools/car-run.sh` |
+| `car.launch.py` | Everything on the car: the hardware nodes and the strategy. Normally started through `tools/car-run.py` |
 | `sim.launch.py` | The simulator: Gazebo, the field, the car and its sensors |
 | `round.launch.py`, `obstacle_round.launch.py` | A scored round in the simulator, with the referee |
 
 ## Tests
 
 ```bash
-cd src/robotek_obstacle_v3 && python3 -m pytest test -q     # 45 tests on the Pi (on a PC without ROS: 40 pass, 1 is skipped)
+cd src/robotek_obstacle_v3 && python3 -m pytest test -q     # 45 tests with ROS (without ROS: 40 pass, 1 is skipped)
 cd src/robotek_open && python3 -m pytest test -q            # 62 tests
 cd src/robotek_hardware && python3 -m pytest test -q        # conversions, wiring checks (need ROS for some)
 ```
 
-Run the car with `bash tools/obstacle-round.sh` (Obstacle) or `bash tools/car-run.sh open` (Open). More in chapter 9 of the [README](../README.md#9-build-run-and-test-it-yourself).
+Run the car with `python3 tools/obstacle-round.py` (Obstacle) or `python3 tools/car-run.py open` (Open). More in chapter 9 of the [README](../README.md#9-build-run-and-test-it-yourself).

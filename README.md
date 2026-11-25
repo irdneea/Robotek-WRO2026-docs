@@ -587,7 +587,7 @@ With both systems in place, fit the housings on the top of the base, following t
 4. Connect the battery (2S LiPo) to the board's power input. The board gives the motor and the servo their power and sends 5 V to the Raspberry Pi over its USB-C port. There is only one battery.
 5. Wire the rear VL53L0X to the Pi: VIN to 3.3 V (pin 1), SDA to pin 3, SCL to pin 5, GND.
 6. Wire the extra push button between GPIO 16 and GND.
-7. Run `bash tools/setup-pi.sh` to install the software and the udev rules (see chapter 9).
+7. Run `python3 tools/setup-pi.py` to install the software and the udev rules (see chapter 9).
 
 The rear distance sensor sits in a small printed mount on the back of the base:
 
@@ -749,7 +749,7 @@ Inside `robotek_obstacle_v3/robotek_obstacle_v3` each file has one job:
 
 ### Testing and tuning process, with metrics
 
-* **Unit tests** per package (`pytest`): the strategy checks, `steer_watch`, the lot exit, the parking planner and the corner planner. At this version `robotek_obstacle_v3` passes 45 tests on the Pi (40 plus 1 skipped on a PC without ROS).
+* **Unit tests** per package (`pytest`): the strategy checks, `steer_watch`, the lot exit, the parking planner and the corner planner. With ROS 2 Jazzy on Ubuntu 24.04 the 198 tests of the five packages that have tests pass (`robotek_obstacle_v3` 45, `robotek_open` 62, `robotek_hardware` 33, `robotek_evaluation` 47, `robotek_course` 11).
 * **Honest simulation.** Rounds in Gazebo and in a fast kinematic **lab** use only what the real car has: LiDAR, gyroscope and camera, with noise. No odometry, no pose of the pillars. The true pose is recorded only to audit. The judge module scores a round with the rules (sections, laps, signs, parking), flagging what is estimated.
 * **Metrics.** Estimated points, total round time from Start (laps as partial times), contacts, faults. Comparison rule: points first, then time. Every round on the car and in simulation writes `round.json`, `events.jsonl`, telemetry and scans, see [chapter 9](#9-build-run-and-test-it-yourself).
 * **Tuning evidence.** The steering faults and corner crashes of 11 Nov (`23:56`, `23:59`) led to `steer_watch`; the camera stalls led to `CAMERA_MAX_AGE` / `CAMERA_LOST`; the lot exit pulses were tuned until the heading grew about 10° per pair of pulses. Details in [chapter 8](#8-systems-thinking-and-engineering-decisions) and the [journal](#12-history-of-the-car-and-engineering-journal).
@@ -1216,6 +1216,10 @@ flowchart LR
 
 How another team can install the software, run both challenges and repeat our tests. The mechanical build is in chapter 3. Every script mentioned here is explained in [`tools/README.md`](tools/README.md).
 
+### Programming language
+
+The code of the team is **Python**: the strategies, the hardware nodes, the launch files and the scripts in `tools`. The exception in `src` is the driver of the LiDAR, third-party C++ from LDROBOT with one change of ours ([notice](src/ldlidar_stl_ros2/NOTICE-ROBOTEK.md)). The other files are data and build descriptions that ROS 2 needs (YAML, XML, URDF, SDF, message definitions and `CMakeLists.txt`). The [development workspace](development/wro-strategies/README.md) keeps some shell scripts as they were used.
+
 ### Install the software (Raspberry Pi 5)
 
 You need a Raspberry Pi 5 with Ubuntu 24.04 (arm64) and internet, the RRC Lite board, the LD19 LiDAR and the Pi camera connected as in chapter 4. Then clone the repository and run one script:
@@ -1223,13 +1227,13 @@ You need a Raspberry Pi 5 with Ubuntu 24.04 (arm64) and internet, the RRC Lite b
 ```bash
 git clone <the URL of this repository>
 cd <the repository folder>
-bash tools/setup-pi.sh            # ROS 2 Jazzy base, dependencies, udev rules, groups and colcon build
+python3 tools/setup-pi.py            # ROS 2 Jazzy base, dependencies, udev rules, groups and colcon build
 ```
 
 The script skips what is already done, so you can run it again. The first time it adds your user to the groups `dialout`, `video` and `gpio`: **log out and in again**. Then:
 
 ```bash
-bash tools/setup-pi.sh --check    # board, LiDAR, camera, groups: it only checks, it changes nothing
+python3 tools/setup-pi.py --check    # board, LiDAR, camera, groups: it only checks, it changes nothing
 source install/setup.bash
 ```
 
@@ -1242,17 +1246,17 @@ source install/setup.bash
 Wait until the two board LEDs are **green**, then press the board button **once**: it is the Start. A second press stops the car. Lights: green = ready, blue = pressed (the round is running or over), blinking red = low battery.
 
 ```bash
-bash tools/obstacle-round.sh      # Obstacle: start in the lot, three laps, partial park (the command validated on 12 Nov 2026)
-bash tools/car-run.sh open        # Open Challenge, version 5
+python3 tools/obstacle-round.py      # Obstacle: start in the lot, three laps, partial park (the command validated on 12 Nov 2026)
+python3 tools/car-run.py open        # Open Challenge, version 5
 ```
 
-Both scripts first stop the autostart and any leftover node (`tools/car-clean.sh`), so two strategies never publish speed commands at the same time, and they set the network that your computer sees (Cyclone DDS, domain 1). When the terminal says `READY` the LEDs are green. The terminal prints every change of state with its time, the laps and the final time; the telemetry goes to `~/runs/<date>-<time>-obstacle-v3/` or `-open-v5/`.
+Both scripts first stop the autostart and any leftover node (`tools/car-clean.py`), so two strategies never publish speed commands at the same time, and they set the network that your computer sees (Cyclone DDS, domain 1). When the terminal says `READY` the LEDs are green. The terminal prints every change of state with its time, the laps and the final time; the telemetry goes to `~/runs/<date>-<time>-obstacle-v3/` or `-open-v5/`.
 
-`obstacle-round.sh` uses the profile `src/robotek_obstacle_v3/config/car_picam_park_round.yaml` (team field lot: far limit 0.31 m, length 0.3675 m). Extra arguments go at the end: `bash tools/obstacle-round.sh direction:=cw`.
+`obstacle-round.py` uses the profile `src/robotek_obstacle_v3/config/car_picam_park_round.yaml` (team field lot: far limit 0.31 m, length 0.3675 m). Extra arguments go at the end: `python3 tools/obstacle-round.py direction:=cw`.
 
 **The Open on the car**
 
-* The car's own values are in `src/robotek_open/config/car_picam.yaml` and `car.launch.py` loads them by itself. Any of them can be changed at launch: `bash tools/car-run.sh open cruise_speed:=0.8`.
+* The car's own values are in `src/robotek_open/config/car_picam.yaml` and `car.launch.py` loads them by itself. Any of them can be changed at launch: `python3 tools/car-run.py open cruise_speed:=0.8`.
 * **Gears and speed.** The car has 1:1 gears and `robot.yaml` has `motor_rps_per_mps: 7.0` (with 8.0 it goes a little faster). The motor limit of the Open is `motor_max_rps` 6.7.
 * **Direction.** The camera decides it from the longer line, blue or orange. If it cannot decide in 1 s the car starts counter-clockwise (`direction_fallback`) and the LiDAR corrects it before the first corner. Without a camera it runs anyway.
 * **Heading.** From the gyroscope, corrected on every straight with the island wall (`wall_heading_gain`): the gyro of the car reads about 6 % short.
@@ -1282,15 +1286,18 @@ The camera colours (HSV bands for the blue and orange lines, tuned for the IMX70
 
 ### Start by itself when the Pi is switched on
 
+> [!IMPORTANT]
+> These scripts used to be shell scripts. A Pi that already had the autostart switched on still points to the old file: after updating the code, run `python3 tools/car-autostart.py on` again (with your usual arguments).
+
 ```bash
-bash tools/car-autostart.sh on        # the Open v5 with the car's values
-bash tools/car-autostart.sh status    # is it running? (log shows its output)
-bash tools/car-autostart.sh stop      # stop it now, for example to launch something by hand
-bash tools/car-autostart.sh start     # another round (the Open ends in DONE and has to be launched again)
-bash tools/car-autostart.sh off       # do not start at boot any more
+python3 tools/car-autostart.py on        # the Open v5 with the car's values
+python3 tools/car-autostart.py status    # is it running? (log shows its output)
+python3 tools/car-autostart.py stop      # stop it now, for example to launch something by hand
+python3 tools/car-autostart.py start     # another round (the Open ends in DONE and has to be launched again)
+python3 tools/car-autostart.py off       # do not start at boot any more
 ```
 
-It is a systemd user service (`robotek-car.service`, no sudo). At boot it waits for Wi-Fi (up to 60 s) and launches `car.launch.py`; the strategy **waits for the board button**, and `button:=false` is refused here because the car would drive off 12 s after every boot. Running `on` again changes the arguments. Every start and every `stop` first go through `tools/car-clean.sh`, which stops any node left over from an earlier launch and sets the motors to 0 (on 4 Nov 2026 leftover nodes ran two strategies at once and braked the Open into a wall): use it by hand before any test too. Every round is saved in `~/runs/<date>-<time>-autostart/` with `launch.log`, `kernel.log` (USB cuts of the board) and a light rosbag that starts when Start is pressed.
+It is a systemd user service (`robotek-car.service`, no sudo). At boot it waits for Wi-Fi (up to 60 s) and launches `car.launch.py`; the strategy **waits for the board button**, and `button:=false` is refused here because the car would drive off 12 s after every boot. Running `on` again changes the arguments. Every start and every `stop` first go through `tools/car-clean.py`, which stops any node left over from an earlier launch and sets the motors to 0 (on 4 Nov 2026 leftover nodes ran two strategies at once and braked the Open into a wall): use it by hand before any test too. Every round is saved in `~/runs/<date>-<time>-autostart/` with `launch.log`, `kernel.log` (USB cuts of the board) and a light rosbag that starts when Start is pressed.
 
 ### Driving the car with the keyboard
 
@@ -1303,8 +1310,7 @@ ros2 launch robotek_course car.launch.py teleop:=true motor_max_rps:=3   # anoth
 
 On your computer, on the same Wi-Fi as the car, a window works like a racing game: hold and combine the arrow keys (or W A S D). When you release everything the car stops and centres the steering; if the window loses focus or closes, the car stops. The numbers are the speed (m/s) and the steering in degrees.
 
-* **Mac** (RoboStack): `ROBOSTACK_ENV=~/robotek-ros/jazzy bash tools/keyboard_racing.sh 0.4 15`
-* **Windows**, from a terminal with ROS 2 Jazzy loaded: `powershell -ExecutionPolicy Bypass -File tools\keyboard_racing.ps1 -Speed 0.4 -Steer 15`. The first time, allow Python in the Windows firewall (private networks). If the car has another IP, add `-PiIp 192.168.8.xxx`.
+* From a terminal of your computer with ROS 2 Jazzy loaded (Linux, macOS with RoboStack, or Windows): `python3 tools/keyboard_racing_connect.py --speed 0.4 --steer 15`. On Windows, allow Python in the firewall (private networks) the first time. If the car has another IP, add `--pi-ip 192.168.8.xxx`.
 
 The real speed is limited by `motor_max_rps` of the launch, not by the window. From a terminal on the Pi, without a window: `ros2 run robotek_course keyboard_drive --ros-args -p hold:=true`.
 
@@ -1323,7 +1329,7 @@ The video [simulation-run.mp4](videos/simulation-run.mp4) shows a round in the s
 On Ubuntu 24.04 (or WSL2):
 
 ```bash
-bash tools/install-ubuntu.sh                  # ROS 2 Jazzy and Gazebo Harmonic
+python3 tools/install-ubuntu.py                  # ROS 2 Jazzy and Gazebo Harmonic
 source /opt/ros/jazzy/setup.bash
 colcon build --symlink-install
 source install/setup.bash

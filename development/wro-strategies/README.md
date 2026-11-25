@@ -40,6 +40,7 @@ The second differs by one round; we have not found out why. These are lab rounds
 ## What is missing or was removed
 
 * **Raw telemetry** of most simulator rounds. Git has ignored it since 9 Oct 2026, so only the summaries are here.
+* **Helpers that were not in Python or shell:** two macOS window-capture utilities (Swift and shell), a web page that simulated the car and the page that rendered assembly pictures. No result depends on them. `tools/assembly/write_chapter.py` and `save_server.py` belonged to those pages.
 * **Third-party material:** the WRO rules and playfield artwork, Hiwonder manuals and shop screenshots, and vendor packages. Without the playfield texture, `robotek_game_field.sdf` shows no mat drawing; use the open field.
 * **Private data:** e-mail addresses, network addresses and user names in paths were replaced by placeholders. Two photos with people or the room were left out. Set your own addresses before using the remote or car scripts.
 * Links inside the notes may point to files that were not copied.

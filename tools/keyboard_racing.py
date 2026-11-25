@@ -2,8 +2,7 @@
 r"""Drive the real car like a racing game, from a small window on your computer (not over ssh).
 
     # on the car:      ros2 launch robotek_course car.launch.py teleop:=true
-    # on the computer: bash tools/keyboard_racing.sh            (or this script with ROS and the car's network set)
-    # on Windows:      powershell -ExecutionPolicy Bypass -File tools\keyboard_racing.ps1 -Speed 0.4
+    # on the computer: python3 tools/keyboard_racing_connect.py --speed 0.4   (sets the car's network and opens this)
 
 Hold the arrows (or W A S D) and combine them: up = forward, down = back, left/right = steer while held. Releasing
 everything stops the car and centres the wheels. If the window loses focus or closes, the car stops. It publishes
@@ -39,7 +38,7 @@ def main():
     pending = {}
 
     root = tk.Tk()
-    root.title('Robotek: conducir')
+    root.title('Robotek: drive')
     label = tk.Label(root, font=('Helvetica', 16), justify='left', padx=20, pady=20)
     label.pack()
     tk.Label(root, text='Hold ↑ ↓ ← → (or W A S D) and combine them. Release everything to stop.\n'
@@ -56,7 +55,7 @@ def main():
         cmd.linear.x = float(v)
         cmd.angular.z = float(v * math.tan(steer) / WHEELBASE)
         pub.publish(cmd)
-        label.config(text=f'velocidad {v:+.2f} m/s\ndirección {math.degrees(steer):+.0f}°  '
+        label.config(text=f'speed {v:+.2f} m/s\nsteering {math.degrees(steer):+.0f}°  '
                           f'({"left" if steer > 0 else "right" if steer < 0 else "straight"})')
         rclpy.spin_once(node, timeout_sec=0)
         root.after(50, publish)
